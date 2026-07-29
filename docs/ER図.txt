@@ -10,3 +10,4 @@ MP	        max_mp・current_mp
 スタミナ	stamina・max_stamina
 作成日時	created_at
 更新日時	updated_at
+test
