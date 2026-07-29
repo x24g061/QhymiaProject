@@ -1,0 +1,12 @@
+カテゴリ	項目
+ユーザー	user
+基本	    name
+レベル	    level・exp・reincarnation_count
+HP	        max_hp・current_hp
+MP	        max_mp・current_mp
+能力値	    str・int・dex・agi・vit・luk
+属性	    fire・water・grass・rock・light・dark
+所持金	    gold
+スタミナ	stamina・max_stamina
+作成日時	created_at
+更新日時	updated_at
