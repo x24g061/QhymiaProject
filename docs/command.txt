@@ -1,0 +1,74 @@
+
+--毎日やるべきこと--
+
+① WSLでVS Codeを開く
+Windowsから
+VS Codeを起動
+左下が
+>< WSL: Ubuntu
+になっていることを確認します。
+
+② プロジェクトを開く
+もし開いていなければ
+~/QhymiaProject
+を開きます。
+
+③ ターミナルを開く
+ショートカット
+Ctrl + Shift + `
+または
+ターミナル
+↓
+新しいターミナル
+
+④ 仮想環境を有効化
+毎回必ず実行します。
+cd ~/QhymiaProject
+source venv/bin/activate
+成功すると
+(venv)
+が付きます。
+例
+(venv) x24g061@PC:~/QhymiaProject$
+
+⑤ Gitの状態確認
+git status
+正常なら
+On branch main
+Your branch is up to date with 'origin/main'.
+になります。
+もし共同開発で誰かが更新していたら
+git pull
+します。
+
+⑥ PostgreSQL起動確認
+念のため
+sudo service postgresql status
+確認します。
+もし停止していたら
+sudo service postgresql start
+
+⑦ Django起動確認
+python manage.py runserver
+ブラウザで
+http://127.0.0.1:8000
+を開いて
+ホーム画面が表示されればOKです。
+
+
+
+--githubに保存--
+
+git status
+↓
+git add .
+↓
+git commit -m "feat: Characterモデル作成"
+↓
+git push
+
+
+
+--githubで内容が更新されていたら全員がやる作業--
+
+git pull
