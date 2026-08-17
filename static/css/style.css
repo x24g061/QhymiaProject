@@ -4,6 +4,7 @@
 
 body {
     margin: 0;
+
     font-family:
         "Yu Gothic",
         "Meiryo",
@@ -19,6 +20,11 @@ body {
 
     min-height: 100vh;
 }
+
+
+/* =====================
+   ヘッダー
+===================== */
 
 header {
     background: rgba(20, 30, 20, 0.9);
@@ -36,9 +42,14 @@ header h1 {
     letter-spacing: 2px;
 }
 
+
+/* =====================
+   メイン
+===================== */
+
 main {
     width: 100%;
-    max-width: 1400px;
+    max-width: 1500px;
 
     margin: 0 auto;
     padding: 30px;
@@ -52,14 +63,19 @@ main {
 .game-home {
     display: grid;
 
+    /*
+        左：ステータス
+        右：メインエリア
+    */
     grid-template-columns:
-        minmax(260px, 1fr)
-        minmax(350px, 1.6fr)
-        minmax(260px, 1fr);
+        360px
+        minmax(0, 1fr);
 
     gap: 24px;
 
     align-items: start;
+
+    width: 100%;
 }
 
 
@@ -82,101 +98,82 @@ main {
         rgba(0, 0, 0, 0.25);
 }
 
-.game-panel h2 {
-    margin-top: 0;
-
-    padding-bottom: 8px;
-
-    border-bottom: 2px solid #8c704a;
-
-    text-align: center;
-}
-
 
 /* =====================
-   ステータス
+   左：ステータス
 ===================== */
 
-.character-name {
-    text-align: center;
+.status-panel {
+    grid-column: 1;
 
-    font-size: 24px;
-}
-
-.basic-status {
-    display: flex;
-
-    justify-content: space-between;
-
-    font-weight: bold;
-}
-
-.status-grid {
-    display: grid;
-
-    grid-template-columns:
-        repeat(2, 1fr);
-
-    gap: 10px;
-
-    margin: 20px 0;
+    /* 右側が縦に伸びても左に固定 */
+    grid-row: 1 / span 2;
 }
 
 
 /* =====================
-   中央
+   右上：闘技場・探索
 ===================== */
 
 .center-area {
-    display: flex;
+    grid-column: 2;
+    grid-row: 1;
 
-    flex-direction: column;
-
-    gap: 24px;
-}
-
-.floor-name {
-    text-align: center;
-
-    font-size: 24px;
-
-    font-weight: bold;
-}
-
-.character-info {
     display: grid;
 
     grid-template-columns:
-        repeat(2, 1fr);
+        1fr
+        1fr;
 
-    gap: 10px;
-}
-
-.exploration-panel {
-    text-align: center;
-}
-
-.exploration-panel select {
-    width: 100%;
-
-    padding: 12px;
-
-    margin-bottom: 20px;
-
-    font-size: 16px;
+    gap: 24px;
 }
 
 
 /* =====================
-   右側
+   右下
+   行動メニュー・お知らせ
 ===================== */
 
 .right-area {
+    grid-column: 2;
+    grid-row: 2;
+
     display: flex;
 
     flex-direction: column;
 
     gap: 24px;
+}
+
+
+/* =====================
+   行動メニュー
+===================== */
+
+.action-panel {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+}
+
+
+/* タイトルは横幅いっぱい */
+.action-panel h2 {
+    grid-column: 1 / -1;
+}
+
+
+/* =====================
+   お知らせ
+===================== */
+
+.notice-panel {
+    width: 100%;
 }
 
 
@@ -186,6 +183,7 @@ main {
 
 .action-button,
 .main-action-button,
+.explore-button,
 .profile-button {
     display: block;
 
@@ -214,8 +212,11 @@ main {
     transition: 0.2s;
 }
 
+
+/* ホバー */
 .action-button:hover,
 .main-action-button:hover,
+.explore-button:hover,
 .profile-button:hover {
     background:
         linear-gradient(
@@ -227,10 +228,13 @@ main {
         translateY(-2px);
 }
 
-.main-action-button {
-    padding: 18px;
 
-    font-size: 20px;
+/* 探索ボタン */
+.main-action-button,
+.explore-button {
+    padding: 16px;
+
+    font-size: 18px;
 
     background:
         linear-gradient(
@@ -241,13 +245,52 @@ main {
 
 
 /* =====================
-   スマホ
+   行動ボタン
+===================== */
+
+.action-button {
+    width: 100%;
+
+    margin: 0;
+}
+
+
+/* =====================
+   スマホ・狭い画面
 ===================== */
 
 @media (max-width: 900px) {
+
+    main {
+        padding: 20px;
+    }
 
     .game-home {
         grid-template-columns: 1fr;
     }
 
+    .status-panel {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    .center-area {
+        grid-column: 1;
+        grid-row: auto;
+
+        grid-template-columns: 1fr;
+    }
+
+    .right-area {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    .action-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .action-panel h2 {
+        grid-column: auto;
+    }
 }

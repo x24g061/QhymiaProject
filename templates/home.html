@@ -7,108 +7,118 @@
 
 <div class="game-home">
 
-    <!-- 左：ステータス -->
-    <section class="game-panel status-panel">
-        <h2>ステータス</h2>
+    <!-- =====================
+         上：闘技場
+    ====================== -->
+    <section class="game-panel battle-info">
+        <h2>闘技場</h2>
 
-        <h3 class="character-name">かずま</h3>
+        <p class="floor-name">一階層：草原</p>
 
-        <div class="basic-status">
-            <p>Lv.1</p>
-            <p>EXP：0 / 100</p>
+        <div class="character-info">
+            <strong>かずま</strong>
+            <span>属性：岩</span>
+            <span>属性値：20</span>
+            <span>戦闘力：100</span>
         </div>
-
-        <div class="status-grid">
-            <span>HP：100</span>
-            <span>MP：20</span>
-
-            <span>STR：5</span>
-            <span>INT：5</span>
-
-            <span>AGI：5</span>
-            <span>VIT：5</span>
-
-            <span>LUK：5</span>
-        </div>
-
-        <hr>
-
-        <p>所持キュー：0Q</p>
-        <p>回帰回数：0</p>
-        <p>最大到達階数：1</p>
-
-        <a href="#" class="profile-button">
-            プロフィールを見る
-        </a>
     </section>
 
 
-    <!-- 中央 -->
-    <section class="center-area">
+    <!-- =====================
+         下：メインエリア
+    ====================== -->
+    <div class="home-main">
 
-        <div class="game-panel battle-info">
-            <h2>闘技場</h2>
+        <!-- 左：ステータス -->
+        <section class="game-panel status-panel">
+            <h2>ステータス</h2>
 
-            <p class="floor-name">一階層：草原</p>
+            <h3 class="character-name">かずま</h3>
 
-            <div class="character-info">
-                <strong>かずま</strong>
-                <span>属性：岩</span>
-                <span>属性値：20</span>
-                <span>戦闘力：100</span>
+            <div class="basic-status">
+                <p>Lv.1</p>
+                <p>EXP：0 / 100</p>
             </div>
+
+            <div class="status-grid">
+                <span>HP：100</span>
+                <span>MP：20</span>
+
+                <span>STR：5</span>
+                <span>INT：5</span>
+
+                <span>AGI：5</span>
+                <span>VIT：5</span>
+
+                <span>LUK：5</span>
+            </div>
+
+            <hr>
+
+            <p>所持キュー：0Q</p>
+            <p>回帰回数：0</p>
+            <p>最大到達階数：1</p>
+
+            <a href="#" class="profile-button">
+                プロフィールを見る
+            </a>
+        </section>
+
+
+        <!-- 右 -->
+        <div class="right-area">
+
+            <!-- 行動メニュー -->
+            <section class="game-panel action-panel">
+                <h2>行動メニュー</h2>
+
+                <a href="#" class="action-button">
+                    行動を開始する
+                </a>
+
+                <a href="#" class="action-button">
+                    倉庫に行く
+                </a>
+
+                <a href="#" class="action-button">
+                    回帰する
+                </a>
+
+                <a href="#" class="action-button">
+                    ショップに行く
+                </a>
+            </section>
+
+
+            <!-- 探索 -->
+            <section class="game-panel exploration-panel">
+                <h2>探索</h2>
+
+                <p>探索する場所を選択してください</p>
+
+                <select>
+                    <option>一階層：草原</option>
+                    <option>二階層</option>
+                    <option>三階層</option>
+                </select>
+
+                <a href="{% url 'battle:battle' %}" class="explore-button">
+                    探索する
+                </a>
+            </section>
+
+
+            <!-- お知らせ -->
+            <section class="game-panel notice-panel">
+                <h2>お知らせ</h2>
+
+                <p>Qhymiaへようこそ！</p>
+                <p>更新情報などを表示します。</p>
+            </section>
+
         </div>
 
-        <div class="game-panel exploration-panel">
-            <h2>探索</h2>
-
-            <p>探索する場所を選択してください</p>
-
-            <select>
-                <option>一階層：草原</option>
-                <option>二階層</option>
-                <option>三階層</option>
-            </select>
-
-            <a href="#" class="main-action-button">
-                探索を行う
-            </a>
-        </div>
-
-    </section>
-
-
-    <!-- 右 -->
-    <section class="right-area">
-
-        <div class="game-panel action-panel">
-            <h2>行動メニュー</h2>
-
-            <a href="#" class="action-button">
-                行動を開始する
-            </a>
-
-            <a href="#" class="action-button">
-                倉庫に行く
-            </a>
-
-            <a href="#" class="action-button">
-                回帰する
-            </a>
-
-            <a href="#" class="action-button">
-                ショップに行く
-            </a>
-        </div>
-
-        <div class="game-panel notice-panel">
-            <h2>お知らせ</h2>
-
-            <p>Qhymiaへようこそ！</p>
-            <p>更新情報などを表示します。</p>
-        </div>
-
-    </section>
+    </div>
 
 </div>
 
