@@ -120,3 +120,20 @@ feature/dungeon
 feature/battle
 feature/shop
 feature/payment
+
+
+
+--画面の開き方--
+cd ~/QhymiaProject
+source .venv/bin/activate
+python manage.py runserver
+
+
+
+せなじたくPCDBアカウント
+qhymia_user
+g050830
+
+管理者アカウント
+admin
+g20050830
