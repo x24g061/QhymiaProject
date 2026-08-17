@@ -24,6 +24,7 @@ Ctrl + Shift + `
 ④ 仮想環境を有効化
 毎回必ず実行します。
 cd ~/QhymiaProject
+(失敗する方は python3 -m venv venv を打ってみてもろて)
 source venv/bin/activate
 成功すると
 (venv)
