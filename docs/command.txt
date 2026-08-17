@@ -72,3 +72,4 @@ git push
 --githubで内容が更新されていたら全員がやる作業--
 
 git pull
+あるけみ
