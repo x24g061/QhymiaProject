@@ -1,0 +1,147 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>戦闘画面 | キュメイア</title>
+
+  <link rel="stylesheet" href="{% static 'css/battle.css' %}">
+</head>
+
+<body>
+
+    <main class="battle-screen">
+
+        <!-- 上部 -->
+        <header class="battle-header">
+            <p class="turn-count">1ターン</p>
+            <h1 class="game-title">キュメイア</h1>
+        </header>
+
+        <!-- 敵出現メッセージ -->
+        <section class="encounter-message">
+            <p>赤さん が襲いかかってきた！</p>
+        </section>
+
+        <!-- 戦闘エリア -->
+        <section class="battle-field">
+
+            <!-- プレイヤー -->
+            <div class="fighter player">
+
+                <h2 class="fighter-name">テスター</h2>
+
+                <div class="fighter-icon">
+                    プレイヤーアイコン
+                </div>
+
+                <div class="action-gauge">
+                    <div class="action-gauge-fill"></div>
+                </div>
+
+                <div class="status">
+                    <p>HP</p>
+
+                    <div class="status-bar">
+                        <div class="hp-fill player-hp"></div>
+                    </div>
+
+                    <span>100 / 100</span>
+                </div>
+
+                <div class="status">
+                    <p>ST</p>
+
+                    <div class="status-bar">
+                        <div class="stamina-fill player-stamina"></div>
+                    </div>
+
+                    <span>80 / 100</span>
+                </div>
+
+            </div>
+
+            <!-- VS -->
+            <div class="vs">
+                VS
+            </div>
+
+            <!-- 敵 -->
+            <div class="fighter enemy">
+
+                <h2 class="fighter-name">赤さん</h2>
+
+                <div class="fighter-icon">
+                    敵アイコン
+                </div>
+
+                <div class="action-gauge">
+                    <div class="action-gauge-fill"></div>
+                </div>
+
+                <div class="status">
+                    <p>HP</p>
+
+                    <div class="status-bar">
+                        <div class="hp-fill enemy-hp"></div>
+                    </div>
+
+                    <span>60 / 100</span>
+                </div>
+
+                <div class="status">
+                    <p>ST</p>
+
+                    <div class="status-bar">
+                        <div class="stamina-fill enemy-stamina"></div>
+                    </div>
+
+                    <span>70 / 100</span>
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- 戦闘ログ -->
+        <section class="battle-log">
+
+            <h2>戦闘ログ</h2>
+
+            <p>
+                テスター は 赤さん を攻撃した。
+            </p>
+
+            <p>
+                318 のダメージ。赤さん は倒れた…。
+            </p>
+
+        </section>
+
+        <!-- 戦闘結果 -->
+        <section class="battle-result">
+
+            <p class="result-text">
+                テスターは勝利した。
+            </p>
+
+            <p>
+                10の経験値を獲得した。
+            </p>
+
+        </section>
+
+        <!-- 街に戻る -->
+        <div class="return-area">
+            <a href="{% url 'home' %}" class="return-button">
+                街に戻る
+            </a>
+        </div>
+
+    </main>
+
+</body>
+</html>

@@ -1,0 +1,296 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+
+    font-family:
+        "Yu Gothic",
+        "Meiryo",
+        sans-serif;
+
+    background-color: #8ac65c;
+
+    background-image:
+        linear-gradient(
+            rgba(255, 255, 255, 0.08),
+            rgba(255, 255, 255, 0.08)
+        );
+
+    min-height: 100vh;
+}
+
+
+/* =====================
+   ヘッダー
+===================== */
+
+header {
+    background: rgba(20, 30, 20, 0.9);
+    color: white;
+
+    padding: 12px 30px;
+
+    border-bottom: 3px solid #59462d;
+}
+
+header h1 {
+    margin: 0;
+
+    font-family: Georgia, serif;
+    letter-spacing: 2px;
+}
+
+
+/* =====================
+   メイン
+===================== */
+
+main {
+    width: 100%;
+    max-width: 1500px;
+
+    margin: 0 auto;
+    padding: 30px;
+}
+
+
+/* =====================
+   ホーム全体
+===================== */
+
+.game-home {
+    display: grid;
+
+    /*
+        左：ステータス
+        右：メインエリア
+    */
+    grid-template-columns:
+        360px
+        minmax(0, 1fr);
+
+    gap: 24px;
+
+    align-items: start;
+
+    width: 100%;
+}
+
+
+/* =====================
+   共通パネル
+===================== */
+
+.game-panel {
+    background:
+        rgba(255, 250, 230, 0.94);
+
+    border: 3px solid #5c4630;
+
+    border-radius: 8px;
+
+    padding: 20px;
+
+    box-shadow:
+        0 6px 12px
+        rgba(0, 0, 0, 0.25);
+}
+
+
+/* =====================
+   左：ステータス
+===================== */
+
+.status-panel {
+    grid-column: 1;
+
+    /* 右側が縦に伸びても左に固定 */
+    grid-row: 1 / span 2;
+}
+
+
+/* =====================
+   右上：闘技場・探索
+===================== */
+
+.center-area {
+    grid-column: 2;
+    grid-row: 1;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        1fr;
+
+    gap: 24px;
+}
+
+
+/* =====================
+   右下
+   行動メニュー・お知らせ
+===================== */
+
+.right-area {
+    grid-column: 2;
+    grid-row: 2;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 24px;
+}
+
+
+/* =====================
+   行動メニュー
+===================== */
+
+.action-panel {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+}
+
+
+/* タイトルは横幅いっぱい */
+.action-panel h2 {
+    grid-column: 1 / -1;
+}
+
+
+/* =====================
+   お知らせ
+===================== */
+
+.notice-panel {
+    width: 100%;
+}
+
+
+/* =====================
+   ボタン
+===================== */
+
+.action-button,
+.main-action-button,
+.explore-button,
+.profile-button {
+    display: block;
+
+    text-decoration: none;
+
+    text-align: center;
+
+    color: #2d2116;
+
+    background:
+        linear-gradient(
+            #f5e4b7,
+            #d6b87d
+        );
+
+    border: 2px solid #664c2c;
+
+    border-radius: 6px;
+
+    padding: 13px 12px;
+
+    margin: 10px 0;
+
+    font-weight: bold;
+
+    transition: 0.2s;
+}
+
+
+/* ホバー */
+.action-button:hover,
+.main-action-button:hover,
+.explore-button:hover,
+.profile-button:hover {
+    background:
+        linear-gradient(
+            #fff1c7,
+            #e5ca90
+        );
+
+    transform:
+        translateY(-2px);
+}
+
+
+/* 探索ボタン */
+.main-action-button,
+.explore-button {
+    padding: 16px;
+
+    font-size: 18px;
+
+    background:
+        linear-gradient(
+            #cbe89d,
+            #8fbd64
+        );
+}
+
+
+/* =====================
+   行動ボタン
+===================== */
+
+.action-button {
+    width: 100%;
+
+    margin: 0;
+}
+
+
+/* =====================
+   スマホ・狭い画面
+===================== */
+
+@media (max-width: 900px) {
+
+    main {
+        padding: 20px;
+    }
+
+    .game-home {
+        grid-template-columns: 1fr;
+    }
+
+    .status-panel {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    .center-area {
+        grid-column: 1;
+        grid-row: auto;
+
+        grid-template-columns: 1fr;
+    }
+
+    .right-area {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    .action-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .action-panel h2 {
+        grid-column: auto;
+    }
+}
