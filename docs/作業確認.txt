@@ -1,3 +1,9 @@
+＃全体ルール
+
+・データベースには「現在の状態」を保存し、「ゲームのルール」はPythonで管理する。
+・
+
+
 
 --毎日やるべきこと--
 
@@ -58,6 +64,18 @@ http://127.0.0.1:8000
 
 
 
+--開発の流れ--
+
+main を最新にする（git pull）
+feature/〇〇 ブランチを作成
+開発
+動作確認
+コミット・プッシュ
+GitHubでPull Request
+main にマージ
+
+
+
 --githubに保存--
 
 git status
@@ -68,9 +86,18 @@ git commit -m "feat: Characterモデル作成"
 ↓
 git push
 
+＠コミットメッセージの統一
+
+ 内容	          コミットメッセージ
+
+新機能	            feat:
+修正	            fix:
+リファクタリング	 refactor:
+ドキュメント	     docs:
+テスト	            test:
+
 
 
 --githubで内容が更新されていたら全員がやる作業--
 
 git pull
-あるけみ
