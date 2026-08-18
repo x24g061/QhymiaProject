@@ -1,22 +1,62 @@
+from django.conf import settings
+from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-from django.conf import settings
+
+
+class UserManager(BaseUserManager):
+    """user_idをログインIDとして扱うユーザー管理クラス。"""
+
+    use_in_migrations = True
+
+    def create_user(self, user_id, password=None, **extra_fields):
+        if not user_id:
+            raise ValueError("user_idは必須です")
+
+        user = self.model(
+            user_id=user_id,
+            **extra_fields,
+        )
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, user_id, password=None, **extra_fields):
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("is_active", True)
+
+        if extra_fields.get("is_staff") is not True:
+            raise ValueError("スーパーユーザーはis_staff=Trueが必要です")
+
+        if extra_fields.get("is_superuser") is not True:
+            raise ValueError(
+                "スーパーユーザーはis_superuser=Trueが必要です"
+            )
+
+        return self.create_user(
+            user_id=user_id,
+            password=password,
+            **extra_fields,
+        )
 
 
 # ===== ユーザー情報 =====
 
+
 class User(AbstractUser):
     username = None
 
-    # ログインに使用する固有ID
     user_id = models.CharField(
         max_length=20,
         unique=True,
-        help_text="ログイン用の固有ID"
+        help_text="ログイン用の固有ID",
     )
 
     USERNAME_FIELD = "user_id"
     REQUIRED_FIELDS = []
+
+    objects = UserManager()
 
     def __str__(self):
         return self.user_id
