@@ -2,28 +2,23 @@
 
 {% block content %}
 
-<div class="login-container">
+<div class="login-page">
+    <div class="login-card">
 
-    <div class="login-box">
-
-        <h1>Qhymia</h1>
+        <h1 class="login-logo">Qhymia</h1>
         <p class="login-title">ログイン</p>
 
-        <!-- エラーメッセージ -->
         {% if error_message %}
             <p class="error-message">
                 {{ error_message }}
             </p>
         {% endif %}
 
-        <!-- 固有ID・パスワードログイン -->
-        <form method="post">
-
+        <form method="post" class="login-form">
             {% csrf_token %}
 
             <div class="form-group">
                 <label for="user_id">固有ID</label>
-
                 <input
                     type="text"
                     id="user_id"
@@ -35,7 +30,6 @@
 
             <div class="form-group">
                 <label for="password">パスワード</label>
-
                 <input
                     type="password"
                     id="password"
@@ -48,21 +42,18 @@
             <button type="submit" class="login-button">
                 ログイン
             </button>
-
         </form>
 
-        <!-- 区切り -->
         <div class="separator">
             <span>または</span>
         </div>
 
-        <!-- Googleログイン -->
         <button type="button" class="google-button">
+            <span class="google-mark">G</span>
             Googleでログイン
         </button>
 
     </div>
-
 </div>
 
 {% endblock %}

@@ -1,6 +1,36 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 from django.conf import settings
+
+
+# ===== ユーザーマネージャー =====
+
+class UserManager(BaseUserManager):
+
+    def create_user(self, user_id, password=None, **extra_fields):
+        if not user_id:
+            raise ValueError("固有IDは必須です。")
+
+        user = self.model(
+            user_id=user_id,
+            **extra_fields
+        )
+
+        user.set_password(password)
+        user.save(using=self._db)
+
+        return user
+
+    def create_superuser(self, user_id, password=None, **extra_fields):
+        extra_fields.setdefault("is_staff", True)
+        extra_fields.setdefault("is_superuser", True)
+        extra_fields.setdefault("is_active", True)
+
+        return self.create_user(
+            user_id=user_id,
+            password=password,
+            **extra_fields
+        )
 
 
 # ===== ユーザー情報 =====
@@ -8,7 +38,6 @@ from django.conf import settings
 class User(AbstractUser):
     username = None
 
-    # ログインに使用する固有ID
     user_id = models.CharField(
         max_length=20,
         unique=True,
@@ -18,6 +47,8 @@ class User(AbstractUser):
     USERNAME_FIELD = "user_id"
     REQUIRED_FIELDS = []
 
+    objects = UserManager()
+
     def __str__(self):
         return self.user_id
 
@@ -26,12 +57,13 @@ class User(AbstractUser):
 
 class Character(models.Model):
 
-    # ユーザーとキャラクターを1対1で紐づける
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="character",
     )
+
+    # ↓ Characterの残りは今のコードをそのまま
 
     # ゲーム内で表示されるキャラクター名
     name = models.CharField(
