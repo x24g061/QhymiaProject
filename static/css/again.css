@@ -1,0 +1,108 @@
+.again-page {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.again-container {
+    width: 900px;
+    max-width: 100%;
+    padding: 35px;
+    border: 1px solid #555;
+    border-radius: 8px;
+}
+
+.again-title {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.again-title h1 {
+    margin: 0;
+    font-size: 36px;
+    letter-spacing: 10px;
+}
+
+.again-title p {
+    margin-top: 10px;
+    opacity: 0.7;
+}
+
+.again-status-area {
+    display: grid;
+    grid-template-columns: 1fr 80px 1fr;
+    gap: 20px;
+    align-items: center;
+}
+
+.again-status-card {
+    padding: 25px;
+    border: 1px solid #555;
+    border-radius: 6px;
+}
+
+.again-status-card h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.status-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 5px;
+    border-bottom: 1px solid #444;
+}
+
+.status-line {
+    height: 15px;
+}
+
+.again-arrow {
+    text-align: center;
+    font-size: 48px;
+}
+
+.again-info {
+    margin-top: 30px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid #555;
+    border-radius: 6px;
+}
+
+.again-info p {
+    margin: 5px 0;
+}
+
+.again-actions {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.back-button,
+.again-button {
+    width: 180px;
+    padding: 12px 20px;
+    border: 1px solid #666;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 15px;
+}
+
+.back-button {
+    text-decoration: none;
+}
+
+.again-button {
+    cursor: pointer;
+}
+
+.again-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

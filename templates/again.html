@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/again.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="again-page">
+
+    <div class="again-container">
+
+        <div class="again-title">
+            <h1>回 帰</h1>
+            <p>― 魂は、新たな可能性へと還る ―</p>
+        </div>
+
+        <div class="again-status-area">
+
+            <!-- 現在の能力 -->
+            <div class="again-status-card">
+                <h2>現在の能力</h2>
+
+                <div class="status-row">
+                    <span>HP</span>
+                    <strong>{{ character.max_hp }}</strong>
+                </div>
+
+                <div class="status-row">
+                    <span>MP</span>
+                    <strong>{{ character.max_mp }}</strong>
+                </div>
+
+                <div class="status-line"></div>
+
+                <div class="status-row">
+                    <span>STR</span>
+                    <strong>{{ character.strength }}</strong>
+                </div>
+
+                <div class="status-row">
+                    <span>INT</span>
+                    <strong>{{ character.intelligence }}</strong>
+                </div>
+
+                <div class="status-row">
+                    <span>AGI</span>
+                    <strong>{{ character.agility }}</strong>
+                </div>
+
+                <div class="status-row">
+                    <span>VIT</span>
+                    <strong>{{ character.vitality }}</strong>
+                </div>
+
+                <div class="status-row">
+                    <span>LUK</span>
+                    <strong>{{ character.luck }}</strong>
+                </div>
+            </div>
+
+            <div class="again-arrow">
+                →
+            </div>
+
+            <!-- 回帰後 -->
+            <div class="again-status-card">
+                <h2>回帰後</h2>
+
+                <div class="status-row">
+                    <span>HP</span>
+                    <strong>???</strong>
+                </div>
+
+                <div class="status-row">
+                    <span>MP</span>
+                    <strong>???</strong>
+                </div>
+
+                <div class="status-line"></div>
+
+                <div class="status-row">
+                    <span>STR</span>
+                    <strong>???</strong>
+                </div>
+
+                <div class="status-row">
+                    <span>INT</span>
+                    <strong>???</strong>
+                </div>
+
+                <div class="status-row">
+                    <span>AGI</span>
+                    <strong>???</strong>
+                </div>
+
+                <div class="status-row">
+                    <span>VIT</span>
+                    <strong>???</strong>
+                </div>
+
+                <div class="status-row">
+                    <span>LUK</span>
+                    <strong>???</strong>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="again-info">
+            <p>回帰後の能力値はランダムに決定されます。</p>
+            <p>回帰を重ねることで、より高い能力を得られるようになります。</p>
+        </div>
+
+        <div class="again-actions">
+            <a href="/" class="back-button">ホームに戻る</a>
+
+            <!-- 今は画面だけなので無効 -->
+            <button class="again-button" type="button" disabled>
+                回帰する
+            </button>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
