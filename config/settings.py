@@ -45,6 +45,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # django-allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+
     # 自作アプリ
     'apps.accounts',
     "apps.inventory",
@@ -57,6 +63,10 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+
+    # django-allauth
+    'allauth.account.middleware.AccountMiddleware',
+
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -99,8 +109,43 @@ DATABASES = {
 }
 
 
-# Custom User Model
+# ===== Custom User Model =====
+
 AUTH_USER_MODEL = "accounts.User"
+
+
+# ===== django-allauth =====
+
+# Qhymiaでは username フィールドを使用しない
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+
+# allauth側のログイン方法はメールアドレス
+ACCOUNT_LOGIN_METHODS = {"email"}
+
+# usernameは登録時に要求しない
+ACCOUNT_SIGNUP_FIELDS = [
+    "email*",
+    "password1*",
+    "password2*",
+]
+# Googleログイン時にQhymia独自の処理を使用する
+SOCIALACCOUNT_ADAPTER = "apps.accounts.adapter.SocialAccountAdapter"
+
+# 「Googleでログイン → 続ける」の確認画面をスキップ
+SOCIALACCOUNT_LOGIN_ON_GET = True
+
+# ログイン成功後はホーム画面へ移動
+LOGIN_REDIRECT_URL = "/"
+
+# ===== Authentication Backends =====
+
+AUTHENTICATION_BACKENDS = [
+    # 固有ID + パスワード認証
+    "django.contrib.auth.backends.ModelBackend",
+
+    # Googleログインなどのallauth認証
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
 
 
 # Password validation
@@ -149,3 +194,23 @@ STATICFILES_DIRS = [
 MEDIA_URL = "media/"
 
 MEDIA_ROOT = BASE_DIR / "media"
+
+
+# ===== Google OAuth =====
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "APP": {
+            "client_id": env("GOOGLE_CLIENT_ID"),
+            "secret": env("GOOGLE_CLIENT_SECRET"),
+            "key": "",
+        },
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+    }
+}
