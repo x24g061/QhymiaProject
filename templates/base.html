@@ -2,16 +2,25 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{% block title %}Qhymia{% endblock %}</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        {% block title %}Qhymia{% endblock %}
+    </title>
 
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/sns.css' %}">
 
     {% block extra_css %}
     {% endblock %}
 </head>
+
 <body>
 
     <header>
@@ -19,9 +28,23 @@
     </header>
 
     <main>
+
         {% block content %}
         {% endblock %}
+
     </main>
+
+
+    <!-- =====================
+         全画面共通ミニSNS
+    ====================== -->
+
+    {% include "sns.html" %}
+
+
+    <script
+        src="{% static 'js/sns.js' %}">
+    </script>
 
 </body>
 </html>
