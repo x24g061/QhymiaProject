@@ -5,6 +5,7 @@ Django==6.0.7
 django-allauth==65.19.1
 django-environ==0.14.0
 idna==3.19
+pillow==12.3.0
 psycopg==3.3.4
 psycopg-binary==3.3.4
 requests==2.34.2

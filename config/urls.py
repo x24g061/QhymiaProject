@@ -1,14 +1,17 @@
 from django.contrib import admin
 from django.urls import include, path
 
-from .views import again,home
+from .views import again, home
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', home, name='home'),
-    
+
     path('again/', again, name='again'),
+
+    # SNS
+    path('sns/', include('apps.sns.urls')),
 
     # Qhymiaアカウント
     path('', include('apps.accounts.urls')),
@@ -18,4 +21,7 @@ urlpatterns = [
 
     # 戦闘画面
     path('battle/', include('apps.battle.urls')),
+
+    #SHOP画面
+    path("shop/", include("apps.shop.urls")),
 ]

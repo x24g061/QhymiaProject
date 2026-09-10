@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     # 自作アプリ
     'apps.accounts',
     "apps.inventory",
+    "apps.shop.apps.ShopConfig",
+    'apps.sns',
 ]
 
 
