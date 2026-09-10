@@ -100,4 +100,19 @@ git push
 
 --githubで内容が更新されていたら全員がやる作業--
 
-git pull
+git switch main
+git pull origin main
+
+これでGitHubの main に入った最新変更を、このPCにも持ってこれる。
+
+そのあと依存関係も増えてる可能性があるから、
+
+pip install -r requirements.txt
+
+さらにマイグレーションが追加されてたら、
+
+python manage.py migrate
+
+最後に、
+
+python manage.py runserver
