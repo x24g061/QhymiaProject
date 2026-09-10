@@ -1,0 +1,567 @@
+/* ========================================
+   SHOP ページ基本設定
+======================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+    margin: 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            #15191f 0%,
+            #0d1014 100%
+        );
+
+    color: #eeeeee;
+
+    font-family:
+        "Yu Gothic",
+        "Meiryo",
+        sans-serif;
+
+    min-height: 100vh;
+}
+
+
+
+/* ========================================
+   SHOP全体
+======================================== */
+
+.shop-page {
+    width: min(1000px, 92%);
+
+    margin: 0 auto;
+
+    padding:
+        50px
+        0;
+}
+
+
+
+/* ========================================
+   ヘッダー
+======================================== */
+
+.shop-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: flex-end;
+
+    padding:
+        20px
+        25px;
+
+    border:
+        1px solid
+        #59616b;
+
+    border-bottom:
+        3px solid
+        #aeb8c4;
+
+    background:
+        rgba(
+            24,
+            29,
+            35,
+            0.95
+        );
+
+    box-shadow:
+        0
+        5px
+        20px
+        rgba(
+            0,
+            0,
+            0,
+            0.35
+        );
+}
+
+
+.shop-subtitle {
+    margin: 0 0 4px;
+
+    color: #89939f;
+
+    font-size: 12px;
+
+    letter-spacing: 3px;
+}
+
+
+.shop-header h1 {
+    margin: 0;
+
+    font-size: 36px;
+
+    letter-spacing: 8px;
+}
+
+
+
+/* ========================================
+   所持金
+======================================== */
+
+.money-box {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding:
+        10px
+        18px;
+
+    border:
+        1px solid
+        #59616b;
+
+    background:
+        #101419;
+}
+
+
+.money-label {
+    color: #aeb5bd;
+
+    font-size: 13px;
+}
+
+
+.money-value {
+    font-size: 20px;
+
+    letter-spacing: 1px;
+}
+
+
+
+/* ========================================
+   カテゴリー
+======================================== */
+
+.shop-tabs {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            3,
+            1fr
+        );
+
+    margin-top: 20px;
+
+    gap: 8px;
+}
+
+
+.shop-tab {
+    padding:
+        14px
+        20px;
+
+    border:
+        1px solid
+        #4b535c;
+
+    background:
+        #171c22;
+
+    color:
+        #a8b0ba;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition:
+        0.2s;
+}
+
+
+.shop-tab:hover {
+    background:
+        #252c34;
+
+    color:
+        #ffffff;
+}
+
+
+.shop-tab.active {
+    background:
+        #343d47;
+
+    border-color:
+        #9da8b5;
+
+    color:
+        #ffffff;
+
+    font-weight: bold;
+}
+
+
+
+/* ========================================
+   商品一覧
+======================================== */
+
+.shop-content {
+    margin-top: 18px;
+}
+
+
+.item-list {
+    display: none;
+}
+
+
+.item-list.active {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+}
+
+
+
+/* ========================================
+   商品カード
+======================================== */
+
+.shop-item {
+    display: grid;
+
+    grid-template-columns:
+        70px
+        1fr
+        auto;
+
+    align-items: center;
+
+    gap: 20px;
+
+    padding:
+        20px;
+
+    border:
+        1px solid
+        #414952;
+
+    background:
+        rgba(
+            21,
+            26,
+            32,
+            0.95
+        );
+
+    transition:
+        transform
+        0.15s,
+        border-color
+        0.15s,
+        background
+        0.15s;
+}
+
+
+.shop-item:hover {
+    transform:
+        translateY(-2px);
+
+    border-color:
+        #737f8c;
+
+    background:
+        #1d242b;
+}
+
+
+
+/* ========================================
+   商品アイコン
+======================================== */
+
+.item-icon {
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border:
+        1px solid
+        #58616b;
+
+    background:
+        #0d1115;
+
+    font-size: 28px;
+}
+
+
+
+/* ========================================
+   商品情報
+======================================== */
+
+.item-info h2 {
+    margin:
+        0
+        0
+        6px;
+
+    font-size: 19px;
+
+    letter-spacing: 1px;
+}
+
+
+.item-description {
+    margin:
+        0
+        0
+        8px;
+
+    color:
+        #9ca4ad;
+
+    font-size: 13px;
+}
+
+
+.item-effect {
+    display:
+        inline-block;
+
+    padding:
+        3px
+        8px;
+
+    border:
+        1px solid
+        #4c555f;
+
+    color:
+        #c6ccd3;
+
+    font-size:
+        12px;
+}
+
+
+
+/* ========================================
+   購入部分
+======================================== */
+
+.item-purchase {
+    min-width:
+        150px;
+
+    text-align:
+        right;
+}
+
+
+.item-price {
+    display:
+        block;
+
+    margin-bottom:
+        10px;
+
+    font-size:
+        18px;
+}
+
+
+
+/* ========================================
+   購入ボタン
+======================================== */
+
+.buy-button {
+    width:
+        120px;
+
+    padding:
+        9px
+        15px;
+
+    border:
+        1px solid
+        #798591;
+
+    background:
+        #28313a;
+
+    color:
+        #ffffff;
+
+    cursor:
+        pointer;
+
+    transition:
+        0.2s;
+}
+
+
+.buy-button:hover {
+    background:
+        #475462;
+}
+
+
+
+/* ========================================
+   フッター
+======================================== */
+
+.shop-footer {
+    margin-top:
+        30px;
+
+    text-align:
+        center;
+}
+
+
+.back-button {
+    display:
+        inline-block;
+
+    padding:
+        11px
+        26px;
+
+    border:
+        1px solid
+        #59616b;
+
+    background:
+        #171c22;
+
+    color:
+        #dddddd;
+
+    text-decoration:
+        none;
+
+    transition:
+        0.2s;
+}
+
+
+.back-button:hover {
+    background:
+        #2c343d;
+
+    color:
+        #ffffff;
+}
+
+
+
+/* ========================================
+   スマホ
+======================================== */
+
+@media (
+    max-width:
+    700px
+) {
+
+    .shop-page {
+        width:
+            94%;
+
+        padding-top:
+            25px;
+    }
+
+
+    .shop-header {
+        flex-direction:
+            column;
+
+        align-items:
+            flex-start;
+
+        gap:
+            20px;
+    }
+
+
+    .money-box {
+        width:
+            100%;
+
+        justify-content:
+            space-between;
+    }
+
+
+    .shop-tabs {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .shop-item {
+        grid-template-columns:
+            55px
+            1fr;
+    }
+
+
+    .item-icon {
+        width:
+            50px;
+
+        height:
+            50px;
+    }
+
+
+    .item-purchase {
+        grid-column:
+            1 / -1;
+
+        display:
+            flex;
+
+        justify-content:
+            space-between;
+
+        align-items:
+            center;
+
+        width:
+            100%;
+    }
+
+
+    .item-price {
+        margin-bottom:
+            0;
+    }
+
+}

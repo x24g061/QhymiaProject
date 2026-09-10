@@ -1,0 +1,185 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>SHOP | Qhymia</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/shop.css' %}"
+    >
+</head>
+
+<body>
+
+<div class="shop-page">
+
+    <!-- =========================
+         SHOPタイトル
+    ========================== -->
+
+    <header class="shop-header">
+
+        <div>
+            <p class="shop-subtitle">
+                Qhymia Item Store
+            </p>
+
+            <h1>
+                SHOP
+            </h1>
+        </div>
+
+
+        <!-- 所持金 -->
+        <div class="money-box">
+
+            <span class="money-label">
+                所持Q
+            </span>
+
+            <strong class="money-value">
+                1,000 Q
+            </strong>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         商品一覧
+    ========================== -->
+
+    <main class="shop-content">
+
+        <section class="item-list active">
+
+            {% for stock in shop_stocks %}
+
+                <article class="shop-item">
+
+                    <!-- アイコン -->
+                    <div class="item-icon">
+
+                        {% if stock.item.category == "equipment" %}
+                            ⚔
+                        {% elif stock.item.category == "consumable" %}
+                            ✚
+                        {% elif stock.item.category == "material" %}
+                            ◆
+                        {% else %}
+                            ★
+                        {% endif %}
+
+                    </div>
+
+
+                    <!-- 商品情報 -->
+                    <div class="item-info">
+
+                        <h2>
+                            {{ stock.item.name }}
+                        </h2>
+
+                        <p class="item-description">
+                            {{ stock.item.description }}
+                        </p>
+
+                        <span class="item-effect">
+                            {{ stock.item.get_category_display }}
+                        </span>
+
+                        <p>
+                            在庫：{{ stock.stock }}
+                        </p>
+
+                    </div>
+
+
+                    <!-- 購入部分 -->
+                    <div class="item-purchase">
+
+                        <strong class="item-price">
+                            {{ stock.price }} Q
+                        </strong>
+
+                        {% if stock.stock > 0 %}
+
+                            <button
+                                class="buy-button"
+                                type="button"
+                            >
+                                購入
+                            </button>
+
+                        {% else %}
+
+                            <button
+                                class="buy-button"
+                                type="button"
+                                disabled
+                            >
+                                売り切れ
+                            </button>
+
+                        {% endif %}
+
+                    </div>
+
+                </article>
+
+            {% empty %}
+
+                <article class="shop-item">
+
+                    <div class="item-info">
+
+                        <h2>
+                            商品がありません
+                        </h2>
+
+                        <p class="item-description">
+                            現在販売中の商品はありません。
+                        </p>
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         下部
+    ========================== -->
+
+    <footer class="shop-footer">
+
+        <a
+            href="/"
+            class="back-button"
+        >
+            ← ホームへ戻る
+        </a>
+
+    </footer>
+
+</div>
+
+</body>
+
+</html>
