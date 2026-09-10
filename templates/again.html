@@ -45,6 +45,11 @@
                 </div>
 
                 <div class="status-row">
+                    <span>DEX</span>
+                    <strong>{{ character.dexterity }}</strong>
+                </div>
+
+                <div class="status-row">
                     <span>AGI</span>
                     <strong>{{ character.agility }}</strong>
                 </div>
@@ -70,41 +75,106 @@
 
                 <div class="status-row">
                     <span>HP</span>
-                    <strong>???</strong>
+                    <strong>{{ reincarnation_stats.max_hp }}</strong>
                 </div>
 
                 <div class="status-row">
                     <span>MP</span>
-                    <strong>???</strong>
+                    <strong>{{ reincarnation_stats.max_mp }}</strong>
                 </div>
 
                 <div class="status-line"></div>
 
                 <div class="status-row">
                     <span>STR</span>
-                    <strong>???</strong>
+                    <strong>{{ reincarnation_stats.strength }}</strong>
                 </div>
 
                 <div class="status-row">
                     <span>INT</span>
-                    <strong>???</strong>
+                    <strong>{{ reincarnation_stats.intelligence }}</strong>
+                </div>
+
+                <div class="status-row">
+                    <span>DEX</span>
+                    <strong>{{ reincarnation_stats.dexterity }}</strong>
                 </div>
 
                 <div class="status-row">
                     <span>AGI</span>
-                    <strong>???</strong>
+                    <strong>{{ reincarnation_stats.agility }}</strong>
                 </div>
 
                 <div class="status-row">
                     <span>VIT</span>
-                    <strong>???</strong>
+                    <strong>{{ reincarnation_stats.vitality }}</strong>
                 </div>
 
                 <div class="status-row">
                     <span>LUK</span>
-                    <strong>???</strong>
+                    <strong>{{ reincarnation_stats.luck }}</strong>
+                </div>
+
+                <div class="status-line"></div>
+
+                <div class="status-row">
+                    <span>火</span>
+                    <strong>{{ reincarnation_stats.fire }}</strong>
+                </div>
+
+                <div class="status-row">
+                    <span>水</span>
+                    <strong>{{ reincarnation_stats.water }}</strong>
+                </div>
+
+                <div class="status-row">
+                    <span>草</span>
+                    <strong>{{ reincarnation_stats.grass }}</strong>
+                </div>
+
+                <div class="status-row">
+                    <span>岩</span>
+                    <strong>{{ reincarnation_stats.rock }}</strong>
+                </div>
+
+                <div class="status-row">
+                    <span>光</span>
+                    <strong>{{ reincarnation_stats.light }}</strong>
+                </div>
+
+                <div class="status-row">
+                    <span>闇</span>
+                    <strong>{{ reincarnation_stats.dark }}</strong>
                 </div>
             </div>
+
+            {% if can_reincarnate %}
+
+            <div class="again-info">
+                <p>今回の総ボーナスポイント：{{ total_points }} pt</p>
+
+                <p>
+                    HP {{ bonus_points.max_hp }}pt /
+                    MP {{ bonus_points.max_mp }}pt /
+                    STR {{ bonus_points.strength }}pt /
+                    INT {{ bonus_points.intelligence }}pt /
+                    DEX {{ bonus_points.dexterity }}pt /
+                    AGI {{ bonus_points.agility }}pt /
+                    VIT {{ bonus_points.vitality }}pt /
+                    LUK {{ bonus_points.luck }}pt
+                </p>
+
+                <p>
+                    火 {{ bonus_points.fire }}pt /
+                    水 {{ bonus_points.water }}pt /
+                    草 {{ bonus_points.grass }}pt /
+                    岩 {{ bonus_points.rock }}pt /
+                    光 {{ bonus_points.light }}pt /
+                    闇 {{ bonus_points.dark }}pt
+                </p>
+            </div>
+
+            {% endif %}
 
         </div>
 
@@ -116,10 +186,15 @@
         <div class="again-actions">
             <a href="/" class="back-button">ホームに戻る</a>
 
-            <!-- 今は画面だけなので無効 -->
-            <button class="again-button" type="button" disabled>
-                回帰する
-            </button>
+            {% if can_reincarnate %}
+                <button class="again-button" type="button">
+                    回帰する
+                </button>
+            {% else %}
+                <button class="again-button" type="button" disabled>
+                    Lv100で回帰できます
+                </button>
+            {% endif %}
         </div>
 
     </div>
