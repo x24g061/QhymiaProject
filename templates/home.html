@@ -73,8 +73,11 @@
                 <h2>行動メニュー</h2>
 
                 <button id="sns-open-home" class="action-button" type="button">
-                    SNSを見る
+                    <a href="{% url 'sns' %}" class="action-button">
+                        SNSを見る
                 </button>
+
+                </a>
 
 
                 <a href="#" class="action-button">
@@ -83,7 +86,7 @@
 
                 <a href="{% url 'again' %}" class="action-button">回帰する</a>
 
-                <a href="{% url 'shop:shop' %}" class="action-button">
+                <a href="#" class="action-button">
                     ショップに行く
                 </a>
             </section>

@@ -1,0 +1,90 @@
+.sns-post-box {
+    max-width: 650px;
+    margin: 20px auto;
+    padding: 16px;
+
+    border: 2px solid #555;
+    border-radius: 8px;
+    background: white;
+}
+
+.sns-post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sns-user-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sns-character-placeholder {
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid #555;
+    background: #ddd;
+
+    font-size: 24px;
+}
+
+.sns-character-name {
+    font-size: 18px;
+}
+
+.sns-post-time {
+    font-size: 13px;
+    color: #666;
+}
+
+.sns-post-content {
+    padding: 15px 5px;
+}
+
+.sns-post-image {
+    max-width: 100%;
+    max-height: 400px;
+}
+
+.sns-post-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.sns-create-post {
+    max-width: 650px;
+    margin: 20px auto;
+    padding: 16px;
+
+    border: 2px solid #555;
+    border-radius: 8px;
+    background: white;
+}
+
+.sns-create-text textarea {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px;
+
+    resize: vertical;
+}
+
+.sns-create-image {
+    margin-top: 10px;
+}
+
+.sns-submit-button {
+    display: block;
+
+    margin: 12px 0 0 auto;
+    padding: 8px 20px;
+
+    cursor: pointer;
+}

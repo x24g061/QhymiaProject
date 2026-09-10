@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/sns_page.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="sns-create-post">
+
+    <form method="post" enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        <div class="sns-create-text">
+            {{ form.text }}
+        </div>
+
+        <div class="sns-create-image">
+            {{ form.image }}
+        </div>
+
+        <button type="submit" class="sns-submit-button">
+            投稿する
+        </button>
+
+    </form>
+
+</div>
+{% for post in posts %}
+
+<div class="sns-post-box">
+
+    <div class="sns-post-header">
+
+        <div class="sns-user-area">
+
+            <div class="sns-character-placeholder">
+                □
+            </div>
+
+            <strong class="sns-character-name">
+                {{ post.user.character.name }}
+            </strong>
+
+        </div>
+
+        <span class="sns-post-time">
+            {{ post.created_at|date:"H:i" }}
+        </span>
+
+    </div>
+
+    <div class="sns-post-content">
+
+        {% if post.text %}
+        <p>
+            {{ post.text }}
+        </p>
+        {% endif %}
+
+        {% if post.image %}
+        <img src="{{ post.image.url }}" alt="投稿画像" class="sns-post-image">
+        {% endif %}
+
+    </div>
+
+    <div class="sns-post-actions">
+
+        <button type="button">
+            ♡ {{ post.likes.count }}
+        </button>
+
+        <button type="button">
+            ★ お気に入り
+        </button>
+
+    </div>
+
+</div>
+
+{% empty %}
+
+<p>まだ投稿はありません。</p>
+
+{% endfor %}
+
+<div class="sns-back-area">
+    <a href="{% url 'home' %}" class="sns-back-button">
+        ホームに戻る
+    </a>
+</div>
+{% endblock %}

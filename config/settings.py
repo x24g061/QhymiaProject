@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'apps.accounts',
     "apps.inventory",
     "apps.shop.apps.ShopConfig",
+    'apps.sns',
 ]
 
 
