@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from apps.accounts.models import Character
 import random
 
@@ -57,22 +57,81 @@ def again(request):
     character = Character.objects.filter(user=request.user).first()
 
     can_reincarnate = False
+    total_points = 0
     bonus_points = None
     reincarnation_stats = None
-    total_points = 0
 
     if character and character.level >= 100:
         can_reincarnate = True
-
-        # 今回の転生で使用する総ポイント
         total_points = (character.reincarnation_count + 1) * 125
 
-        # 14種類へランダム配分
-        bonus_points = generate_reincarnation_bonus(character)
+        # POST = 回帰確定
+        if request.method == "POST":
+            bonus_points = request.session.get("reincarnation_bonus_points")
 
-        # 配分ポイントから実際の能力値を計算
+            if bonus_points:
+                reincarnation_stats = calculate_reincarnation_stats(
+                    bonus_points
+                )
+
+                # 回帰後の基礎ステータスを保存
+                character.max_hp = reincarnation_stats["max_hp"]
+                character.current_hp = reincarnation_stats["max_hp"]
+
+                character.max_mp = reincarnation_stats["max_mp"]
+                character.current_mp = reincarnation_stats["max_mp"]
+
+                character.strength = reincarnation_stats["strength"]
+                character.intelligence = reincarnation_stats["intelligence"]
+                character.dexterity = reincarnation_stats["dexterity"]
+                character.agility = reincarnation_stats["agility"]
+                character.vitality = reincarnation_stats["vitality"]
+                character.luck = reincarnation_stats["luck"]
+
+                character.fire = reincarnation_stats["fire"]
+                character.water = reincarnation_stats["water"]
+                character.grass = reincarnation_stats["grass"]
+                character.rock = reincarnation_stats["rock"]
+                character.light = reincarnation_stats["light"]
+                character.dark = reincarnation_stats["dark"]
+
+                # 回帰処理
+                character.level = 1
+                character.exp = 0
+                character.reincarnation_count += 1
+
+                character.save()
+
+                # 使用済み抽選結果を削除
+                request.session.pop(
+                    "reincarnation_bonus_points",
+                    None,
+                )
+
+                return redirect("home")
+
+        # GET = 回帰結果のプレビュー
+        bonus_points = request.session.get(
+            "reincarnation_bonus_points"
+        )
+
+        # まだ抽選していない場合だけ新しく生成
+        if bonus_points is None:
+            bonus_points = generate_reincarnation_bonus(character)
+
+            request.session["reincarnation_bonus_points"] = (
+                bonus_points
+            )
+
         reincarnation_stats = calculate_reincarnation_stats(
             bonus_points
+        )
+
+    else:
+        # Lv100未満なら古い抽選結果を消す
+        request.session.pop(
+            "reincarnation_bonus_points",
+            None,
         )
 
     context = {

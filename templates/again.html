@@ -187,9 +187,12 @@
             <a href="/" class="back-button">ホームに戻る</a>
 
             {% if can_reincarnate %}
-                <button class="again-button" type="button">
-                    回帰する
-                </button>
+                <form method="post">
+                    {% csrf_token %}
+                    <button class="again-button" type="submit">
+                        回帰する
+                    </button>
+                </form>
             {% else %}
                 <button class="again-button" type="button" disabled>
                     Lv100で回帰できます
