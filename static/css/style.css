@@ -243,6 +243,26 @@ main {
         );
 }
 
+/* メッセージ */
+.message-area {
+    width: 90%;
+    max-width: 700px;
+    margin: 20px auto;
+}
+
+.message {
+    padding: 14px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.message.success {
+    background-color: #f4f1d0;
+    border: 2px solid #5f4b32;
+    color: #1b1b1b;
+}
+
 
 /* =====================
    行動ボタン
