@@ -4,7 +4,53 @@ from apps.accounts.models import Character
 import random
 
 def home(request):
-    return render(request, 'home.html')
+    character = Character.objects.filter(
+        user=request.user
+    ).first()
+
+    main_attribute_name = "-"
+    main_attribute_value = 0
+    battle_power = 0
+
+    if character:
+        attributes = {
+            "火": character.fire,
+            "水": character.water,
+            "草": character.grass,
+            "岩": character.rock,
+            "光": character.light,
+            "闇": character.dark,
+        }
+
+        main_attribute_name = max(
+            attributes,
+            key=attributes.get
+        )
+
+        main_attribute_value = attributes[
+            main_attribute_name
+        ]
+
+        battle_power = (
+            character.max_hp
+            + character.max_mp
+            + character.strength
+            + character.intelligence
+            + character.dexterity
+            + character.agility
+            + character.vitality
+            + character.luck
+            + main_attribute_value
+        )
+
+    context = {
+        "character": character,
+        "main_attribute_name": main_attribute_name,
+        "main_attribute_value": main_attribute_value,
+        "battle_power": battle_power,
+    }
+
+    return render(request, "home.html", context)
 
 def generate_reincarnation_bonus(character):
     total_points = (character.reincarnation_count + 1) * 125

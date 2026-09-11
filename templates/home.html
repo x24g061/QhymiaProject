@@ -16,10 +16,10 @@
         <p class="floor-name">一階層：草原</p>
 
         <div class="character-info">
-            <strong>かずま</strong>
-            <span>属性：岩</span>
-            <span>属性値：20</span>
-            <span>戦闘力：100</span>
+            <strong>{{ character.name }}</strong>
+            <span>属性：{{ main_attribute_name }}</span>
+            <span>属性値：{{ main_attribute_value }}</span>
+            <span>戦闘力：{{ battle_power }}</span>
         </div>
     </section>
 
@@ -33,30 +33,40 @@
         <section class="game-panel status-panel">
             <h2>ステータス</h2>
 
-            <h3 class="character-name">かずま</h3>
+            <h3 class="character-name">
+                {{ character.name }}
+            </h3>
 
             <div class="basic-status">
-                <p>Lv.1</p>
-                <p>EXP：0 / 100</p>
+                <p>Lv.{{ character.level }}</p>
+                <p>EXP：{{ character.exp }} / 100</p>
             </div>
 
             <div class="status-grid">
-                <span>HP：100</span>
-                <span>MP：20</span>
+                <span>
+                    HP：{{ character.current_hp }} /
+                    {{ character.max_hp }}
+                </span>
 
-                <span>STR：5</span>
-                <span>INT：5</span>
+                <span>
+                    MP：{{ character.current_mp }} /
+                    {{ character.max_mp }}
+                </span>
 
-                <span>AGI：5</span>
-                <span>VIT：5</span>
+                <span>STR：{{ character.strength }}</span>
+                <span>INT：{{ character.intelligence }}</span>
 
-                <span>LUK：5</span>
+                <span>DEX：{{ character.dexterity }}</span>
+                <span>AGI：{{ character.agility }}</span>
+
+                <span>VIT：{{ character.vitality }}</span>
+                <span>LUK：{{ character.luck }}</span>
             </div>
 
             <hr>
 
-            <p>所持キュー：0Q</p>
-            <p>回帰回数：0</p>
+            <p>所持キュー：{{ character.gold }}Q</p>
+            <p>回帰回数：{{ character.reincarnation_count }}</p>
             <p>最大到達階数：1</p>
 
             <a href="#" class="profile-button">
