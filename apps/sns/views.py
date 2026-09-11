@@ -1,9 +1,11 @@
-from django.shortcuts import redirect, render
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import PostForm
-from .models import Post
+from .models import Like, Post
 
 
+@login_required
 def sns_page(request):
     posts = Post.objects.select_related(
         "user",
@@ -15,8 +17,6 @@ def sns_page(request):
 
         if form.is_valid():
             post = form.save(commit=False)
-
-            # 現在のユーザーと投稿を内部で紐づける
             post.user = request.user
             post.save()
 
@@ -33,3 +33,25 @@ def sns_page(request):
             "form": form,
         },
     )
+
+
+@login_required
+def toggle_like(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+
+    like = Like.objects.filter(
+        user=request.user,
+        post=post,
+    ).first()
+
+    if like:
+        # すでにいいねしていたら解除
+        like.delete()
+    else:
+        # まだいいねしていなければ追加
+        Like.objects.create(
+            user=request.user,
+            post=post,
+        )
+
+    return redirect("sns")

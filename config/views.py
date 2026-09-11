@@ -1,8 +1,12 @@
-from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+
 from apps.accounts.models import Character
+
 import random
 
+@login_required
 def home(request):
     character = Character.objects.filter(
         user=request.user
@@ -100,6 +104,7 @@ def calculate_reincarnation_stats(bonus_points):
         "dark": bonus_points["dark"],
     }
 
+@login_required
 def again(request):
     character = Character.objects.filter(user=request.user).first()
 

@@ -66,15 +66,16 @@
     </div>
 
     <div class="sns-post-actions">
-
-        <button type="button">
-            ♡ {{ post.likes.count }}
-        </button>
+        <form method="post" action="{% url 'toggle_like' post.id %}">
+            {% csrf_token %}
+            <button type="submit">
+                ♡ {{ post.likes.count }}
+            </button>
+        </form>
 
         <button type="button">
             ★ お気に入り
         </button>
-
     </div>
 
 </div>
