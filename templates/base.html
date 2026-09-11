@@ -29,6 +29,16 @@
 
     <main>
 
+        {% if messages %}
+            <div class="message-area">
+                {% for message in messages %}
+                    <div class="message {{ message.tags }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
         {% block content %}
         {% endblock %}
 

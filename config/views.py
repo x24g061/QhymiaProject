@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib import messages
 from apps.accounts.models import Character
 import random
 
@@ -106,6 +107,12 @@ def again(request):
                 request.session.pop(
                     "reincarnation_bonus_points",
                     None,
+                )
+
+                # 回帰成功メッセージを表示
+                messages.success(
+                    request,
+                    f"回帰が完了しました！回帰回数：{character.reincarnation_count}回",
                 )
 
                 return redirect("home")
