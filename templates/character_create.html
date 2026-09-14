@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}
+キャラクター作成 | Qhymia
+{% endblock %}
+
+{% block content %}
+
+<div class="character-create">
+
+    <h1>キャラクター作成</h1>
+
+    <p>
+        ゲーム内で使用するキャラクター名を入力してください。
+    </p>
+
+    {% if error_message %}
+        <p>
+            {{ error_message }}
+        </p>
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+
+        <label for="character_name">
+            キャラクター名
+        </label>
+
+        <input
+            type="text"
+            id="character_name"
+            name="character_name"
+            maxlength="20"
+            required
+        >
+
+        <button type="submit">
+            キャラクターを作成
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}
