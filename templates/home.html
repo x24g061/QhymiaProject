@@ -5,125 +5,736 @@
 
 {% block content %}
 
-<div class="game-home">
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
 
-    <!-- =====================
-         上：闘技場
-    ====================== -->
-    <section class="game-panel battle-info">
-        <h2>闘技場</h2>
 
-        <p class="floor-name">一階層：草原</p>
+<div class="qh-home">
 
-        <div class="character-info">
-            <strong>{{ character.name }}</strong>
-            <span>属性：{{ main_attribute_name }}</span>
-            <span>属性値：{{ main_attribute_value }}</span>
-            <span>戦闘力：{{ battle_power }}</span>
+    <!-- =====================================
+         HOME ヘッダー
+    ====================================== -->
+    <section class="home-hero">
+
+        <div class="hero-main">
+
+            <p class="hero-label">
+                QHYMIA ADVENTURER HOME
+            </p>
+
+            <h1>
+                {{ character.name }}
+            </h1>
+
+            <p class="hero-description">
+                冒険者情報の確認や、探索・ショップ・SNSなどの
+                各コンテンツへ移動できます。
+            </p>
+
         </div>
+
+
+        <div class="hero-summary">
+
+            <div class="summary-item">
+
+                <span>
+                    LEVEL
+                </span>
+
+                <strong>
+                    {{ character.level }}
+                </strong>
+
+            </div>
+
+
+            <div class="summary-item">
+
+                <span>
+                    BATTLE POWER
+                </span>
+
+                <strong>
+                    {{ battle_power }}
+                </strong>
+
+            </div>
+
+
+            <div class="summary-item">
+
+                <span>
+                    所持Q
+                </span>
+
+                <strong>
+                    {{ character.gold }} Q
+                </strong>
+
+            </div>
+
+        </div>
+
     </section>
 
 
-    <!-- =====================
-         下：メインエリア
-    ====================== -->
-    <div class="home-main">
 
-        <!-- 左：ステータス -->
-        <section class="game-panel status-panel">
-            <h2>ステータス</h2>
+    <!-- =====================================
+         闘技場情報
+    ====================================== -->
 
-            <h3 class="character-name">
-                {{ character.name }}
-            </h3>
+    <section class="arena-panel">
 
-            <div class="basic-status">
-                <p>Lv.{{ character.level }}</p>
-                <p>EXP：{{ character.exp }} / 100</p>
+        <div class="arena-heading">
+
+            <div>
+
+                <p class="section-label">
+                    ARENA STATUS
+                </p>
+
+                <h2>
+                    闘技場
+                </h2>
+
             </div>
 
-            <div class="status-grid">
-                <span>
-                    HP：{{ character.current_hp }} /
-                    {{ character.max_hp }}
-                </span>
+
+            <span class="floor-badge">
+                一階層：草原
+            </span>
+
+        </div>
+
+
+        <div class="arena-info">
+
+            <div class="arena-info-item">
 
                 <span>
-                    MP：{{ character.current_mp }} /
-                    {{ character.max_mp }}
+                    キャラクター
                 </span>
 
-                <span>STR：{{ character.strength }}</span>
-                <span>INT：{{ character.intelligence }}</span>
+                <strong>
+                    {{ character.name }}
+                </strong>
 
-                <span>DEX：{{ character.dexterity }}</span>
-                <span>AGI：{{ character.agility }}</span>
-
-                <span>VIT：{{ character.vitality }}</span>
-                <span>LUK：{{ character.luck }}</span>
             </div>
 
-            <hr>
 
-            <p>所持キュー：{{ character.gold }}Q</p>
-            <p>回帰回数：{{ character.reincarnation_count }}</p>
-            <p>最大到達階数：1</p>
+            <div class="arena-info-item">
 
-            <a href="#" class="profile-button">
+                <span>
+                    メイン属性
+                </span>
+
+                <strong>
+                    {{ main_attribute_name }}
+                </strong>
+
+            </div>
+
+
+            <div class="arena-info-item">
+
+                <span>
+                    属性値
+                </span>
+
+                <strong>
+                    {{ main_attribute_value }}
+                </strong>
+
+            </div>
+
+
+            <div class="arena-info-item">
+
+                <span>
+                    戦闘力
+                </span>
+
+                <strong>
+                    {{ battle_power }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =====================================
+         メインレイアウト
+    ====================================== -->
+
+    <div class="home-layout">
+
+
+        <!-- =================================
+             左：ステータス
+        ================================== -->
+
+        <section class="home-card status-card">
+
+            <div class="card-heading">
+
+                <div>
+
+                    <p class="section-label">
+                        CHARACTER STATUS
+                    </p>
+
+                    <h2>
+                        ステータス
+                    </h2>
+
+                </div>
+
+
+                <span class="level-badge">
+                    Lv.{{ character.level }}
+                </span>
+
+            </div>
+
+
+
+            <div class="character-header">
+
+                <div class="character-avatar">
+                    {{ character.name|slice:":1" }}
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        {{ character.name }}
+                    </h3>
+
+                    <p>
+                        {{ main_attribute_name }} 属性
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- EXP -->
+
+            <div class="exp-area">
+
+                <div class="status-line">
+
+                    <span>
+                        EXP
+                    </span>
+
+                    <strong>
+                        {{ character.exp }} / 100
+                    </strong>
+
+                </div>
+
+
+                <div class="progress-bar">
+
+                    <div
+                        class="progress-fill exp-fill"
+                        style="width: {{ character.exp }}%;"
+                    ></div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- HP -->
+
+            <div class="resource-area">
+
+                <div class="status-line">
+
+                    <span>
+                        HP
+                    </span>
+
+                    <strong>
+                        {{ character.current_hp }}
+                        /
+                        {{ character.max_hp }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- MP -->
+
+            <div class="resource-area">
+
+                <div class="status-line">
+
+                    <span>
+                        MP
+                    </span>
+
+                    <strong>
+                        {{ character.current_mp }}
+                        /
+                        {{ character.max_mp }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- 能力値 -->
+
+            <div class="status-table">
+
+                <div class="status-box">
+
+                    <span>
+                        STR
+                    </span>
+
+                    <strong>
+                        {{ character.strength }}
+                    </strong>
+
+                </div>
+
+
+                <div class="status-box">
+
+                    <span>
+                        INT
+                    </span>
+
+                    <strong>
+                        {{ character.intelligence }}
+                    </strong>
+
+                </div>
+
+
+                <div class="status-box">
+
+                    <span>
+                        DEX
+                    </span>
+
+                    <strong>
+                        {{ character.dexterity }}
+                    </strong>
+
+                </div>
+
+
+                <div class="status-box">
+
+                    <span>
+                        AGI
+                    </span>
+
+                    <strong>
+                        {{ character.agility }}
+                    </strong>
+
+                </div>
+
+
+                <div class="status-box">
+
+                    <span>
+                        VIT
+                    </span>
+
+                    <strong>
+                        {{ character.vitality }}
+                    </strong>
+
+                </div>
+
+
+                <div class="status-box">
+
+                    <span>
+                        LUK
+                    </span>
+
+                    <strong>
+                        {{ character.luck }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- その他 -->
+
+            <div class="character-meta">
+
+                <div>
+
+                    <span>
+                        所持キュー
+                    </span>
+
+                    <strong>
+                        {{ character.gold }} Q
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        回帰回数
+                    </span>
+
+                    <strong>
+                        {{ character.reincarnation_count }} 回
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        最大到達階数
+                    </span>
+
+                    <strong>
+                        1 階
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <a
+                href="#"
+                class="secondary-button"
+            >
                 プロフィールを見る
             </a>
+
         </section>
 
 
-        <!-- 右 -->
-        <div class="right-area">
 
-            <!-- 行動メニュー -->
-            <section class="game-panel action-panel">
-                <h2>行動メニュー</h2>
+        <!-- =================================
+             右側
+        ================================== -->
 
-                <a href="{% url 'sns' %}" class="action-button">
-                    SNSを見る
-                </a>
+        <div class="home-right">
 
-                <a href="#" class="action-button">
-                    倉庫に行く
-                </a>
 
-                <a href="{% url 'again' %}" class="action-button">
-                    回帰する
-                </a>
+            <!-- =============================
+                 行動メニュー
+            ============================== -->
 
-                <a href="{% url 'shop:shop' %}" class="action-button">
-                    ショップに行く
-                </a>
+            <section class="home-card action-card">
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <p class="section-label">
+                            ACTION MENU
+                        </p>
+
+                        <h2>
+                            行動メニュー
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="action-grid">
+
+
+                    <a
+                        href="{% url 'sns' %}"
+                        class="home-action-button"
+                    >
+
+                        <span class="action-icon">
+                            ◇
+                        </span>
+
+                        <span class="action-text">
+
+                            <strong>
+                                SNS
+                            </strong>
+
+                            <small>
+                                他の冒険者の投稿を見る
+                            </small>
+
+                        </span>
+
+                        <span class="action-arrow">
+                            →
+                        </span>
+
+                    </a>
+
+
+
+                    <a
+                        href="#"
+                        class="home-action-button disabled-link"
+                    >
+
+                        <span class="action-icon">
+                            ▣
+                        </span>
+
+                        <span class="action-text">
+
+                            <strong>
+                                倉庫
+                            </strong>
+
+                            <small>
+                                所持品を整理する
+                            </small>
+
+                        </span>
+
+                        <span class="action-arrow">
+                            →
+                        </span>
+
+                    </a>
+
+
+
+                    <a
+                        href="{% url 'again' %}"
+                        class="home-action-button"
+                    >
+
+                        <span class="action-icon">
+                            ↻
+                        </span>
+
+                        <span class="action-text">
+
+                            <strong>
+                                回帰
+                            </strong>
+
+                            <small>
+                                キャラクターを回帰させる
+                            </small>
+
+                        </span>
+
+                        <span class="action-arrow">
+                            →
+                        </span>
+
+                    </a>
+
+
+
+                    <a
+                        href="{% url 'shop:shop' %}"
+                        class="home-action-button"
+                    >
+
+                        <span class="action-icon">
+                            ◈
+                        </span>
+
+                        <span class="action-text">
+
+                            <strong>
+                                ショップ
+                            </strong>
+
+                            <small>
+                                装備やアイテムを購入する
+                            </small>
+
+                        </span>
+
+                        <span class="action-arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
             </section>
 
-            <!-- 探索 -->
-            <section class="game-panel exploration-panel">
-                <h2>探索</h2>
 
-                <p>探索する場所を選択してください</p>
 
-                <select>
-                    <option>一階層：草原</option>
-                    <option>二階層</option>
-                    <option>三階層</option>
-                </select>
+            <!-- =============================
+                 探索
+            ============================== -->
 
-                <a href="{% url 'battle:battle' %}" class="explore-button">
-                    探索する
-                </a>
+            <section class="home-card exploration-card">
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <p class="section-label">
+                            EXPLORATION
+                        </p>
+
+                        <h2>
+                            探索
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <p class="card-description">
+                    探索する階層を選択してください。
+                    選択した場所で戦闘を開始します。
+                </p>
+
+
+                <div class="exploration-form">
+
+                    <div class="select-area">
+
+                        <label for="exploration-floor">
+                            探索場所
+                        </label>
+
+
+                        <select id="exploration-floor">
+
+                            <option>
+                                一階層：草原
+                            </option>
+
+                            <option>
+                                二階層
+                            </option>
+
+                            <option>
+                                三階層
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <a
+                        href="{% url 'battle:battle' %}"
+                        class="explore-button"
+                    >
+                        探索を開始する
+                        <span>→</span>
+                    </a>
+
+                </div>
+
             </section>
 
 
-            <!-- お知らせ -->
-            <section class="game-panel notice-panel">
-                <h2>お知らせ</h2>
 
-                <p>Qhymiaへようこそ！</p>
-                <p>更新情報などを表示します。</p>
+            <!-- =============================
+                 お知らせ
+            ============================== -->
+
+            <section class="home-card notice-card">
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <p class="section-label">
+                            INFORMATION
+                        </p>
+
+                        <h2>
+                            お知らせ
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="notice-list">
+
+                    <div class="notice-item">
+
+                        <span class="notice-tag">
+                            INFO
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Qhymiaへようこそ！
+                            </strong>
+
+                            <p>
+                                冒険の準備をして探索へ向かいましょう。
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="notice-item">
+
+                        <span class="notice-tag update">
+                            UPDATE
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                更新情報
+                            </strong>
+
+                            <p>
+                                最新のゲーム情報をここに表示します。
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
             </section>
+
 
         </div>
 

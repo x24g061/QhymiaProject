@@ -1,0 +1,1070 @@
+/* ========================================
+   Qhymia Home
+======================================== */
+
+.qh-home {
+    --main: #156b86;
+    --main-dark: #0d4c62;
+    --main-light: #dceff5;
+
+    --accent: #d79a38;
+
+    --background: #eef2f1;
+    --panel: rgba(255, 255, 255, 0.96);
+
+    --border: #8a999d;
+
+    --text: #15252a;
+    --muted: #68777b;
+
+    width: 100%;
+    max-width: 1400px;
+
+    margin: 0 auto;
+    padding: 0 20px 50px;
+
+    color: var(--text);
+
+    font-family:
+        "Yu Gothic",
+        "Meiryo",
+        sans-serif;
+}
+
+
+.qh-home *,
+.qh-home *::before,
+.qh-home *::after {
+    box-sizing: border-box;
+}
+
+
+
+/* ========================================
+   HOME HERO
+======================================== */
+
+.home-hero {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 30px;
+
+    min-height: 180px;
+
+    margin-bottom: 18px;
+
+    padding: 30px 38px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            110deg,
+            #164e61,
+            #1d7b95
+        );
+
+    border-bottom: 3px solid var(--accent);
+
+    box-shadow:
+        0 3px 9px
+        rgba(0, 0, 0, 0.14);
+}
+
+
+.hero-main {
+    min-width: 0;
+}
+
+
+.hero-label,
+.section-label {
+    margin: 0 0 5px;
+
+    color: #d9a85b;
+
+    font-size: 9px;
+
+    font-weight: bold;
+
+    letter-spacing: 0.18em;
+}
+
+
+.home-hero h1 {
+    margin: 0;
+
+    font-family:
+        "Yu Mincho",
+        Georgia,
+        serif;
+
+    font-size: 36px;
+
+    letter-spacing: 0.06em;
+}
+
+
+.hero-description {
+    max-width: 600px;
+
+    margin: 10px 0 0;
+
+    color: #d8e8ed;
+
+    font-size: 12px;
+
+    line-height: 1.7;
+}
+
+
+
+/* ========================================
+   HERO SUMMARY
+======================================== */
+
+.hero-summary {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(100px, 1fr));
+
+    min-width: 380px;
+
+    overflow: hidden;
+
+    background:
+        rgba(255, 255, 255, 0.1);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.3);
+}
+
+
+.summary-item {
+    padding: 14px 18px;
+
+    text-align: center;
+
+    border-right:
+        1px solid
+        rgba(255, 255, 255, 0.2);
+}
+
+
+.summary-item:last-child {
+    border-right: none;
+}
+
+
+.summary-item span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #c8dde3;
+
+    font-size: 8px;
+
+    font-weight: bold;
+
+    letter-spacing: 0.08em;
+}
+
+
+.summary-item strong {
+    font-size: 17px;
+}
+
+
+
+/* ========================================
+   闘技場
+======================================== */
+
+.arena-panel {
+    margin-bottom: 18px;
+
+    padding: 18px 22px;
+
+    background: var(--panel);
+
+    border: 1px solid var(--border);
+
+    border-left: 5px solid var(--main);
+
+    border-radius: 4px;
+
+    box-shadow:
+        0 2px 7px
+        rgba(0, 0, 0, 0.1);
+}
+
+
+.arena-heading {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 15px;
+}
+
+
+.arena-heading h2 {
+    margin: 0;
+
+    font-size: 19px;
+}
+
+
+.floor-badge {
+    padding: 7px 14px;
+
+    color: white;
+
+    background: var(--main);
+
+    border-radius: 3px;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+
+.arena-info {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    border: 1px solid #c5ced0;
+}
+
+
+.arena-info-item {
+    padding: 11px 14px;
+
+    border-right: 1px solid #d6dcdd;
+
+    background: #f7f9f8;
+}
+
+
+.arena-info-item:last-child {
+    border-right: none;
+}
+
+
+.arena-info-item span {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: var(--muted);
+
+    font-size: 9px;
+}
+
+
+.arena-info-item strong {
+    font-size: 13px;
+}
+
+
+
+/* ========================================
+   HOME MAIN LAYOUT
+======================================== */
+
+.home-layout {
+    display: grid;
+
+    grid-template-columns:
+        340px
+        minmax(0, 1fr);
+
+    gap: 18px;
+
+    align-items: start;
+}
+
+
+.home-right {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 18px;
+}
+
+
+
+/* ========================================
+   共通カード
+======================================== */
+
+.home-card {
+    padding: 20px;
+
+    background: var(--panel);
+
+    border: 1px solid var(--border);
+
+    border-radius: 5px;
+
+    box-shadow:
+        0 2px 8px
+        rgba(0, 0, 0, 0.09);
+}
+
+
+.card-heading {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-bottom: 17px;
+
+    padding-bottom: 11px;
+
+    border-bottom:
+        2px solid var(--main);
+}
+
+
+.card-heading h2 {
+    margin: 0;
+
+    font-size: 18px;
+}
+
+
+
+/* ========================================
+   STATUS
+======================================== */
+
+.level-badge {
+    padding: 7px 12px;
+
+    color: white;
+
+    background: var(--main);
+
+    border-radius: 3px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+
+
+/* キャラクター */
+
+.character-header {
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    margin-bottom: 20px;
+}
+
+
+.character-avatar {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 54px;
+    height: 54px;
+
+    flex-shrink: 0;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--main-dark),
+            var(--main)
+        );
+
+    border: 2px solid #aec5cb;
+
+    font-family:
+        "Yu Mincho",
+        serif;
+
+    font-size: 22px;
+
+    font-weight: bold;
+}
+
+
+.character-header h3 {
+    margin: 0 0 4px;
+
+    font-size: 18px;
+}
+
+
+.character-header p {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 10px;
+}
+
+
+
+/* EXP / HP / MP */
+
+.exp-area,
+.resource-area {
+    margin-bottom: 14px;
+}
+
+
+.status-line {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 6px;
+
+    font-size: 11px;
+}
+
+
+.status-line span {
+    color: var(--muted);
+
+    font-weight: bold;
+}
+
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+
+    overflow: hidden;
+
+    background: #d8dfe0;
+
+    border-radius: 10px;
+}
+
+
+.progress-fill {
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--main-dark),
+            var(--main)
+        );
+}
+
+
+
+/* ========================================
+   能力値
+======================================== */
+
+.status-table {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    margin: 20px 0;
+
+    border-top:
+        1px solid
+        #c7d0d2;
+
+    border-left:
+        1px solid
+        #c7d0d2;
+}
+
+
+.status-box {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 11px 12px;
+
+    background: #f7f9f8;
+
+    border-right:
+        1px solid
+        #c7d0d2;
+
+    border-bottom:
+        1px solid
+        #c7d0d2;
+}
+
+
+.status-box span {
+    color: var(--main-dark);
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+
+.status-box strong {
+    font-size: 15px;
+}
+
+
+
+/* ========================================
+   CHARACTER META
+======================================== */
+
+.character-meta {
+    margin-bottom: 18px;
+
+    border-top:
+        1px solid
+        #d0d7d8;
+}
+
+
+.character-meta > div {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px 3px;
+
+    border-bottom:
+        1px solid
+        #dce1e2;
+
+    font-size: 11px;
+}
+
+
+.character-meta span {
+    color: var(--muted);
+}
+
+
+.character-meta strong {
+    color: var(--main-dark);
+}
+
+
+
+/* ========================================
+   PROFILE BUTTON
+======================================== */
+
+.secondary-button {
+    display: block;
+
+    width: 100%;
+
+    padding: 10px;
+
+    color: var(--main-dark);
+
+    text-align: center;
+
+    text-decoration: none;
+
+    background: #f1f4f3;
+
+    border:
+        1px solid
+        var(--main-dark);
+
+    border-radius: 3px;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    transition: 0.15s;
+}
+
+
+.secondary-button:hover {
+    color: white;
+
+    background: var(--main);
+}
+
+
+
+/* ========================================
+   ACTION MENU
+======================================== */
+
+.action-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+}
+
+
+.home-action-button {
+    display: grid;
+
+    grid-template-columns:
+        38px
+        minmax(0, 1fr)
+        20px;
+
+    align-items: center;
+
+    gap: 9px;
+
+    min-height: 70px;
+
+    padding: 11px 13px;
+
+    color: var(--text);
+
+    text-decoration: none;
+
+    background: #f7f9f8;
+
+    border: 1px solid #9ca9ac;
+
+    border-left: 4px solid var(--main);
+
+    border-radius: 3px;
+
+    transition: 0.15s;
+}
+
+
+.home-action-button:hover {
+    background: #e8f2f5;
+
+    border-color: var(--main);
+
+    transform: translateY(-1px);
+}
+
+
+.action-icon {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    color: white;
+
+    background: var(--main);
+
+    border-radius: 3px;
+
+    font-size: 18px;
+}
+
+
+.action-text {
+    min-width: 0;
+}
+
+
+.action-text strong {
+    display: block;
+
+    margin-bottom: 3px;
+
+    font-size: 13px;
+}
+
+
+.action-text small {
+    display: block;
+
+    overflow: hidden;
+
+    color: var(--muted);
+
+    font-size: 9px;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+.action-arrow {
+    color: var(--main);
+
+    font-size: 17px;
+
+    font-weight: bold;
+}
+
+
+.disabled-link {
+    opacity: 0.6;
+}
+
+
+
+/* ========================================
+   EXPLORATION
+======================================== */
+
+.card-description {
+    margin:
+        -3px 0 16px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+
+    line-height: 1.6;
+}
+
+
+.exploration-form {
+    display: grid;
+
+    grid-template-columns:
+        minmax(200px, 1fr)
+        190px;
+
+    gap: 12px;
+
+    align-items: end;
+}
+
+
+.select-area label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: var(--muted);
+
+    font-size: 9px;
+
+    font-weight: bold;
+}
+
+
+.select-area select {
+    width: 100%;
+    height: 42px;
+
+    padding: 0 11px;
+
+    color: var(--text);
+
+    background: white;
+
+    border:
+        1px solid
+        #87979b;
+
+    border-radius: 3px;
+
+    font: inherit;
+
+    font-size: 11px;
+}
+
+
+.select-area select:focus {
+    outline:
+        2px solid
+        rgba(21, 107, 134, 0.18);
+
+    border-color:
+        var(--main);
+}
+
+
+
+/* EXPLORE BUTTON */
+
+.explore-button {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 15px;
+
+    height: 42px;
+
+    padding: 0 18px;
+
+    color: white;
+
+    text-decoration: none;
+
+    background:
+        var(--main);
+
+    border:
+        1px solid
+        var(--main-dark);
+
+    border-radius: 3px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    transition: 0.15s;
+}
+
+
+.explore-button:hover {
+    background:
+        var(--main-dark);
+}
+
+
+
+/* ========================================
+   NOTICE
+======================================== */
+
+.notice-list {
+    border:
+        1px solid
+        #c6cfd1;
+}
+
+
+.notice-item {
+    display: grid;
+
+    grid-template-columns:
+        70px
+        1fr;
+
+    gap: 12px;
+
+    align-items: center;
+
+    padding: 12px 14px;
+
+    background: #fafbfa;
+
+    border-bottom:
+        1px solid
+        #d8dfe0;
+}
+
+
+.notice-item:last-child {
+    border-bottom: none;
+}
+
+
+.notice-tag {
+    padding: 4px 7px;
+
+    color: white;
+
+    text-align: center;
+
+    background: var(--main);
+
+    border-radius: 2px;
+
+    font-size: 8px;
+
+    font-weight: bold;
+}
+
+
+.notice-tag.update {
+    background: var(--accent);
+}
+
+
+.notice-item strong {
+    font-size: 11px;
+}
+
+
+.notice-item p {
+    margin: 3px 0 0;
+
+    color: var(--muted);
+
+    font-size: 9px;
+}
+
+
+
+/* ========================================
+   TABLET
+======================================== */
+
+@media (max-width: 1000px) {
+
+    .home-hero {
+        align-items: stretch;
+
+        flex-direction: column;
+    }
+
+
+    .hero-summary {
+        min-width: 0;
+
+        width: 100%;
+    }
+
+
+    .home-layout {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .arena-info {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+
+    .arena-info-item:nth-child(2) {
+        border-right: none;
+    }
+
+
+    .arena-info-item:nth-child(-n+2) {
+        border-bottom:
+            1px solid
+            #d6dcdd;
+    }
+
+}
+
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 650px) {
+
+    .qh-home {
+        padding:
+            0 10px 35px;
+    }
+
+
+    .home-hero {
+        min-height: 0;
+
+        padding: 22px 18px;
+    }
+
+
+    .home-hero h1 {
+        font-size: 27px;
+    }
+
+
+    .hero-summary {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .summary-item {
+        border-right: none;
+
+        border-bottom:
+            1px solid
+            rgba(255, 255, 255, 0.2);
+    }
+
+
+    .summary-item:last-child {
+        border-bottom: none;
+    }
+
+
+    .arena-heading {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+
+    .arena-info {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .arena-info-item {
+        border-right: none;
+
+        border-bottom:
+            1px solid
+            #d6dcdd;
+    }
+
+
+    .arena-info-item:last-child {
+        border-bottom: none;
+    }
+
+
+    .action-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .exploration-form {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .status-table {
+        grid-template-columns:
+            1fr;
+    }
+
+}
