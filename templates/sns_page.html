@@ -94,7 +94,15 @@
             ☆ お気に入り
             {% endif %}
         </button>
+        {% if post.user == request.user %}
+        <form method="post" action="{% url 'delete_post' post.id %}" onsubmit="return confirm('この投稿を削除しますか？');">
+            {% csrf_token %}
 
+            <button type="submit" class="delete-button">
+                削除
+            </button>
+        </form>
+        {% endif %}
     </div>
 
 </div>
@@ -195,5 +203,4 @@
 
     });
 </script>
-
 {% endblock %}
