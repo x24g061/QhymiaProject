@@ -25,6 +25,12 @@
 
     <header>
         <h1>Qhymia</h1>
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'accounts:logout' %}">
+                ログアウト
+            </a>
+        {% endif %}
     </header>
 
     <main>
