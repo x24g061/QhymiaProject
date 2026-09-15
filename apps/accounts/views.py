@@ -1,10 +1,15 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 
 from .forms import SignUpForm
 from .models import Character
 
 from django.contrib.auth.decorators import login_required
+
+
+def logout_view(request):
+    logout(request)
+    return redirect("accounts:login")
 
 
 def login_view(request):
@@ -22,7 +27,11 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            return redirect("home")
+
+            if Character.objects.filter(user=user).exists():
+                return redirect("home")
+            else:
+                return redirect("accounts:character_create")
 
         error_message = "固有IDまたはパスワードが正しくありません。"
 

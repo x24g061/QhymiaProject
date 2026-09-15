@@ -130,11 +130,17 @@ ACCOUNT_SIGNUP_FIELDS = [
     "password1*",
     "password2*",
 ]
-# Googleログイン時にQhymia独自の処理を使用する
+# Googleログイン時のUser作成処理
 SOCIALACCOUNT_ADAPTER = "apps.accounts.adapter.SocialAccountAdapter"
+
+# allauthログイン後の遷移先をQhymia独自処理で決定
+ACCOUNT_ADAPTER = "apps.accounts.adapter.AccountAdapter"
 
 # 「Googleでログイン → 続ける」の確認画面をスキップ
 SOCIALACCOUNT_LOGIN_ON_GET = True
+
+# ログインが必要なページで未ログインだった場合
+LOGIN_URL = "/login/"
 
 # ログイン成功後はホーム画面へ移動
 LOGIN_REDIRECT_URL = "/"

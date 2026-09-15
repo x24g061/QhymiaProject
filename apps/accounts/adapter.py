@@ -1,6 +1,7 @@
+from allauth.account.adapter import DefaultAccountAdapter
 from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 
-from .models import User
+from .models import Character, User
 
 
 class SocialAccountAdapter(DefaultSocialAccountAdapter):
@@ -25,3 +26,17 @@ class SocialAccountAdapter(DefaultSocialAccountAdapter):
             next_number = last_user.id + 1
 
         return f"QH{next_number:06d}"
+
+
+class AccountAdapter(DefaultAccountAdapter):
+
+    def get_login_redirect_url(self, request):
+        user = request.user
+
+        if Character.objects.filter(user=user).exists():
+            return "/"
+
+        return "/character/create/"
+
+    def get_signup_redirect_url(self, request):
+        return "/character/create/"
