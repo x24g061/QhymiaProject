@@ -2,130 +2,324 @@
 {% load static %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/sns_page.css' %}">
+<link rel="stylesheet" href="{% static 'css/sns_page.css' %}?v=2">
 {% endblock %}
 
 {% block content %}
 
-<div class="sns-tabs">
-    <a href="{% url 'sns' %}">
-        投稿一覧
-    </a>
+<div class="sns-page">
 
-    <a href="{% url 'sns' %}?view=favorites">
-        ★ お気に入り
-    </a>
-</div>
+    <!-- =========================
+         SNSヘッダー
+    ========================== -->
+    <section class="sns-hero">
 
-<div class="sns-create-post">
+        <div class="sns-hero-main">
+            <p class="sns-label">QHYMIA SOCIAL</p>
+            <h1>SNS</h1>
 
-    <form method="post" enctype="multipart/form-data">
-
-        {% csrf_token %}
-
-        <div class="sns-create-text">
-            {{ form.text }}
+            <p class="sns-hero-description">
+                冒険者たちの今を共有する交流広場
+            </p>
         </div>
 
-        <div class="sns-create-image">
-            {{ form.image }}
+        <div class="sns-hero-actions">
+            <a href="{% url 'home' %}" class="sns-home-button">
+                ← ホームに戻る
+            </a>
         </div>
 
-        <button type="submit" class="sns-submit-button">
-            投稿する
-        </button>
-
-    </form>
-
-</div>
+    </section>
 
 
-{% for post in posts %}
+    <!-- =========================
+         SNSメニュー
+    ========================== -->
+    <section class="sns-navigation">
 
-<div class="sns-post-box">
+        <div class="sns-navigation-title">
+            <p class="sns-label">SOCIAL MENU</p>
+            <h2>交流広場</h2>
+        </div>
 
-    <div class="sns-post-header">
+        <div class="sns-tabs">
 
-        <div class="sns-user-area">
+            <a
+                href="{% url 'sns' %}"
+                class="sns-tab"
+            >
+                <span class="sns-tab-icon">▤</span>
+                投稿一覧
+            </a>
 
-            <div class="sns-character-placeholder">
-                □
+            <a
+                href="{% url 'sns' %}?view=favorites"
+                class="sns-tab favorite-tab"
+            >
+                <span class="sns-tab-icon">★</span>
+                お気に入り
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         投稿作成
+    ========================== -->
+    <section class="sns-create-post">
+
+        <div class="sns-create-header">
+
+            <div>
+                <p class="sns-label">NEW POST</p>
+                <h2>新しく投稿する</h2>
             </div>
 
-            <strong class="sns-character-name">
-                {{ post.user.character.name }}
-            </strong>
+            <span class="sns-create-badge">
+                POST
+            </span>
 
         </div>
 
-        <span class="sns-post-time">
-            {{ post.created_at|date:"Y/n/j H:i" }}
-        </span>
+
+        <form method="post" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <div class="sns-create-text">
+
+                <label class="sns-form-label">
+                    MESSAGE
+                </label>
+
+                {{ form.text }}
+
+            </div>
+
+
+            <div class="sns-create-bottom">
+
+                <div class="sns-create-image">
+
+                    <label class="sns-form-label">
+                        IMAGE
+                    </label>
+
+                    {{ form.image }}
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="sns-submit-button"
+                >
+                    投稿する
+                    <span>→</span>
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+
+    <!-- =========================
+         投稿一覧タイトル
+    ========================== -->
+    <div class="sns-list-heading">
+
+        <div>
+            <p class="sns-label">TIMELINE</p>
+            <h2>冒険者たちの投稿</h2>
+        </div>
 
     </div>
 
 
-    <div class="sns-post-content">
+    <!-- =========================
+         投稿一覧
+    ========================== -->
+    <div class="sns-post-list">
 
-        {% if post.text %}
-        <p>
-            {{ post.text }}
-        </p>
-        {% endif %}
+        {% for post in posts %}
 
-        {% if post.image %}
-        <img src="{{ post.image.url }}" alt="投稿画像" class="sns-post-image">
-        {% endif %}
+        <article class="sns-post-box">
+
+            <!-- 投稿ヘッダー -->
+            <div class="sns-post-header">
+
+                <div class="sns-user-area">
+
+                    <div class="sns-character-placeholder">
+                        <span>◆</span>
+                    </div>
+
+
+                    <div class="sns-user-information">
+
+                        <span class="sns-user-label">
+                            ADVENTURER
+                        </span>
+
+                        <strong class="sns-character-name">
+                            {{ post.user.character.name }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="sns-post-time-area">
+
+                    <span class="sns-time-label">
+                        POSTED
+                    </span>
+
+                    <span class="sns-post-time">
+                        {{ post.created_at|date:"Y/n/j H:i" }}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- 投稿本文 -->
+            <div class="sns-post-content">
+
+                {% if post.text %}
+
+                <p class="sns-post-text">
+                    {{ post.text }}
+                </p>
+
+                {% endif %}
+
+
+                {% if post.image %}
+
+                <div class="sns-image-wrapper">
+
+                    <img
+                        src="{{ post.image.url }}"
+                        alt="投稿画像"
+                        class="sns-post-image"
+                    >
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- 投稿操作 -->
+            <div class="sns-post-actions">
+
+                <button
+                    type="button"
+                    class="like-button"
+                    data-post-id="{{ post.id }}"
+                >
+                    <span class="like-icon">♡</span>
+
+                    いいね
+
+                    <span class="like-count">
+                        {{ post.likes.count }}
+                    </span>
+                </button>
+
+
+                <button
+                    type="button"
+                    class="favorite-button"
+                    data-post-id="{{ post.id }}"
+                >
+                    {% if post.id in favorite_post_ids %}
+                        ★ お気に入り済み
+                    {% else %}
+                        ☆ お気に入り
+                    {% endif %}
+                </button>
+
+            </div>
+
+        </article>
+
+
+        {% empty %}
+
+        <div class="sns-empty">
+
+            <div class="sns-empty-icon">
+                ◇
+            </div>
+
+            <p class="sns-label">
+                NO POSTS
+            </p>
+
+            <h3>まだ投稿はありません</h3>
+
+            <p>
+                最初の投稿をして、冒険者たちと交流してみましょう。
+            </p>
+
+        </div>
+
+        {% endfor %}
 
     </div>
 
 
-    <div class="sns-post-actions">
+    <!-- =========================
+         下部
+    ========================== -->
+    <div class="sns-back-area">
 
-        <button type="button" class="like-button" data-post-id="{{ post.id }}">
-            ♡ <span class="like-count">{{ post.likes.count }}</span>
-        </button>
-
-
-        <button type="button" class="favorite-button" data-post-id="{{ post.id }}">
-            {% if post.id in favorite_post_ids %}
-            ★ お気に入り済み
-            {% else %}
-            ☆ お気に入り
-            {% endif %}
-        </button>
+        <a
+            href="{% url 'home' %}"
+            class="sns-back-button"
+        >
+            ← ホームに戻る
+        </a>
 
     </div>
 
-</div>
-
-
-{% empty %}
-
-<p>まだ投稿はありません。</p>
-
-{% endfor %}
-
-
-<div class="sns-back-area">
-    <a href="{% url 'home' %}" class="sns-back-button">
-        ホームに戻る
-    </a>
 </div>
 
 
 <script>
+
     function getCookie(name) {
-        const cookies = document.cookie.split(";");
+
+        const cookies =
+            document.cookie.split(";");
 
         for (let cookie of cookies) {
+
             cookie = cookie.trim();
 
-            if (cookie.startsWith(name + "=")) {
+            if (
+                cookie.startsWith(
+                    name + "="
+                )
+            ) {
+
                 return decodeURIComponent(
-                    cookie.substring(name.length + 1)
+                    cookie.substring(
+                        name.length + 1
+                    )
                 );
+
             }
+
         }
 
         return null;
@@ -136,64 +330,100 @@
     // いいね
     // =========================
 
-    document.querySelectorAll(".like-button").forEach(button => {
+    document
+        .querySelectorAll(".like-button")
+        .forEach(button => {
 
-        button.addEventListener("click", async () => {
+            button.addEventListener(
+                "click",
+                async () => {
 
-            const postId = button.dataset.postId;
+                    const postId =
+                        button.dataset.postId;
 
-            const response = await fetch(
-                `/sns/like/${postId}/`,
-                {
-                    method: "POST",
-                    headers: {
-                        "X-CSRFToken": getCookie("csrftoken"),
-                    },
+                    const response =
+                        await fetch(
+                            `/sns/like/${postId}/`,
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "X-CSRFToken":
+                                        getCookie(
+                                            "csrftoken"
+                                        ),
+                                },
+                            }
+                        );
+
+                    const data =
+                        await response.json();
+
+                    button
+                        .querySelector(
+                            ".like-count"
+                        )
+                        .textContent =
+                            data.like_count;
+
                 }
             );
 
-            const data = await response.json();
-
-            button.querySelector(
-                ".like-count"
-            ).textContent = data.like_count;
-
         });
-
-    });
 
 
     // =========================
     // お気に入り
     // =========================
 
-    document.querySelectorAll(".favorite-button").forEach(button => {
+    document
+        .querySelectorAll(
+            ".favorite-button"
+        )
+        .forEach(button => {
 
-        button.addEventListener("click", async () => {
+            button.addEventListener(
+                "click",
+                async () => {
 
-            const postId = button.dataset.postId;
+                    const postId =
+                        button.dataset.postId;
 
-            const response = await fetch(
-                `/sns/favorite/${postId}/`,
-                {
-                    method: "POST",
-                    headers: {
-                        "X-CSRFToken": getCookie("csrftoken"),
-                    },
+                    const response =
+                        await fetch(
+                            `/sns/favorite/${postId}/`,
+                            {
+                                method: "POST",
+
+                                headers: {
+                                    "X-CSRFToken":
+                                        getCookie(
+                                            "csrftoken"
+                                        ),
+                                },
+                            }
+                        );
+
+                    const data =
+                        await response.json();
+
+                    if (data.favorited) {
+
+                        button.textContent =
+                            "★ お気に入り済み";
+
+                    } else {
+
+                        button.textContent =
+                            "☆ お気に入り";
+
+                    }
+
                 }
             );
 
-            const data = await response.json();
-
-            if (data.favorited) {
-                button.textContent = "★ お気に入り済み";
-            } else {
-                button.textContent = "☆ お気に入り";
-            }
-
         });
 
-    });
 </script>
 
 {% endblock %}
