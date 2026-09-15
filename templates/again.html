@@ -9,198 +9,463 @@
 
 <div class="again-page">
 
-    <div class="again-container">
+    <!-- =========================
+         回帰ヘッダー
+    ========================== -->
+    <section class="again-hero">
 
-        <div class="again-title">
+        <div class="again-hero-main">
+            <p class="again-label">QHYMIA REINCARNATION</p>
+
             <h1>回 帰</h1>
-            <p>― 魂は、新たな可能性へと還る ―</p>
+
+            <p class="again-description">
+                魂は、新たな可能性へと還る
+            </p>
         </div>
+
+        <div class="again-hero-summary">
+
+            <div class="hero-summary-item">
+                <span>CHARACTER</span>
+                <strong>{{ character.name }}</strong>
+            </div>
+
+            <div class="hero-summary-item">
+                <span>LEVEL</span>
+                <strong>Lv.{{ character.level }}</strong>
+            </div>
+
+            <div class="hero-summary-item">
+                <span>REINCARNATION</span>
+                <strong>{{ character.reincarnation_count }} 回</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         注意・説明
+    ========================== -->
+    <section class="again-guide">
+
+        <div>
+            <p class="again-label">REINCARNATION GUIDE</p>
+            <h2>回帰について</h2>
+        </div>
+
+        <p>
+            回帰後の能力値はランダムに決定されます。
+            回帰を重ねることで、より高い能力を得られるようになります。
+        </p>
+
+    </section>
+
+
+    <!-- =========================
+         ステータス比較
+    ========================== -->
+    <section class="comparison-section">
+
+        <div class="section-heading">
+            <div>
+                <p class="again-label">STATUS COMPARISON</p>
+                <h2>能力値比較</h2>
+            </div>
+        </div>
+
 
         <div class="again-status-area">
 
             <!-- 現在の能力 -->
-            <div class="again-status-card">
-                <h2>現在の能力</h2>
+            <div class="again-status-card current-status">
 
-                <div class="status-row">
-                    <span>HP</span>
-                    <strong>{{ character.max_hp }}</strong>
+                <div class="status-card-heading">
+                    <div>
+                        <p class="again-label">CURRENT STATUS</p>
+                        <h3>現在の能力</h3>
+                    </div>
+
+                    <span class="status-badge current">
+                        CURRENT
+                    </span>
                 </div>
 
-                <div class="status-row">
-                    <span>MP</span>
-                    <strong>{{ character.max_mp }}</strong>
+
+                <div class="status-group">
+
+                    <p class="status-group-title">
+                        基本能力
+                    </p>
+
+                    <div class="status-grid">
+
+                        <div class="status-row">
+                            <span>HP</span>
+                            <strong>{{ character.max_hp }}</strong>
+                        </div>
+
+                        <div class="status-row">
+                            <span>MP</span>
+                            <strong>{{ character.max_mp }}</strong>
+                        </div>
+
+                        <div class="status-row">
+                            <span>STR</span>
+                            <strong>{{ character.strength }}</strong>
+                        </div>
+
+                        <div class="status-row">
+                            <span>INT</span>
+                            <strong>{{ character.intelligence }}</strong>
+                        </div>
+
+                        <div class="status-row">
+                            <span>DEX</span>
+                            <strong>{{ character.dexterity }}</strong>
+                        </div>
+
+                        <div class="status-row">
+                            <span>AGI</span>
+                            <strong>{{ character.agility }}</strong>
+                        </div>
+
+                        <div class="status-row">
+                            <span>VIT</span>
+                            <strong>{{ character.vitality }}</strong>
+                        </div>
+
+                        <div class="status-row">
+                            <span>LUK</span>
+                            <strong>{{ character.luck }}</strong>
+                        </div>
+
+                    </div>
+
                 </div>
 
-                <div class="status-line"></div>
-
-                <div class="status-row">
-                    <span>STR</span>
-                    <strong>{{ character.strength }}</strong>
-                </div>
-
-                <div class="status-row">
-                    <span>INT</span>
-                    <strong>{{ character.intelligence }}</strong>
-                </div>
-
-                <div class="status-row">
-                    <span>DEX</span>
-                    <strong>{{ character.dexterity }}</strong>
-                </div>
-
-                <div class="status-row">
-                    <span>AGI</span>
-                    <strong>{{ character.agility }}</strong>
-                </div>
-
-                <div class="status-row">
-                    <span>VIT</span>
-                    <strong>{{ character.vitality }}</strong>
-                </div>
-
-                <div class="status-row">
-                    <span>LUK</span>
-                    <strong>{{ character.luck }}</strong>
-                </div>
             </div>
 
+
+            <!-- 矢印 -->
             <div class="again-arrow">
-                →
+                <span>→</span>
+                <small>REINCARNATE</small>
             </div>
+
 
             <!-- 回帰後 -->
-            <div class="again-status-card">
-                <h2>回帰後</h2>
+            <div class="again-status-card after-status">
 
-                <div class="status-row">
-                    <span>HP</span>
-                    <strong>{{ reincarnation_stats.max_hp }}</strong>
+                <div class="status-card-heading">
+                    <div>
+                        <p class="again-label">AFTER REBIRTH</p>
+                        <h3>回帰後</h3>
+                    </div>
+
+                    <span class="status-badge after">
+                        NEW
+                    </span>
                 </div>
 
-                <div class="status-row">
-                    <span>MP</span>
-                    <strong>{{ reincarnation_stats.max_mp }}</strong>
+
+                <div class="status-group">
+
+                    <p class="status-group-title">
+                        基本能力
+                    </p>
+
+                    <div class="status-grid">
+
+                        <div class="status-row">
+                            <span>HP</span>
+                            <strong>{{ reincarnation_stats.max_hp }}</strong>
+                        </div>
+
+                        <div class="status-row">
+                            <span>MP</span>
+                            <strong>{{ reincarnation_stats.max_mp }}</strong>
+                        </div>
+
+                        <div class="status-row">
+                            <span>STR</span>
+                            <strong>{{ reincarnation_stats.strength }}</strong>
+                        </div>
+
+                        <div class="status-row">
+                            <span>INT</span>
+                            <strong>{{ reincarnation_stats.intelligence }}</strong>
+                        </div>
+
+                        <div class="status-row">
+                            <span>DEX</span>
+                            <strong>{{ reincarnation_stats.dexterity }}</strong>
+                        </div>
+
+                        <div class="status-row">
+                            <span>AGI</span>
+                            <strong>{{ reincarnation_stats.agility }}</strong>
+                        </div>
+
+                        <div class="status-row">
+                            <span>VIT</span>
+                            <strong>{{ reincarnation_stats.vitality }}</strong>
+                        </div>
+
+                        <div class="status-row">
+                            <span>LUK</span>
+                            <strong>{{ reincarnation_stats.luck }}</strong>
+                        </div>
+
+                    </div>
+
                 </div>
 
-                <div class="status-line"></div>
 
-                <div class="status-row">
-                    <span>STR</span>
-                    <strong>{{ reincarnation_stats.strength }}</strong>
+                <div class="status-group attribute-group">
+
+                    <p class="status-group-title">
+                        属性
+                    </p>
+
+                    <div class="status-grid attribute-grid">
+
+                        <div class="status-row">
+                            <span>火</span>
+                            <strong>{{ reincarnation_stats.fire }}</strong>
+                        </div>
+
+                        <div class="status-row">
+                            <span>水</span>
+                            <strong>{{ reincarnation_stats.water }}</strong>
+                        </div>
+
+                        <div class="status-row">
+                            <span>草</span>
+                            <strong>{{ reincarnation_stats.grass }}</strong>
+                        </div>
+
+                        <div class="status-row">
+                            <span>岩</span>
+                            <strong>{{ reincarnation_stats.rock }}</strong>
+                        </div>
+
+                        <div class="status-row">
+                            <span>光</span>
+                            <strong>{{ reincarnation_stats.light }}</strong>
+                        </div>
+
+                        <div class="status-row">
+                            <span>闇</span>
+                            <strong>{{ reincarnation_stats.dark }}</strong>
+                        </div>
+
+                    </div>
+
                 </div>
 
-                <div class="status-row">
-                    <span>INT</span>
-                    <strong>{{ reincarnation_stats.intelligence }}</strong>
-                </div>
-
-                <div class="status-row">
-                    <span>DEX</span>
-                    <strong>{{ reincarnation_stats.dexterity }}</strong>
-                </div>
-
-                <div class="status-row">
-                    <span>AGI</span>
-                    <strong>{{ reincarnation_stats.agility }}</strong>
-                </div>
-
-                <div class="status-row">
-                    <span>VIT</span>
-                    <strong>{{ reincarnation_stats.vitality }}</strong>
-                </div>
-
-                <div class="status-row">
-                    <span>LUK</span>
-                    <strong>{{ reincarnation_stats.luck }}</strong>
-                </div>
-
-                <div class="status-line"></div>
-
-                <div class="status-row">
-                    <span>火</span>
-                    <strong>{{ reincarnation_stats.fire }}</strong>
-                </div>
-
-                <div class="status-row">
-                    <span>水</span>
-                    <strong>{{ reincarnation_stats.water }}</strong>
-                </div>
-
-                <div class="status-row">
-                    <span>草</span>
-                    <strong>{{ reincarnation_stats.grass }}</strong>
-                </div>
-
-                <div class="status-row">
-                    <span>岩</span>
-                    <strong>{{ reincarnation_stats.rock }}</strong>
-                </div>
-
-                <div class="status-row">
-                    <span>光</span>
-                    <strong>{{ reincarnation_stats.light }}</strong>
-                </div>
-
-                <div class="status-row">
-                    <span>闇</span>
-                    <strong>{{ reincarnation_stats.dark }}</strong>
-                </div>
             </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         ボーナスポイント
+    ========================== -->
+    {% if can_reincarnate %}
+
+    <section class="bonus-section">
+
+        <div class="bonus-header">
+
+            <div>
+                <p class="again-label">BONUS POINT</p>
+                <h2>回帰ボーナス</h2>
+            </div>
+
+            <div class="total-point">
+                <span>今回の総ボーナスポイント</span>
+                <strong>{{ total_points }} pt</strong>
+            </div>
+
+        </div>
+
+
+        <div class="bonus-content">
+
+            <div class="bonus-group">
+
+                <p class="bonus-group-title">
+                    基本能力ボーナス
+                </p>
+
+                <div class="bonus-grid">
+
+                    <div>
+                        <span>HP</span>
+                        <strong>+{{ bonus_points.max_hp }}</strong>
+                    </div>
+
+                    <div>
+                        <span>MP</span>
+                        <strong>+{{ bonus_points.max_mp }}</strong>
+                    </div>
+
+                    <div>
+                        <span>STR</span>
+                        <strong>+{{ bonus_points.strength }}</strong>
+                    </div>
+
+                    <div>
+                        <span>INT</span>
+                        <strong>+{{ bonus_points.intelligence }}</strong>
+                    </div>
+
+                    <div>
+                        <span>DEX</span>
+                        <strong>+{{ bonus_points.dexterity }}</strong>
+                    </div>
+
+                    <div>
+                        <span>AGI</span>
+                        <strong>+{{ bonus_points.agility }}</strong>
+                    </div>
+
+                    <div>
+                        <span>VIT</span>
+                        <strong>+{{ bonus_points.vitality }}</strong>
+                    </div>
+
+                    <div>
+                        <span>LUK</span>
+                        <strong>+{{ bonus_points.luck }}</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="bonus-group">
+
+                <p class="bonus-group-title">
+                    属性ボーナス
+                </p>
+
+                <div class="bonus-grid attribute-bonus-grid">
+
+                    <div>
+                        <span>火</span>
+                        <strong>+{{ bonus_points.fire }}</strong>
+                    </div>
+
+                    <div>
+                        <span>水</span>
+                        <strong>+{{ bonus_points.water }}</strong>
+                    </div>
+
+                    <div>
+                        <span>草</span>
+                        <strong>+{{ bonus_points.grass }}</strong>
+                    </div>
+
+                    <div>
+                        <span>岩</span>
+                        <strong>+{{ bonus_points.rock }}</strong>
+                    </div>
+
+                    <div>
+                        <span>光</span>
+                        <strong>+{{ bonus_points.light }}</strong>
+                    </div>
+
+                    <div>
+                        <span>闇</span>
+                        <strong>+{{ bonus_points.dark }}</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    {% endif %}
+
+
+    <!-- =========================
+         回帰実行
+    ========================== -->
+    <section class="again-execution">
+
+        <div class="execution-message">
 
             {% if can_reincarnate %}
 
-            <div class="again-info">
-                <p>今回の総ボーナスポイント：{{ total_points }} pt</p>
+                <p class="again-label">READY TO REINCARNATE</p>
+                <h2>回帰の準備ができています</h2>
 
                 <p>
-                    HP {{ bonus_points.max_hp }}pt /
-                    MP {{ bonus_points.max_mp }}pt /
-                    STR {{ bonus_points.strength }}pt /
-                    INT {{ bonus_points.intelligence }}pt /
-                    DEX {{ bonus_points.dexterity }}pt /
-                    AGI {{ bonus_points.agility }}pt /
-                    VIT {{ bonus_points.vitality }}pt /
-                    LUK {{ bonus_points.luck }}pt
+                    回帰すると新たな能力値が適用されます。
                 </p>
 
+            {% else %}
+
+                <p class="again-label">REQUIREMENT</p>
+                <h2>回帰条件を満たしていません</h2>
+
                 <p>
-                    火 {{ bonus_points.fire }}pt /
-                    水 {{ bonus_points.water }}pt /
-                    草 {{ bonus_points.grass }}pt /
-                    岩 {{ bonus_points.rock }}pt /
-                    光 {{ bonus_points.light }}pt /
-                    闇 {{ bonus_points.dark }}pt
+                    Lv100に到達すると回帰できるようになります。
                 </p>
-            </div>
 
             {% endif %}
 
         </div>
 
-        <div class="again-info">
-            <p>回帰後の能力値はランダムに決定されます。</p>
-            <p>回帰を重ねることで、より高い能力を得られるようになります。</p>
-        </div>
 
         <div class="again-actions">
-            <a href="/" class="back-button">ホームに戻る</a>
+
+            <a href="/" class="back-button">
+                ← ホームに戻る
+            </a>
+
 
             {% if can_reincarnate %}
+
                 <form method="post">
                     {% csrf_token %}
-                    <button class="again-button" type="submit">
+
+                    <button
+                        class="again-button"
+                        type="submit"
+                    >
                         回帰する
+                        <span>→</span>
                     </button>
+
                 </form>
+
             {% else %}
-                <button class="again-button" type="button" disabled>
+
+                <button
+                    class="again-button"
+                    type="button"
+                    disabled
+                >
                     Lv100で回帰できます
                 </button>
+
             {% endif %}
+
         </div>
 
-    </div>
+    </section>
 
 </div>
 
