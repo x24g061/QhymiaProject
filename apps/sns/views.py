@@ -98,3 +98,16 @@ def toggle_favorite(request, post_id):
     return JsonResponse({
         "favorited": favorited,
     })
+
+@login_required
+def delete_post(request, post_id):
+    post = get_object_or_404(
+        Post,
+        id=post_id,
+        user=request.user,
+    )
+
+    if request.method == "POST":
+        post.delete()
+
+    return redirect("sns")

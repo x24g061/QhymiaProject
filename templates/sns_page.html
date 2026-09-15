@@ -236,19 +236,23 @@
                 </button>
 
 
-                <button
-                    type="button"
-                    class="favorite-button"
-                    data-post-id="{{ post.id }}"
-                >
-                    {% if post.id in favorite_post_ids %}
-                        ★ お気に入り済み
-                    {% else %}
-                        ☆ お気に入り
-                    {% endif %}
-                </button>
+        <button type="button" class="favorite-button" data-post-id="{{ post.id }}">
+            {% if post.id in favorite_post_ids %}
+            ★ お気に入り済み
+            {% else %}
+            ☆ お気に入り
+            {% endif %}
+        </button>
+        {% if post.user == request.user %}
+        <form method="post" action="{% url 'delete_post' post.id %}" onsubmit="return confirm('この投稿を削除しますか？');">
+            {% csrf_token %}
 
-            </div>
+            <button type="submit" class="delete-button">
+                削除
+            </button>
+        </form>
+        {% endif %}
+    </div>
 
         </article>
 
@@ -425,5 +429,4 @@
         });
 
 </script>
-
 {% endblock %}
