@@ -61,17 +61,14 @@
     color: white;
 
     background:
-        linear-gradient(
-            110deg,
+        linear-gradient(110deg,
             #164e61,
-            #1d7b95
-        );
+            #1d7b95);
 
     border-bottom: 3px solid var(--accent);
 
     box-shadow:
-        0 3px 9px
-        rgba(0, 0, 0, 0.14);
+        0 3px 9px rgba(0, 0, 0, 0.14);
 }
 
 
@@ -140,8 +137,7 @@
         rgba(255, 255, 255, 0.1);
 
     border:
-        1px solid
-        rgba(255, 255, 255, 0.3);
+        1px solid rgba(255, 255, 255, 0.3);
 }
 
 
@@ -151,8 +147,7 @@
     text-align: center;
 
     border-right:
-        1px solid
-        rgba(255, 255, 255, 0.2);
+        1px solid rgba(255, 255, 255, 0.2);
 }
 
 
@@ -200,8 +195,7 @@
     border-radius: 4px;
 
     box-shadow:
-        0 2px 7px
-        rgba(0, 0, 0, 0.1);
+        0 2px 7px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -288,8 +282,7 @@
     display: grid;
 
     grid-template-columns:
-        340px
-        minmax(0, 1fr);
+        340px minmax(0, 1fr);
 
     gap: 18px;
 
@@ -321,8 +314,7 @@
     border-radius: 5px;
 
     box-shadow:
-        0 2px 8px
-        rgba(0, 0, 0, 0.09);
+        0 2px 8px rgba(0, 0, 0, 0.09);
 }
 
 
@@ -398,11 +390,9 @@
     color: white;
 
     background:
-        linear-gradient(
-            135deg,
+        linear-gradient(135deg,
             var(--main-dark),
-            var(--main)
-        );
+            var(--main));
 
     border: 2px solid #aec5cb;
 
@@ -438,6 +428,10 @@
 .exp-area,
 .resource-area {
     margin-bottom: 14px;
+}
+
+.exp-fill {
+    width: var(--exp-width);
 }
 
 
@@ -476,11 +470,9 @@
     height: 100%;
 
     background:
-        linear-gradient(
-            90deg,
+        linear-gradient(90deg,
             var(--main-dark),
-            var(--main)
-        );
+            var(--main));
 }
 
 
@@ -498,12 +490,10 @@
     margin: 20px 0;
 
     border-top:
-        1px solid
-        #c7d0d2;
+        1px solid #c7d0d2;
 
     border-left:
-        1px solid
-        #c7d0d2;
+        1px solid #c7d0d2;
 }
 
 
@@ -518,12 +508,10 @@
     background: #f7f9f8;
 
     border-right:
-        1px solid
-        #c7d0d2;
+        1px solid #c7d0d2;
 
     border-bottom:
-        1px solid
-        #c7d0d2;
+        1px solid #c7d0d2;
 }
 
 
@@ -550,12 +538,11 @@
     margin-bottom: 18px;
 
     border-top:
-        1px solid
-        #d0d7d8;
+        1px solid #d0d7d8;
 }
 
 
-.character-meta > div {
+.character-meta>div {
     display: flex;
 
     align-items: center;
@@ -564,8 +551,7 @@
     padding: 10px 3px;
 
     border-bottom:
-        1px solid
-        #dce1e2;
+        1px solid #dce1e2;
 
     font-size: 11px;
 }
@@ -602,8 +588,7 @@
     background: #f1f4f3;
 
     border:
-        1px solid
-        var(--main-dark);
+        1px solid var(--main-dark);
 
     border-radius: 3px;
 
@@ -641,9 +626,7 @@
     display: grid;
 
     grid-template-columns:
-        38px
-        minmax(0, 1fr)
-        20px;
+        38px minmax(0, 1fr) 20px;
 
     align-items: center;
 
@@ -761,8 +744,7 @@
     display: grid;
 
     grid-template-columns:
-        minmax(200px, 1fr)
-        190px;
+        minmax(200px, 1fr) 190px;
 
     gap: 12px;
 
@@ -794,8 +776,7 @@
     background: white;
 
     border:
-        1px solid
-        #87979b;
+        1px solid #87979b;
 
     border-radius: 3px;
 
@@ -807,8 +788,7 @@
 
 .select-area select:focus {
     outline:
-        2px solid
-        rgba(21, 107, 134, 0.18);
+        2px solid rgba(21, 107, 134, 0.18);
 
     border-color:
         var(--main);
@@ -838,8 +818,7 @@
         var(--main);
 
     border:
-        1px solid
-        var(--main-dark);
+        1px solid var(--main-dark);
 
     border-radius: 3px;
 
@@ -864,8 +843,7 @@
 
 .notice-list {
     border:
-        1px solid
-        #c6cfd1;
+        1px solid #c6cfd1;
 }
 
 
@@ -873,8 +851,7 @@
     display: grid;
 
     grid-template-columns:
-        70px
-        1fr;
+        70px 1fr;
 
     gap: 12px;
 
@@ -885,8 +862,7 @@
     background: #fafbfa;
 
     border-bottom:
-        1px solid
-        #d8dfe0;
+        1px solid #d8dfe0;
 }
 
 
@@ -971,8 +947,7 @@
 
     .arena-info-item:nth-child(-n+2) {
         border-bottom:
-            1px solid
-            #d6dcdd;
+            1px solid #d6dcdd;
     }
 
 }
@@ -1013,8 +988,7 @@
         border-right: none;
 
         border-bottom:
-            1px solid
-            rgba(255, 255, 255, 0.2);
+            1px solid rgba(255, 255, 255, 0.2);
     }
 
 
@@ -1040,8 +1014,7 @@
         border-right: none;
 
         border-bottom:
-            1px solid
-            #d6dcdd;
+            1px solid #d6dcdd;
     }
 
 
