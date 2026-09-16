@@ -11,6 +11,7 @@ class Item(models.Model):
         EQUIPMENT = "equipment", "装備品"
         MATERIAL = "material", "素材"
         KEY_ITEM = "key_item", "重要アイテム"
+        SYSTEM = "system", "システム"
 
     name = models.CharField(
         max_length=100,
@@ -42,6 +43,21 @@ class Item(models.Model):
     is_usable = models.BooleanField(
         default=False,
         help_text="使用可能なアイテムか",
+    )
+
+    npc_purchasable = models.BooleanField(
+    default=False,
+    help_text="NPCショップから購入できるか",
+    )
+
+    npc_sellable = models.BooleanField(
+    default=True,
+    help_text="NPCショップへ売却できるか",
+    )
+
+    market_sellable = models.BooleanField(
+    default=True,
+    help_text="フリマへ出品できるか",
     )
 
     created_at = models.DateTimeField(
