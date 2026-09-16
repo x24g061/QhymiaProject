@@ -53,8 +53,12 @@ class User(AbstractUser):
         help_text="ログイン用の固有ID",
     )
 
+    email = models.EmailField(
+        unique=True,
+    )
+
     USERNAME_FIELD = "user_id"
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ["email"]
 
     objects = UserManager()
 
