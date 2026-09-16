@@ -28,10 +28,15 @@ def login_view(request):
         if user is not None:
             login(request, user)
 
-            if Character.objects.filter(user=user).exists():
-                return redirect("home")
-            else:
+            if not Character.objects.filter(user=user).exists():
                 return redirect("accounts:character_create")
+
+            next_url = request.GET.get("next")
+
+            if next_url:
+                return redirect(next_url)
+
+            return redirect("home")
 
         error_message = "固有IDまたはパスワードが正しくありません。"
 
