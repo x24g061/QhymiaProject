@@ -16,6 +16,19 @@ class SignUpForm(UserCreationForm):
         ),
     )
 
+    email = forms.EmailField(
+        label="メールアドレス",
+        widget=forms.EmailInput(
+            attrs={
+                "placeholder": "メールアドレスを入力してください",
+                "autocomplete": "email",
+            }
+        ),
+        error_messages={
+            "unique": "このメールアドレスは既に使用されています。",
+        },
+    )
+
     password1 = forms.CharField(
         label="パスワード",
         widget=forms.PasswordInput(
@@ -40,6 +53,13 @@ class SignUpForm(UserCreationForm):
         model = User
         fields = (
             "user_id",
+            "email",
             "password1",
             "password2",
         )
+
+        error_messages = {
+            "email": {
+                "unique": "このメールアドレスは既に使用されています。",
+            },
+        }

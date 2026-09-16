@@ -31,6 +31,20 @@
             </div>
 
             <div class="form-group">
+                <label for="{{ form.email.id_for_label }}">
+                    メールアドレス
+                </label>
+
+                {{ form.email }}
+
+                {% for error in form.email.errors %}
+                    <p class="error-message">
+                        {{ error }}
+                    </p>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
                 <label for="{{ form.password1.id_for_label }}">
                     パスワード
                 </label>
