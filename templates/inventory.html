@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}倉庫{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/inventory.css' %}?v=2">
+{% endblock %}
+
+{% block content %}
+
+<div class="inventory-page">
+
+    <div class="inventory-header">
+        <h1>倉庫</h1>
+        <a href="{% url 'home' %}" class="back-button">
+            ホームへ戻る
+        </a>
+    </div>
+
+
+    <!-- 装備中アイテム -->
+    <section class="inventory-section">
+
+        <h2>装備中アイテム</h2>
+
+        <table class="inventory-table">
+
+            <thead>
+                <tr>
+                    <th>種類</th>
+                    <th>アイテム名</th>
+                    <th>戦闘力</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>武器</td>
+                    <td>鉄の剣</td>
+                    <td>120</td>
+                </tr>
+
+                <tr>
+                    <td>頭具</td>
+                    <td>革の帽子</td>
+                    <td>30</td>
+                </tr>
+
+                <tr>
+                    <td>防具</td>
+                    <td>革の鎧</td>
+                    <td>70</td>
+                </tr>
+
+                <tr>
+                    <td>足具</td>
+                    <td>革の靴</td>
+                    <td>25</td>
+                </tr>
+
+                <tr>
+                    <td>アクセサリー</td>
+                    <td>銀の指輪</td>
+                    <td>15</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+
+    <!-- 所持アイテム -->
+    <section class="inventory-section">
+
+        <h2>所持アイテム</h2>
+
+        <table class="inventory-table">
+
+            <thead>
+                <tr>
+                    <th>種類</th>
+                    <th>アイテム名</th>
+                    <th>個数</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>消耗品</td>
+                    <td>回復薬</td>
+                    <td>5</td>
+                </tr>
+
+                <tr>
+                    <td>武器</td>
+                    <td>木の剣</td>
+                    <td>1</td>
+                </tr>
+
+                <tr>
+                    <td>素材</td>
+                    <td>スライムの核</td>
+                    <td>8</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+</div>
+
+{% endblock %}
