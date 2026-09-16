@@ -26,6 +26,9 @@ urlpatterns = [
 
     #SHOP画面
     path("shop/", include("apps.shop.urls")),
+
+    # Inventory画面
+    path("inventory/", include("apps.inventory.urls")),
 ]
 
 if settings.DEBUG:
