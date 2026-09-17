@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "apps.shop.apps.ShopConfig",
     'apps.sns',
      'apps.payment',
+      'apps.chat.apps.ChatConfig',
 ]
 
 

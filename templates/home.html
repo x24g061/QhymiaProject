@@ -640,7 +640,53 @@
                 </div>
 
             </section>
+            <!-- =============================
+             オープンチャット
+            ============================== -->
 
+            <section class="home-card chat-card">
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <p class="section-label">
+                            OPEN CHAT
+                        </p>
+
+                        <h2>
+                            オープンチャット
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div id="chat-messages" class="chat-messages">
+
+                    <p class="chat-loading">
+                        メッセージを読み込み中...
+                    </p>
+
+                </div>
+
+
+                <div class="chat-form">
+
+                    {% csrf_token %}
+
+                    <input id="chat-input" type="text" maxlength="200" placeholder="メッセージを入力..." autocomplete="off">
+
+                    <button id="chat-send-button" type="button">
+                        送信
+                    </button>
+
+                </div>
+
+                <p id="chat-error" class="chat-error"></p>
+
+            </section>
 
 
             <!-- =============================
@@ -719,5 +765,5 @@
     </div>
 
 </div>
-
+<script src="{% static 'js/chat.js' %}"></script>
 {% endblock %}

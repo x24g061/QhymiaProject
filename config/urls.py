@@ -32,6 +32,8 @@ urlpatterns = [
 
      # Payment
     path("payment/", include("apps.payment.urls")),
+    # Open Chat
+        path("chat/", include("apps.chat.urls")),
 ]
 
 if settings.DEBUG:

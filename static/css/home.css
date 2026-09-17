@@ -1041,3 +1041,190 @@
     }
 
 }
+
+/* ========================================
+   OPEN CHAT
+======================================== */
+
+.chat-messages {
+    height: 260px;
+
+    overflow-y: auto;
+
+    padding: 10px;
+
+    background: #f7f9f8;
+
+    border: 1px solid #c6cfd1;
+
+    border-radius: 3px;
+}
+
+
+/* メッセージ1件 */
+
+.chat-message {
+    padding: 9px 10px;
+
+    margin-bottom: 8px;
+
+    background: white;
+
+    border: 1px solid #d5dcde;
+
+    border-left: 3px solid var(--main);
+
+    border-radius: 3px;
+}
+
+
+.chat-message:last-child {
+    margin-bottom: 0;
+}
+
+
+/* 名前・時間 */
+
+.chat-message-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 5px;
+}
+
+
+.chat-message-header strong {
+    color: var(--main-dark);
+
+    font-size: 11px;
+}
+
+
+.chat-message-header span {
+    color: var(--muted);
+
+    font-size: 9px;
+}
+
+
+/* 本文 */
+
+.chat-message p {
+    margin: 0;
+
+    color: var(--text);
+
+    font-size: 11px;
+
+    line-height: 1.6;
+
+    word-break: break-word;
+}
+
+
+/* 入力欄 */
+
+.chat-form {
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) 90px;
+
+    gap: 8px;
+
+    margin-top: 10px;
+}
+
+
+.chat-form input {
+    width: 100%;
+    height: 40px;
+
+    padding: 0 12px;
+
+    color: var(--text);
+
+    background: white;
+
+    border: 1px solid #87979b;
+
+    border-radius: 3px;
+
+    font: inherit;
+
+    font-size: 11px;
+}
+
+
+.chat-form input:focus {
+    outline: 2px solid rgba(21, 107, 134, 0.18);
+
+    border-color: var(--main);
+}
+
+
+/* 送信ボタン */
+
+.chat-form button {
+    height: 40px;
+
+    color: white;
+
+    background: var(--main);
+
+    border: 1px solid var(--main-dark);
+
+    border-radius: 3px;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.15s;
+}
+
+
+.chat-form button:hover {
+    background: var(--main-dark);
+}
+
+
+.chat-form button:disabled {
+    opacity: 0.5;
+
+    cursor: not-allowed;
+}
+
+
+/* エラー */
+
+.chat-error {
+    min-height: 16px;
+
+    margin: 6px 0 0;
+
+    color: #b43b3b;
+
+    font-size: 10px;
+}
+
+
+/* 読み込み・空 */
+
+.chat-loading,
+.chat-empty {
+    margin: 0;
+
+    padding: 20px;
+
+    color: var(--muted);
+
+    text-align: center;
+
+    font-size: 11px;
+}
