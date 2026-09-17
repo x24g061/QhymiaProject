@@ -1,91 +1,139 @@
 {% extends "base.html" %}
+{% load static %}
+
 {% block content %}
 
-<div class="login-page">
-    <div class="login-card">
+<link rel="stylesheet" href="{% static 'css/signup.css' %}">
 
-        <h1 class="login-logo">Qhymia</h1>
-        <p class="login-title">新規作成</p>
+<div class="signup-page">
 
-        <form method="post" class="login-form">
-            {% csrf_token %}
+    <div class="signup-container">
 
-            {% if form.non_field_errors %}
-                <div class="error-message">
-                    {{ form.non_field_errors }}
-                </div>
-            {% endif %}
-
-            <div class="form-group">
-                <label for="{{ form.user_id.id_for_label }}">
-                    固有ID
-                </label>
-
-                {{ form.user_id }}
-
-                {% for error in form.user_id.errors %}
-                    <p class="error-message">
-                        {{ error }}
-                    </p>
-                {% endfor %}
-            </div>
-
-            <div class="form-group">
-                <label for="{{ form.email.id_for_label }}">
-                    メールアドレス
-                </label>
-
-                {{ form.email }}
-
-                {% for error in form.email.errors %}
-                    <p class="error-message">
-                        {{ error }}
-                    </p>
-                {% endfor %}
-            </div>
-
-            <div class="form-group">
-                <label for="{{ form.password1.id_for_label }}">
-                    パスワード
-                </label>
-
-                {{ form.password1 }}
-
-                {% for error in form.password1.errors %}
-                    <p class="error-message">
-                        {{ error }}
-                    </p>
-                {% endfor %}
-            </div>
-
-            <div class="form-group">
-                <label for="{{ form.password2.id_for_label }}">
-                    パスワード確認
-                </label>
-
-                {{ form.password2 }}
-
-                {% for error in form.password2.errors %}
-                    <p class="error-message">
-                        {{ error }}
-                    </p>
-                {% endfor %}
-            </div>
-
-            <button type="submit" class="login-button">
-                新規作成
-            </button>
-        </form>
-
-        <div class="separator">
-            <span>または</span>
+        <!-- ロゴ -->
+        <div class="signup-brand">
+            <img src="{% static 'images/logo.png' %}" alt="Qhymia" class="signup-logo">
         </div>
 
-        <a href="{% url 'accounts:login' %}" class="google-button">
-            ログイン画面に戻る
-        </a>
+        <!-- 登録エリア -->
+        <section class="signup-content">
+
+            <h1 class="signup-title">
+                新規登録
+            </h1>
+
+            <p class="signup-description">
+                メールアドレスとユーザーIDから
+                Qhymiaのアカウントを作成できます。
+            </p>
+
+            <!-- 区切り -->
+            <div class="signup-separator">
+                <span>アカウント情報</span>
+            </div>
+
+            <!-- フォーム -->
+            <form method="post" class="signup-form">
+                {% csrf_token %}
+
+                {% if form.non_field_errors %}
+                <div class="signup-error">
+                    {{ form.non_field_errors }}
+                </div>
+                {% endif %}
+
+                <p class="signup-form-title">
+                    ● メールアドレスで登録する
+                </p>
+
+                <!-- メールアドレス -->
+                <div class="signup-form-group">
+                    {{ form.email }}
+
+                    {% for error in form.email.errors %}
+                    <p class="signup-error">
+                        {{ error }}
+                    </p>
+                    {% endfor %}
+                </div>
+
+                <!-- ユーザーID -->
+                <div class="signup-form-group">
+                    {{ form.user_id }}
+
+                    {% for error in form.user_id.errors %}
+                    <p class="signup-error">
+                        {{ error }}
+                    </p>
+                    {% endfor %}
+                </div>
+
+                <!-- パスワード -->
+                <div class="signup-form-group">
+                    {{ form.password1 }}
+
+                    {% for error in form.password1.errors %}
+                    <p class="signup-error">
+                        {{ error }}
+                    </p>
+                    {% endfor %}
+                </div>
+
+                <!-- パスワード確認 -->
+                <div class="signup-form-group">
+                    {{ form.password2 }}
+
+                    {% for error in form.password2.errors %}
+                    <p class="signup-error">
+                        {{ error }}
+                    </p>
+                    {% endfor %}
+                </div>
+
+                <!-- 説明 -->
+                <div class="signup-notes">
+                    <p>・ユーザーIDはログイン時に使用します</p>
+                    <p>・パスワードは忘れないようにしてください</p>
+                    <p>・登録したメールアドレスはアカウント管理に使用します</p>
+                </div>
+
+                <!-- 注意 -->
+                <div class="signup-warning">
+                    <strong>【注意事項】</strong>
+                    <p>
+                        複数アカウント・マクロ・botなどの利用は厳禁です。発覚次第、利用停止となります。
+                    </p>
+                </div>
+
+                <!-- 登録 -->
+                <button type="submit" class="signup-button">
+                    アカウントを作成
+                    <span>＞</span>
+                </button>
+
+            </form>
+
+            <a href="{% url 'accounts:login' %}" class="signup-back">
+                ＜ ログイン画面に戻る
+            </a>
+
+        </section>
 
     </div>
+
 </div>
+<footer class="signup-footer">
+
+    <p class="signup-copyright">
+        商標登録及び著作権
+    </p>
+
+    <div class="signup-footer-links">
+        <a href="#">利用規約</a>
+        <a href="#">特定商取引法</a>
+        <a href="#">プライバシーポリシー</a>
+    </div>
+
+</footer>
+
 
 {% endblock %}
