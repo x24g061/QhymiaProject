@@ -83,7 +83,43 @@ class Character(models.Model):
         unique=True,
     )
 
-        # ===== 成長情報 =====
+    # ===== 種族・職業 =====
+
+    RACE_CHOICES = [
+        ("human", "ヒューマン"),
+        ("elf", "エルフ"),
+        ("dwarf", "ドワーフ"),
+        ("dragonia", "ドラゴニア"),
+        ("witch", "ウィッチ"),
+        ("fairy", "フェアリー"),
+        ("demonia", "デモニア"),
+    ]
+
+    JOB_CHOICES = [
+        ("grappler", "拳闘士"),
+        ("warrior", "重戦士"),
+        ("hunter", "狩人"),
+        ("wizard", "ウィザード"),
+        ("priest", "プリースト"),
+        ("wanderer", "放浪人"),
+        ("assassin", "暗殺者"),
+    ]
+
+    race = models.CharField(
+        max_length=20,
+        choices=RACE_CHOICES,
+        default="human",
+        help_text="キャラクターの種族",
+    )
+
+    job = models.CharField(
+        max_length=20,
+        choices=JOB_CHOICES,
+        default="wanderer",
+        help_text="キャラクターの職業",
+    )
+
+     # ===== 成長情報 =====
 
     level = models.PositiveIntegerField(
         default=1,
