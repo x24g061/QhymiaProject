@@ -1228,3 +1228,18 @@
 
     font-size: 11px;
 }
+
+.explore-button-disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.cooldown-status {
+    margin: 0 0 10px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+
+    font-weight: bold;
+}

@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils import timezone
 
 
 class UserManager(BaseUserManager):
@@ -119,7 +120,7 @@ class Character(models.Model):
         help_text="キャラクターの職業",
     )
 
-     # ===== 成長情報 =====
+    # ===== 成長情報 =====
 
     level = models.PositiveIntegerField(
         default=1,
@@ -241,6 +242,26 @@ class Character(models.Model):
         help_text="キャラクターの現在スタミナ"
     )
 
+    # ===== 探索クールタイム =====
+
+    last_explored_at = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="最後に探索した日時"
+    )
+
+    exploration_cooldown_until = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="現在の探索クールタイム終了日時"
+    )
+
+    exploration_cooldown_reduced_until = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="探索クールタイム短縮効果の終了日時"
+    )
+
     # ===== システム情報 =====
 
     created_at = models.DateTimeField(
@@ -252,6 +273,37 @@ class Character(models.Model):
         auto_now=True,
         help_text="キャラクター情報更新日時"
     )
+
+    # ===== 探索クールタイム処理 =====
+
+    def is_exploration_cooldown_reduced(self):
+        """探索CT短縮効果が現在有効か判定する。"""
+        if not self.exploration_cooldown_reduced_until:
+            return False
+
+        return (
+            self.exploration_cooldown_reduced_until
+            > timezone.now()
+        )
+
+    def get_exploration_cooldown_seconds(self):
+        """現在適用される探索CT秒数を返す。"""
+        if self.is_exploration_cooldown_reduced():
+            return 20
+
+        return 40
+
+    def get_exploration_cooldown_remaining(self):
+        """現在の探索CT残り秒数を返す。"""
+        if not self.exploration_cooldown_until:
+            return 0
+
+        remaining = (
+            self.exploration_cooldown_until
+            - timezone.now()
+        ).total_seconds()
+
+        return max(0, int(remaining))
 
     def __str__(self):
         return self.name

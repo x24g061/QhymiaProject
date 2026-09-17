@@ -635,10 +635,33 @@
                     </div>
 
 
+                    {% if exploration_cooldown_remaining > 0 %}
+
+                    <button type="button" class="explore-button explore-button-disabled"
+                        id="exploration-cooldown-button" data-remaining="{{ exploration_cooldown_remaining }}" disabled>
+                        あと
+                        <span id="exploration-cooldown-seconds">
+                            {{ exploration_cooldown_remaining }}
+                        </span>
+                        秒
+                    </button>
+                    {% if exploration_cooldown_reduced %}
+                    <p class="cooldown-status">
+                        探索CT短縮中：20秒
+                    </p>
+                    {% else %}
+                    <p class="cooldown-status">
+                        通常探索CT：40秒
+                    </p>
+                    {% endif %}
+                    {% else %}
+
                     <a href="{% url 'battle:battle' %}" class="explore-button">
                         探索を開始する
                         <span>→</span>
                     </a>
+
+                    {% endif %}
 
                 </div>
 
@@ -768,5 +791,6 @@
     </div>
 
 </div>
+<script src="{% static 'js/exploration-cooldown.js' %}"></script>
 <script src="{% static 'js/chat.js' %}"></script>
 {% endblock %}

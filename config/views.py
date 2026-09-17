@@ -16,6 +16,9 @@ def home(request):
     main_attribute_value = 0
     battle_power = 0
 
+    exploration_cooldown_remaining = 0
+    exploration_cooldown_reduced = False
+
     if character:
         attributes = {
             "火": character.fire,
@@ -47,11 +50,23 @@ def home(request):
             + main_attribute_value
         )
 
+        exploration_cooldown_remaining = (
+            character.get_exploration_cooldown_remaining()
+        )
+
+        exploration_cooldown_reduced = (
+            character.is_exploration_cooldown_reduced()
+        )
+
     context = {
         "character": character,
         "main_attribute_name": main_attribute_name,
         "main_attribute_value": main_attribute_value,
         "battle_power": battle_power,
+        "exploration_cooldown_remaining":
+            exploration_cooldown_remaining,
+        "exploration_cooldown_reduced":
+            exploration_cooldown_reduced,
     }
 
     return render(request, "home.html", context)
