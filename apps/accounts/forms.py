@@ -6,11 +6,11 @@ from .models import User
 
 class SignUpForm(UserCreationForm):
     user_id = forms.CharField(
-        label="固有ID",
+        label="ユーザーID",
         max_length=20,
         widget=forms.TextInput(
             attrs={
-                "placeholder": "固有IDを入力してください",
+                "placeholder": "ユーザーIDを入力してください",
                 "autocomplete": "username",
             }
         ),
