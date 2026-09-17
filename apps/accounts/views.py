@@ -1,9 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
-
 from .forms import SignUpForm
-from .models import Character
-
+from .models import Character, User
 from django.contrib.auth.decorators import login_required
 
 
@@ -16,12 +14,21 @@ def login_view(request):
     error_message = None
 
     if request.method == "POST":
-        user_id = request.POST.get("user_id")
+        login_id = request.POST.get("user_id", "").strip()
         password = request.POST.get("password")
+
+        # メールアドレスで入力された場合
+        if "@" in login_id:
+            user_obj = User.objects.filter(
+                email__iexact=login_id
+            ).first()
+
+            if user_obj:
+                login_id = user_obj.user_id
 
         user = authenticate(
             request,
-            user_id=user_id,
+            user_id=login_id,
             password=password,
         )
 
@@ -38,7 +45,7 @@ def login_view(request):
 
             return redirect("home")
 
-        error_message = "固有IDまたはパスワードが正しくありません。"
+        error_message = "固有ID・メールアドレスまたはパスワードが正しくありません。"
 
     return render(
         request,
