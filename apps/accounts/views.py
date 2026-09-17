@@ -96,6 +96,14 @@ def character_create_view(request):
             "character_name",
             ""
         ).strip()
+        race = request.POST.get(
+            "race",
+            ""
+        ).strip()
+        job = request.POST.get(
+            "job",
+            ""
+        ).strip()
 
         if not character_name:
             error_message = "キャラクター名を入力してください。"
@@ -109,6 +117,8 @@ def character_create_view(request):
             Character.objects.create(
                 user=request.user,
                 name=character_name,
+                race=race,
+                job=job,
             )
 
             return redirect("home")
