@@ -29,6 +29,9 @@ urlpatterns = [
 
     # Inventory画面
     path("inventory/", include("apps.inventory.urls")),
+
+     # Payment
+    path("payment/", include("apps.payment.urls")),
 ]
 
 if settings.DEBUG:

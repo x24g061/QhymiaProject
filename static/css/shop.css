@@ -35,10 +35,8 @@ body {
     color: var(--text);
 
     background:
-        linear-gradient(
-            rgba(237, 244, 243, 0.91),
-            rgba(222, 231, 229, 0.94)
-        );
+        linear-gradient(rgba(237, 244, 243, 0.91),
+            rgba(222, 231, 229, 0.94));
 
     font-family:
         "Yu Gothic",
@@ -94,8 +92,7 @@ button:disabled {
     border-bottom: 2px solid var(--main-dark);
 
     box-shadow:
-        0 2px 7px
-        rgba(0, 0, 0, 0.12);
+        0 2px 7px rgba(0, 0, 0, 0.12);
 }
 
 
@@ -186,11 +183,9 @@ button:disabled {
     color: white;
 
     background:
-        linear-gradient(
-            110deg,
+        linear-gradient(110deg,
             #164e61,
-            #1d7b95
-        );
+            #1d7b95);
 
     border-bottom:
         3px solid #d19a40;
@@ -241,8 +236,7 @@ button:disabled {
     display: grid;
 
     grid-template-columns:
-        230px
-        minmax(0, 1fr);
+        230px minmax(0, 1fr);
 
     gap: 18px;
 
@@ -269,8 +263,7 @@ button:disabled {
     border-radius: 5px;
 
     box-shadow:
-        0 2px 8px
-        rgba(0, 0, 0, 0.1);
+        0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -338,8 +331,7 @@ button:disabled {
 
 .side-description {
     margin:
-        7px 5px
-        16px;
+        7px 5px 16px;
 
     color: var(--muted);
 
@@ -364,8 +356,7 @@ button:disabled {
     border-radius: 5px;
 
     box-shadow:
-        0 2px 8px
-        rgba(0, 0, 0, 0.1);
+        0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 
@@ -382,17 +373,13 @@ button:disabled {
     overflow-x: auto;
 
     padding:
-        12px
-        12px
-        0;
+        12px 12px 0;
 
     background:
-        rgba(
-            244,
+        rgba(244,
             247,
             246,
-            0.95
-        );
+            0.95);
 
     border-bottom:
         1px solid #aab5b7;
@@ -403,8 +390,7 @@ button:disabled {
     min-width: 100px;
 
     padding:
-        10px
-        15px;
+        10px 15px;
 
     color:
         #17678b;
@@ -508,8 +494,7 @@ button:disabled {
     height: 36px;
 
     padding:
-        0
-        10px;
+        0 10px;
 
     color:
         var(--text);
@@ -537,13 +522,10 @@ button:disabled {
 .toolbar-controls input:focus,
 .toolbar-controls select:focus {
     outline:
-        2px solid
-        rgba(
-            21,
+        2px solid rgba(21,
             107,
             134,
-            0.18
-        );
+            0.18);
 
     border-color:
         var(--main);
@@ -567,8 +549,7 @@ button:disabled {
     overflow: hidden;
 
     border:
-        1px solid
-        #566a70;
+        1px solid #566a70;
 }
 
 
@@ -577,12 +558,7 @@ button:disabled {
     display: grid;
 
     grid-template-columns:
-        120px
-        170px
-        minmax(220px, 1fr)
-        80px
-        100px
-        120px;
+        120px 170px minmax(220px, 1fr) 80px 100px 120px;
 }
 
 
@@ -593,15 +569,14 @@ button:disabled {
         var(--main);
 
     border-bottom:
-        1px solid
-        var(--main-dark);
+        1px solid var(--main-dark);
 
     font-weight:
         bold;
 }
 
 
-.table-header > div {
+.table-header>div {
     display: flex;
 
     align-items: center;
@@ -615,15 +590,14 @@ button:disabled {
         7px;
 
     border-right:
-        1px solid
-        rgba(255, 255, 255, 0.25);
+        1px solid rgba(255, 255, 255, 0.25);
 
     font-size:
         11px;
 }
 
 
-.table-header > div:last-child {
+.table-header>div:last-child {
     border-right:
         none;
 }
@@ -642,8 +616,7 @@ button:disabled {
         rgba(255, 255, 255, 0.97);
 
     border-bottom:
-        1px solid
-        #ccd3d4;
+        1px solid #ccd3d4;
 
     transition:
         0.12s;
@@ -681,8 +654,7 @@ button:disabled {
         8px 10px;
 
     border-right:
-        1px solid
-        #d8dfe0;
+        1px solid #d8dfe0;
 
     font-size:
         11px;
@@ -719,8 +691,7 @@ button:disabled {
         #deeff4;
 
     border:
-        1px solid
-        #86b4c1;
+        1px solid #86b4c1;
 
     border-radius:
         3px;
@@ -810,8 +781,7 @@ button:disabled {
         #f2f3f2;
 
     border:
-        1px solid
-        #64777c;
+        1px solid #64777c;
 
     border-radius:
         2px;
@@ -858,8 +828,7 @@ button:disabled {
 
 .empty-items {
     padding:
-        45px
-        20px;
+        45px 20px;
 
     color:
         var(--muted);
@@ -1013,4 +982,244 @@ button:disabled {
             100%;
     }
 
+}
+
+/* ========================================
+   Q購入エリア
+======================================== */
+
+.q-charge-section {
+    margin-bottom: 28px;
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid #cfdadd;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(13, 76, 98, 0.08);
+}
+
+/* タイトル */
+
+.q-charge-header {
+    margin-bottom: 20px;
+}
+
+.q-charge-small-title {
+    margin: 0 0 4px;
+    color: #156b86;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+}
+
+.q-charge-header h2 {
+    margin: 0;
+    color: #15252a;
+    font-size: 24px;
+}
+
+.q-charge-description {
+    margin: 8px 0 0;
+    color: #68777b;
+    font-size: 14px;
+}
+
+
+/* ========================================
+   Q購入カード一覧
+======================================== */
+
+.q-charge-list {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 14px;
+}
+
+
+/* 各カード */
+
+.q-charge-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 0;
+    padding: 20px 12px 16px;
+
+    background: #ffffff;
+    border: 1px solid #d3dcde;
+    border-radius: 10px;
+
+    box-shadow: 0 3px 10px rgba(13, 76, 98, 0.06);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.q-charge-card:hover {
+    transform: translateY(-3px);
+    border-color: #d79a38;
+    box-shadow: 0 7px 18px rgba(13, 76, 98, 0.13);
+}
+
+
+/* ========================================
+   Qコイン
+======================================== */
+
+.q-coin-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+
+    margin-bottom: 10px;
+
+    border: 3px solid #d79a38;
+    border-radius: 50%;
+
+    background: #fff8e8;
+    color: #d79a38;
+
+    font-size: 24px;
+    font-weight: 800;
+
+    box-shadow: inset 0 0 0 3px #ffffff;
+}
+
+
+/* ========================================
+   Q量・価格
+======================================== */
+
+.q-amount {
+    display: block;
+    margin-bottom: 5px;
+
+    color: #15252a;
+    font-size: 18px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.q-price {
+    display: block;
+    margin-bottom: 14px;
+
+    color: #68777b;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+/* ========================================
+   購入ボタン
+======================================== */
+
+.q-purchase-button {
+    width: 100%;
+    min-height: 38px;
+
+    padding: 8px 10px;
+
+    border: none;
+    border-radius: 6px;
+
+    background: #156b86;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.1s ease;
+}
+
+.q-purchase-button:hover {
+    background: #0d4c62;
+}
+
+.q-purchase-button:active {
+    transform: translateY(1px);
+}
+
+
+/* ========================================
+   注意事項
+======================================== */
+
+.q-charge-notice {
+    margin-top: 18px;
+    padding: 14px 18px;
+
+    background: #edf7fa;
+    border: 1px solid #b8d8e1;
+    border-radius: 8px;
+
+    color: #42565c;
+    font-size: 13px;
+}
+
+.q-charge-notice strong {
+    display: block;
+    margin-bottom: 6px;
+
+    color: #156b86;
+    font-size: 14px;
+}
+
+.q-charge-notice ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.q-charge-notice li {
+    margin: 3px 0;
+}
+
+
+/* ========================================
+   レスポンシブ
+======================================== */
+
+@media (max-width: 1100px) {
+
+    .q-charge-list {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 700px) {
+
+    .q-charge-section {
+        padding: 18px;
+    }
+
+    .q-charge-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 450px) {
+
+    .q-charge-list {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ========================================
+   Q購入フォーム
+======================================== */
+
+.q-charge-card form {
+    width: 100%;
+}
+
+.q-charge-card form .q-purchase-button {
+    width: 100%;
 }

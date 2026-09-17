@@ -183,6 +183,110 @@
 
             <main class="market-area">
 
+                <!-- =================================
+     Q購入エリア
+================================== -->
+
+                <section class="q-charge-section">
+
+                    <div class="q-charge-header">
+                        <div>
+                            <p class="q-charge-small-title">Q CHARGE</p>
+                            <h2>課金（Qの購入）</h2>
+                            <p class="q-charge-description">
+                                Qを購入して、ショップでの買い物やサービスに利用できます。
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="q-charge-list">
+
+                        <!-- 500 Q -->
+                        <article class="q-charge-card">
+                            <div class="q-coin-icon">Q</div>
+                            <strong class="q-amount">500 Q</strong>
+                            <span class="q-price">¥500</span>
+
+                            <form method="post" action="{% url 'payment:purchase_q' 500 %}">
+                                {% csrf_token %}
+                                <button type="submit" class="q-purchase-button">
+                                    購入する
+                                </button>
+                            </form>
+                        </article>
+
+
+                        <!-- 1,000 Q -->
+                        <article class="q-charge-card">
+                            <div class="q-coin-icon">Q</div>
+                            <strong class="q-amount">1,000 Q</strong>
+                            <span class="q-price">¥1,000</span>
+
+                            <form method="post" action="{% url 'payment:purchase_q' 1000 %}">
+                                {% csrf_token %}
+                                <button type="submit" class="q-purchase-button">
+                                    購入する
+                                </button>
+                            </form>
+                        </article>
+
+
+                        <!-- 3,000 Q -->
+                        <article class="q-charge-card">
+                            <div class="q-coin-icon">Q</div>
+                            <strong class="q-amount">3,000 Q</strong>
+                            <span class="q-price">¥3,000</span>
+
+                            <form method="post" action="{% url 'payment:purchase_q' 3000 %}">
+                                {% csrf_token %}
+                                <button type="submit" class="q-purchase-button">
+                                    購入する
+                                </button>
+                            </form>
+                        </article>
+
+
+                        <!-- 5,000 Q -->
+                        <article class="q-charge-card">
+                            <div class="q-coin-icon">Q</div>
+                            <strong class="q-amount">5,000 Q</strong>
+                            <span class="q-price">¥5,000</span>
+
+                            <form method="post" action="{% url 'payment:purchase_q' 5000 %}">
+                                {% csrf_token %}
+                                <button type="submit" class="q-purchase-button">
+                                    購入する
+                                </button>
+                            </form>
+                        </article>
+
+
+                        <!-- 10,000 Q -->
+                        <article class="q-charge-card">
+                            <div class="q-coin-icon">Q</div>
+                            <strong class="q-amount">10,000 Q</strong>
+                            <span class="q-price">¥10,000</span>
+
+                            <form method="post" action="{% url 'payment:purchase_q' 10000 %}">
+                                {% csrf_token %}
+                                <button type="submit" class="q-purchase-button">
+                                    購入する
+                                </button>
+                            </form>
+                        </article>
+
+                    </div>
+                    <div class="q-charge-notice">
+                        <strong>ⓘ ご注意</strong>
+
+                        <ul>
+                            <li>購入したQは、ゲーム内のショップでアイテムの購入などに利用できます。</li>
+                            <li>購入後、Qはアカウントに反映されます。</li>
+                            <li>購入処理完了後のキャンセルについては対応できません。</li>
+                        </ul>
+                    </div>
+
+                </section>
 
                 <!-- =================================
                  カテゴリー
