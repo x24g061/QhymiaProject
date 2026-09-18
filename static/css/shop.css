@@ -1157,6 +1157,9 @@ button:disabled {
     margin-top: 18px;
     padding: 14px 18px;
 
+    width: 100%;
+    box-sizing: border-box;
+
     background: #edf7fa;
     border: 1px solid #b8d8e1;
     border-radius: 8px;
@@ -1222,4 +1225,56 @@ button:disabled {
 
 .q-charge-card form .q-purchase-button {
     width: 100%;
+}
+
+/* ========================================
+   Q購入 ご注意・特商法リンク
+======================================== */
+
+/* ご注意欄を横長にする */
+.q-charge-notice {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
+}
+
+/* 特商法の注意文 */
+.q-charge-notice .q-charge-legal-notice {
+    display: block;
+    margin: 10px 0 0;
+    padding: 0;
+
+    color: #d64545;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+/* 特商法リンク */
+.q-charge-notice .q-charge-legal-notice a {
+    display: inline !important;
+    width: auto !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    color: #d64545 !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+
+    font-size: inherit;
+    font-weight: 700;
+    line-height: inherit;
+    text-decoration: underline;
+}
+
+/* マウスを乗せたとき */
+.q-charge-notice .q-charge-legal-notice a:hover {
+    color: #a92f2f !important;
+    background: transparent !important;
 }

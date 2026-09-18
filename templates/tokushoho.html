@@ -1,0 +1,332 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>特定商取引法に基づく表記 | Qhymia</title>
+
+    <!-- 利用規約画面と同じCSS -->
+    <link
+        rel="stylesheet"
+        href="{% static 'css/terms.css' %}"
+    >
+
+    <!-- 特商法ページ用CSS -->
+    <link
+        rel="stylesheet"
+        href="{% static 'css/tokushoho.css' %}"
+    >
+</head>
+
+
+<body>
+
+<div class="terms-page">
+
+    <!-- =========================
+         ロゴ
+    ========================== -->
+    <header class="terms-header">
+
+        <a
+            href="{% url 'accounts:signup' %}"
+            class="terms-logo-link"
+        >
+            <img
+                src="{% static 'images/logo.png' %}"
+                alt="Qhymia"
+                class="terms-logo"
+            >
+        </a>
+
+    </header>
+
+
+    <!-- =========================
+         メイン
+    ========================== -->
+    <main class="terms-container">
+
+        <section class="terms-title-area">
+
+            <h1>
+                特定商取引法に基づく表記
+            </h1>
+
+            <p>
+                Qhymiaにおけるサービスの提供および
+                取引に関する情報を掲載しています。
+            </p>
+
+        </section>
+
+
+        <!-- =========================
+             表記内容
+        ========================== -->
+        <div class="tokushoho-content">
+
+            <div class="tokushoho-table">
+
+
+                <!-- 販売事業者 -->
+                <div class="tokushoho-row">
+
+                    <div class="tokushoho-label">
+                        販売事業者
+                    </div>
+
+                    <div class="tokushoho-value">
+                        【正式な事業者名・運営者名を入力】
+                    </div>
+
+                </div>
+
+
+                <!-- 運営責任者 -->
+                <div class="tokushoho-row">
+
+                    <div class="tokushoho-label">
+                        運営責任者
+                    </div>
+
+                    <div class="tokushoho-value">
+                        かいと
+                    </div>
+
+                </div>
+
+
+                <!-- 所在地 -->
+                <div class="tokushoho-row">
+
+                    <div class="tokushoho-label">
+                        所在地
+                    </div>
+
+                    <div class="tokushoho-value">
+                        【所在地を入力】
+                    </div>
+
+                </div>
+
+
+                <!-- 電話番号 -->
+                <div class="tokushoho-row">
+
+                    <div class="tokushoho-label">
+                        電話番号
+                    </div>
+
+                    <div class="tokushoho-value">
+                        【連絡可能な電話番号を入力】
+                    </div>
+
+                </div>
+
+
+                <!-- メールアドレス -->
+                <div class="tokushoho-row">
+
+                    <div class="tokushoho-label">
+                        お問い合わせ先
+                    </div>
+
+                    <div class="tokushoho-value">
+                        【お問い合わせ用メールアドレスを入力】
+                    </div>
+
+                </div>
+
+
+                <!-- 販売価格 -->
+                <div class="tokushoho-row">
+
+                    <div class="tokushoho-label">
+                        販売価格
+                    </div>
+
+                    <div class="tokushoho-value">
+                        各商品・サービスの購入画面に表示される価格に準じます。
+                    </div>
+
+                </div>
+
+
+                <!-- 商品代金以外 -->
+                <div class="tokushoho-row">
+
+                    <div class="tokushoho-label">
+                        商品代金以外の必要料金
+                    </div>
+
+                    <div class="tokushoho-value">
+                        インターネット接続に必要となる
+                        通信料金等はユーザーの負担となります。
+                    </div>
+
+                </div>
+
+
+                <!-- 支払い方法 -->
+                <div class="tokushoho-row">
+
+                    <div class="tokushoho-label">
+                        支払方法
+                    </div>
+
+                    <div class="tokushoho-value">
+                        本サービスが購入画面上で指定する
+                        決済方法をご利用いただけます。
+                    </div>
+
+                </div>
+
+
+                <!-- 支払時期 -->
+                <div class="tokushoho-row">
+
+                    <div class="tokushoho-label">
+                        支払時期
+                    </div>
+
+                    <div class="tokushoho-value">
+                        商品またはサービスの購入手続き完了時に
+                        決済が行われます。
+                    </div>
+
+                </div>
+
+
+                <!-- 提供時期 -->
+                <div class="tokushoho-row">
+
+                    <div class="tokushoho-label">
+                        商品・サービスの提供時期
+                    </div>
+
+                    <div class="tokushoho-value">
+                        決済手続き完了後、
+                        原則として直ちにゲーム内へ反映されます。
+                    </div>
+
+                </div>
+
+
+                <!-- 返品 -->
+                <div class="tokushoho-row">
+
+                    <div class="tokushoho-label">
+                        返品・キャンセル
+                    </div>
+
+                    <div class="tokushoho-value">
+                        デジタルコンテンツという商品の性質上、
+                        提供開始後の返品またはキャンセルについては、
+                        法令上必要な場合を除き、
+                        原則として受け付けておりません。
+                    </div>
+
+                </div>
+
+
+                <!-- 不具合 -->
+                <div class="tokushoho-row">
+
+                    <div class="tokushoho-label">
+                        商品・サービスに不具合がある場合
+                    </div>
+
+                    <div class="tokushoho-value">
+                        ゲーム内アイテム等が正常に反映されない場合は、
+                        お問い合わせ先までご連絡ください。
+                        状況を確認した上で対応します。
+                    </div>
+
+                </div>
+
+
+                <!-- 動作環境 -->
+                <div class="tokushoho-row">
+
+                    <div class="tokushoho-label">
+                        動作環境
+                    </div>
+
+                    <div class="tokushoho-value">
+                        本サービスを利用するためには、
+                        インターネットへ接続可能な端末および
+                        対応ブラウザが必要です。
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- 注意 -->
+            <div class="tokushoho-note">
+
+                <h2>
+                    ご注意
+                </h2>
+
+                <p>
+                    本ページに記載されている内容は、
+                    サービス内容の変更などに応じて
+                    変更される場合があります。
+                </p>
+
+            </div>
+
+
+            <div class="terms-date">
+
+                <p>
+                    制定日：2026年9月18日
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================
+             戻る
+        ========================== -->
+        <div class="terms-actions">
+
+            <a
+                href="{% url 'accounts:signup' %}"
+                class="terms-back-button"
+            >
+                ＜ 新規登録画面に戻る
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <footer class="terms-footer">
+
+        <p>
+            Qhymia
+        </p>
+
+    </footer>
+
+</div>
+
+</body>
+
+</html>

@@ -130,3 +130,14 @@ def character_create_view(request):
             "error_message": error_message,
         },
     )
+
+    # 利用規約
+def terms_view(request):
+    return render(request, "terms.html")
+
+    # 特定商取引法
+def tokushoho_view(request):
+    return render(request, "tokushoho.html")
+    # プライバシーポリシー
+def privacy_view(request):
+    return render(request, "privacy.html")

@@ -10,7 +10,7 @@
 
     <title>NPCショップ | Qhymia</title>
 
-    <link rel="stylesheet" href="{% static 'css/shop.css' %}">
+    <link rel="stylesheet" href="{% static 'css/shop.css' %}?v=2">
 
     <script src="{% static 'js/shop.js' %}" defer></script>
 </head>
@@ -276,6 +276,9 @@
                         </article>
 
                     </div>
+                    <!-- q-charge-list ここまで -->
+
+
                     <div class="q-charge-notice">
                         <strong>ⓘ ご注意</strong>
 
@@ -284,7 +287,12 @@
                             <li>購入後、Qはアカウントに反映されます。</li>
                             <li>購入処理完了後のキャンセルについては対応できません。</li>
                         </ul>
+
+                        <p class="q-charge-legal-notice">
+                            <a href="{% url 'payment:kakin_tokushoho' %}">特定商取引法に基づく表記</a>をご確認の上、ご購入ください。
+                        </p>
                     </div>
+
 
                 </section>
 

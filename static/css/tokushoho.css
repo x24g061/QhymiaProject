@@ -1,0 +1,165 @@
+/* ========================================
+   特定商取引法に基づく表記
+======================================== */
+
+.tokushoho-content {
+    padding:
+        35px
+        45px;
+}
+
+
+/* ========================================
+   表
+======================================== */
+
+.tokushoho-table {
+    width: 100%;
+
+    border-top:
+        1px solid
+        rgba(35, 95, 120, 0.30);
+
+    border-left:
+        1px solid
+        rgba(35, 95, 120, 0.30);
+}
+
+
+.tokushoho-row {
+    display: grid;
+
+    grid-template-columns:
+        210px 1fr;
+
+    border-bottom:
+        1px solid
+        rgba(35, 95, 120, 0.30);
+}
+
+
+/* 左側 */
+
+.tokushoho-label {
+    padding:
+        17px
+        18px;
+
+    background:
+        rgba(45, 184, 223, 0.10);
+
+    color: #075376;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    line-height: 1.7;
+
+    border-right:
+        1px solid
+        rgba(35, 95, 120, 0.30);
+}
+
+
+/* 右側 */
+
+.tokushoho-value {
+    padding:
+        17px
+        20px;
+
+    background:
+        rgba(255, 255, 255, 0.50);
+
+    color: #315f72;
+
+    font-size: 14px;
+
+    line-height: 1.8;
+
+    border-right:
+        1px solid
+        rgba(35, 95, 120, 0.30);
+}
+
+
+/* ========================================
+   注意
+======================================== */
+
+.tokushoho-note {
+    margin-top: 35px;
+
+    padding:
+        20px
+        22px;
+
+    background:
+        rgba(45, 184, 223, 0.07);
+
+    border-left:
+        4px solid
+        #2db8df;
+}
+
+
+.tokushoho-note h2 {
+    margin:
+        0
+        0
+        10px;
+
+    color: #075376;
+
+    font-size: 17px;
+}
+
+
+.tokushoho-note p {
+    margin: 0;
+
+    color: #315f72;
+
+    font-size: 14px;
+
+    line-height: 1.8;
+}
+
+
+/* ========================================
+   スマホ
+======================================== */
+
+@media (max-width: 700px) {
+
+    .tokushoho-content {
+        padding:
+            25px
+            20px;
+    }
+
+
+    .tokushoho-row {
+        display: block;
+    }
+
+
+    .tokushoho-label {
+        border-right:
+            1px solid
+            rgba(35, 95, 120, 0.30);
+
+        border-bottom:
+            1px solid
+            rgba(35, 95, 120, 0.20);
+    }
+
+
+    .tokushoho-value {
+        border-right:
+            1px solid
+            rgba(35, 95, 120, 0.30);
+    }
+
+}
