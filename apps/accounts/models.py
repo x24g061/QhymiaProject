@@ -274,6 +274,13 @@ class Character(models.Model):
         help_text="キャラクター情報更新日時"
     )
 
+    # ===== 闘技場 =====
+
+    arena_floor = models.PositiveIntegerField(
+    default=1,
+    help_text="現在の闘技場階層"
+    )
+
     # ===== 探索クールタイム処理 =====
 
     def is_exploration_cooldown_reduced(self):

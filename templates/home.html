@@ -102,69 +102,92 @@
 
             </div>
 
-
-            <span class="floor-badge">
-                一階層：草原
-            </span>
-
         </div>
 
 
-        <div class="arena-info">
+        <div class="arena-character">
 
-            <div class="arena-info-item">
-
-                <span>
-                    キャラクター
-                </span>
+            <div class="arena-floor">
+                <span>CURRENT ARENA FLOOR</span>
 
                 <strong>
-                    {{ character.name }}
+                    闘技場 {{ character.arena_floor }}階
                 </strong>
+            </div>
+
+
+            <div class="arena-character-icon">
+                {{ character.name|slice:":1" }}
+            </div>
+
+
+            <h3 class="
+            arena-character-name
+            {% if main_attribute_name == '火' %}
+                attribute-fire
+            {% elif main_attribute_name == '水' %}
+                attribute-water
+            {% elif main_attribute_name == '草' %}
+                attribute-grass
+            {% elif main_attribute_name == '岩' %}
+                attribute-rock
+            {% elif main_attribute_name == '光' %}
+                attribute-light
+            {% elif main_attribute_name == '闇' %}
+                attribute-dark
+            {% endif %}
+        ">
+                {{ character.name }}
+            </h3>
+
+
+            <p class="arena-character-attribute">
+                {{ main_attribute_name }}属性
+            </p>
+
+
+            <div class="arena-resource">
+
+                <div class="arena-resource-header">
+                    <span>HP</span>
+
+                    <strong>
+                        {{ character.current_hp }}
+                        /
+                        {{ character.max_hp }}
+                    </strong>
+                </div>
+
+                <div class="arena-resource-bar">
+                    <div class="arena-resource-fill arena-hp-fill"
+                        style="width: {% widthratio character.current_hp character.max_hp 100 %}%;">
+                    </div>
+                </div>
 
             </div>
 
 
-            <div class="arena-info-item">
+            <div class="arena-resource">
 
-                <span>
-                    メイン属性
-                </span>
+                <div class="arena-resource-header">
+                    <span>MP</span>
 
-                <strong>
-                    {{ main_attribute_name }}
-                </strong>
+                    <strong>
+                        {{ character.current_mp }}
+                        /
+                        {{ character.max_mp }}
+                    </strong>
+                </div>
 
-            </div>
-
-
-            <div class="arena-info-item">
-
-                <span>
-                    属性値
-                </span>
-
-                <strong>
-                    {{ main_attribute_value }}
-                </strong>
-
-            </div>
-
-
-            <div class="arena-info-item">
-
-                <span>
-                    戦闘力
-                </span>
-
-                <strong>
-                    {{ battle_power }}
-                </strong>
+                <div class="arena-resource-bar">
+                    <div class="arena-resource-fill arena-mp-fill"
+                        style="width: {% widthratio character.current_mp character.max_mp 100 %}%;">
+                    </div>
+                </div>
 
             </div>
 
         </div>
-
     </section>
 
 

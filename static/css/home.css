@@ -1243,3 +1243,209 @@
 
     font-weight: bold;
 }
+
+/* ========================================
+   ARENA CHARACTER
+======================================== */
+
+.arena-character {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    padding: 20px;
+
+    background: #f7f9f8;
+
+    border: 1px solid #c5ced0;
+}
+
+
+/* 現在の闘技場階 */
+
+.arena-floor {
+    width: 100%;
+
+    margin-bottom: 20px;
+
+    padding: 10px 14px;
+
+    text-align: center;
+
+    background: #eef3f3;
+
+    border-left: 4px solid var(--main);
+}
+
+
+.arena-floor span {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: var(--muted);
+
+    font-size: 8px;
+
+    font-weight: bold;
+
+    letter-spacing: 0.1em;
+}
+
+
+.arena-floor strong {
+    color: var(--text);
+
+    font-size: 15px;
+}
+
+
+/* キャラクターアイコン */
+
+.arena-character-icon {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 76px;
+    height: 76px;
+
+    margin-bottom: 10px;
+
+    color: white;
+
+    background:
+        linear-gradient(135deg,
+            var(--main-dark),
+            var(--main));
+
+    border: 3px solid #aec5cb;
+
+    border-radius: 6px;
+
+    font-family:
+        "Yu Mincho",
+        serif;
+
+    font-size: 30px;
+
+    font-weight: bold;
+}
+
+
+/* キャラクター名 */
+
+.arena-character-name {
+    margin: 0 0 3px;
+
+    font-size: 21px;
+
+    font-weight: bold;
+}
+
+
+/* 属性 */
+
+.arena-character-attribute {
+    margin: 0 0 20px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+}
+
+
+/* 属性ごとの名前色 */
+
+.attribute-fire {
+    color: #c94a3f;
+}
+
+.attribute-water {
+    color: #2877b5;
+}
+
+.attribute-grass {
+    color: #3e8a52;
+}
+
+.attribute-rock {
+    color: #9b6a38;
+}
+
+.attribute-light {
+    color: #c99a22;
+}
+
+.attribute-dark {
+    color: #7046a0;
+}
+
+
+/* HP / MP */
+
+.arena-resource {
+    width: 100%;
+
+    max-width: 500px;
+
+    margin-bottom: 13px;
+}
+
+
+.arena-resource:last-child {
+    margin-bottom: 0;
+}
+
+
+.arena-resource-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 5px;
+
+    font-size: 11px;
+}
+
+
+.arena-resource-header span {
+    color: var(--muted);
+
+    font-weight: bold;
+}
+
+
+/* ゲージ */
+
+.arena-resource-bar {
+    width: 100%;
+    height: 10px;
+
+    overflow: hidden;
+
+    background: #d8dfe0;
+
+    border-radius: 10px;
+}
+
+
+.arena-resource-fill {
+    height: 100%;
+
+    border-radius: 10px;
+}
+
+
+.arena-hp-fill {
+    background: #518c58;
+}
+
+
+.arena-mp-fill {
+    background: #397aa3;
+}
