@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 
 
 # 購入可能なQ
@@ -49,3 +49,8 @@ def purchase_q(request, amount):
     )
 
     return redirect("shop:npc_shop")
+
+
+# 特定商取引法
+def kakin_tokushoho(request):
+    return render(request, "kakin_tokushoho.html")

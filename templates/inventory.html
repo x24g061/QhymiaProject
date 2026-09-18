@@ -1,119 +1,499 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}倉庫{% endblock %}
+{% block title %}倉庫 | Qhymia{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/inventory.css' %}?v=2">
+<link rel="stylesheet" href="{% static 'css/inventory.css' %}">
 {% endblock %}
 
 {% block content %}
 
 <div class="inventory-page">
 
-    <div class="inventory-header">
-        <h1>倉庫</h1>
-        <a href="{% url 'home' %}" class="back-button">
-            ホームへ戻る
+    <!-- 上部メニュー -->
+    <header class="inventory-top-menu">
+
+        <a href="{% url 'home' %}" class="top-button">
+            ← ホームへ戻る
         </a>
+
+        <a href="{% url 'shop:shop' %}" class="top-button">
+            ショップへ
+        </a>
+
+        <div class="inventory-count">
+            <span>所持アイテム</span>
+            <strong>3</strong>
+            <span>個</span>
+        </div>
+
+    </header>
+
+
+    <!-- タイトル -->
+    <section class="inventory-title">
+
+        <div>
+
+            <p class="inventory-label">
+                QHYMIA INVENTORY
+            </p>
+
+            <h1>
+                倉庫
+            </h1>
+
+            <p>
+                装備中のアイテムや所持アイテムを確認できます。
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- メイン -->
+    <div class="inventory-layout">
+
+        <!-- 左メニュー -->
+        <aside class="inventory-side-menu">
+
+            <h2>
+                アイテムメニュー
+            </h2>
+
+            <button
+                type="button"
+                class="side-button active"
+                data-target="equipment"
+            >
+                <span>装備中アイテム</span>
+                <span>▶</span>
+            </button>
+
+            <p class="side-description">
+                現在キャラクターが装備しているアイテムを確認できます。
+            </p>
+
+
+            <button
+                type="button"
+                class="side-button"
+                data-target="items"
+            >
+                <span>所持アイテム</span>
+                <span>▶</span>
+            </button>
+
+            <p class="side-description">
+                現在倉庫に所持しているアイテムを確認できます。
+            </p>
+
+        </aside>
+
+
+        <!-- 右側 -->
+        <main class="inventory-main">
+
+
+            <!-- ===============================
+                 装備中アイテム
+            ================================ -->
+
+            <section
+                id="equipment-panel"
+                class="inventory-panel active-panel"
+            >
+
+                <div class="inventory-toolbar">
+
+                    <div>
+
+                        <p class="small-title">
+                            EQUIPPED ITEMS
+                        </p>
+
+                        <h2>
+                            装備中アイテム
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <div class="equipment-table">
+
+                        <div class="equipment-header">
+
+                            <div>種類</div>
+                            <div>アイテム名</div>
+                            <div>戦闘力</div>
+
+                        </div>
+
+
+                        <div class="table-body">
+
+                            <article class="equipment-row">
+
+                                <div class="table-cell">
+                                    <span class="category-tag">
+                                        武器
+                                    </span>
+                                </div>
+
+                                <div class="table-cell item-name-cell">
+                                    <strong>
+                                        鉄の剣
+                                    </strong>
+                                </div>
+
+                                <div class="table-cell power-cell">
+                                    120
+                                </div>
+
+                            </article>
+
+
+                            <article class="equipment-row">
+
+                                <div class="table-cell">
+                                    <span class="category-tag">
+                                        頭具
+                                    </span>
+                                </div>
+
+                                <div class="table-cell item-name-cell">
+                                    <strong>
+                                        革の帽子
+                                    </strong>
+                                </div>
+
+                                <div class="table-cell power-cell">
+                                    30
+                                </div>
+
+                            </article>
+
+
+                            <article class="equipment-row">
+
+                                <div class="table-cell">
+                                    <span class="category-tag">
+                                        防具
+                                    </span>
+                                </div>
+
+                                <div class="table-cell item-name-cell">
+                                    <strong>
+                                        革の鎧
+                                    </strong>
+                                </div>
+
+                                <div class="table-cell power-cell">
+                                    70
+                                </div>
+
+                            </article>
+
+
+                            <article class="equipment-row">
+
+                                <div class="table-cell">
+                                    <span class="category-tag">
+                                        足具
+                                    </span>
+                                </div>
+
+                                <div class="table-cell item-name-cell">
+                                    <strong>
+                                        革の靴
+                                    </strong>
+                                </div>
+
+                                <div class="table-cell power-cell">
+                                    25
+                                </div>
+
+                            </article>
+
+
+                            <article class="equipment-row">
+
+                                <div class="table-cell">
+                                    <span class="category-tag">
+                                        アクセサリー
+                                    </span>
+                                </div>
+
+                                <div class="table-cell item-name-cell">
+                                    <strong>
+                                        銀の指輪
+                                    </strong>
+                                </div>
+
+                                <div class="table-cell power-cell">
+                                    15
+                                </div>
+
+                            </article>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ===============================
+                 所持アイテム
+            ================================ -->
+
+            <section
+                id="items-panel"
+                class="inventory-panel"
+            >
+
+                <!-- カテゴリ -->
+                <nav class="category-tabs">
+
+                    <button
+                        type="button"
+                        class="category-button active"
+                        data-category="all"
+                    >
+                        すべて
+                    </button>
+
+                    <button
+                        type="button"
+                        class="category-button"
+                        data-category="equipment"
+                    >
+                        装備品
+                    </button>
+
+                    <button
+                        type="button"
+                        class="category-button"
+                        data-category="consumable"
+                    >
+                        消耗品
+                    </button>
+
+                    <button
+                        type="button"
+                        class="category-button"
+                        data-category="material"
+                    >
+                        素材
+                    </button>
+
+                </nav>
+
+
+                <div class="inventory-toolbar">
+
+                    <div>
+
+                        <p class="small-title">
+                            OWNED ITEMS
+                        </p>
+
+                        <h2 id="category-title">
+                            所持アイテム
+                        </h2>
+
+                    </div>
+
+
+                    <div class="toolbar-controls">
+
+                        <input
+                            type="search"
+                            id="search"
+                            placeholder="アイテム名で検索"
+                        >
+
+                        <select id="sort">
+
+                            <option value="default">
+                                標準
+                            </option>
+
+                            <option value="name">
+                                名前順
+                            </option>
+
+                            <option value="quantity-high">
+                                個数が多い順
+                            </option>
+
+                            <option value="quantity-low">
+                                個数が少ない順
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <div class="item-table">
+
+                        <div class="item-header">
+
+                            <div>種類</div>
+                            <div>アイテム名</div>
+                            <div>個数</div>
+
+                        </div>
+
+
+                        <div id="items" class="table-body">
+
+                            <article
+                                class="item-row"
+                                data-item
+                                data-name="回復薬"
+                                data-category="consumable"
+                                data-quantity="5"
+                            >
+
+                                <div class="table-cell">
+
+                                    <span class="category-tag">
+                                        消耗品
+                                    </span>
+
+                                </div>
+
+                                <div class="table-cell item-name-cell">
+
+                                    <strong>
+                                        回復薬
+                                    </strong>
+
+                                </div>
+
+                                <div class="table-cell quantity-cell">
+
+                                    <strong>
+                                        5
+                                    </strong>
+
+                                    個
+
+                                </div>
+
+                            </article>
+
+
+                            <article
+                                class="item-row"
+                                data-item
+                                data-name="木の剣"
+                                data-category="equipment"
+                                data-quantity="1"
+                            >
+
+                                <div class="table-cell">
+
+                                    <span class="category-tag">
+                                        装備品
+                                    </span>
+
+                                </div>
+
+                                <div class="table-cell item-name-cell">
+
+                                    <strong>
+                                        木の剣
+                                    </strong>
+
+                                </div>
+
+                                <div class="table-cell quantity-cell">
+
+                                    <strong>
+                                        1
+                                    </strong>
+
+                                    個
+
+                                </div>
+
+                            </article>
+
+
+                            <article
+                                class="item-row"
+                                data-item
+                                data-name="スライムの核"
+                                data-category="material"
+                                data-quantity="8"
+                            >
+
+                                <div class="table-cell">
+
+                                    <span class="category-tag">
+                                        素材
+                                    </span>
+
+                                </div>
+
+                                <div class="table-cell item-name-cell">
+
+                                    <strong>
+                                        スライムの核
+                                    </strong>
+
+                                </div>
+
+                                <div class="table-cell quantity-cell">
+
+                                    <strong>
+                                        8
+                                    </strong>
+
+                                    個
+
+                                </div>
+
+                            </article>
+
+                        </div>
+
+
+                        <div
+                            id="search-empty"
+                            class="empty-items hidden"
+                        >
+                            条件に一致するアイテムがありません。
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
     </div>
 
-
-    <!-- 装備中アイテム -->
-    <section class="inventory-section">
-
-        <h2>装備中アイテム</h2>
-
-        <table class="inventory-table">
-
-            <thead>
-                <tr>
-                    <th>種類</th>
-                    <th>アイテム名</th>
-                    <th>戦闘力</th>
-                </tr>
-            </thead>
-
-            <tbody>
-
-                <tr>
-                    <td>武器</td>
-                    <td>鉄の剣</td>
-                    <td>120</td>
-                </tr>
-
-                <tr>
-                    <td>頭具</td>
-                    <td>革の帽子</td>
-                    <td>30</td>
-                </tr>
-
-                <tr>
-                    <td>防具</td>
-                    <td>革の鎧</td>
-                    <td>70</td>
-                </tr>
-
-                <tr>
-                    <td>足具</td>
-                    <td>革の靴</td>
-                    <td>25</td>
-                </tr>
-
-                <tr>
-                    <td>アクセサリー</td>
-                    <td>銀の指輪</td>
-                    <td>15</td>
-                </tr>
-
-            </tbody>
-
-        </table>
-
-    </section>
-
-
-    <!-- 所持アイテム -->
-    <section class="inventory-section">
-
-        <h2>所持アイテム</h2>
-
-        <table class="inventory-table">
-
-            <thead>
-                <tr>
-                    <th>種類</th>
-                    <th>アイテム名</th>
-                    <th>個数</th>
-                </tr>
-            </thead>
-
-            <tbody>
-
-                <tr>
-                    <td>消耗品</td>
-                    <td>回復薬</td>
-                    <td>5</td>
-                </tr>
-
-                <tr>
-                    <td>武器</td>
-                    <td>木の剣</td>
-                    <td>1</td>
-                </tr>
-
-                <tr>
-                    <td>素材</td>
-                    <td>スライムの核</td>
-                    <td>8</td>
-                </tr>
-
-            </tbody>
-
-        </table>
-
-    </section>
-
 </div>
+
+<script src="{% static 'js/inventory.js' %}"></script>
 
 {% endblock %}
