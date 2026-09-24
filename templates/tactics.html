@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+
+{% block title %}
+戦術 | Qhymia
+{% endblock %}
+
+{% block content %}
+
+<div class="tactics-page">
+
+    <h1>戦術</h1>
+
+    <a href="{% url 'home' %}">
+        ホームへ戻る
+    </a>
+
+
+    <!-- =========================
+         キャラクター情報
+    ========================== -->
+
+    <section>
+
+        <h2>キャラクター</h2>
+
+        <p>
+            名前：
+            {{ character.name }}
+        </p>
+
+        <p>
+            種族：
+            {{ character.get_race_display }}
+        </p>
+
+        <p>
+            職業：
+            {{ character.get_job_display }}
+        </p>
+
+        <p>
+            HP：
+            {{ character.max_hp }}
+        </p>
+
+        <p>
+            MP：
+            {{ character.max_mp }}
+        </p>
+
+        <p>
+            STR：
+            {{ character.strength }}
+        </p>
+
+        <p>
+            INT：
+            {{ character.intelligence }}
+        </p>
+
+        <p>
+            DEX：
+            {{ character.dexterity }}
+        </p>
+
+        <p>
+            AGI：
+            {{ character.agility }}
+        </p>
+
+        <p>
+            VIT：
+            {{ character.vitality }}
+        </p>
+
+        <p>
+            LUK：
+            {{ character.luck }}
+        </p>
+
+    </section>
+
+
+    <!-- =========================
+         スキルプリセット
+    ========================== -->
+
+    <section>
+
+        <h2>スキルプリセット</h2>
+
+        <p>
+            戦闘で使用するスキルを上から順番に設定します。
+        </p>
+
+        {% if error_message %}
+            <p>
+                {{ error_message }}
+            </p>
+        {% endif %}
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            {% for slot_data in preset_slots %}
+
+                <div class="preset-slot">
+
+                    <h3>
+                        SLOT {{ slot_data.slot }}
+                    </h3>
+
+                    <div>
+
+                        <label>
+                            スキル
+                        </label>
+
+                        <select
+                            name="skill_{{ slot_data.slot }}"
+                        >
+
+                            <option value="">
+                                未設定
+                            </option>
+
+                            {% for skill in available_skills %}
+
+                                <option
+                                    value="{{ skill.id }}"
+
+                                    {% if slot_data.preset and slot_data.preset.skill.id == skill.id %}
+                                        selected
+                                    {% endif %}
+                                >
+
+                                    {{ skill.name }}
+
+                                    {% if skill.is_passive %}
+                                        【PASSIVE】
+                                    {% else %}
+                                        MP {{ skill.mp_cost }}
+                                    {% endif %}
+
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <div>
+
+                        <label>
+                            使用回数
+                        </label>
+
+                        <input
+                            type="number"
+                            name="use_count_{{ slot_data.slot }}"
+                            min="1"
+
+                            {% if slot_data.preset %}
+                                value="{{ slot_data.preset.use_count }}"
+                            {% else %}
+                                value="1"
+                            {% endif %}
+                        >
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+
+            <button type="submit">
+                プリセットを保存
+            </button>
+
+        </form>
+
+    </section>
+
+    <!-- =========================
+         使用可能スキル
+    ========================== -->
+
+    <section>
+
+        <h2>使用可能スキル</h2>
+
+        {% for skill in available_skills %}
+
+            <div>
+
+                <h3>
+                    {{ skill.name }}
+                </h3>
+
+                <p>
+                    属性：
+                    {{ skill.get_attribute_display }}
+                </p>
+
+                <p>
+                    種別：
+                    {{ skill.get_skill_type_display }}
+                </p>
+
+                <p>
+                    MP：
+                    {{ skill.mp_cost }}
+                </p>
+
+                <p>
+                    発動率：
+                    {{ skill.activation_rate }}%
+                </p>
+
+                <p>
+                    {{ skill.description }}
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+    </section>
+
+</div>
+
+{% endblock %}
