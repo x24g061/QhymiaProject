@@ -131,13 +131,35 @@ def character_create_view(request):
         },
     )
 
-    # 利用規約
+
+# プロフィール
+@login_required
+def profile_view(request):
+    character = getattr(
+        request.user,
+        "character",
+        None,
+    )
+
+    return render(
+        request,
+        "profile.html",
+        {
+            "character": character,
+        },
+    )
+
+
+# 利用規約
 def terms_view(request):
     return render(request, "terms.html")
 
-    # 特定商取引法
+
+# 特定商取引法
 def tokushoho_view(request):
     return render(request, "tokushoho.html")
-    # プライバシーポリシー
+
+
+# プライバシーポリシー
 def privacy_view(request):
     return render(request, "privacy.html")
