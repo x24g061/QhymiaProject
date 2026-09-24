@@ -1449,3 +1449,291 @@
 .arena-mp-fill {
     background: #397aa3;
 }
+
+/* ========================================
+   ARENA CARD UI
+======================================== */
+
+.arena-panel {
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+
+    display: flex;
+    justify-content: center;
+}
+
+.arena-card {
+    width: 100%;
+    max-width: 280px;
+
+    overflow: hidden;
+
+    background: #f7f7f7;
+
+    border: 1px solid #c9c9c9;
+
+    border-radius: 4px;
+
+    box-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.arena-card-header {
+    padding: 7px 10px;
+
+    color: white;
+
+    text-align: center;
+
+    background: #6b145e;
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+.arena-card-body {
+    padding: 14px 12px 12px;
+
+    text-align: center;
+}
+
+
+/* キャラクターアイコン */
+
+.arena-card-avatar {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 74px;
+    height: 74px;
+
+    margin: 0 auto 10px;
+
+    color: white;
+
+    background:
+        linear-gradient(135deg,
+            var(--main-dark),
+            var(--main));
+
+    border:
+        2px solid #b8ccd2;
+
+    border-radius: 6px;
+
+    font-family:
+        "Yu Mincho",
+        serif;
+
+    font-size: 30px;
+
+    font-weight: bold;
+}
+
+
+/* 名前 */
+
+.arena-card-name {
+    margin: 0 0 9px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+}
+
+
+/* 属性色 */
+
+.attribute-fire {
+    color: #c94a3f;
+}
+
+.attribute-water {
+    color: #2877b5;
+}
+
+.attribute-grass {
+    color: #3e8a52;
+}
+
+.attribute-rock {
+    color: #9b6a38;
+}
+
+.attribute-light {
+    color: #c99a22;
+}
+
+.attribute-dark {
+    color: #7046a0;
+}
+
+
+/* HP / MP */
+
+.arena-card-gauge {
+    width: 100%;
+    height: 7px;
+
+    margin-bottom: 6px;
+
+    overflow: hidden;
+
+    border-radius: 999px;
+}
+
+.arena-card-gauge-fill {
+    height: 100%;
+}
+
+.hp-gauge {
+    background: #efb0b0;
+}
+
+.hp-gauge .arena-card-gauge-fill {
+    background: #62c950;
+}
+
+.mp-gauge {
+    background: #b8c4f4;
+}
+
+.mp-gauge .arena-card-gauge-fill {
+    background: #7187dd;
+}
+
+
+/* 連勝 */
+
+.arena-card-streak {
+    margin: 10px 0 3px;
+
+    color: #333;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+
+/* 直近結果 */
+
+.arena-card-result {
+    margin: 0;
+
+    color: #555;
+
+    font-size: 10px;
+
+}
+
+.arena-card-list {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    width: 100%;
+    max-width: 900px;
+
+    margin: 0 auto;
+
+    gap: 16px;
+
+    align-items: stretch;
+}
+
+.arena-card-slot {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 0;
+}
+
+
+.arena-card-current {
+    transform: scale(1.05);
+
+    border: 3px solid #18c73d;
+
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.arena-edge-message {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    width: 100%;
+    max-width: 280px;
+    min-height: 120px;
+
+    padding: 15px;
+
+    color: #555;
+
+    text-align: center;
+
+    background: rgba(255, 255, 255, 0.65);
+
+    border: 1px dashed #aaa;
+
+    border-radius: 4px;
+
+    font-size: 11px;
+}
+
+.arena-edge-message span {
+    font-size: 22px;
+
+    font-weight: bold;
+}
+
+.arena-edge-message p {
+    margin: 0;
+}
+
+@media (max-width: 700px) {
+
+    .arena-card-list {
+        gap: 8px;
+    }
+
+    .arena-card-body {
+        padding: 12px 8px 10px;
+    }
+
+    .arena-card-avatar {
+        width: 60px;
+        height: 60px;
+
+        font-size: 24px;
+    }
+
+    .arena-card-header {
+        padding: 6px 5px;
+
+        font-size: 11px;
+    }
+
+    .arena-card-name {
+        font-size: 12px;
+    }
+
+    .arena-edge-message {
+        padding: 8px;
+
+        font-size: 9px;
+    }
+}
