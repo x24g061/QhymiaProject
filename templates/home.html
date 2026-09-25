@@ -89,7 +89,39 @@
      右：次の階
 ====================================== -->
 
-    <section class="arena-panel">
+<section
+    class="arena-panel collapsible-section"
+    data-collapse-id="arena"
+>
+
+    <div class="arena-collapse-heading">
+
+        <div>
+
+            <p class="section-label">
+                ARENA
+            </p>
+
+            <h2>
+                闘技場
+            </h2>
+
+        </div>
+
+        <button
+            type="button"
+            class="collapse-toggle"
+            aria-expanded="true"
+        >
+            <span class="collapse-toggle-icon">
+                ▼
+            </span>
+        </button>
+
+    </div>
+
+
+    <div class="collapsible-content">
 
         <!-- 3つの表示枠を横並びにする箱 -->
         <div class="arena-card-list">
@@ -396,7 +428,9 @@
         </div>
 
 
-</div>
+        </div>
+
+    </div>
 
 </section>
 
@@ -411,30 +445,48 @@
              左：ステータス
         ================================== -->
 
-    <section class="home-card status-card">
+<section
+    class="home-card status-card collapsible-section"
+    data-collapse-id="status"
+>
 
-        <div class="card-heading">
+<div class="card-heading">
 
-            <div>
+    <div>
 
-                <p class="section-label">
-                    CHARACTER STATUS
-                </p>
+        <p class="section-label">
+            CHARACTER STATUS
+        </p>
 
-                <h2>
-                    ステータス
-                </h2>
+        <h2>
+            ステータス
+        </h2>
 
-            </div>
+    </div>
 
 
-            <span class="level-badge">
-                Lv.{{ character.level }}
+    <div class="card-heading-actions">
+
+        <span class="level-badge">
+            Lv.{{ character.level }}
+        </span>
+
+        <button
+            type="button"
+            class="collapse-toggle"
+            aria-expanded="true"
+        >
+            <span class="collapse-toggle-icon">
+                ▼
             </span>
+        </button>
 
-        </div>
+    </div>
+
+</div>
 
 
+<div class="collapsible-content">
 
         <div class="character-header">
 
@@ -663,7 +715,7 @@
         <a href="{% url 'accounts:profile' %}" class="secondary-button">
             プロフィールを見る
         </a>
-
+</div>
     </section>
 
 
@@ -679,25 +731,39 @@
                  行動メニュー
             ============================== -->
 
-        <section class="home-card action-card">
+        <section
+    class="home-card action-card collapsible-section"
+    data-collapse-id="action"
+>
 
-            <div class="card-heading">
+<div class="card-heading">
 
-                <div>
+    <div>
 
-                    <p class="section-label">
-                        ACTION MENU
-                    </p>
+        <p class="section-label">
+            ACTION MENU
+        </p>
 
-                    <h2>
-                        行動メニュー
-                    </h2>
+        <h2>
+            行動メニュー
+        </h2>
 
-                </div>
-
-            </div>
+    </div>
 
 
+    <button
+        type="button"
+        class="collapse-toggle"
+        aria-expanded="true"
+    >
+        <span class="collapse-toggle-icon">
+            ▼
+        </span>
+    </button>
+
+</div>
+
+<div class="collapsible-content">
             <div class="action-grid">
 
 
@@ -803,9 +869,11 @@
 
                 </a>
 
-            </div>
+    </div>
 
-        </section>
+</div>
+
+</section>
 
 
 
@@ -813,23 +881,23 @@
                  探索
             ============================== -->
 
-        <section class="home-card exploration-card">
+      <section class="home-card exploration-card">
 
             <div class="card-heading">
 
-                <div>
+    <div>
 
-                    <p class="section-label">
-                        EXPLORATION
-                    </p>
+        <p class="section-label">
+            EXPLORATION
+        </p>
 
-                    <h2>
-                        探索
-                    </h2>
+        <h2>
+            探索
+        </h2>
 
-                </div>
+    </div>
 
-            </div>
+</div>
 
 
             <p class="card-description">
@@ -894,32 +962,48 @@
 
                 {% endif %}
 
-            </div>
+</div>
 
-        </section>
+
+
+</section>
         <!-- =============================
              オープンチャット
             ============================== -->
 
-        <section class="home-card chat-card">
+        <section
+    class="home-card chat-card collapsible-section"
+    data-collapse-id="chat"
+>
 
-            <div class="card-heading">
+<div class="card-heading">
 
-                <div>
+    <div>
 
-                    <p class="section-label">
-                        OPEN CHAT
-                    </p>
+        <p class="section-label">
+            OPEN CHAT
+        </p>
 
-                    <h2>
-                        オープンチャット
-                    </h2>
+        <h2>
+            オープンチャット
+        </h2>
 
-                </div>
-
-            </div>
+    </div>
 
 
+    <button
+        type="button"
+        class="collapse-toggle"
+        aria-expanded="true"
+    >
+        <span class="collapse-toggle-icon">
+            ▼
+        </span>
+    </button>
+
+</div>
+
+<div class="collapsible-content">
             <div id="chat-messages" class="chat-messages">
 
                 <p class="chat-loading">
@@ -942,7 +1026,7 @@
             </div>
 
             <p id="chat-error" class="chat-error"></p>
-
+</div>
         </section>
 
 
@@ -950,25 +1034,39 @@
                  お知らせ
             ============================== -->
 
-        <section class="home-card notice-card">
+       <section
+    class="home-card notice-card collapsible-section"
+    data-collapse-id="notice"
+>
 
             <div class="card-heading">
 
-                <div>
+    <div>
 
-                    <p class="section-label">
-                        INFORMATION
-                    </p>
+        <p class="section-label">
+            INFORMATION
+        </p>
 
-                    <h2>
-                        お知らせ
-                    </h2>
+        <h2>
+            お知らせ
+        </h2>
 
-                </div>
-
-            </div>
+    </div>
 
 
+    <button
+        type="button"
+        class="collapse-toggle"
+        aria-expanded="true"
+    >
+        <span class="collapse-toggle-icon">
+            ▼
+        </span>
+    </button>
+
+</div>
+
+<div class="collapsible-content">
             <div class="notice-list">
 
                 <div class="notice-item">
@@ -990,7 +1088,7 @@
                     </div>
 
                 </div>
-
+</div>
 
                 <div class="notice-item">
 
@@ -1041,4 +1139,5 @@
 </script>
 <script src="{% static 'js/exploration-cooldown.js' %}"></script>
 <script src="{% static 'js/chat.js' %}"></script>
+<script src="{% static 'js/home-collapse.js' %}"></script>
 {% endblock %}

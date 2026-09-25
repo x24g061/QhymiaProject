@@ -1737,3 +1737,196 @@
         font-size: 9px;
     }
 }
+
+/* ========================================
+   HOME COLLAPSE
+======================================== */
+
+
+/* 見出し右側 */
+
+.card-heading-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+/* 折りたたみボタン */
+
+.collapse-toggle {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 34px;
+    height: 34px;
+
+    flex-shrink: 0;
+
+    padding: 0;
+
+    color: var(--main-dark);
+
+    background: #f1f4f3;
+
+    border: 1px solid #aebabc;
+
+    border-radius: 4px;
+
+    font: inherit;
+
+    font-size: 14px;
+
+    cursor: pointer;
+
+    transition:
+        color 0.15s,
+        background 0.15s,
+        border-color 0.15s;
+}
+
+
+.collapse-toggle:hover {
+    color: white;
+
+    background: var(--main);
+
+    border-color: var(--main);
+}
+
+
+/* ▼アイコン */
+
+.collapse-toggle-icon {
+    display: block;
+
+    transition:
+        transform 0.2s ease;
+}
+
+
+/* 閉じたら横向きにする */
+
+.collapsible-section.is-collapsed
+.collapse-toggle-icon {
+    transform: rotate(-90deg);
+}
+
+
+/* 中身 */
+
+.collapsible-content {
+    display: block;
+}
+
+
+/* 折りたたみ時 */
+
+.collapsible-section.is-collapsed
+> .collapsible-content {
+    display: none;
+}
+
+
+/* 通常カードを閉じた時の余白調整 */
+
+.home-card.collapsible-section.is-collapsed
+.card-heading {
+    margin-bottom: 0;
+}
+
+
+/* ========================================
+   ARENA COLLAPSE
+======================================== */
+
+
+/*
+闘技場は既存CSSで display:flex になっているため
+折りたたみ対応時は通常ブロックへ戻す
+*/
+
+.arena-panel.collapsible-section {
+    display: block;
+}
+
+
+/* 闘技場見出し */
+
+.arena-collapse-heading {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    width: 100%;
+    max-width: 900px;
+
+    margin:
+        0 auto 14px;
+
+    padding:
+        12px 16px;
+
+    background:
+        var(--panel);
+
+    border:
+        1px solid var(--border);
+
+    border-left:
+        5px solid var(--main);
+
+    border-radius:
+        4px;
+
+    box-shadow:
+        0 2px 7px rgba(0, 0, 0, 0.08);
+}
+
+
+.arena-collapse-heading h2 {
+    margin: 0;
+
+    font-size: 18px;
+}
+
+
+.arena-panel
+> .collapsible-content {
+    width: 100%;
+}
+
+
+/* 閉じた時 */
+
+.arena-panel.is-collapsed
+.arena-collapse-heading {
+    margin-bottom: 0;
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 650px) {
+
+    .collapse-toggle {
+        width: 32px;
+        height: 32px;
+    }
+
+
+    .arena-collapse-heading {
+        padding:
+            10px 12px;
+    }
+
+}
