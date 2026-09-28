@@ -8,137 +8,379 @@
 
     <title>戦闘画面 | キュメイア</title>
 
-  <link rel="stylesheet" href="{% static 'css/battle.css' %}">
+    <link rel="stylesheet" href="{% static 'css/battle.css' %}">
 </head>
 
 <body>
 
     <main class="battle-screen">
 
-        <!-- 上部 -->
+        <!-- ==================================================
+             上部
+        =================================================== -->
         <header class="battle-header">
-            <p class="turn-count">1ターン</p>
-            <h1 class="game-title">キュメイア</h1>
+
+            <p class="turn-count">
+                戦闘終了
+            </p>
+
+            <h1 class="game-title">
+                キュメイア
+            </h1>
+
         </header>
 
-        <!-- 敵出現メッセージ -->
+
+        <!-- ==================================================
+             敵出現メッセージ
+        =================================================== -->
         <section class="encounter-message">
-            <p>赤さん が襲いかかってきた！</p>
+
+            <p>
+                {{ enemy.name }} が襲いかかってきた！
+            </p>
+
         </section>
 
-        <!-- 戦闘エリア -->
+
+        <!-- ==================================================
+             戦闘エリア
+        =================================================== -->
         <section class="battle-field">
 
-            <!-- プレイヤー -->
+
+            <!-- =========================
+                 プレイヤー
+            ========================== -->
             <div class="fighter player">
 
-                <h2 class="fighter-name">テスター</h2>
+                <h2 class="fighter-name">
+                    {{ character.name }}
+                </h2>
 
+
+                <!-- キャラクター画像は後で実装 -->
                 <div class="fighter-icon">
                     プレイヤーアイコン
                 </div>
 
+
                 <div class="action-gauge">
                     <div class="action-gauge-fill"></div>
                 </div>
 
+
+                <!-- HP -->
                 <div class="status">
+
                     <p>HP</p>
 
+                    {% widthratio battle_result.player_hp character.max_hp 100 as player_hp_percent %}
+
                     <div class="status-bar">
-                        <div class="hp-fill player-hp"></div>
+
+                        <div
+                            class="hp-fill player-hp"
+                            style="width: {{ player_hp_percent }}%;"
+                        ></div>
+
                     </div>
 
-                    <span>100 / 100</span>
+                    <span>
+                        {{ battle_result.player_hp }}
+                        /
+                        {{ character.max_hp }}
+                    </span>
+
                 </div>
 
+
+                <!-- スタミナ -->
                 <div class="status">
+
                     <p>ST</p>
 
+                    {% widthratio character.current_stamina character.max_stamina 100 as player_stamina_percent %}
+
                     <div class="status-bar">
-                        <div class="stamina-fill player-stamina"></div>
+
+                        <div
+                            class="stamina-fill player-stamina"
+                            style="width: {{ player_stamina_percent }}%;"
+                        ></div>
+
                     </div>
 
-                    <span>80 / 100</span>
+                    <span>
+                        {{ character.current_stamina }}
+                        /
+                        {{ character.max_stamina }}
+                    </span>
+
                 </div>
 
             </div>
 
-            <!-- VS -->
+
+            <!-- =========================
+                 VS
+            ========================== -->
             <div class="vs">
                 VS
             </div>
 
-            <!-- 敵 -->
+
+            <!-- =========================
+                 敵
+            ========================== -->
             <div class="fighter enemy">
 
-                <h2 class="fighter-name">赤さん</h2>
+                <h2 class="fighter-name">
+                    {{ enemy.name }}
+                </h2>
 
+
+                <!-- 敵画像は後で実装 -->
                 <div class="fighter-icon">
                     敵アイコン
                 </div>
+
 
                 <div class="action-gauge">
                     <div class="action-gauge-fill"></div>
                 </div>
 
+
+                <!-- HP -->
                 <div class="status">
+
                     <p>HP</p>
 
+                    {% widthratio battle_result.enemy_hp enemy.max_hp 100 as enemy_hp_percent %}
+
                     <div class="status-bar">
-                        <div class="hp-fill enemy-hp"></div>
+
+                        <div
+                            class="hp-fill enemy-hp"
+                            style="width: {{ enemy_hp_percent }}%;"
+                        ></div>
+
                     </div>
 
-                    <span>60 / 100</span>
+                    <span>
+                        {{ battle_result.enemy_hp }}
+                        /
+                        {{ enemy.max_hp }}
+                    </span>
+
                 </div>
 
+
+                <!-- 敵MP -->
                 <div class="status">
-                    <p>ST</p>
+
+                    <p>MP</p>
 
                     <div class="status-bar">
-                        <div class="stamina-fill enemy-stamina"></div>
+
+                        <div
+                            class="stamina-fill enemy-stamina"
+                            style="width: 0%;"
+                        ></div>
+
                     </div>
 
-                    <span>70 / 100</span>
+                    <span>
+                        {{ enemy.max_mp }}
+                    </span>
+
                 </div>
 
             </div>
 
         </section>
 
-        <!-- 戦闘ログ -->
+
+        <!-- ==================================================
+             戦闘ログ
+        =================================================== -->
         <section class="battle-log">
 
-            <h2>戦闘ログ</h2>
+            <h2>
+                戦闘ログ
+            </h2>
 
-            <p>
-                テスター は 赤さん を攻撃した。
-            </p>
 
-            <p>
-                318 のダメージ。赤さん は倒れた…。
-            </p>
+            {% if battle_logs %}
+
+                {% for log in battle_logs %}
+
+                    <p>
+                        {{ log }}
+                    </p>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p>
+                    戦闘ログがありません。
+                </p>
+
+            {% endif %}
 
         </section>
 
-        <!-- 戦闘結果 -->
+
+        <!-- ==================================================
+             戦闘結果
+        =================================================== -->
         <section class="battle-result">
 
-            <p class="result-text">
-                テスターは勝利した。
-            </p>
 
-            <p>
-                10の経験値を獲得した。
-            </p>
+            <!-- =========================
+                 勝利
+            ========================== -->
+            {% if battle_result.winner == "player" %}
+
+                <p class="result-text">
+                    {{ character.name }}は勝利した！
+                </p>
+
+                <p>
+                    {{ exp_gained }} EXPを獲得した。
+                </p>
+
+
+                <!-- =====================
+                     レベルアップ
+                ====================== -->
+                {% if growth_result.level_up_count %}
+
+                    <div class="level-up-result">
+
+                        <h2>
+                            LEVEL UP!
+                        </h2>
+
+
+                        {% for level_up in growth_result.level_ups %}
+
+                            <div class="level-up-detail">
+
+                                <h3>
+                                    Lv.{{ level_up.level }}
+                                </h3>
+
+
+                                <!-- 基礎能力成長 -->
+                                <p>
+                                    基礎能力成長
+                                </p>
+
+                                <ul>
+
+                                    {% for growth in level_up.growths %}
+
+                                        <li>
+                                            {{ growth }}
+                                        </li>
+
+                                    {% endfor %}
+
+                                </ul>
+
+
+                                <!-- 属性成長 -->
+                                <p>
+                                    属性成長
+                                </p>
+
+                                <ul>
+
+                                    {% for growth in level_up.attribute_growths %}
+
+                                        <li>
+                                            {{ growth }}
+                                        </li>
+
+                                    {% endfor %}
+
+                                </ul>
+
+                            </div>
+
+                        {% endfor %}
+
+
+                        <p>
+                            現在 Lv.{{ growth_result.current_level }}
+                        </p>
+
+                        <p>
+                            EXP
+                            {{ growth_result.remaining_exp }}
+                            / 100
+                        </p>
+
+                    </div>
+
+                {% else %}
+
+                    <!-- レベルアップしなかった場合 -->
+                    <p>
+                        EXP
+                        {{ character.exp }}
+                        / 100
+                    </p>
+
+                {% endif %}
+
+
+            <!-- =========================
+                 敗北
+            ========================== -->
+            {% elif battle_result.winner == "enemy" %}
+
+                <p class="result-text">
+                    {{ character.name }}は敗北した…。
+                </p>
+
+                <p>
+                    EXPは獲得できなかった。
+                </p>
+
+
+            <!-- =========================
+                 引き分け
+            ========================== -->
+            {% else %}
+
+                <p class="result-text">
+                    戦闘は決着がつかなかった。
+                </p>
+
+                <p>
+                    EXPは獲得できなかった。
+                </p>
+
+            {% endif %}
 
         </section>
 
-        <!-- 街に戻る -->
+
+        <!-- ==================================================
+             街に戻る
+        =================================================== -->
         <div class="return-area">
-            <a href="{% url 'home' %}" class="return-button">
+
+            <a
+                href="{% url 'home' %}"
+                class="return-button"
+            >
                 街に戻る
             </a>
+
         </div>
 
     </main>

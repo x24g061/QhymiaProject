@@ -71,6 +71,8 @@ class User(AbstractUser):
 
 class Character(models.Model):
 
+
+
     # ユーザーとキャラクターを1対1で紐づける
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
@@ -223,6 +225,16 @@ class Character(models.Model):
         help_text="闇属性値"
     )
 
+    # 属性成長ウェイト
+    # 値が高い属性ほど、
+    # レベルアップ時に成長しやすくなる。
+    fire_growth_weight = models.PositiveIntegerField(default=1)
+    water_growth_weight = models.PositiveIntegerField(default=1)
+    grass_growth_weight = models.PositiveIntegerField(default=1)
+    rock_growth_weight = models.PositiveIntegerField(default=1)
+    light_growth_weight = models.PositiveIntegerField(default=1)
+    dark_growth_weight = models.PositiveIntegerField(default=1)
+
     # ===== 所持情報 =====
 
     gold = models.PositiveIntegerField(
@@ -314,3 +326,17 @@ class Character(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_equipment_fusion_multiplier(self):
+        """
+        装備合成成功率に掛ける
+        種族補正を返す。
+
+        ドワーフ:
+        成功率 ×1.5
+        """
+
+        if self.race == "dwarf":
+            return 1.5
+
+        return 1.0

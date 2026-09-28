@@ -2,32 +2,91 @@ from datetime import timedelta
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db import transaction
 from django.shortcuts import redirect, render
 from django.utils import timezone
-from .models import Skill, SkillPreset
-from django.db import transaction
+
+from apps.accounts.growth import apply_exploration_exp
+
+from .models import Enemy, Skill, SkillPreset
+from .services import BattleEngine
 
 
 @login_required
 def battle(request):
+    """
+    探索を1回実行する。
+
+    探索1クリック
+    ↓
+    敵を1体選択
+    ↓
+    自動戦闘を1回実行
+    ↓
+    戦闘ログを表示
+    ↓
+    勝利ならEXP獲得
+    ↓
+    必要ならレベルアップ
+    ↓
+    HP / MP全回復
+    """
+
     character = request.user.character
     now = timezone.now()
 
-    # 現在クールタイム中なら探索させない
+    # ========================================================
+    # 探索クールタイム確認
+    # ========================================================
+
     if (
         character.exploration_cooldown_until
         and character.exploration_cooldown_until > now
     ):
-        remaining = character.get_exploration_cooldown_remaining()
+        remaining = (
+            character.get_exploration_cooldown_remaining()
+        )
 
         messages.warning(
             request,
-            f"探索クールタイム中です。あと約{remaining}秒です。"
+            f"探索クールタイム中です。"
+            f"あと約{remaining}秒です。",
         )
 
         return redirect("home")
 
-    # 現在適用されるCT
+
+    # ========================================================
+    # 戦う敵を選択
+    # ========================================================
+    #
+    # 現段階では登録されている敵から
+    # ランダムで1体選ぶ。
+    #
+    # 後で探索階層ごとの敵選択へ変更可能。
+    # ========================================================
+
+    enemy = (
+        Enemy.objects
+        .order_by("?")
+        .first()
+    )
+
+    # 敵が1体も登録されていない場合
+    if enemy is None:
+
+        messages.error(
+            request,
+            "戦闘できる敵が登録されていません。",
+        )
+
+        return redirect("home")
+
+
+    # ========================================================
+    # 探索クールタイム設定
+    # ========================================================
+
     cooldown_seconds = (
         character.get_exploration_cooldown_seconds()
     )
@@ -35,9 +94,12 @@ def battle(request):
     # 探索した時刻
     character.last_explored_at = now
 
-    # CT終了時刻
+    # 次に探索できる時刻
     character.exploration_cooldown_until = (
-        now + timedelta(seconds=cooldown_seconds)
+        now
+        + timedelta(
+            seconds=cooldown_seconds
+        )
     )
 
     character.save(
@@ -48,14 +110,98 @@ def battle(request):
         ]
     )
 
+
+    # ========================================================
+    # 自動戦闘
+    # ========================================================
+
+    engine = BattleEngine(
+        character,
+        enemy,
+    )
+
+    battle_result = engine.run()
+
+
+    # ========================================================
+    # EXP / レベルアップ
+    # ========================================================
+    #
+    # 1探索 = 1戦闘なので、
+    # EXP獲得も1回だけ。
+    #
+    # 敵の数が増えても
+    # 1戦闘につき1回だけEXPを与える。
+    # ========================================================
+
+    growth_result = None
+
+    if battle_result["winner"] == "player":
+
+        growth_result = apply_exploration_exp(
+            character,
+            battle_result["exp_gained"],
+        )
+
+    else:
+        # ====================================================
+        # 敗北・引き分け
+        # ====================================================
+        #
+        # EXPは獲得しない。
+        #
+        # 探索終了なので
+        # HP / MPは全回復する。
+        # ====================================================
+
+        character.current_hp = (
+            character.max_hp
+        )
+
+        character.current_mp = (
+            character.max_mp
+        )
+
+        character.save(
+            update_fields=[
+                "current_hp",
+                "current_mp",
+                "updated_at",
+            ]
+        )
+
+
+    # ========================================================
+    # 戦闘画面表示
+    # ========================================================
+
     return render(
         request,
         "battle.html",
         {
             "character": character,
+
+            # 今回戦った敵
+            "enemy": enemy,
+
+            # BattleEngineの結果全部
+            "battle_result": battle_result,
+
+            # テンプレートで扱いやすいよう
+            # ログも単独で渡す
+            "battle_logs": battle_result["logs"],
+
+            # EXP
+            "exp_gained": battle_result["exp_gained"],
+
+            # レベルアップ情報
+            "growth_result": growth_result,
+
+            # クールタイム
             "cooldown_seconds": cooldown_seconds,
-        }
+        },
     )
+
 
 @login_required
 def tactics(request):
@@ -115,7 +261,9 @@ def tactics(request):
 
             else:
                 try:
-                    use_count = int(use_count_value)
+                    use_count = int(
+                        use_count_value
+                    )
 
                 except (TypeError, ValueError):
                     error_message = (
@@ -173,7 +321,9 @@ def tactics(request):
                 "スキルプリセットを保存しました。",
             )
 
-            return redirect("battle:tactics")
+            return redirect(
+                "battle:tactics"
+            )
 
     # 現在保存されているプリセット
     preset_dict = {
@@ -190,7 +340,9 @@ def tactics(request):
         preset_slots.append(
             {
                 "slot": slot,
-                "preset": preset_dict.get(slot),
+                "preset": preset_dict.get(
+                    slot
+                ),
             }
         )
 
