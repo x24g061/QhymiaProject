@@ -1,0 +1,914 @@
+/* ========================================
+   login画面だけbase.htmlの制限を解除
+======================================== */
+
+body {
+    background: #dceef3;
+}
+
+body > header {
+    display: none;
+}
+
+main {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* ========================================
+   Qhymia ログイン画面
+======================================== */
+
+.login-page {
+    width: 100%;
+    min-height: 100vh;
+
+    color: #164e69;
+
+    background-image:
+        linear-gradient(
+            rgba(255, 255, 255, 0.35),
+            rgba(255, 255, 255, 0.35)
+        ),
+        url("../images/sinki.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    padding: 0;
+}
+
+
+/* ========================================
+   全体幅
+======================================== */
+
+.login-container {
+    width: min(100%, 1000px);
+    min-height: 100vh;
+
+    margin: 0 auto;
+
+    background: transparent;
+
+    border: none;
+}
+
+
+/* ========================================
+   Qhymia ロゴ
+======================================== */
+
+.login-brand {
+    width: 100%;
+    height: 105px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0 auto;
+
+    background: transparent !important;
+    background-color: transparent !important;
+    background-image: none !important;
+}
+
+
+.login-logo {
+    display: block;
+
+    width: 230px;
+    height: auto;
+
+    max-width: none;
+    max-height: none;
+
+    object-fit: contain;
+
+    background: transparent !important;
+    background-color: transparent !important;
+}
+
+
+/* ========================================
+   メインエリア
+======================================== */
+
+.login-content {
+    width: 86%;
+    max-width: 820px;
+
+    margin: 0 auto;
+
+    padding: 28px 30px 45px;
+
+    background:
+        rgba(255, 255, 255, 0.75);
+}
+
+
+/* ========================================
+   タイトル
+======================================== */
+
+.login-title {
+    margin: 0 0 25px;
+
+    font-size: 25px;
+
+    color: #075376;
+
+    letter-spacing: 1px;
+
+    text-align: center;
+}
+
+
+.login-description {
+    margin:
+        0
+        0
+        22px;
+
+    font-size: 15px;
+
+    color: #376b80;
+
+    line-height: 1.8;
+}
+
+
+/* ========================================
+   区切り
+======================================== */
+
+.login-separator {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    margin:
+        18px
+        0
+        15px;
+
+    color: #075376;
+
+    font-weight: bold;
+}
+
+
+.login-separator::before,
+.login-separator::after {
+    content: "";
+
+    flex: 1;
+
+    height: 1px;
+
+    background: #24657d;
+}
+
+
+.login-separator span {
+    white-space: nowrap;
+}
+
+
+/* ========================================
+   フォーム
+======================================== */
+
+.login-form {
+    width: 100%;
+}
+
+
+.login-form-title {
+    margin:
+        0
+        0
+        12px;
+
+    font-weight: bold;
+
+    color: #064e6c;
+
+    letter-spacing: 1px;
+}
+
+
+/* ========================================
+   入力欄
+======================================== */
+
+.login-form-group {
+    width: 100%;
+    max-width: 625px;
+
+    margin: 0 auto 12px;
+}
+
+
+.login-form-group label {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: #326a81;
+
+    font-size: 14px;
+}
+
+
+.login-form-group input {
+    display: block;
+
+    width: 100%;
+    height: 48px;
+
+    padding:
+        0
+        12px;
+
+    background:
+        rgba(255, 255, 255, 0.90);
+
+    color: #164e69;
+
+    border:
+        2px solid #225b72;
+
+    border-radius: 0;
+
+    outline: none;
+
+    font-size: 15px;
+
+    transition:
+        border-color 0.15s,
+        box-shadow 0.15s,
+        background 0.15s;
+}
+
+
+.login-form-group input::placeholder {
+    color: #84979e;
+}
+
+
+.login-form-group input:focus {
+    background: #ffffff;
+
+    border-color: #21aeda;
+
+    box-shadow:
+        0
+        0
+        0
+        2px
+        rgba(33, 174, 218, 0.15);
+}
+
+
+/* ========================================
+   ログインボタン
+======================================== */
+
+.login-button {
+    position: relative;
+
+    display: block;
+
+    width: 280px;
+
+    margin:
+        22px
+        auto
+        25px;
+
+    padding:
+        15px
+        42px
+        15px
+        20px;
+
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            90deg,
+            #2db8df,
+            #27a9d2
+        );
+
+    border: none;
+
+    border-radius: 0;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    letter-spacing: 1px;
+
+    transition:
+        transform 0.15s,
+        filter 0.15s;
+}
+
+
+.login-button span {
+    position: absolute;
+
+    right: 30px;
+}
+
+
+.login-button:hover {
+    filter: brightness(1.08);
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* ========================================
+   Googleログイン
+======================================== */
+
+.google-login-button {
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 280px;
+    min-height: 50px;
+
+    margin:
+        20px
+        auto
+        28px;
+
+    padding:
+        0
+        45px;
+
+    background:
+        rgba(255, 255, 255, 0.95);
+
+    color: #315f72;
+
+    border:
+        2px solid #6d9caf;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    transition:
+        background 0.15s,
+        transform 0.15s;
+}
+
+
+.google-login-button:hover {
+    background: #ffffff;
+
+    transform:
+        translateY(-1px);
+}
+
+
+.google-icon {
+    position: absolute;
+
+    left: 22px;
+
+    color: #4285f4;
+
+    font-size: 20px;
+
+    font-weight: bold;
+}
+
+
+.button-arrow {
+    position: absolute;
+
+    right: 25px;
+}
+
+
+/* ========================================
+   新規登録
+======================================== */
+
+.login-register-text {
+    margin:
+        0
+        auto
+        15px;
+
+    text-align: center;
+
+    color: #376b80;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+
+.register-button {
+    position: relative;
+
+    display: block;
+
+    width: 280px;
+
+    margin:
+        15px
+        auto
+        25px;
+
+    padding:
+        15px
+        42px
+        15px
+        20px;
+
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            90deg,
+            #2db8df,
+            #27a9d2
+        );
+
+    text-align: center;
+
+    text-decoration: none;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    transition:
+        transform 0.15s,
+        filter 0.15s;
+}
+
+
+.register-button span {
+    position: absolute;
+
+    right: 30px;
+}
+
+
+.register-button:hover {
+    filter: brightness(1.08);
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* ========================================
+   ログイン補足
+======================================== */
+
+.login-notes {
+    margin-top: 25px;
+
+    padding:
+        12px
+        15px;
+
+    background:
+        rgba(235, 249, 253, 0.65);
+
+    border-left:
+        3px solid #27a9d2;
+
+    color: #326a81;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+}
+
+
+.login-notes p {
+    margin: 2px 0;
+}
+
+
+/* ========================================
+   エラー
+======================================== */
+
+.login-error {
+    width: 100%;
+
+    margin:
+        5px
+        0
+        15px;
+
+    padding:
+        8px
+        10px;
+
+    color: #d52222;
+
+    background:
+        rgba(255, 225, 225, 0.85);
+
+    border-left:
+        3px solid #e73535;
+
+    font-size: 13px;
+}
+
+
+/* ========================================
+   フッター
+======================================== */
+
+.login-footer {
+    width: 100%;
+
+    padding:
+        12px
+        20px
+        14px;
+
+    text-align: center;
+
+    background:
+        rgba(255, 255, 255, 0.78);
+
+    border-top:
+        1px solid
+        rgba(30, 80, 100, 0.25);
+
+    color: #334c56;
+}
+
+
+.login-copyright {
+    margin:
+        0
+        0
+        8px;
+
+    font-size: 13px;
+}
+
+
+.login-footer-links {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 90px;
+}
+
+
+.login-footer-links a {
+    color: #334c56;
+
+    font-size: 13px;
+
+    text-decoration: underline;
+
+    text-underline-offset: 3px;
+}
+
+
+.login-footer-links a:hover {
+    color: #159bc7;
+}
+
+
+/* ========================================
+   レスポンシブ
+======================================== */
+
+@media (max-width: 700px) {
+
+    .login-container {
+        border: none;
+    }
+
+
+    .login-brand {
+        width: 230px;
+        height: 85px;
+
+        margin-left: 0;
+    }
+
+
+    .login-logo {
+        width: 200px;
+    }
+
+
+    .login-content {
+        width: 94%;
+
+        padding:
+            20px
+            15px
+            40px;
+    }
+
+
+    .login-form-group {
+        max-width: none;
+    }
+
+
+    .login-button,
+    .google-login-button,
+    .register-button {
+        width: 100%;
+
+        max-width: 320px;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .login-footer-links {
+        gap: 20px;
+
+        flex-wrap: wrap;
+    }
+
+}
+
+/* ========================================
+   現在ログイン数
+======================================== */
+
+.login-status {
+    margin: 25px 0 20px;
+
+    padding: 12px 15px;
+
+    text-align: center;
+
+    color: #075376;
+
+    background: rgba(255, 255, 255, 0.55);
+
+    border-top: 1px solid #8db9c9;
+    border-bottom: 1px solid #8db9c9;
+
+    font-size: 14px;
+}
+
+.login-status strong {
+    margin: 0 4px;
+
+    color: #159bc7;
+
+    font-size: 18px;
+}
+
+
+/* ========================================
+   利用規約案内
+======================================== */
+
+.terms-notice {
+    margin: 20px 0 35px;
+
+    padding: 15px 18px;
+
+    background: rgba(236, 249, 253, 0.78);
+
+    border: 1px solid #74a8bc;
+
+    color: #326a81;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+}
+
+.terms-notice p {
+    margin: 0;
+}
+
+.terms-notice-title {
+    margin-bottom: 5px !important;
+
+    color: #075376;
+
+    font-weight: bold;
+}
+
+.terms-notice a {
+    color: #159bc7;
+
+    font-weight: bold;
+
+    text-decoration: underline;
+
+    text-underline-offset: 3px;
+}
+
+
+/* ========================================
+   共通情報セクション
+======================================== */
+
+.login-info-section {
+    margin-top: 35px;
+}
+
+.login-section-title {
+    margin: 0;
+
+    padding: 9px 13px;
+
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            90deg,
+            #238db4,
+            #45b8d7
+        );
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    letter-spacing: 1px;
+}
+
+.login-info-box,
+.ranking-box,
+.update-box {
+    padding: 18px;
+
+    background:
+        rgba(255, 255, 255, 0.68);
+
+    border:
+        1px solid
+        rgba(36, 101, 125, 0.45);
+
+    border-top: none;
+}
+
+.login-info-box p {
+    margin:
+        0
+        0
+        8px;
+
+    color: #326a81;
+
+    font-size: 14px;
+
+    line-height: 1.8;
+}
+
+.login-info-box p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ========================================
+   ランキング
+======================================== */
+
+.ranking-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    color: #326a81;
+
+    font-size: 14px;
+}
+
+.ranking-table th {
+    padding: 10px;
+
+    background:
+        rgba(38, 154, 194, 0.13);
+
+    border-bottom: 1px solid #74a8bc;
+
+    color: #075376;
+
+    text-align: left;
+}
+
+.ranking-table td {
+    padding: 10px;
+
+    border-bottom:
+        1px solid
+        rgba(116, 168, 188, 0.35);
+}
+
+.ranking-table tr:last-child td {
+    border-bottom: none;
+}
+
+.ranking-table th:first-child,
+.ranking-table td:first-child {
+    width: 80px;
+
+    text-align: center;
+}
+
+.ranking-table th:last-child,
+.ranking-table td:last-child {
+    width: 100px;
+
+    text-align: center;
+}
+
+
+/* ========================================
+   更新情報
+======================================== */
+
+.update-item {
+    display: flex;
+
+    gap: 25px;
+
+    padding: 10px 5px;
+
+    border-bottom:
+        1px solid
+        rgba(116, 168, 188, 0.35);
+}
+
+.update-item:last-child {
+    border-bottom: none;
+}
+
+.update-date {
+    flex-shrink: 0;
+
+    color: #168db8;
+
+    font-size: 13px;
+}
+
+.update-text {
+    color: #326a81;
+
+    font-size: 14px;
+}
+
+
+/* ========================================
+   スマホ
+======================================== */
+
+@media (max-width: 600px) {
+
+    .update-item {
+        flex-direction: column;
+
+        gap: 3px;
+    }
+
+    .login-section-title {
+        font-size: 15px;
+    }
+
+}

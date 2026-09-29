@@ -152,14 +152,62 @@ def profile_view(request):
 
 # 利用規約
 def terms_view(request):
-    return render(request, "terms.html")
+    from_page = request.GET.get("from")
+
+    if from_page == "login":
+        back_url_name = "accounts:login"
+        back_text = "＜ ログイン画面に戻る"
+    else:
+        back_url_name = "accounts:signup"
+        back_text = "＜ 新規登録画面に戻る"
+
+    return render(
+        request,
+        "terms.html",
+        {
+            "back_url_name": back_url_name,
+            "back_text": back_text,
+        },
+    )
 
 
 # 特定商取引法
 def tokushoho_view(request):
-    return render(request, "tokushoho.html")
+    from_page = request.GET.get("from")
+
+    if from_page == "login":
+        back_url_name = "accounts:login"
+        back_text = "＜ ログイン画面に戻る"
+    else:
+        back_url_name = "accounts:signup"
+        back_text = "＜ 新規登録画面に戻る"
+
+    return render(
+        request,
+        "tokushoho.html",
+        {
+            "back_url_name": back_url_name,
+            "back_text": back_text,
+        },
+    )
 
 
 # プライバシーポリシー
 def privacy_view(request):
-    return render(request, "privacy.html")
+    from_page = request.GET.get("from")
+
+    if from_page == "login":
+        back_url_name = "accounts:login"
+        back_text = "＜ ログイン画面に戻る"
+    else:
+        back_url_name = "accounts:signup"
+        back_text = "＜ 新規登録画面に戻る"
+
+    return render(
+        request,
+        "privacy.html",
+        {
+            "back_url_name": back_url_name,
+            "back_text": back_text,
+        },
+    )
