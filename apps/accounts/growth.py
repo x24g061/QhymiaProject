@@ -469,41 +469,6 @@ def level_up_once(character):
     }
 
 
-    # ========================================================
-    # 3回抽選
-    # ========================================================
-    #
-    # choicesなので重複あり。
-    #
-    # 例:
-    # STR
-    # STR
-    # HP
-    #
-    # のような結果も発生する。
-    # ========================================================
-
-    selected_stats = random.choices(
-        population=stat_names,
-        weights=weights,
-        k=3,
-    )
-
-    growth_logs = []
-
-    for stat_name in selected_stats:
-
-        result = apply_stat_growth(
-            character,
-            stat_name,
-        )
-
-        growth_logs.append(
-            result
-        )
-
-    return growth_logs
-
 
 # ============================================================
 # 探索終了時のEXP処理

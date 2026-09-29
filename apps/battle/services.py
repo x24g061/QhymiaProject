@@ -3275,15 +3275,6 @@ class BattleEngine:
         if self.hide_turns > 0:
             hit_rate *= 0.90
 
-        if not self.roll_percent(hit_rate):
-
-            self.logs.append(
-                f"{self.enemy.name}の攻撃！ "
-                "しかし外れた！"
-            )
-
-            return
-
         # ===== ステルス =====
         #
         # 回避率+10%
@@ -3300,6 +3291,16 @@ class BattleEngine:
                 50,
                 hit_rate,
             )
+
+        #===== 命中判定 =====
+        if not self.roll_percent(hit_rate):
+
+            self.logs.append(
+                f"{self.enemy.name}の攻撃！ "
+                "しかし外れた！"
+            )
+
+            return
 
         damage = self.calculate_physical_damage(
             strength=self.enemy.strength,
