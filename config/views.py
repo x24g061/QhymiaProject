@@ -21,23 +21,21 @@ def home(request):
 
     arena_max_floor = 100
     if character:
-        attributes = {
-            "火": character.fire,
-            "水": character.water,
-            "草": character.grass,
-            "岩": character.rock,
-            "光": character.light,
-            "闇": character.dark,
-        }
-
-        main_attribute_name = max(
-            attributes,
-            key=attributes.get
+        # 得意属性はCharacter側の共通処理を使用
+        main_attribute_name = (
+            character.get_main_attribute_display()
         )
 
-        main_attribute_value = attributes[
-            main_attribute_name
-        ]
+        # 戦闘力計算用。
+        # 今までと同じく6属性の最高値を使う。
+        main_attribute_value = max(
+            character.fire,
+            character.water,
+            character.grass,
+            character.rock,
+            character.light,
+            character.dark,
+        )
 
         battle_power = (
             character.max_hp

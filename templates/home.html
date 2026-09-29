@@ -981,10 +981,20 @@
                 {% endif %}
                 {% else %}
 
-                <a href="{% url 'battle:battle' %}" class="explore-button">
-                    探索を開始する
-                    <span>→</span>
-                </a>
+                <form
+                    method="post"
+                    action="{% url 'battle:battle' %}"
+                >
+                    {% csrf_token %}
+
+                    <button
+                        type="submit"
+                        class="explore-button"
+                    >
+                        探索を開始する
+                        <span>→</span>
+                    </button>
+                </form>
 
                 {% endif %}
 

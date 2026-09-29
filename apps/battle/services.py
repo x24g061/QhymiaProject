@@ -415,37 +415,15 @@ class BattleEngine:
 
 
     def get_player_main_attribute(self):
-        attributes = {
-            "fire": self.character.fire,
-            "water": self.character.water,
-            "grass": self.character.grass,
-            "rock": self.character.rock,
-            "light": self.character.light,
-            "dark": self.character.dark,
-        }
+        """
+        プレイヤーの得意属性を取得する。
+        判定自体はCharacter側で共通化する。
+        """
 
-        values = list(attributes.values())
-
-        average = sum(values) / len(values)
-
-        max_value = max(values)
-
-        # 最高値の属性を全部取得
-        max_attributes = [
-            key
-            for key, value in attributes.items()
-            if value == max_value
-        ]
-
-        # 最高値が複数なら無属性
-        if len(max_attributes) != 1:
-            return "neutral"
-
-        # 平均値 ×1.5 を超えていなければ無属性
-        if max_value <= average * 1.5:
-            return "neutral"
-
-        return max_attributes[0]
+        return (
+            self.character
+            .get_main_attribute()
+        )
 
     @staticmethod
     def calculate_critical_rate(

@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.shortcuts import redirect, render
 from django.utils import timezone
+from django.views.decorators.http import require_POST
 
 from apps.accounts.growth import apply_exploration_exp
 
@@ -12,7 +13,9 @@ from .models import Enemy, Skill, SkillPreset
 from .services import BattleEngine
 
 
+
 @login_required
+@require_POST
 def battle(request):
     """
     探索を1回実行する。
