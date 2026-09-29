@@ -2,13 +2,14 @@
 
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>戦闘画面 | キュメイア</title>
 
-  <link rel="stylesheet" href="{% static 'css/battle.css' %}">
+    <link rel="stylesheet" href="{% static 'css/battle.css' %}">
 </head>
 
 <body>
@@ -131,7 +132,15 @@
             <p>
                 10の経験値を獲得した。
             </p>
-
+            {% if dropped_item %}
+            <p class="drop-message">
+                {{ dropped_item.name }} を手に入れた！
+            </p>
+            {% endif %}
+            <p>
+                現在のアイテムドロップ率：
+                {{ item_drop_rate }}%
+            </p>
         </section>
 
         <!-- 街に戻る -->
@@ -144,4 +153,5 @@
     </main>
 
 </body>
+
 </html>

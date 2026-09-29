@@ -12,6 +12,9 @@ def home(request):
         user=request.user
     ).first()
 
+    previous_arena_character = None
+    next_arena_character = None
+
     main_attribute_name = "-"
     main_attribute_value = 0
     battle_power = 0
@@ -21,43 +24,80 @@ def home(request):
 
     arena_max_floor = 100
     if character:
-        attributes = {
-            "火": character.fire,
-            "水": character.water,
-            "草": character.grass,
-            "岩": character.rock,
-            "光": character.light,
-            "闇": character.dark,
-        }
 
-        main_attribute_name = max(
-            attributes,
-            key=attributes.get
+    # ==============================
+    # 闘技場：前の階の相手を取得
+    # ==============================
+     if character.arena_floor > 1:
+        previous_arena_character = (
+            Character.objects
+            .filter(
+                arena_floor=character.arena_floor - 1
+            )
+            .exclude(id=character.id)
+            .first()
         )
 
-        main_attribute_value = attributes[
-            main_attribute_name
-        ]
-
-        battle_power = (
-            character.max_hp
-            + character.max_mp
-            + character.strength
-            + character.intelligence
-            + character.dexterity
-            + character.agility
-            + character.vitality
-            + character.luck
-            + main_attribute_value
+    # ==============================
+    # 闘技場：次の階の相手を取得
+    # ==============================
+    if character.arena_floor < arena_max_floor:
+        next_arena_character = (
+            Character.objects
+            .filter(
+                arena_floor=character.arena_floor + 1
+            )
+            .exclude(id=character.id)
+            .first()
         )
 
-        exploration_cooldown_remaining = (
-            character.get_exploration_cooldown_remaining()
-        )
+    attributes = {
+        "火": character.fire,
+        "水": character.water,
+        "草": character.grass,
+        "岩": character.rock,
+        "光": character.light,
+        "闇": character.dark,
+    }
 
-        exploration_cooldown_reduced = (
-            character.is_exploration_cooldown_reduced()
-        )
+    main_attribute_name = max(
+        attributes,
+        key=attributes.get
+    )
+
+    main_attribute_value = attributes[
+        main_attribute_name
+    ]
+
+
+    # ==============================
+    # 戦闘力
+    # ==============================
+
+    battle_power = (
+        character.max_hp
+        + character.max_mp
+        + character.strength
+        + character.intelligence
+        + character.dexterity
+        + character.agility
+        + character.vitality
+        + character.luck
+        + main_attribute_value
+    )
+
+
+    # ==============================
+    # 探索CT
+    # ==============================
+
+    exploration_cooldown_remaining = (
+        character.get_exploration_cooldown_remaining()
+    )
+
+    exploration_cooldown_reduced = (
+        character.is_exploration_cooldown_reduced()
+    )
 
     context = {
         "character": character,
@@ -69,6 +109,10 @@ def home(request):
         "exploration_cooldown_reduced":
             exploration_cooldown_reduced,
         "arena_max_floor": arena_max_floor,
+        "previous_arena_character":
+            previous_arena_character,
+        "next_arena_character":
+            next_arena_character,
     }
 
 
