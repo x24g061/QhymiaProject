@@ -274,12 +274,41 @@ class Character(models.Model):
         help_text="キャラクター情報更新日時"
     )
 
-    # ===== 闘技場 =====
+       # ===== 闘技場 =====
 
+    # 現在いる闘技場の階層
     arena_floor = models.PositiveIntegerField(
-    default=1,
-    help_text="現在の闘技場階層"
+        default=1,
+        help_text="現在の闘技場階層"
     )
+    
+    # 現在の連勝数
+    arena_win_streak = models.PositiveIntegerField(
+        default=0,
+        help_text="闘技場での現在の連勝数"
+    )
+
+    # 直近の闘技場対戦結果
+    ARENA_RESULT_CHOICES = [
+        ("none", "対戦なし"),
+        ("win", "勝利"),
+        ("loss", "敗北"),
+        ("draw", "引き分け"),
+    ]
+
+    arena_last_result = models.CharField(
+        max_length=10,
+        choices=ARENA_RESULT_CHOICES,
+        default="none",
+        help_text="直近の闘技場対戦結果"
+    )
+
+    arena_next_floor_unlocked = models.BooleanField(
+        default=False,
+        help_text="次の闘技場階層への挑戦が解禁されているか"
+ )
+    
+
 
     # ===== 探索クールタイム処理 =====
 

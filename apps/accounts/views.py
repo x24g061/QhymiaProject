@@ -163,3 +163,35 @@ def tokushoho_view(request):
 # プライバシーポリシー
 def privacy_view(request):
     return render(request, "privacy.html")
+
+@login_required
+def arena_result(request, result):
+    character = request.user.character
+
+    if result == "win":
+        character.arena_win_streak += 1
+        character.arena_last_result = "win"
+        character.arena_next_floor_unlocked = False
+
+    elif result == "loss":
+        character.arena_win_streak = 0
+        character.arena_last_result = "loss"
+        character.arena_next_floor_unlocked = True
+
+    else:
+        messages.error(
+            request,
+            "不正な闘技場結果です。"
+        )
+        return redirect("home")
+
+    character.save(
+        update_fields=[
+            "arena_win_streak",
+            "arena_last_result",
+            "arena_next_floor_unlocked",
+            "updated_at",
+        ]
+    )
+
+    return redirect("home")
