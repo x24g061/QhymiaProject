@@ -19,6 +19,7 @@ def home(request):
     exploration_cooldown_remaining = 0
     exploration_cooldown_reduced = False
 
+    arena_max_floor = 100
     if character:
         attributes = {
             "火": character.fire,
@@ -67,7 +68,11 @@ def home(request):
             exploration_cooldown_remaining,
         "exploration_cooldown_reduced":
             exploration_cooldown_reduced,
+        "arena_max_floor": arena_max_floor,
     }
+
+
+   
 
     return render(request, "home.html", context)
 

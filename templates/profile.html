@@ -1,0 +1,210 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>プロフィール | Qhymia</title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/profile.css' %}"
+    >
+</head>
+
+<body>
+
+<div class="profile-page">
+
+    <header class="profile-header">
+        <div>
+            <p class="profile-label">CHARACTER PROFILE</p>
+            <h1>プロフィール</h1>
+        </div>
+
+        <a href="{% url 'home' %}" class="home-button">
+            ホームへ戻る
+        </a>
+    </header>
+
+    {% if character %}
+
+    <main class="profile-container">
+
+        <section class="profile-main-card">
+
+            <div class="character-icon">
+                <div class="icon-placeholder">
+                    ?
+                </div>
+            </div>
+
+            <div class="character-summary">
+                <p class="character-level">
+                    Lv. {{ character.level }}
+                </p>
+
+                <h2>{{ character.name }}</h2>
+
+                <div class="character-tags">
+                    <span class="tag">
+                        {{ character.get_race_display }}
+                    </span>
+
+                    <span class="tag">
+                        {{ character.get_job_display }}
+                    </span>
+
+                    <span class="tag">
+                        転生 {{ character.reincarnation_count }}回
+                    </span>
+                </div>
+            </div>
+
+        </section>
+
+
+        <section class="profile-card">
+            <h3>基本情報</h3>
+
+            <div class="information-grid">
+
+                <div class="information-item">
+                    <span>EXP</span>
+                    <strong>{{ character.exp }} / 100</strong>
+                </div>
+
+                <div class="information-item">
+                    <span>HP</span>
+                    <strong>
+                        {{ character.current_hp }}
+                        /
+                        {{ character.max_hp }}
+                    </strong>
+                </div>
+
+                <div class="information-item">
+                    <span>MP</span>
+                    <strong>
+                        {{ character.current_mp }}
+                        /
+                        {{ character.max_mp }}
+                    </strong>
+                </div>
+
+                <div class="information-item">
+                    <span>STAMINA</span>
+                    <strong>
+                        {{ character.current_stamina }}
+                        /
+                        {{ character.max_stamina }}
+                    </strong>
+                </div>
+
+                <div class="information-item">
+                    <span>所持Q</span>
+                    <strong>{{ character.gold }} Q</strong>
+                </div>
+
+                <div class="information-item">
+                    <span>闘技場</span>
+                    <strong>{{ character.arena_floor }} 階</strong>
+                </div>
+
+            </div>
+        </section>
+
+
+        <section class="profile-card">
+            <h3>ステータス</h3>
+
+            <div class="status-grid">
+
+                <div class="status-item">
+                    <span>STR</span>
+                    <strong>{{ character.strength }}</strong>
+                </div>
+
+                <div class="status-item">
+                    <span>INT</span>
+                    <strong>{{ character.intelligence }}</strong>
+                </div>
+
+                <div class="status-item">
+                    <span>DEX</span>
+                    <strong>{{ character.dexterity }}</strong>
+                </div>
+
+                <div class="status-item">
+                    <span>AGI</span>
+                    <strong>{{ character.agility }}</strong>
+                </div>
+
+                <div class="status-item">
+                    <span>VIT</span>
+                    <strong>{{ character.vitality }}</strong>
+                </div>
+
+                <div class="status-item">
+                    <span>LUK</span>
+                    <strong>{{ character.luck }}</strong>
+                </div>
+
+            </div>
+        </section>
+
+
+        <section class="profile-card">
+            <h3>属性</h3>
+
+            <div class="attribute-grid">
+
+                <div class="attribute-item">
+                    <span>🔥 火</span>
+                    <strong>{{ character.fire }}</strong>
+                </div>
+
+                <div class="attribute-item">
+                    <span>💧 水</span>
+                    <strong>{{ character.water }}</strong>
+                </div>
+
+                <div class="attribute-item">
+                    <span>🌱 草</span>
+                    <strong>{{ character.grass }}</strong>
+                </div>
+
+                <div class="attribute-item">
+                    <span>🪨 岩</span>
+                    <strong>{{ character.rock }}</strong>
+                </div>
+
+                <div class="attribute-item">
+                    <span>✨ 光</span>
+                    <strong>{{ character.light }}</strong>
+                </div>
+
+                <div class="attribute-item">
+                    <span>🌑 闇</span>
+                    <strong>{{ character.dark }}</strong>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    {% else %}
+
+    <div class="no-character">
+        キャラクターが作成されていません。
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
