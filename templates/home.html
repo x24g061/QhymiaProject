@@ -449,43 +449,37 @@
 
                             {% endif %}
 
-                            {% if character.arena_floor < arena_max_floor %} <div class="arena-card">
-
-                                <div class="arena-card-header">
-                                    闘技場{{ character.arena_floor|add:"1" }}階
-                                </div>
-
-                                <div class="arena-card-body">
-
-                                </div>
-
-                        </div>
+                            {% if character.arena_next_floor_unlocked %}
+                            <a href="{% url 'battle:arena_next_floor' %}" class="arena-next-floor-button">
+                                次の階へ挑戦
+                            </a>
+                            {% endif %}
 
 
-                        <!--
+                            <!--
                     現在が最上階の場合
                 -->
-                        {% else %}
+                            {% else %}
 
-                        <div class="arena-edge-message arena-edge-right">
+                            <div class="arena-edge-message arena-edge-right">
 
-                            <p>
-                                これより上の階はありません
-                            </p>
+                                <p>
+                                    これより上の階はありません
+                                </p>
 
-                            <span>
-                                →
-                            </span>
+                                <span>
+                                    →
+                                </span>
+
+                            </div>
+
+                            {% endif %}
 
                         </div>
-
-                        {% endif %}
 
                 </div>
 
             </div>
-
-        </div>
 
     </section>
 
