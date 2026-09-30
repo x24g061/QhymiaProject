@@ -1,0 +1,451 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>闘技場 | キュメイア</title>
+
+    <!--
+        探索画面と同じ battle.css を使用。
+        闘技場と探索で戦闘画面のデザインを統一する。
+    -->
+    <link rel="stylesheet" href="{% static 'css/battle.css' %}">
+</head>
+
+<body>
+
+    <main class="battle-screen">
+
+        <!-- ========================================
+             画面上部
+
+             ・現在の闘技場階層
+             ・ゲームタイトル
+        ========================================= -->
+        <header class="battle-header">
+
+            <p class="turn-count">
+                闘技場{{ character.arena_floor }}階
+            </p>
+
+            <h1 class="game-title">
+                キュメイア
+            </h1>
+
+        </header>
+
+
+        <!-- ========================================
+             対戦開始メッセージ
+
+             views.py から渡された opponent の
+             キャラクター名を表示する。
+        ========================================= -->
+        <section class="encounter-message">
+
+            <p>
+                {{ opponent.name }} との闘技場戦！
+            </p>
+
+        </section>
+
+
+        <!-- ========================================
+             戦闘フィールド
+
+             左：
+             ログイン中の自分
+
+             中央：
+             VS表示
+
+             右：
+             対戦相手
+        ========================================= -->
+        <section class="battle-field">
+
+
+            <!-- ====================================
+                 プレイヤー側
+            ===================================== -->
+            <div class="fighter player">
+
+                <!-- キャラクター名 -->
+                <h2 class="fighter-name">
+                    {{ character.name }}
+                </h2>
+
+
+                <!--
+                    仮キャラクターアイコン。
+
+                    本物の画像を実装するまでは
+                    キャラクター名の最初の1文字を表示する。
+                -->
+                <div class="fighter-icon">
+                    {{ character.name|slice:":1" }}
+                </div>
+
+
+                <!--
+                    行動ゲージ。
+
+                    現在は見た目だけ。
+                    将来的にAGIや行動順と連動可能。
+                -->
+                <div class="action-gauge">
+                    <div class="action-gauge-fill"></div>
+                </div>
+
+
+                <!-- =================================
+                     プレイヤーHP
+                ================================== -->
+                <div class="status">
+
+                    <p>HP</p>
+
+                    <div class="status-bar">
+
+                        <!--
+                            data-current = 現在HP
+                            data-max     = 最大HP
+
+                            下部JavaScriptで割合を計算して
+                            HPバーの幅を変更する。
+                        -->
+                        <div class="hp-fill player-hp js-arena-hp" data-current="{{ character.current_hp }}"
+                            data-max="{{ character.max_hp }}"></div>
+
+                    </div>
+
+                    <span>
+                        {{ character.current_hp }}
+                        /
+                        {{ character.max_hp }}
+                    </span>
+
+                </div>
+
+
+                <!-- =================================
+                     プレイヤースタミナ
+                ================================== -->
+                <div class="status">
+
+                    <p>ST</p>
+
+                    <div class="status-bar">
+
+                        <div class="stamina-fill player-stamina js-arena-stamina"
+                            data-current="{{ character.current_stamina }}" data-max="{{ character.max_stamina }}"></div>
+
+                    </div>
+
+                    <span>
+                        {{ character.current_stamina }}
+                        /
+                        {{ character.max_stamina }}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ====================================
+                 VS表示
+            ===================================== -->
+            <div class="vs">
+                VS
+            </div>
+
+
+            <!-- ====================================
+                 対戦相手側
+            ===================================== -->
+            <div class="fighter enemy">
+
+                <!-- 対戦相手名 -->
+                <h2 class="fighter-name">
+                    {{ opponent.name }}
+                </h2>
+
+
+                <!-- 仮キャラクターアイコン -->
+                <div class="fighter-icon">
+                    {{ opponent.name|slice:":1" }}
+                </div>
+
+
+                <!-- 行動ゲージ -->
+                <div class="action-gauge">
+                    <div class="action-gauge-fill"></div>
+                </div>
+
+
+                <!-- =================================
+                     対戦相手HP
+                ================================== -->
+                <div class="status">
+
+                    <p>HP</p>
+
+                    <div class="status-bar">
+
+                        <div class="hp-fill enemy-hp js-arena-hp" data-current="{{ opponent.current_hp }}"
+                            data-max="{{ opponent.max_hp }}"></div>
+
+                    </div>
+
+                    <span>
+                        {{ opponent.current_hp }}
+                        /
+                        {{ opponent.max_hp }}
+                    </span>
+
+                </div>
+
+
+                <!-- =================================
+                     対戦相手スタミナ
+                ================================== -->
+                <div class="status">
+
+                    <p>ST</p>
+
+                    <div class="status-bar">
+
+                        <div class="stamina-fill enemy-stamina js-arena-stamina"
+                            data-current="{{ opponent.current_stamina }}" data-max="{{ opponent.max_stamina }}"></div>
+
+                    </div>
+
+                    <span>
+                        {{ opponent.current_stamina }}
+                        /
+                        {{ opponent.max_stamina }}
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================
+             戦闘情報
+
+             現在は開発確認用。
+
+             ・各ステータス
+             ・先攻
+             ・命中率
+             ・命中 / ミス
+
+             を表示して戦闘計算が正しく動いているか
+             確認する。
+        ========================================= -->
+        <section class="battle-log">
+
+            <h2>
+                戦闘ステータス
+            </h2>
+
+
+            <!-- ====================================
+                 プレイヤーステータス
+            ===================================== -->
+            <p>
+                {{ character.name }}
+                ：STR {{ character.strength }}
+                / INT {{ character.intelligence }}
+                / DEX {{ character.dexterity }}
+                / AGI {{ character.agility }}
+                / VIT {{ character.vitality }}
+                / LUK {{ character.luck }}
+            </p>
+
+
+            <!-- ====================================
+                 対戦相手ステータス
+            ===================================== -->
+            <p>
+                {{ opponent.name }}
+                ：STR {{ opponent.strength }}
+                / INT {{ opponent.intelligence }}
+                / DEX {{ opponent.dexterity }}
+                / AGI {{ opponent.agility }}
+                / VIT {{ opponent.vitality }}
+                / LUK {{ opponent.luck }}
+            </p>
+
+
+            <!-- ====================================
+                 先攻判定結果
+
+                 views.py でAGIを比較して決定。
+                 AGIが同じ場合はランダム。
+            ===================================== -->
+            <p>
+                先攻：
+                {{ first_attacker.name }}
+            </p>
+
+
+            <!-- ====================================
+                 命中率
+
+                 現在の計算：
+
+                 基本80%
+                 ＋ 攻撃側DEX
+                 － 防御側DEX
+
+                 最低10%
+                 最大95%
+            ===================================== -->
+            <p>
+                命中率：
+                {{ hit_rate }}%
+            </p>
+
+
+            <!-- ====================================
+                 命中判定結果
+
+                 attack_hit が True
+                 → 命中
+
+                 False
+                 → ミス
+            ===================================== -->
+            <p>
+                攻撃結果：
+
+                {% if attack_hit %}
+                命中
+                {% else %}
+                ミス
+                {% endif %}
+            </p>
+
+
+            <!-- ====================================
+                 ダメージ表示
+
+                 views.py 側で damage を追加したあと使用。
+
+                 命中した場合だけダメージを表示する。
+            ===================================== -->
+            {% if attack_hit %}
+
+            <p>
+                ダメージ：
+                {{ damage }}
+            </p>
+
+            {% endif %}
+
+        </section>
+
+
+        <!-- ========================================
+             街へ戻る
+        ========================================= -->
+        <div class="return-area">
+
+            <a href="{% url 'home' %}" class="return-button">
+                街に戻る
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <!-- ============================================
+         HP / ST ゲージ処理
+
+         Djangoから
+
+         data-current
+         data-max
+
+         をHTMLへ渡し、
+
+         current ÷ max × 100
+
+         で残量をパーセント計算する。
+
+         例：
+         HP 50 / 100
+         ↓
+         width: 50%
+
+         となる。
+    ============================================= -->
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                document
+                    .querySelectorAll(
+                        ".js-arena-hp, .js-arena-stamina"
+                    )
+                    .forEach(function (gauge) {
+
+                        // 現在値
+                        const current = Number(
+                            gauge.dataset.current
+                        );
+
+                        // 最大値
+                        const max = Number(
+                            gauge.dataset.max
+                        );
+
+                        let percent = 0;
+
+
+                        // 0除算防止
+                        if (max > 0) {
+
+                            percent = (
+                                current / max
+                            ) * 100;
+
+                        }
+
+
+                        // 0%未満、100%超えを防ぐ
+                        percent = Math.max(
+                            0,
+                            Math.min(
+                                100,
+                                percent
+                            )
+                        );
+
+
+                        // ゲージの横幅へ反映
+                        gauge.style.width =
+                            percent + "%";
+
+                    });
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>
