@@ -1,0 +1,579 @@
+/* ========================================
+   character_create画面だけ
+   base.htmlのレイアウトを解除
+======================================== */
+
+/* Qhymia・ログアウトがあるヘッダーを非表示 */
+body > header {
+    display: none;
+}
+
+/* base.html側のmain設定を解除 */
+main {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* ページ全体の余白をなくす */
+body {
+    margin: 0;
+    padding: 0;
+
+    background: #dceef3;
+}
+/* ========================================
+   キャラクター作成画面
+======================================== */
+
+.character-create-page {
+    width: 100%;
+    min-height: 100vh;
+
+    padding: 18px 3% 30px;
+
+    color: #164e69;
+
+    background-image:
+        linear-gradient(
+            rgba(255, 255, 255, 0.45),
+            rgba(255, 255, 255, 0.45)
+        ),
+        url("../images/character-create-bg.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    box-sizing: border-box;
+}
+
+
+/* ========================================
+   タイトル
+======================================== */
+
+.character-create-title {
+    margin: 0 0 12px;
+
+    text-align: center;
+
+    font-size: 32px;
+    font-weight: 700;
+
+    color: #111;
+}
+
+
+/* ========================================
+   メインフォーム
+======================================== */
+
+.character-create-form {
+    width: min(1180px, 100%);
+    margin: 0 auto;
+    padding: 10px 22px 18px;
+
+    background: rgba(255, 255, 255, 0.88);
+
+    box-sizing: border-box;
+}
+
+
+/* ========================================
+   キャラクター名
+======================================== */
+
+.name-section {
+    margin-bottom: 20px;
+}
+
+.name-label {
+    display: block;
+
+    margin-bottom: 3px;
+
+    font-size: 20px;
+    font-weight: 500;
+}
+
+#character_name {
+    display: block;
+
+    width: 440px;
+    max-width: 100%;
+    height: 40px;
+
+    padding: 4px 10px;
+
+    border: 2px solid #333;
+
+    background: #fff;
+
+    font-size: 18px;
+
+    box-sizing: border-box;
+}
+
+#character_name:focus {
+    outline: 2px solid #5bc0eb;
+    outline-offset: 1px;
+}
+
+.name-warning {
+    margin: 4px 0 0;
+
+    color: #ff2a20;
+
+    font-size: 17px;
+}
+
+.error-message {
+    margin-top: 6px;
+
+    color: #d50000;
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+
+/* ========================================
+   セクションタイトル
+======================================== */
+
+.section-heading {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+
+    margin: 10px 0 14px;
+
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.section-heading::before,
+.section-heading::after {
+    content: "";
+
+    flex: 1;
+
+    height: 2px;
+
+    background: #17617d;
+}
+
+.section-heading span {
+    padding: 0 12px;
+}
+
+
+/* ========================================
+   選択中キャラクター
+======================================== */
+
+.selected-character-section {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 16px;
+
+    padding: 0 12px 8px;
+}
+
+.selected-character-preview {
+    flex-shrink: 0;
+}
+
+.character-image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 165px;
+    height: 165px;
+
+    border: 2px solid #173f50;
+
+    background: #fff;
+
+    color: #222;
+
+    text-align: center;
+    font-size: 15px;
+
+    box-sizing: border-box;
+}
+
+
+/* ========================================
+   選択キャラクター情報
+======================================== */
+
+.selected-character-info {
+    flex: 1;
+
+    padding: 10px 0 0;
+}
+
+.character-status-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    gap: 15px;
+
+    margin-bottom: 28px;
+}
+
+.status-item {
+    display: flex;
+    align-items: center;
+
+    white-space: nowrap;
+}
+
+.status-label {
+    margin-right: 6px;
+
+    font-size: 18px;
+    font-weight: 600;
+}
+
+
+/* ========================================
+   キャラクター番号
+======================================== */
+
+#character_number {
+    width: 105px;
+    height: 34px;
+
+    padding: 0 8px;
+
+    border: 2px solid #333;
+
+    background: #fff;
+
+    color: #222;
+
+    font-size: 17px;
+
+    box-sizing: border-box;
+}
+
+
+/* ========================================
+   種族・職業
+======================================== */
+
+.status-select {
+    min-width: 125px;
+    height: 34px;
+
+    padding: 0 8px;
+
+    border: 2px solid #333;
+
+    background: #fff;
+
+    color: #222;
+
+    font-size: 17px;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+}
+
+.status-select:focus {
+    outline: 2px solid #59bfe9;
+    outline-offset: 1px;
+}
+
+
+/* ========================================
+   リンク
+======================================== */
+
+.character-links {
+    display: flex;
+    justify-content: space-between;
+
+    width: 75%;
+}
+
+/* 「キャラクター画像から選ぶ」と一覧リンク */
+.character-image-select-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+/* ここはリンクではなく普通の説明文 */
+.character-select-text {
+    margin: 0;
+
+    color: #164e69;
+
+    font-size: 17px;
+    line-height: 1.35;
+}
+
+/* 実際にクリックできるリンク */
+.character-link {
+    color: #3697e8;
+
+    font-size: 17px;
+    line-height: 1.35;
+
+    text-decoration: underline;
+}
+
+.character-link:hover {
+    opacity: 0.7;
+}
+
+.passive-link {
+    align-self: flex-start;
+}
+
+
+/* ========================================
+   ランダム選択
+======================================== */
+
+.random-character-section {
+    margin-top: 0;
+}
+
+.random-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 10px;
+}
+
+.random-description {
+    margin: 0;
+
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.random-description span {
+    font-weight: 400;
+}
+
+.random-button {
+    width: 240px;
+    height: 42px;
+
+    border: none;
+
+    background: #59bfe9;
+
+    color: #fff;
+
+    font-size: 18px;
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+.random-button:hover {
+    opacity: 0.82;
+}
+
+
+/* ========================================
+   キャラクター一覧
+======================================== */
+
+.character-list {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+
+    gap: 14px;
+}
+
+.character-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    height: 115px;
+
+    padding: 0;
+
+    border: 2px solid #173f50;
+
+    background: #fff;
+
+    color: #222;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    box-sizing: border-box;
+
+    transition:
+        border-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.character-card:hover {
+    border-color: #59bfe9;
+
+    transform: translateY(-2px);
+}
+
+
+/* ========================================
+   作成ボタン
+======================================== */
+
+.submit-area {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 25px;
+}
+
+.create-character-button {
+    min-width: 270px;
+
+    padding: 12px 20px;
+
+    border: 2px solid #fff;
+
+    background: #45afe0;
+
+    color: #fff;
+
+    font-size: 19px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+.create-character-button:hover {
+    opacity: 0.85;
+}
+
+
+/* ========================================
+   レスポンシブ
+======================================== */
+
+@media (max-width: 1100px) {
+
+    .character-create-form {
+        width: 100%;
+    }
+
+    .character-list {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .character-status-row {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    .character-links {
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .character-create-page {
+        padding: 15px 10px 25px;
+    }
+
+    .character-create-title {
+        font-size: 27px;
+    }
+
+    .character-create-form {
+        padding: 12px;
+    }
+
+    .name-label {
+        font-size: 18px;
+    }
+
+    #character_name {
+        width: 100%;
+    }
+
+    .name-warning {
+        font-size: 14px;
+    }
+
+    .selected-character-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .selected-character-info {
+        width: 100%;
+    }
+
+    .character-status-row {
+        flex-direction: column;
+        align-items: stretch;
+
+        margin-bottom: 20px;
+    }
+
+    .status-item {
+        justify-content: space-between;
+    }
+
+    .character-links {
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+    .random-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .random-button {
+        width: 100%;
+    }
+
+    .character-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .section-heading {
+        font-size: 17px;
+    }
+
+    .section-heading span {
+        text-align: center;
+    }
+
+    .create-character-button {
+        width: 100%;
+        min-width: 0;
+    }
+}
+
