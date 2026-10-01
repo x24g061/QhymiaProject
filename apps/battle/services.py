@@ -143,8 +143,6 @@ class BattleEngine:
             self.get_player_max_mp()
         )
 
-        self.enemy_hp = enemy.max_hp
-
         # イニシアチブ
         self.player_initiative = 0
         self.enemy_initiative = 0
@@ -356,6 +354,34 @@ class BattleEngine:
         """
 
         self.player_combatant.mp = value
+
+
+    # ============================================================
+    # 敵HP
+    # ============================================================
+
+    @property
+    def enemy_hp(self):
+        """
+        敵の現在HPを返す。
+
+        実際のHPはEnemyCombatant側で管理する。
+        """
+
+        return self.enemy_combatant.hp
+
+
+    @enemy_hp.setter
+    def enemy_hp(self, value):
+        """
+        敵HPを変更する。
+
+        既存のBattleEngine側から
+        self.enemy_hpを書き換えても、
+        EnemyCombatant.hpへ反映される。
+        """
+
+        self.enemy_combatant.hp = value
 
 
     def get_player_stat(self, stat_name):

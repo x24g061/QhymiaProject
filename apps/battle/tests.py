@@ -398,6 +398,35 @@ class BattleEngineTests(TestCase):
         )
 
 
+    def test_enemy_hp_is_managed_by_combatant(self):
+        """
+        BattleEngineのenemy_hpが
+        EnemyCombatantのHPと同期していることを確認。
+        """
+
+        # BattleEngine側からダメージ
+        self.engine.enemy_hp -= 10
+
+        self.assertEqual(
+            self.engine.enemy_hp,
+            20,
+        )
+
+        self.assertEqual(
+            self.engine.enemy_combatant.hp,
+            20,
+        )
+
+        # EnemyCombatant側から変更しても
+        # BattleEngine側へ反映される
+        self.engine.enemy_combatant.hp = 5
+
+        self.assertEqual(
+            self.engine.enemy_hp,
+            5,
+        )
+
+
 class CombatantTests(TestCase):
 
     def setUp(self):
