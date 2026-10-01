@@ -427,6 +427,49 @@ class BattleEngineTests(TestCase):
         )
 
 
+    def test_enemy_status_is_managed_by_combatant(self):
+        """
+        敵の状態異常が
+        EnemyCombatant側で管理されることを確認。
+        """
+
+        # BattleEngine側から変更
+        self.engine.enemy_sleep_turns = 2
+        self.engine.enemy_poison_turns = 5
+        self.engine.enemy_paralysis_turns = 3
+        self.engine.enemy_dex_debuff_rate = 0.03
+
+        # EnemyCombatant側にも反映されている
+        self.assertEqual(
+            self.engine.enemy_combatant.sleep_turns,
+            2,
+        )
+
+        self.assertEqual(
+            self.engine.enemy_combatant.poison_turns,
+            5,
+        )
+
+        self.assertEqual(
+            self.engine.enemy_combatant.paralysis_turns,
+            3,
+        )
+
+        self.assertEqual(
+            self.engine.enemy_combatant.dex_debuff_rate,
+            0.03,
+        )
+
+        # EnemyCombatant側から変更しても
+        # BattleEngine側から確認できる
+        self.engine.enemy_combatant.poison_turns = 1
+
+        self.assertEqual(
+            self.engine.enemy_poison_turns,
+            1,
+        )
+
+
 class CombatantTests(TestCase):
 
     def setUp(self):

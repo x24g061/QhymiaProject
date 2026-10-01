@@ -239,18 +239,6 @@ class BattleEngine:
         # 5行動の間有効
         self.frost_armor_turns = 0
 
-        # ===== 敵の状態異常 =====
-
-        # 睡眠
-        # 行動不能。最大3行動。
-        # 直接攻撃を受けると解除。
-        self.enemy_sleep_turns = 0
-
-        # 毒
-        # 最大HPの10%ダメージ。
-        # 5行動持続。
-        self.enemy_poison_turns = 0
-
         # ===== プリースト用の戦闘状態 =====
 
         # 「ヒーリングシールド」
@@ -265,12 +253,6 @@ class BattleEngine:
         # 1戦につき1回
         self.resurrection_used = False
 
-        # ===== 敵の麻痺状態 =====
-
-        # 最大5行動。
-        # 行動時50%で動けない。
-        self.enemy_paralysis_turns = 0
-
         # ===== 暗殺者用の戦闘状態 =====
 
         # 「ステルス」
@@ -282,14 +264,6 @@ class BattleEngine:
         # 「シャドウステップ」
         # 発動後3行動の間、被ダメージの40%を反射
         self.shadow_step_turns = 0
-
-        # 「ポイズンダガー」のDEX低下
-        #
-        # DEX -3%。
-        # 持続時間はまだ正式決定していないため、
-        # 現段階では戦闘中フラグとして扱う。
-        self.enemy_dex_debuff_rate = 0.0
-
 
         # ===== 種族パッシブ用の戦闘状態 =====
 
@@ -382,6 +356,77 @@ class BattleEngine:
         """
 
         self.enemy_combatant.hp = value
+
+
+    # ============================================================
+    # 敵の状態異常
+    # ============================================================
+
+    @property
+    def enemy_sleep_turns(self):
+        """敵の睡眠残りターンを返す。"""
+
+        return (
+            self.enemy_combatant.sleep_turns
+        )
+
+
+    @enemy_sleep_turns.setter
+    def enemy_sleep_turns(self, value):
+        """敵の睡眠残りターンを変更する。"""
+
+        self.enemy_combatant.sleep_turns = value
+
+
+    @property
+    def enemy_poison_turns(self):
+        """敵の毒残りターンを返す。"""
+
+        return (
+            self.enemy_combatant.poison_turns
+        )
+
+
+    @enemy_poison_turns.setter
+    def enemy_poison_turns(self, value):
+        """敵の毒残りターンを変更する。"""
+
+        self.enemy_combatant.poison_turns = value
+
+
+    @property
+    def enemy_paralysis_turns(self):
+        """敵の麻痺残りターンを返す。"""
+
+        return (
+            self.enemy_combatant.paralysis_turns
+        )
+
+
+    @enemy_paralysis_turns.setter
+    def enemy_paralysis_turns(self, value):
+        """敵の麻痺残りターンを変更する。"""
+
+        self.enemy_combatant.paralysis_turns = value
+
+
+    @property
+    def enemy_dex_debuff_rate(self):
+        """敵のDEX低下率を返す。"""
+
+        return (
+            self.enemy_combatant.dex_debuff_rate
+        )
+
+
+    @enemy_dex_debuff_rate.setter
+    def enemy_dex_debuff_rate(
+        self,
+        value,
+    ):
+        """敵のDEX低下率を変更する。"""
+
+        self.enemy_combatant.dex_debuff_rate = value
 
 
     def get_player_stat(self, stat_name):
