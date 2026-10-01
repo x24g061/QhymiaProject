@@ -6,6 +6,10 @@ from apps.accounts.models import Character, User
 from apps.accounts.growth import apply_exploration_exp
 from apps.battle.models import Enemy
 from apps.battle.services import BattleEngine
+from apps.battle.combatants import (
+    PlayerCombatant,
+    EnemyCombatant,
+)
 
 
 class BattleEngineTests(TestCase):
@@ -304,5 +308,103 @@ class BattleEngineTests(TestCase):
 
         self.assertEqual(
             engine.player_mp,
+            105,
+        )
+
+
+class CombatantTests(TestCase):
+
+    def setUp(self):
+
+        self.user = User.objects.create_user(
+            user_id="combatant_test_user",
+            email="combatant@example.com",
+            password="testpass123",
+        )
+
+        self.character = Character.objects.create(
+            user=self.user,
+            name="戦闘テスト",
+            race="human",
+            job="wanderer",
+        )
+
+        self.enemy = Enemy.objects.create(
+            name="戦闘用スライム",
+            max_hp=30,
+            max_mp=0,
+            strength=5,
+            intelligence=3,
+            dexterity=4,
+            agility=4,
+            vitality=4,
+            luck=3,
+            attribute="grass",
+            exp_min=7,
+            exp_max=12,
+        )
+
+
+    def test_enemy_combatant(self):
+        """
+        敵の戦闘用オブジェクトが
+        正しく作られることを確認する。
+        """
+
+        enemy = EnemyCombatant(
+            self.enemy
+        )
+
+        self.assertEqual(
+            enemy.hp,
+            30,
+        )
+
+        self.assertTrue(
+            enemy.is_alive()
+        )
+
+        enemy.take_damage(10)
+
+        self.assertEqual(
+            enemy.hp,
+            20,
+        )
+
+
+    def test_priest_combatant_bonus(self):
+        """
+        プリーストのHP・MP補正を確認する。
+        """
+
+        self.character.job = "priest"
+
+        self.character.max_hp = 100
+        self.character.current_hp = 100
+
+        self.character.max_mp = 100
+        self.character.current_mp = 100
+
+        player = PlayerCombatant(
+            self.character
+        )
+
+        self.assertEqual(
+            player.max_hp,
+            105,
+        )
+
+        self.assertEqual(
+            player.hp,
+            105,
+        )
+
+        self.assertEqual(
+            player.max_mp,
+            105,
+        )
+
+        self.assertEqual(
+            player.mp,
             105,
         )
