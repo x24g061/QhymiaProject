@@ -143,25 +143,6 @@ class BattleEngine:
             self.get_player_max_mp()
         )
 
-        # ========================================
-        # 戦闘中だけ使うHP
-        # ========================================
-
-        # 探索開始時にHPが満タンなら、
-        # 職業補正後の最大HPからスタートする。
-        if (
-            character.current_hp
-            >= character.max_hp
-        ):
-            self.player_hp = (
-                self.player_max_hp
-            )
-        else:
-            self.player_hp = min(
-                character.current_hp,
-                self.player_max_hp,
-            )
-
         self.enemy_hp = enemy.max_hp
 
         # イニシアチブ
@@ -333,6 +314,34 @@ class BattleEngine:
         # 自分の行動終了ごとにAGI +1%
         # 最大+10%
         self.elf_agility_bonus = 0.0
+
+
+    # ============================================================
+    # プレイヤーHP
+    # ============================================================
+
+    @property
+    def player_hp(self):
+        """
+        プレイヤーの現在HPを返す。
+
+        実際のHPはPlayerCombatant側で管理する。
+        """
+
+        return self.player_combatant.hp
+
+
+    @player_hp.setter
+    def player_hp(self, value):
+        """
+        プレイヤーHPを変更する。
+
+        既存のBattleEngine側から
+        self.player_hpを書き換えても、
+        PlayerCombatant.hpへ反映される。
+        """
+
+        self.player_combatant.hp = value
 
 
     def get_player_stat(self, stat_name):
