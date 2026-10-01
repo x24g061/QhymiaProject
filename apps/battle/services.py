@@ -145,7 +145,6 @@ class BattleEngine:
 
         # イニシアチブ
         self.player_initiative = 0
-        self.enemy_initiative = 0
 
         # 戦闘ログ
         self.logs = []
@@ -427,6 +426,35 @@ class BattleEngine:
         """敵のDEX低下率を変更する。"""
 
         self.enemy_combatant.dex_debuff_rate = value
+
+
+    # ============================================================
+    # 敵イニシアチブ
+    # ============================================================
+
+    @property
+    def enemy_initiative(self):
+        """
+        敵の行動ゲージを返す。
+
+        実際の値はEnemyCombatant側で管理する。
+        """
+
+        return (
+            self.enemy_combatant.initiative
+        )
+
+
+    @enemy_initiative.setter
+    def enemy_initiative(
+        self,
+        value,
+    ):
+        """
+        敵の行動ゲージを変更する。
+        """
+
+        self.enemy_combatant.initiative = value
 
 
     def get_player_stat(self, stat_name):
