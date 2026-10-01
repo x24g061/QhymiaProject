@@ -369,6 +369,35 @@ class BattleEngineTests(TestCase):
         )
 
 
+    def test_player_mp_is_managed_by_combatant(self):
+        """
+        BattleEngineのplayer_mpが
+        PlayerCombatantのMPと同期していることを確認。
+        """
+
+        # BattleEngine側からMPを変更
+        self.engine.player_mp -= 3
+
+        self.assertEqual(
+            self.engine.player_mp,
+            7,
+        )
+
+        self.assertEqual(
+            self.engine.player_combatant.mp,
+            7,
+        )
+
+        # PlayerCombatant側から変更しても
+        # BattleEngine側に反映される
+        self.engine.player_combatant.mp = 5
+
+        self.assertEqual(
+            self.engine.player_mp,
+            5,
+        )
+
+
 class CombatantTests(TestCase):
 
     def setUp(self):

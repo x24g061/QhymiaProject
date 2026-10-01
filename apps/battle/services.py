@@ -152,20 +152,6 @@ class BattleEngine:
         # 戦闘ログ
         self.logs = []
 
-        # プレイヤーのMPも戦闘中だけ使う
-        if (
-            character.current_mp
-            >= character.max_mp
-        ):
-            self.player_mp = (
-                self.player_max_mp
-            )
-        else:
-            self.player_mp = min(
-                character.current_mp,
-                self.player_max_mp,
-            )
-
         # プリセットスキルの情報を取得
         self.presets = list(
             character.skill_presets
@@ -342,6 +328,34 @@ class BattleEngine:
         """
 
         self.player_combatant.hp = value
+
+
+    # ============================================================
+    # プレイヤーMP
+    # ============================================================
+
+    @property
+    def player_mp(self):
+        """
+        プレイヤーの現在MPを返す。
+
+        実際のMPはPlayerCombatant側で管理する。
+        """
+
+        return self.player_combatant.mp
+
+
+    @player_mp.setter
+    def player_mp(self, value):
+        """
+        プレイヤーMPを変更する。
+
+        既存のBattleEngine側から
+        self.player_mpを書き換えても、
+        PlayerCombatant.mpへ反映される。
+        """
+
+        self.player_combatant.mp = value
 
 
     def get_player_stat(self, stat_name):
