@@ -312,6 +312,34 @@ class BattleEngineTests(TestCase):
         )
 
 
+    def test_battle_engine_has_combatants(self):
+        """
+        BattleEngine生成時に
+        プレイヤーと敵の戦闘用オブジェクトが
+        正しく作られることを確認する。
+        """
+
+        self.assertEqual(
+            self.engine.player_combatant.character,
+            self.character,
+        )
+
+        self.assertEqual(
+            self.engine.enemy_combatant.enemy,
+            self.enemy,
+        )
+
+        self.assertEqual(
+            self.engine.player_combatant.hp,
+            self.engine.player_hp,
+        )
+
+        self.assertEqual(
+            self.engine.enemy_combatant.hp,
+            self.engine.enemy_hp,
+        )
+
+
 class CombatantTests(TestCase):
 
     def setUp(self):

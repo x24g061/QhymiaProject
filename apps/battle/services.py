@@ -1,5 +1,9 @@
 import random
 import math
+from apps.battle.combatants import (
+    PlayerCombatant,
+    EnemyCombatant,
+)
 
 ATTRIBUTE_MULTIPLIERS = {
     "fire": {
@@ -110,6 +114,22 @@ class BattleEngine:
     def __init__(self, character, enemy):
         self.character = character
         self.enemy = enemy
+
+
+        # ============================================================
+        # 新しい戦闘参加者クラス
+        # ============================================================
+
+        # 今は旧処理を残したまま、
+        # 新しいクラスも同時に用意する。
+        self.player_combatant = PlayerCombatant(
+            character
+        )
+
+        self.enemy_combatant = EnemyCombatant(
+            enemy
+        )
+
 
         # ========================================
         # 戦闘中の最大HP・MP
