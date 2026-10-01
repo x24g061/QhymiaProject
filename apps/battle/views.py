@@ -283,7 +283,7 @@ def arena_battle(request):
     # 対戦相手取得
     #
     # 自分と同じ闘技場階にいる
-    # 別キャラクターをランダムで1人取得する。
+    # 別キャラクターをランダムで1人取得
     # ========================================
 
     opponent = (
@@ -298,9 +298,7 @@ def arena_battle(request):
         .first()
     )
 
-    # 相手がいない場合
     if opponent is None:
-
         messages.warning(
             request,
             "この階には対戦相手がいません。"
@@ -309,148 +307,223 @@ def arena_battle(request):
         return redirect("home")
 
     # ========================================
+    # 闘技場戦闘用HP
+    #
+    # DB上の current_hp はまだ変更しない。
+    # この戦闘内だけで使う一時HP。
+    # ========================================
+
+    character_battle_hp = character.current_hp
+    opponent_battle_hp = opponent.current_hp
+
+    # ========================================
     # 先攻判定
     #
     # AGIが高い方が先攻。
-    #
-    # AGIが同じ場合はランダム。
+    # 同値の場合はランダム。
     # ========================================
 
     if character.agility > opponent.agility:
-
         first_attacker = character
         second_attacker = opponent
 
     elif character.agility < opponent.agility:
-
         first_attacker = opponent
         second_attacker = character
 
     else:
-
-        # AGIが同じ場合
         if random.choice([True, False]):
-
             first_attacker = character
             second_attacker = opponent
-
         else:
-
             first_attacker = opponent
             second_attacker = character
 
     # ========================================
-    # 命中率計算
+    # 先攻側の命中率計算
     #
-    # 基本命中率：80%
-    #
-    # 攻撃側DEX
-    # －
-    # 防御側DEX
-    #
-    # を補正として加える。
-    # ========================================
-
-    hit_rate = 80 + (
-        first_attacker.dexterity
-        - second_attacker.dexterity
-    )
-
-    # ========================================
-    # 命中率の上限・下限
+    # 基本80%
+    # + 攻撃側DEX
+    # - 防御側DEX
     #
     # 最低10%
     # 最大95%
     # ========================================
 
-    hit_rate = max(
+    first_hit_rate = 80 + (
+        first_attacker.dexterity
+        - second_attacker.dexterity
+    )
+
+    first_hit_rate = max(
         10,
         min(
             95,
-            hit_rate
+            first_hit_rate
         )
     )
 
     # ========================================
-    # 命中判定
-    #
-    # 1～100の乱数を生成。
-    #
-    # 命中率以下なら命中。
+    # 先攻側の命中判定
     # ========================================
 
-    hit_roll = random.randint(
+    first_hit_roll = random.randint(
         1,
         100
     )
 
-    attack_hit = (
-        hit_roll <= hit_rate
+    first_attack_hit = (
+        first_hit_roll <= first_hit_rate
     )
 
     # ========================================
-    # ダメージ計算
+    # 先攻側のダメージ計算
     #
-    # 現在の計算式：
+    # STR - VIT
     #
-    # 攻撃側STR
-    # －
-    # 防御側VIT
-    #
-    # 攻撃が外れた場合は0。
+    # 命中時は最低1ダメージ
     # ========================================
 
-    damage = 0
+    first_damage = 0
 
-    if attack_hit:
-
-        damage = (
+    if first_attack_hit:
+        first_damage = (
             first_attacker.strength
             - second_attacker.vitality
         )
 
-        # ====================================
-        # 最低1ダメージ保証
-        #
-        # VITがSTRより高くても
-        # 命中した場合は最低1ダメージ入る。
-        # ====================================
-
-        damage = max(
+        first_damage = max(
             1,
-            damage
+            first_damage
         )
 
     # ========================================
-    # HP減少計算
+    # 先攻側の攻撃をHPへ反映
     #
-    # 現在はDBのHPを書き換えず、
-    # 「攻撃後なら何HPになるか」
-    # だけ計算する。
-    #
-    # これは開発途中で安全に確認するため。
+    # DBにはまだ保存しない。
     # ========================================
 
-    remaining_hp = (
-        second_attacker.current_hp
-    )
+    if second_attacker == character:
 
-    # 攻撃が命中した場合だけHPを減らす
-    if attack_hit:
+        if first_attack_hit:
+            character_battle_hp = max(
+                0,
+                character_battle_hp
+                - first_damage
+            )
 
-        remaining_hp = max(
-            0,
-            (
-                second_attacker.current_hp
-                - damage
+    else:
+
+        if first_attack_hit:
+            opponent_battle_hp = max(
+                0,
+                opponent_battle_hp
+                - first_damage
+            )
+
+    # ========================================
+    # 後攻側の反撃準備
+    #
+    # 先攻の攻撃でHPが0になった場合は
+    # 反撃させない。
+    # ========================================
+
+    second_can_attack = True
+
+    if second_attacker == character:
+        if character_battle_hp <= 0:
+            second_can_attack = False
+
+    else:
+        if opponent_battle_hp <= 0:
+            second_can_attack = False
+
+    # ========================================
+    # 後攻側の初期値
+    #
+    # 反撃できない場合でも
+    # テンプレートで安全に表示できるようにする。
+    # ========================================
+
+    second_hit_rate = 0
+    second_attack_hit = False
+    second_damage = 0
+
+    # ========================================
+    # 後攻側の反撃
+    # ========================================
+
+    if second_can_attack:
+
+        # ====================================
+        # 後攻側の命中率
+        # ====================================
+
+        second_hit_rate = 80 + (
+            second_attacker.dexterity
+            - first_attacker.dexterity
+        )
+
+        second_hit_rate = max(
+            10,
+            min(
+                95,
+                second_hit_rate
             )
         )
 
+        # ====================================
+        # 後攻側の命中判定
+        # ====================================
+
+        second_hit_roll = random.randint(
+            1,
+            100
+        )
+
+        second_attack_hit = (
+            second_hit_roll <= second_hit_rate
+        )
+
+        # ====================================
+        # 後攻側のダメージ計算
+        # ====================================
+
+        if second_attack_hit:
+            second_damage = (
+                second_attacker.strength
+                - first_attacker.vitality
+            )
+
+            second_damage = max(
+                1,
+                second_damage
+            )
+
+        # ====================================
+        # 後攻側の攻撃をHPへ反映
+        # ====================================
+
+        if first_attacker == character:
+
+            if second_attack_hit:
+                character_battle_hp = max(
+                    0,
+                    character_battle_hp
+                    - second_damage
+                )
+
+        else:
+
+            if second_attack_hit:
+                opponent_battle_hp = max(
+                    0,
+                    opponent_battle_hp
+                    - second_damage
+                )
+
     # ========================================
     # 共通CT開始
-    #
-    # 闘技場を実行した場合も、
-    # 探索と同じCTを開始する。
     # ========================================
 
     cooldown_seconds = (
@@ -474,8 +547,19 @@ def arena_battle(request):
     # ========================================
     # 闘技場画面表示
     #
-    # 計算した値を
-    # arena_battle.html に渡す。
+    # 今回は
+    #
+    # ・先攻
+    # ・先攻側命中率
+    # ・先攻側命中結果
+    # ・先攻側ダメージ
+    # ・後攻側反撃有無
+    # ・後攻側命中率
+    # ・後攻側命中結果
+    # ・後攻側ダメージ
+    # ・戦闘後の一時HP
+    #
+    # を渡す。
     # ========================================
 
     return render(
@@ -494,16 +578,31 @@ def arena_battle(request):
             "second_attacker":
                 second_attacker,
 
-            "hit_rate":
-                hit_rate,
+            "first_hit_rate":
+                first_hit_rate,
 
-            "attack_hit":
-                attack_hit,
+            "first_attack_hit":
+                first_attack_hit,
 
-            "damage":
-                damage,
+            "first_damage":
+                first_damage,
 
-            "remaining_hp":
-                remaining_hp,
+            "second_can_attack":
+                second_can_attack,
+
+            "second_hit_rate":
+                second_hit_rate,
+
+            "second_attack_hit":
+                second_attack_hit,
+
+            "second_damage":
+                second_damage,
+
+            "character_battle_hp":
+                character_battle_hp,
+
+            "opponent_battle_hp":
+                opponent_battle_hp,
         }
     )

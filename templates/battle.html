@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>戦闘画面 | キュメイア</title>
+    <title>闘技場 | キュメイア</title>
 
     <link rel="stylesheet" href="{% static 'css/battle.css' %}">
 </head>
@@ -16,141 +16,390 @@
 
     <main class="battle-screen">
 
-        <!-- 上部 -->
+        <!-- ========================================
+             上部
+        ========================================= -->
         <header class="battle-header">
-            <p class="turn-count">1ターン</p>
-            <h1 class="game-title">キュメイア</h1>
+
+            <p class="turn-count">
+                闘技場{{ character.arena_floor }}階
+            </p>
+
+            <h1 class="game-title">
+                キュメイア
+            </h1>
+
         </header>
 
-        <!-- 敵出現メッセージ -->
+
+        <!-- ========================================
+             対戦開始メッセージ
+        ========================================= -->
         <section class="encounter-message">
-            <p>赤さん が襲いかかってきた！</p>
+
+            <p>
+                {{ opponent.name }} との闘技場戦！
+            </p>
+
         </section>
 
-        <!-- 戦闘エリア -->
+
+        <!-- ========================================
+             戦闘エリア
+        ========================================= -->
         <section class="battle-field">
 
-            <!-- プレイヤー -->
+
+            <!-- ====================================
+                 プレイヤー
+            ===================================== -->
             <div class="fighter player">
 
-                <h2 class="fighter-name">テスター</h2>
+                <h2 class="fighter-name">
+                    {{ character.name }}
+                </h2>
 
                 <div class="fighter-icon">
-                    プレイヤーアイコン
+                    {{ character.name|slice:":1" }}
                 </div>
 
                 <div class="action-gauge">
                     <div class="action-gauge-fill"></div>
                 </div>
 
+
+                <!-- HP -->
                 <div class="status">
+
                     <p>HP</p>
 
                     <div class="status-bar">
-                        <div class="hp-fill player-hp"></div>
+
+                        <div class="hp-fill player-hp js-arena-hp" data-current="{{ character_battle_hp }}"
+                            data-max="{{ character.max_hp }}"></div>
+
                     </div>
 
-                    <span>100 / 100</span>
+                    <span>
+                        {{ character_battle_hp }}
+                        /
+                        {{ character.max_hp }}
+                    </span>
+
                 </div>
 
+
+                <!-- ST -->
                 <div class="status">
+
                     <p>ST</p>
 
                     <div class="status-bar">
-                        <div class="stamina-fill player-stamina"></div>
+
+                        <div class="stamina-fill player-stamina js-arena-stamina"
+                            data-current="{{ character.current_stamina }}" data-max="{{ character.max_stamina }}"></div>
+
                     </div>
 
-                    <span>80 / 100</span>
+                    <span>
+                        {{ character.current_stamina }}
+                        /
+                        {{ character.max_stamina }}
+                    </span>
+
                 </div>
 
             </div>
 
-            <!-- VS -->
+
+            <!-- ====================================
+                 VS
+            ===================================== -->
             <div class="vs">
                 VS
             </div>
 
-            <!-- 敵 -->
+
+            <!-- ====================================
+                 対戦相手
+            ===================================== -->
             <div class="fighter enemy">
 
-                <h2 class="fighter-name">赤さん</h2>
+                <h2 class="fighter-name">
+                    {{ opponent.name }}
+                </h2>
 
                 <div class="fighter-icon">
-                    敵アイコン
+                    {{ opponent.name|slice:":1" }}
                 </div>
 
                 <div class="action-gauge">
                     <div class="action-gauge-fill"></div>
                 </div>
 
+
+                <!-- HP -->
                 <div class="status">
+
                     <p>HP</p>
 
                     <div class="status-bar">
-                        <div class="hp-fill enemy-hp"></div>
+
+                        <div class="hp-fill enemy-hp js-arena-hp" data-current="{{ opponent_battle_hp }}"
+                            data-max="{{ opponent.max_hp }}"></div>
+
                     </div>
 
-                    <span>60 / 100</span>
+                    <span>
+                        {{ opponent_battle_hp }}
+                        /
+                        {{ opponent.max_hp }}
+                    </span>
+
                 </div>
 
+
+                <!-- ST -->
                 <div class="status">
+
                     <p>ST</p>
 
                     <div class="status-bar">
-                        <div class="stamina-fill enemy-stamina"></div>
+
+                        <div class="stamina-fill enemy-stamina js-arena-stamina"
+                            data-current="{{ opponent.current_stamina }}" data-max="{{ opponent.max_stamina }}"></div>
+
                     </div>
 
-                    <span>70 / 100</span>
+                    <span>
+                        {{ opponent.current_stamina }}
+                        /
+                        {{ opponent.max_stamina }}
+                    </span>
+
                 </div>
 
             </div>
 
         </section>
 
-        <!-- 戦闘ログ -->
+
+        <!-- ========================================
+             戦闘ログ
+        ========================================= -->
         <section class="battle-log">
 
-            <h2>戦闘ログ</h2>
+            <h2>
+                戦闘ログ
+            </h2>
+
+
+            <!-- ====================================
+                 ステータス確認
+            ===================================== -->
+            <p>
+                {{ character.name }}
+                ：STR {{ character.strength }}
+                / INT {{ character.intelligence }}
+                / DEX {{ character.dexterity }}
+                / AGI {{ character.agility }}
+                / VIT {{ character.vitality }}
+                / LUK {{ character.luck }}
+            </p>
 
             <p>
-                テスター は 赤さん を攻撃した。
+                {{ opponent.name }}
+                ：STR {{ opponent.strength }}
+                / INT {{ opponent.intelligence }}
+                / DEX {{ opponent.dexterity }}
+                / AGI {{ opponent.agility }}
+                / VIT {{ opponent.vitality }}
+                / LUK {{ opponent.luck }}
+            </p>
+
+
+            <!-- ====================================
+                 先攻
+            ===================================== -->
+            <p>
+                先攻：
+                {{ first_attacker.name }}
+            </p>
+
+
+            <!-- ====================================
+                 先攻側の攻撃
+            ===================================== -->
+            <hr>
+
+            <p>
+                {{ first_attacker.name }} の攻撃！
             </p>
 
             <p>
-                318 のダメージ。赤さん は倒れた…。
+                命中率：
+                {{ first_hit_rate }}%
             </p>
 
-        </section>
 
-        <!-- 戦闘結果 -->
-        <section class="battle-result">
+            {% if first_attack_hit %}
 
-            <p class="result-text">
-                テスターは勝利した。
+            <p>
+                攻撃は命中した！
             </p>
 
             <p>
-                10の経験値を獲得した。
+                {{ first_damage }}
+                ダメージ！
             </p>
-            {% if dropped_item %}
-            <p class="drop-message">
-                {{ dropped_item.name }} を手に入れた！
+
+            {% else %}
+
+            <p>
+                攻撃は外れた！
             </p>
+
             {% endif %}
+
+
+            <!-- ====================================
+                 後攻側の反撃
+            ===================================== -->
+            <hr>
+
+
+            {% if second_can_attack %}
+
             <p>
-                現在のアイテムドロップ率：
-                {{ item_drop_rate }}%
+                {{ second_attacker.name }} の反撃！
             </p>
+
+            <p>
+                命中率：
+                {{ second_hit_rate }}%
+            </p>
+
+
+            {% if second_attack_hit %}
+
+            <p>
+                攻撃は命中した！
+            </p>
+
+            <p>
+                {{ second_damage }}
+                ダメージ！
+            </p>
+
+            {% else %}
+
+            <p>
+                攻撃は外れた！
+            </p>
+
+            {% endif %}
+
+            {% else %}
+
+            <p>
+                {{ second_attacker.name }}
+                は倒れたため反撃できない。
+            </p>
+
+            {% endif %}
+
+
+            <!-- ====================================
+                 1ターン終了後HP
+            ===================================== -->
+            <hr>
+
+            <p>
+                {{ character.name }}
+                HP：
+                {{ character_battle_hp }}
+                /
+                {{ character.max_hp }}
+            </p>
+
+            <p>
+                {{ opponent.name }}
+                HP：
+                {{ opponent_battle_hp }}
+                /
+                {{ opponent.max_hp }}
+            </p>
+
         </section>
 
-        <!-- 街に戻る -->
+
+        <!-- ========================================
+             街に戻る
+        ========================================= -->
         <div class="return-area">
+
             <a href="{% url 'home' %}" class="return-button">
                 街に戻る
             </a>
+
         </div>
 
     </main>
+
+
+    <!-- ============================================
+         HP / STゲージ
+
+         current / max × 100
+         でゲージ幅を決定する。
+    ============================================= -->
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                document
+                    .querySelectorAll(
+                        ".js-arena-hp, .js-arena-stamina"
+                    )
+                    .forEach(function (gauge) {
+
+                        const current = Number(
+                            gauge.dataset.current
+                        );
+
+                        const max = Number(
+                            gauge.dataset.max
+                        );
+
+                        let percent = 0;
+
+                        if (max > 0) {
+
+                            percent = (
+                                current / max
+                            ) * 100;
+
+                        }
+
+                        percent = Math.max(
+                            0,
+                            Math.min(
+                                100,
+                                percent
+                            )
+                        );
+
+                        gauge.style.width =
+                            percent + "%";
+
+                    });
+
+            }
+        );
+
+    </script>
 
 </body>
 
