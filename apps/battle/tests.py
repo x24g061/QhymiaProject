@@ -265,3 +265,44 @@ class BattleEngineTests(TestCase):
             result["remaining_exp"],
             50,
         )
+
+
+    def test_priest_max_hp_and_mp_bonus(self):
+        """
+        プリーストは戦闘中、
+        最大HP・MPが5%上昇することを確認。
+        """
+
+        self.character.job = "priest"
+
+        self.character.max_hp = 100
+        self.character.current_hp = 100
+
+        self.character.max_mp = 100
+        self.character.current_mp = 100
+
+        engine = BattleEngine(
+            self.character,
+            self.enemy,
+        )
+
+        # 100 × 1.05 = 105
+        self.assertEqual(
+            engine.player_max_hp,
+            105,
+        )
+
+        self.assertEqual(
+            engine.player_hp,
+            105,
+        )
+
+        self.assertEqual(
+            engine.player_max_mp,
+            105,
+        )
+
+        self.assertEqual(
+            engine.player_mp,
+            105,
+        )

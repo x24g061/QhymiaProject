@@ -1,4 +1,5 @@
 import random
+import math
 
 ATTRIBUTE_MULTIPLIERS = {
     "fire": {
@@ -69,12 +70,78 @@ ATTRIBUTE_MULTIPLIERS = {
 
 class BattleEngine:
 
+
+    def get_player_max_hp(self):
+        """
+        戦闘中の最大HPを返す。
+
+        プリースト:
+        最大HP +5%
+        """
+
+        max_hp = self.character.max_hp
+
+        if self.character.job == "priest":
+            max_hp = math.ceil(
+                max_hp * 1.05
+            )
+
+        return max_hp
+
+
+    def get_player_max_mp(self):
+        """
+        戦闘中の最大MPを返す。
+
+        プリースト:
+        最大MP +5%
+        """
+
+        max_mp = self.character.max_mp
+
+        if self.character.job == "priest":
+            max_mp = math.ceil(
+                max_mp * 1.05
+            )
+
+        return max_mp
+
+
     def __init__(self, character, enemy):
         self.character = character
         self.enemy = enemy
 
+        # ========================================
+        # 戦闘中の最大HP・MP
+        # ========================================
+
+        self.player_max_hp = (
+            self.get_player_max_hp()
+        )
+
+        self.player_max_mp = (
+            self.get_player_max_mp()
+        )
+
+        # ========================================
         # 戦闘中だけ使うHP
-        self.player_hp = character.current_hp
+        # ========================================
+
+        # 探索開始時にHPが満タンなら、
+        # 職業補正後の最大HPからスタートする。
+        if (
+            character.current_hp
+            >= character.max_hp
+        ):
+            self.player_hp = (
+                self.player_max_hp
+            )
+        else:
+            self.player_hp = min(
+                character.current_hp,
+                self.player_max_hp,
+            )
+
         self.enemy_hp = enemy.max_hp
 
         # イニシアチブ
@@ -85,7 +152,18 @@ class BattleEngine:
         self.logs = []
 
         # プレイヤーのMPも戦闘中だけ使う
-        self.player_mp = character.current_mp
+        if (
+            character.current_mp
+            >= character.max_mp
+        ):
+            self.player_mp = (
+                self.player_max_mp
+            )
+        else:
+            self.player_mp = min(
+                character.current_mp,
+                self.player_max_mp,
+            )
 
         # プリセットスキルの情報を取得
         self.presets = list(
@@ -324,7 +402,7 @@ class BattleEngine:
         if (
             self.character.race == "dragonia"
             and self.player_hp
-            <= self.character.max_hp * 0.50
+            <= self.player_max_hp * 0.50
             and stat_name in (
                 "strength",
                 "vitality",
@@ -491,7 +569,7 @@ class BattleEngine:
                 heal_amount = max(
                     1,
                     int(
-                        self.character.max_hp
+                        self.player_max_hp
                         * 0.05
                     ),
                 )
@@ -499,7 +577,7 @@ class BattleEngine:
                 before_hp = self.player_hp
 
                 self.player_hp = min(
-                    self.character.max_hp,
+                    self.player_max_hp,
                     self.player_hp + heal_amount,
                 )
 
@@ -913,6 +991,13 @@ class BattleEngine:
             "player_hp": max(
                 0,
                 self.player_hp,
+            ),
+            "player_max_hp": (
+                self.player_max_hp
+            ),
+
+            "player_max_mp": (
+                self.player_max_mp
             ),
             "enemy_hp": max(
                 0,
@@ -2622,7 +2707,7 @@ class BattleEngine:
         before_hp = self.player_hp
 
         self.player_hp = min(
-            self.character.max_hp,
+            self.player_max_hp,
             self.player_hp + heal_amount,
         )
 
@@ -2907,14 +2992,14 @@ class BattleEngine:
         # 念のため最大HPまで補正する
         before_hp = min(
             self.player_hp,
-            self.character.max_hp,
+            self.player_max_hp,
         )
 
         self.player_hp = before_hp
 
         # 最大HPを超えないように回復
         self.player_hp = min(
-            self.character.max_hp,
+            self.player_max_hp,
             self.player_hp + heal_amount,
         )
 
@@ -2929,7 +3014,7 @@ class BattleEngine:
             f"{self.character.name}のHPが"
             f"{actual_heal}回復！ "
             f"（HP {self.player_hp}"
-            f"/{self.character.max_hp}）"
+            f"/{self.player_max_hp}）"
         )
 
     # ============================

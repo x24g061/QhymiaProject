@@ -75,7 +75,7 @@
 
                     <p>HP</p>
 
-                    {% widthratio battle_result.player_hp character.max_hp 100 as player_hp_percent %}
+                    {% widthratio battle_result.player_hp battle_result.player_max_hp 100 as player_hp_percent %}
 
                     <div class="status-bar">
 
@@ -89,7 +89,7 @@
                     <span>
                         {{ battle_result.player_hp }}
                         /
-                        {{ character.max_hp }}
+                        {{ battle_result.player_max_hp }}
                     </span>
 
                 </div>
