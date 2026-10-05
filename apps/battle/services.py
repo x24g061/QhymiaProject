@@ -1153,89 +1153,194 @@ class BattleEngine:
 
 
     def run(self):
-        """戦闘を最後まで自動実行する。"""
+        """
+        戦闘を最後まで自動実行する。
 
-        self.logs.append(
-            f"{self.character.name} VS {self.enemy.name}"
+        プレイヤー:
+        ・行動するたびに生存敵から
+          ランダムで1体をターゲットする。
+
+        敵:
+        ・生存している敵それぞれが
+          個別のイニシアチブを持つ。
+
+        戦闘終了:
+        ・プレイヤーHPが0
+        ・敵が全滅
+        ・最大ループ数到達
+        """
+
+        # ========================================================
+        # 戦闘開始ログ
+        # ========================================================
+
+        enemy_names = ", ".join(
+            enemy.enemy.name
+            for enemy in self.enemy_combatants
         )
 
-        self.logs.append("戦闘開始！")
+        self.logs.append(
+            f"{self.character.name} VS {enemy_names}"
+        )
+
+        self.logs.append(
+            "戦闘開始！"
+        )
 
         # 無限ループ防止
         loop_count = 0
         max_loop = 1000
 
+        # ========================================================
+        # 戦闘ループ
+        # ========================================================
+
         while (
             self.player_hp > 0
-            and self.enemy_hp > 0
+            and self.get_alive_enemy_combatants()
             and loop_count < max_loop
         ):
+
             loop_count += 1
 
-            # AGI分イニシアチブを加算
+            # ====================================================
+            # イニシアチブ加算
+            # ====================================================
+
+            # プレイヤー
             self.player_initiative += (
-                self.get_player_stat("agility")
+                self.get_player_stat(
+                    "agility"
+                )
             )
 
-            self.enemy_initiative += (
-                self.enemy.agility
-            )
+            # 生存している敵全員
+            for enemy_combatant in (
+                self.get_alive_enemy_combatants()
+            ):
 
+                enemy_combatant.initiative += (
+                    enemy_combatant
+                    .enemy
+                    .agility
+                )
+
+            # ====================================================
             # プレイヤー行動
+            # ====================================================
+
             if self.player_initiative >= 100:
 
                 self.player_initiative -= 100
 
-                action_code = self.player_turn()
+                # 生存敵からランダムで
+                # 今回のターゲットを選択
+                if not self.select_random_alive_enemy():
+                    break
+
+                target_name = (
+                    self.enemy.name
+                )
+
+                action_code = (
+                    self.player_turn()
+                )
 
                 self.finish_player_action(
                     action_code
                 )
 
+                # 今回狙った敵を倒した場合
                 if self.enemy_hp <= 0:
-                    break
 
-            # 敵行動
-            if self.enemy_initiative >= 100:
+                    self.logs.append(
+                        f"{target_name}を倒した！"
+                    )
 
-                self.enemy_initiative -= 100
-
-                self.enemy_turn()
-
-                if (
-                    self.player_hp <= 0
-                    or self.enemy_hp <= 0
+                # 敵が全滅したら終了
+                if not (
+                    self.get_alive_enemy_combatants()
                 ):
                     break
 
-        # ===== 戦闘報酬 =====
-        #
-        # 戦闘終了時に返すEXP。
-        # 敗北・引き分けの場合は0。
+            # ====================================================
+            # 敵行動
+            # ====================================================
+
+            for index, enemy_combatant in enumerate(
+                self.enemy_combatants
+            ):
+
+                # 倒れている敵は行動しない
+                if not enemy_combatant.is_alive():
+                    continue
+
+                # 行動ゲージが100未満なら
+                # まだ行動できない
+                if enemy_combatant.initiative < 100:
+                    continue
+
+                # この敵を現在敵として設定
+                self.current_enemy_index = index
+
+                enemy_combatant.initiative -= 100
+
+                # 行動前は生存していたか
+                was_alive = (
+                    enemy_combatant.is_alive()
+                )
+
+                self.enemy_turn()
+
+                # 毒などで自分のターン開始時に
+                # 倒れた場合
+                if (
+                    was_alive
+                    and not enemy_combatant.is_alive()
+                ):
+                    self.logs.append(
+                        f"{enemy_combatant.name}"
+                        "を倒した！"
+                    )
+
+                # プレイヤーが倒れたら終了
+                if self.player_hp <= 0:
+                    break
+
+            if self.player_hp <= 0:
+                break
+
+        # ========================================================
+        # 戦闘報酬
+        # ========================================================
+
+        # 1戦につきEXPは1回だけ。
         exp_gained = 0
 
-        # ===== 勝敗 =====
+        # ========================================================
+        # 勝敗
+        # ========================================================
 
-        if self.enemy_hp <= 0:
-
-            self.logs.append(
-                f"{self.enemy.name}を倒した！"
-            )
+        if not self.get_alive_enemy_combatants():
 
             winner = "player"
 
-            # ========================================
-            # EXP報酬
-            # ========================================
+            self.logs.append(
+                "敵をすべて倒した！"
+            )
+
+            # ----------------------------------------------------
+            # EXP
+            # ----------------------------------------------------
             #
-            # 敵ごとに設定された
-            # exp_min ～ exp_max の範囲から
-            # ランダムで獲得する。
+            # 現在はまだ旧Enemy側のEXP範囲を使用。
             #
-            # ここではCharacter.expへ直接加算しない。
+            # 次の段階で、
+            # 1～4階  : 7～12
+            # 5～8階  : 8～14
+            # 9～12階 : 10～16
             #
-            # 探索中に獲得EXPを貯めて、
-            # 探索終了時にまとめて成長処理するため。
+            # の階層依存へ変更する。
 
             exp_gained = random.randint(
                 self.enemy.exp_min,
@@ -1248,26 +1353,34 @@ class BattleEngine:
 
         elif self.player_hp <= 0:
 
-            self.logs.append(
-                f"{self.character.name}は倒れた……"
-            )
-
             winner = "enemy"
 
+            self.logs.append(
+                f"{self.character.name}"
+                "は倒れた……"
+            )
+
         else:
+
+            winner = "draw"
+
             self.logs.append(
                 "戦闘が長引いたため終了しました。"
             )
 
-            winner = "draw"
+        # ========================================================
+        # 戦闘結果
+        # ========================================================
 
         return {
             "winner": winner,
             "logs": self.logs,
+
             "player_hp": max(
                 0,
                 self.player_hp,
             ),
+
             "player_max_hp": (
                 self.player_max_hp
             ),
@@ -1275,14 +1388,15 @@ class BattleEngine:
             "player_max_mp": (
                 self.player_max_mp
             ),
+
+            # 今までの画面との互換用
             "enemy_hp": max(
                 0,
                 self.enemy_hp,
             ),
-            #　今回の戦闘で獲得したEXP
+
             "exp_gained": exp_gained,
         }
-
 
     def finish_player_action(self, action_code):
         """プレイヤーの1行動終了時処理。"""

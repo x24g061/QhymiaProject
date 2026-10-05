@@ -629,6 +629,67 @@ class BattleEngineTests(TestCase):
         )
 
 
+    def test_battle_with_two_enemies(self):
+        """
+        敵が2体いる場合、
+        1体倒しても戦闘が終了せず、
+        全員倒すまで戦闘が続くことを確認。
+        """
+
+        second_enemy_data = Enemy.objects.create(
+            name="2体目スライム",
+            max_hp=1,
+            max_mp=0,
+            strength=1,
+            intelligence=1,
+            dexterity=1,
+            agility=1,
+            vitality=1,
+            luck=1,
+            attribute="grass",
+            exp_min=7,
+            exp_max=12,
+        )
+
+        second_enemy = EnemyCombatant(
+            second_enemy_data
+        )
+
+        self.engine.enemy_combatants.append(
+            second_enemy
+        )
+
+        # 1体目もすぐ倒せるようにする
+        self.engine.enemy_combatants[0].hp = 1
+
+        # プレイヤーを十分強くする
+        self.character.strength = 100
+        self.character.dexterity = 100
+        self.character.agility = 100
+
+        # 命中判定などを成功固定
+        with patch.object(
+            BattleEngine,
+            "roll_percent",
+            return_value=True,
+        ):
+            result = self.engine.run()
+
+        self.assertEqual(
+            result["winner"],
+            "player",
+        )
+
+        # 2体とも倒れている
+        self.assertEqual(
+            len(
+                self.engine
+                .get_alive_enemy_combatants()
+            ),
+            0,
+        )
+
+
 class CombatantTests(TestCase):
 
     def setUp(self):
