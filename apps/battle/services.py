@@ -143,9 +143,6 @@ class BattleEngine:
             self.get_player_max_mp()
         )
 
-        # イニシアチブ
-        self.player_initiative = 0
-
         # 戦闘ログ
         self.logs = []
 
@@ -327,6 +324,35 @@ class BattleEngine:
         """
 
         self.player_combatant.mp = value
+
+
+    # ============================================================
+    # プレイヤーイニシアチブ
+    # ============================================================
+
+    @property
+    def player_initiative(self):
+        """
+        プレイヤーの行動ゲージを返す。
+
+        実際の値はPlayerCombatant側で管理する。
+        """
+
+        return (
+            self.player_combatant.initiative
+        )
+
+
+    @player_initiative.setter
+    def player_initiative(
+        self,
+        value,
+    ):
+        """
+        プレイヤーの行動ゲージを変更する。
+        """
+
+        self.player_combatant.initiative = value
 
 
     # ============================================================

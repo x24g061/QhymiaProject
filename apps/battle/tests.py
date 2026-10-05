@@ -499,6 +499,34 @@ class BattleEngineTests(TestCase):
         )
 
 
+    def test_player_initiative_is_managed_by_combatant(self):
+        """
+        プレイヤーのイニシアチブが
+        PlayerCombatant側で管理されることを確認。
+        """
+
+        # BattleEngine側から変更
+        self.engine.player_initiative += 30
+
+        self.assertEqual(
+            self.engine.player_initiative,
+            30,
+        )
+
+        self.assertEqual(
+            self.engine.player_combatant.initiative,
+            30,
+        )
+
+        # PlayerCombatant側から変更
+        self.engine.player_combatant.initiative = 75
+
+        self.assertEqual(
+            self.engine.player_initiative,
+            75,
+        )
+
+
 class CombatantTests(TestCase):
 
     def setUp(self):
