@@ -1,4 +1,5 @@
 from datetime import timedelta
+import random
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -60,30 +61,72 @@ def battle(request):
 
 
     # ========================================================
-    # 戦う敵を選択
-    # ========================================================
-    #
-    # 現段階では登録されている敵から
-    # ランダムで1体選ぶ。
-    #
-    # 後で探索階層ごとの敵選択へ変更可能。
+    # 探索階層を取得
     # ========================================================
 
-    enemy = (
-        Enemy.objects
-        .order_by("?")
-        .first()
-    )
+    try:
+        selected_floor = int(
+            request.POST.get(
+                "floor",
+                1,
+            )
+        )
 
-    # 敵が1体も登録されていない場合
-    if enemy is None:
+    except (TypeError, ValueError):
+        selected_floor = 1
+
+
+    # 今は1～3階を自由に探索可能
+    if selected_floor not in (1, 2, 3):
 
         messages.error(
             request,
-            "戦闘できる敵が登録されていません。",
+            "存在しない探索階層です。",
         )
 
         return redirect("home")
+
+
+    # ========================================================
+    # 選択階層の通常敵を取得
+    # ========================================================
+
+    enemy_candidates = list(
+        Enemy.objects.filter(
+            floor=selected_floor,
+            is_boss=False,
+        )
+    )
+
+
+    if not enemy_candidates:
+
+        messages.error(
+            request,
+            "この階層には敵が登録されていません。",
+        )
+
+        return redirect("home")
+
+
+    # ========================================================
+    # 出現数を1～3体からランダム決定
+    # ========================================================
+
+    enemy_count = random.randint(
+        1,
+        min(
+            3,
+            len(enemy_candidates),
+        ),
+    )
+
+
+    # 同じ戦闘では同じ敵種類を重複させず選ぶ
+    enemies = random.sample(
+        enemy_candidates,
+        enemy_count,
+    )
 
 
     # ========================================================
@@ -120,7 +163,7 @@ def battle(request):
 
     engine = BattleEngine(
         character,
-        enemy,
+        enemies,
     )
 
     battle_result = engine.run()
@@ -184,8 +227,14 @@ def battle(request):
         {
             "character": character,
 
-            # 今回戦った敵
-            "enemy": enemy,
+            # 既存画面との互換用
+            "enemy": enemies[0],
+
+            # 今回出現した敵全部
+            "enemies": enemies,
+
+            # 探索した階層
+            "selected_floor": selected_floor,
 
             # BattleEngineの結果全部
             "battle_result": battle_result,

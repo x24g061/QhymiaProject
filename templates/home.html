@@ -932,85 +932,93 @@
             </p>
 
 
-            <div class="exploration-form">
+<div class="exploration-form">
 
-                <div class="select-area">
+    <form
+        method="post"
+        action="{% url 'battle:battle' %}"
+    >
+        {% csrf_token %}
 
-                    <label for="exploration-floor">
-                        探索場所
-                    </label>
+        <div class="select-area">
+
+            <label for="exploration-floor">
+                探索場所
+            </label>
+
+            <select
+                id="exploration-floor"
+                name="floor"
+            >
+                <option value="1">
+                    一階層：草原
+                </option>
+
+                <option value="2">
+                    二階層
+                </option>
+
+                <option value="3">
+                    三階層
+                </option>
+            </select>
+
+        </div>
 
 
-                    <select id="exploration-floor">
+        {% if exploration_cooldown_remaining > 0 %}
 
-                        <option>
-                            一階層：草原
-                        </option>
+            <button
+                type="button"
+                class="explore-button explore-button-disabled"
+                id="exploration-cooldown-button"
+                data-remaining="{{ exploration_cooldown_remaining }}"
+                disabled
+            >
+                あと
+                <span id="exploration-cooldown-seconds">
+                    {{ exploration_cooldown_remaining }}
+                </span>
+                秒
+            </button>
 
-                        <option>
-                            二階層
-                        </option>
-
-                        <option>
-                            三階層
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                {% if exploration_cooldown_remaining > 0 %}
-
-                <button type="button" class="explore-button explore-button-disabled" id="exploration-cooldown-button"
-                    data-remaining="{{ exploration_cooldown_remaining }}" disabled>
-                    あと
-                    <span id="exploration-cooldown-seconds">
-                        {{ exploration_cooldown_remaining }}
-                    </span>
-                    秒
-                </button>
-                {% if exploration_cooldown_reduced %}
+            {% if exploration_cooldown_reduced %}
                 <p class="cooldown-status">
                     探索CT短縮中：20秒
                 </p>
-                {% else %}
+            {% else %}
                 <p class="cooldown-status">
                     通常探索CT：40秒
                 </p>
-                {% endif %}
-                {% else %}
+            {% endif %}
 
-                <form
-                    method="post"
-                    action="{% url 'battle:battle' %}"
-                >
-                    {% csrf_token %}
+        {% else %}
 
-                    <button
-                        type="submit"
-                        class="explore-button"
-                    >
-                        探索を開始する
-                        <span>→</span>
-                    </button>
-                </form>
+            <button
+                type="submit"
+                class="explore-button"
+            >
+                探索を開始する
+                <span>→</span>
+            </button>
 
-                {% endif %}
+        {% endif %}
+
+    </form>
 
 </div>
 
 
 
-</section>
+        </section>
         <!-- =============================
              オープンチャット
             ============================== -->
 
         <section
-    class="home-card chat-card collapsible-section"
-    data-collapse-id="chat"
->
+            class="home-card chat-card collapsible-section"
+            data-collapse-id="chat"
+        >
 
 <div class="card-heading">
 
