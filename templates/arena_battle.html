@@ -1,0 +1,496 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>闘技場 | キュメイア</title>
+
+    <!--
+        探索画面と同じ battle.css を使用する。
+        探索・闘技場で戦闘画面の見た目を統一する。
+    -->
+    <link rel="stylesheet" href="{% static 'css/battle.css' %}">
+</head>
+
+
+<body>
+
+    <main class="battle-screen">
+
+
+        <!-- ========================================
+             対戦開始メッセージ
+        ========================================= -->
+        <section class="encounter-message">
+
+            <p>
+                {{ opponent.name }} との闘技場戦！
+            </p>
+
+        </section>
+
+
+        <!-- ========================================
+             戦闘フィールド
+
+             左：自分
+             中央：VS
+             右：対戦相手
+        ========================================= -->
+        <section class="battle-field">
+
+
+            <!-- ====================================
+                 プレイヤー
+            ===================================== -->
+            <div class="fighter player">
+
+                <!-- キャラクター名 -->
+                <h2 class="fighter-name">
+                    {{ character.name }}
+                </h2>
+
+
+                <!--
+                    仮キャラクターアイコン。
+
+                    キャラクター画像実装までは
+                    名前の最初の1文字を表示する。
+                -->
+                <div class="fighter-icon">
+                    {{ character.name|slice:":1" }}
+                </div>
+
+
+                <!--
+                    行動ゲージ。
+
+                    現在は見た目のみ。
+                    将来的にAGIなどと連動可能。
+                -->
+                <div class="action-gauge">
+
+                    <div class="action-gauge-fill"></div>
+
+                </div>
+
+
+                <!-- =================================
+                     プレイヤーHP
+                ================================== -->
+                <div class="status">
+
+                    <p>
+                        HP
+                    </p>
+
+                    <div class="status-bar">
+
+                        <!--
+                            闘技場内で計算した
+                            戦闘終了時HPを表示する。
+                        -->
+                        <div class="hp-fill player-hp js-arena-gauge" data-current="{{ character_battle_hp }}"
+                            data-max="{{ character.max_hp }}"></div>
+
+                    </div>
+
+                    <span>
+                        {{ character_battle_hp }}
+                        /
+                        {{ character.max_hp }}
+                    </span>
+
+                </div>
+
+
+                <!-- =================================
+                     プレイヤーST
+                ================================== -->
+                <div class="status">
+
+                    <p>
+                        ST
+                    </p>
+
+                    <div class="status-bar">
+
+                        <div class="stamina-fill player-stamina js-arena-gauge"
+                            data-current="{{ character.current_stamina }}" data-max="{{ character.max_stamina }}"></div>
+
+                    </div>
+
+                    <span>
+                        {{ character.current_stamina }}
+                        /
+                        {{ character.max_stamina }}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- ====================================
+                 VS
+            ===================================== -->
+            <div class="vs">
+                VS
+            </div>
+
+
+            <!-- ====================================
+                 対戦相手
+            ===================================== -->
+            <div class="fighter enemy">
+
+                <!-- キャラクター名 -->
+                <h2 class="fighter-name">
+                    {{ opponent.name }}
+                </h2>
+
+
+                <!-- 仮キャラクターアイコン -->
+                <div class="fighter-icon">
+                    {{ opponent.name|slice:":1" }}
+                </div>
+
+
+                <!-- 行動ゲージ -->
+                <div class="action-gauge">
+
+                    <div class="action-gauge-fill"></div>
+
+                </div>
+
+
+                <!-- =================================
+                     対戦相手HP
+                ================================== -->
+                <div class="status">
+
+                    <p>
+                        HP
+                    </p>
+
+                    <div class="status-bar">
+
+                        <div class="hp-fill enemy-hp js-arena-gauge" data-current="{{ opponent_battle_hp }}"
+                            data-max="{{ opponent.max_hp }}"></div>
+
+                    </div>
+
+                    <span>
+                        {{ opponent_battle_hp }}
+                        /
+                        {{ opponent.max_hp }}
+                    </span>
+
+                </div>
+
+
+                <!-- =================================
+                     対戦相手ST
+                ================================== -->
+                <div class="status">
+
+                    <p>
+                        ST
+                    </p>
+
+                    <div class="status-bar">
+
+                        <div class="stamina-fill enemy-stamina js-arena-gauge"
+                            data-current="{{ opponent.current_stamina }}" data-max="{{ opponent.max_stamina }}"></div>
+
+                    </div>
+
+                    <span>
+                        {{ opponent.current_stamina }}
+                        /
+                        {{ opponent.max_stamina }}
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================
+             戦闘ログ
+        ========================================= -->
+        <section class="battle-log">
+
+            <h2>
+                戦闘ログ
+            </h2>
+
+
+            <!-- 先攻キャラクター -->
+            <p>
+                先攻：
+                {{ first_attacker.name }}
+            </p>
+
+
+            <!-- ====================================
+                 全ターンの攻撃ログ
+            ===================================== -->
+            {% for log in battle_logs %}
+
+            <div class="battle-log-entry">
+
+                <p>
+                    <strong>
+                        {{ log.turn }}ターン目
+                    </strong>
+                </p>
+
+
+                <p>
+                    {{ log.attacker }} の攻撃！
+                </p>
+
+
+                {% if log.hit %}
+
+                <p>
+                    攻撃は命中！
+                    {{ log.damage }}ダメージ！
+                </p>
+
+                {% else %}
+
+                <p>
+                    攻撃は外れた！
+                </p>
+
+                {% endif %}
+
+
+                <!--
+                        各攻撃終了後のHP。
+
+                        戦闘の流れを確認しやすいよう
+                        戦闘ログ内に表示する。
+                    -->
+                <p>
+                    {{ character.name }}
+                    HP：
+                    {{ log.character_hp }}
+                    /
+                    {{ character.max_hp }}
+                </p>
+
+                <p>
+                    {{ opponent.name }}
+                    HP：
+                    {{ log.opponent_hp }}
+                    /
+                    {{ opponent.max_hp }}
+                </p>
+
+                <hr>
+
+            </div>
+
+            {% empty %}
+
+            <p>
+                戦闘ログがありません。
+            </p>
+
+            {% endfor %}
+
+        </section>
+
+
+        <!-- ========================================
+             戦闘結果
+        ========================================= -->
+        <section class="battle-result">
+
+
+            <!-- ====================================
+                 勝利
+            ===================================== -->
+            {% if battle_result == "win" %}
+
+            <p class="result-text">
+                勝利！
+            </p>
+
+            <p>
+                {{ opponent.name }} を倒した！
+            </p>
+
+            <p>
+                現在
+                {{ character.arena_win_streak }}
+                連勝中
+            </p>
+
+
+            <!-- ====================================
+                 敗北
+            ===================================== -->
+            {% else %}
+
+            <p class="result-text">
+                敗北…
+            </p>
+
+            <p>
+                {{ character.name }} は敗北した。
+            </p>
+
+            <p>
+                連勝数はリセットされた。
+            </p>
+
+            {% endif %}
+
+
+            <!-- ====================================
+                 獲得経験値
+            ===================================== -->
+            <p>
+                獲得経験値：
+                {{ gained_exp }} EXP
+            </p>
+
+
+            <!-- ====================================
+                 アイテム獲得結果
+
+                 アイテムが落ちた場合のみ表示。
+            ===================================== -->
+            {% if dropped_item %}
+
+            <p>
+                アイテム獲得：
+                {{ dropped_item.name }}
+            </p>
+
+            {% endif %}
+
+
+            <!-- ====================================
+                 戦闘終了時HP
+            ===================================== -->
+            <p>
+                {{ character.name }}
+                HP：
+                {{ character_battle_hp }}
+                /
+                {{ character.max_hp }}
+            </p>
+
+            <p>
+                {{ opponent.name }}
+                HP：
+                {{ opponent_battle_hp }}
+                /
+                {{ opponent.max_hp }}
+            </p>
+
+        </section>
+
+
+        <!-- ========================================
+             街へ戻る
+        ========================================= -->
+        <div class="return-area">
+
+            <a href="{% url 'home' %}" class="return-button">
+                街に戻る
+            </a>
+
+        </div>
+
+    </main>
+
+
+    <!-- ============================================
+         HP / ST ゲージ処理
+
+         data-current ÷ data-max × 100
+
+         でゲージ幅を設定する。
+    ============================================= -->
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const gauges =
+                    document.querySelectorAll(
+                        ".js-arena-gauge"
+                    );
+
+
+                gauges.forEach(
+                    function (gauge) {
+
+                        // 現在値
+                        const current =
+                            Number(
+                                gauge.dataset.current
+                            );
+
+
+                        // 最大値
+                        const max =
+                            Number(
+                                gauge.dataset.max
+                            );
+
+
+                        let percent = 0;
+
+
+                        // 0除算防止
+                        if (max > 0) {
+
+                            percent =
+                                (
+                                    current / max
+                                ) * 100;
+
+                        }
+
+
+                        // 0～100%に制限
+                        percent =
+                            Math.max(
+                                0,
+                                Math.min(
+                                    100,
+                                    percent
+                                )
+                            );
+
+
+                        // ゲージへ反映
+                        gauge.style.width =
+                            percent + "%";
+
+                    }
+                );
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>
