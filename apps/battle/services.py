@@ -1476,6 +1476,91 @@ class BattleEngine:
             ],
         }
 
+
+    def get_alive_enemy_indexes(self):
+        """
+        生存している敵のindex一覧を返す。
+        """
+
+        return [
+            index
+            for index, enemy
+            in enumerate(
+                self.enemy_combatants
+            )
+            if enemy.is_alive()
+        ]
+
+
+    def player_physical_skill_hit_all(
+        self,
+        skill_name,
+        base_damage,
+        attribute,
+    ):
+        """
+        生存している敵全員へ
+        物理スキルを1回ずつ当てる。
+        """
+
+        original_index = (
+            self.current_enemy_index
+        )
+
+        alive_indexes = (
+            self.get_alive_enemy_indexes()
+        )
+
+        for index in alive_indexes:
+
+            self.current_enemy_index = index
+
+            self.player_physical_skill_hit(
+                skill_name=skill_name,
+                base_damage=base_damage,
+                attribute=attribute,
+            )
+
+        # 元々狙っていた敵へ戻す
+        self.current_enemy_index = (
+            original_index
+        )
+
+
+    def player_magic_skill_hit_all(
+        self,
+        skill_name,
+        base_damage,
+        attribute,
+    ):
+        """
+        生存している敵全員へ
+        魔法スキルを1回ずつ当てる。
+        """
+
+        original_index = (
+            self.current_enemy_index
+        )
+
+        alive_indexes = (
+            self.get_alive_enemy_indexes()
+        )
+
+        for index in alive_indexes:
+
+            self.current_enemy_index = index
+
+            self.player_magic_skill_hit(
+                skill_name=skill_name,
+                base_damage=base_damage,
+                attribute=attribute,
+            )
+
+        self.current_enemy_index = (
+            original_index
+        )
+        
+
     def finish_player_action(self, action_code):
         """プレイヤーの1行動終了時処理。"""
 
@@ -1703,6 +1788,47 @@ class BattleEngine:
 
     def player_normal_attack(self):
         """プレイヤー通常攻撃。"""
+
+
+        # ========================================================
+        # 蜃気楼：通常攻撃
+        # ========================================================
+
+        if self.mirage_active:
+
+            original_index = (
+                self.current_enemy_index
+            )
+
+            target_indexes = (
+                self.get_alive_enemy_indexes()
+            )
+
+            self.mirage_active = False
+
+            self.logs.append(
+                "蜃気楼の効果！ "
+                "通常攻撃が敵全体になった！"
+            )
+
+            for index in target_indexes:
+
+                if not (
+                    self.enemy_combatants[index]
+                    .is_alive()
+                ):
+                    continue
+
+                self.current_enemy_index = index
+
+                self.player_normal_attack()
+
+            self.current_enemy_index = (
+                original_index
+            )
+
+            return
+
 
         hit_rate = self.calculate_hit_rate(
             attacker_dex=self.get_player_stat(
@@ -2173,6 +2299,83 @@ class BattleEngine:
     def execute_player_skill(self, skill):
         """プレイヤーのスキル効果を実行する。"""
 
+
+        # ========================================================
+        # 蜃気楼
+        # ========================================================
+        #
+        # 次に発動する「単体攻撃スキル」1回を
+        # 敵全体へ拡張する。
+        #
+        # 補助・回復スキルでは消費しない。
+        # もともと全体攻撃のスキルでも消費しない。
+        # ========================================================
+
+        already_all_target = {
+            "shock_wave",
+            "flare_blade",
+            "explosion",
+        }
+
+        is_attack_skill = (
+            skill.skill_type
+            in (
+                "physical",
+                "magic",
+            )
+        )
+
+        if (
+            self.mirage_active
+            and is_attack_skill
+            and skill.code
+            not in already_all_target
+        ):
+
+            # 現在のターゲットを保存
+            original_index = (
+                self.current_enemy_index
+            )
+
+            # 攻撃開始時点で生きている敵
+            target_indexes = (
+                self.get_alive_enemy_indexes()
+            )
+
+            # 先に解除する。
+            # execute_player_skillを再度呼ぶため、
+            # ここでFalseにしないと無限ループになる。
+            self.mirage_active = False
+
+            self.logs.append(
+                "蜃気楼の効果！ "
+                "攻撃対象が敵全体になった！"
+            )
+
+            for index in target_indexes:
+
+                # 途中で倒れていた場合は飛ばす
+                if not (
+                    self.enemy_combatants[index]
+                    .is_alive()
+                ):
+                    continue
+
+                self.current_enemy_index = index
+
+                # 同じスキルをこの敵へ実行
+                self.execute_player_skill(
+                    skill
+                )
+
+            # 元のターゲットへ戻す
+            self.current_enemy_index = (
+                original_index
+            )
+
+            return
+
+
         # ============================
         # 拳闘士
         # ============================
@@ -2423,7 +2626,7 @@ class BattleEngine:
             strength * 1.5
         )
 
-        self.player_physical_skill_hit(
+        self.player_physical_skill_hit_all(
             skill_name="衝撃波",
             base_damage=base_damage,
             attribute="light",
@@ -2569,7 +2772,7 @@ class BattleEngine:
             strength * 2.2
         )
 
-        self.player_physical_skill_hit(
+        self.player_physical_skill_hit_all(
             skill_name="フレアブレイド",
             base_damage=base_damage,
             attribute="fire",
@@ -3050,7 +3253,7 @@ class BattleEngine:
             * random_multiplier
         )
 
-        self.player_magic_skill_hit(
+        self.player_magic_skill_hit_all(
             skill_name="エクスプロージョン",
             base_damage=base_damage,
             attribute="rock",
@@ -3731,44 +3934,61 @@ class BattleEngine:
 
         光属性・補助
 
-        50%で敵を麻痺。
+        生存している敵全員に対して
+        それぞれ50%で麻痺を付与する。
 
-        麻痺時間は
-        ランダムで1～3行動。
-
-        本来は敵全体対象。
-        現在は1対1なので敵1体へ適用。
+        麻痺時間:
+        1～3行動
         """
 
-        # ===== 麻痺判定 =====
+        original_index = (
+            self.current_enemy_index
+        )
 
-        if not self.roll_percent(50):
+        alive_indexes = (
+            self.get_alive_enemy_indexes()
+        )
+
+        for index in alive_indexes:
+
+            self.current_enemy_index = index
+
+            enemy_name = (
+                self.enemy.name
+            )
+
+            # 敵ごとに50%判定
+            if not self.roll_percent(50):
+
+                self.logs.append(
+                    "フラッシュバング！ "
+                    f"{enemy_name}には"
+                    "効かなかった！"
+                )
+
+                continue
+
+            # 敵ごとに1～3行動
+            paralysis_turns = (
+                random.randint(
+                    1,
+                    3,
+                )
+            )
+
+            self.enemy_paralysis_turns = (
+                paralysis_turns
+            )
 
             self.logs.append(
                 "フラッシュバング！ "
-                f"{self.enemy.name}には"
-                "効かなかった！"
+                f"{enemy_name}は"
+                f"{paralysis_turns}行動の間、"
+                "麻痺状態になった！"
             )
 
-            return
-
-        # 1～3行動
-        paralysis_turns = (
-            random.randint(
-                1,
-                3,
-            )
-        )
-
-        self.enemy_paralysis_turns = (
-            paralysis_turns
-        )
-
-        self.logs.append(
-            "フラッシュバング！ "
-            f"{self.enemy.name}は"
-            f"{paralysis_turns}行動の間、"
-            "麻痺状態になった！"
+        self.current_enemy_index = (
+            original_index
         )
 
 

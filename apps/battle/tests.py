@@ -690,6 +690,229 @@ class BattleEngineTests(TestCase):
         )
 
 
+    def test_battle_engine_accepts_three_enemies(self):
+        """
+        BattleEngineが最大3体の敵を
+        受け取れることを確認。
+        """
+
+        enemy2 = Enemy.objects.create(
+            name="テストゴブリン",
+            max_hp=30,
+            max_mp=0,
+            strength=5,
+            intelligence=3,
+            dexterity=5,
+            agility=5,
+            vitality=5,
+            luck=3,
+            attribute="neutral",
+            exp_min=7,
+            exp_max=12,
+        )
+
+        enemy3 = Enemy.objects.create(
+            name="テストウルフ",
+            max_hp=30,
+            max_mp=0,
+            strength=5,
+            intelligence=3,
+            dexterity=5,
+            agility=7,
+            vitality=4,
+            luck=4,
+            attribute="grass",
+            exp_min=7,
+            exp_max=12,
+        )
+
+        engine = BattleEngine(
+            self.character,
+            [
+                self.enemy,
+                enemy2,
+                enemy3,
+            ],
+        )
+
+        self.assertEqual(
+            len(engine.enemy_combatants),
+            3,
+        )
+
+        self.assertEqual(
+            engine.enemy_combatants[0].name,
+            self.enemy.name,
+        )
+
+        self.assertEqual(
+            engine.enemy_combatants[1].name,
+            "テストゴブリン",
+        )
+
+        self.assertEqual(
+            engine.enemy_combatants[2].name,
+            "テストウルフ",
+        )
+
+
+    def test_physical_all_attack_hits_all_enemies(self):
+        """
+        物理全体攻撃が
+        生存している敵全員に当たることを確認。
+        """
+
+        enemy2 = Enemy.objects.create(
+            name="敵2",
+            max_hp=30,
+            max_mp=0,
+            vitality=4,
+            agility=4,
+            luck=3,
+            attribute="grass",
+        )
+
+        enemy3 = Enemy.objects.create(
+            name="敵3",
+            max_hp=30,
+            max_mp=0,
+            vitality=4,
+            agility=4,
+            luck=3,
+            attribute="grass",
+        )
+
+        engine = BattleEngine(
+            self.character,
+            [
+                self.enemy,
+                enemy2,
+                enemy3,
+            ],
+        )
+
+        # 命中・クリティカル判定を成功固定
+        with patch.object(
+            engine,
+            "roll_percent",
+            return_value=True,
+        ):
+            engine.player_physical_skill_hit_all(
+                skill_name="テスト全体攻撃",
+                base_damage=10,
+                attribute="neutral",
+            )
+
+        for enemy in engine.enemy_combatants:
+            self.assertLess(
+                enemy.hp,
+                enemy.max_hp,
+            )
+
+
+    def test_flashbang_targets_all_enemies(self):
+        """
+        フラッシュバングが
+        生存敵全員へ麻痺判定することを確認。
+        """
+
+        enemy2 = Enemy.objects.create(
+            name="敵2",
+            max_hp=30,
+            max_mp=0,
+        )
+
+        enemy3 = Enemy.objects.create(
+            name="敵3",
+            max_hp=30,
+            max_mp=0,
+        )
+
+        engine = BattleEngine(
+            self.character,
+            [
+                self.enemy,
+                enemy2,
+                enemy3,
+            ],
+        )
+
+        with (
+            patch.object(
+                engine,
+                "roll_percent",
+                return_value=True,
+            ),
+            patch(
+                "apps.battle.services.random.randint",
+                return_value=2,
+            ),
+        ):
+            engine.skill_flashbang()
+
+        for enemy in engine.enemy_combatants:
+            self.assertEqual(
+                enemy.paralysis_turns,
+                2,
+            )
+
+
+    def test_mirage_makes_normal_attack_hit_all_enemies(self):
+        """
+        蜃気楼の次の通常攻撃が
+        敵全体攻撃になることを確認する。
+        """
+
+        enemy2 = Enemy.objects.create(
+            name="敵2",
+            max_hp=30,
+            max_mp=0,
+            vitality=4,
+            agility=4,
+            luck=3,
+        )
+
+        enemy3 = Enemy.objects.create(
+            name="敵3",
+            max_hp=30,
+            max_mp=0,
+            vitality=4,
+            agility=4,
+            luck=3,
+        )
+
+        engine = BattleEngine(
+            self.character,
+            [
+                self.enemy,
+                enemy2,
+                enemy3,
+            ],
+        )
+
+        engine.mirage_active = True
+
+        with patch.object(
+            engine,
+            "roll_percent",
+            return_value=True,
+        ):
+            engine.player_normal_attack()
+
+        # 全員ダメージを受けている
+        for enemy in engine.enemy_combatants:
+
+            self.assertLess(
+                enemy.hp,
+                enemy.max_hp,
+            )
+
+        # 1回使ったので解除される
+        self.assertFalse(
+            engine.mirage_active
+        )
+
+
 class CombatantTests(TestCase):
 
     def setUp(self):

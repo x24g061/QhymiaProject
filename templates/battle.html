@@ -253,9 +253,6 @@
         <section class="battle-result">
 
 
-            <!-- =========================
-                 勝利
-            ========================== -->
             {% if battle_result.winner == "player" %}
 
                 <p class="result-text">
@@ -266,95 +263,6 @@
                     {{ exp_gained }} EXPを獲得した。
                 </p>
 
-
-                <!-- =====================
-                     レベルアップ
-                ====================== -->
-                {% if growth_result.level_up_count %}
-
-                    <div class="level-up-result">
-
-                        <h2>
-                            LEVEL UP!
-                        </h2>
-
-
-                        {% for level_up in growth_result.level_ups %}
-
-                            <div class="level-up-detail">
-
-                                <h3>
-                                    Lv.{{ level_up.level }}
-                                </h3>
-
-
-                                <!-- 基礎能力成長 -->
-                                <p>
-                                    基礎能力成長
-                                </p>
-
-                                <ul>
-
-                                    {% for growth in level_up.growths %}
-
-                                        <li>
-                                            {{ growth }}
-                                        </li>
-
-                                    {% endfor %}
-
-                                </ul>
-
-
-                                <!-- 属性成長 -->
-                                <p>
-                                    属性成長
-                                </p>
-
-                                <ul>
-
-                                    {% for growth in level_up.attribute_growths %}
-
-                                        <li>
-                                            {{ growth }}
-                                        </li>
-
-                                    {% endfor %}
-
-                                </ul>
-
-                            </div>
-
-                        {% endfor %}
-
-
-                        <p>
-                            現在 Lv.{{ growth_result.current_level }}
-                        </p>
-
-                        <p>
-                            EXP
-                            {{ growth_result.remaining_exp }}
-                            / 100
-                        </p>
-
-                    </div>
-
-                {% else %}
-
-                    <!-- レベルアップしなかった場合 -->
-                    <p>
-                        EXP
-                        {{ character.exp }}
-                        / 100
-                    </p>
-
-                {% endif %}
-
-
-            <!-- =========================
-                 敗北
-            ========================== -->
             {% elif battle_result.winner == "enemy" %}
 
                 <p class="result-text">
@@ -365,10 +273,6 @@
                     {{ exp_gained }} EXPを獲得した。
                 </p>
 
-
-            <!-- =========================
-                 引き分け
-            ========================== -->
             {% else %}
 
                 <p class="result-text">
@@ -381,6 +285,68 @@
 
             {% endif %}
 
+
+            <!-- ========================================
+                レベルアップ
+            ========================================= -->
+
+            {% if growth_result and growth_result.level_up_count %}
+
+                <div class="level-up-result">
+
+                    <h2>
+                        LEVEL UP!
+                    </h2>
+
+                    {% for level_up in growth_result.level_ups %}
+
+                        <div class="level-up-detail">
+
+                            <h3>
+                                Lv.{{ level_up.level }}
+                            </h3>
+
+                            <p>
+                                基礎能力成長
+                            </p>
+
+                            <ul>
+                                {% for growth in level_up.growths %}
+                                    <li>
+                                        {{ growth }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+
+                            <p>
+                                属性成長
+                            </p>
+
+                            <ul>
+                                {% for growth in level_up.attribute_growths %}
+                                    <li>
+                                        {{ growth }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+
+                        </div>
+
+                    {% endfor %}
+
+                    <p>
+                        現在 Lv.{{ growth_result.current_level }}
+                    </p>
+
+                    <p>
+                        EXP
+                        {{ growth_result.remaining_exp }}
+                        / 100
+                    </p>
+
+                </div>
+
+            {% endif %}
         </section>
 
 
