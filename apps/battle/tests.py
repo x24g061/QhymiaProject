@@ -527,6 +527,108 @@ class BattleEngineTests(TestCase):
         )
 
 
+    def test_enemy_combatants_are_managed_as_list(self):
+        """
+        敵がリストで管理され、
+        現在の敵も正しく取得できることを確認。
+        """
+
+        # 現在は1体だけ
+        self.assertEqual(
+            len(self.engine.enemy_combatants),
+            1,
+        )
+
+        # 現在の敵はリストの先頭
+        self.assertEqual(
+            self.engine.enemy_combatant,
+            self.engine.enemy_combatants[0],
+        )
+
+        # 生存している敵は1体
+        alive_enemies = (
+            self.engine
+            .get_alive_enemy_combatants()
+        )
+
+        self.assertEqual(
+            len(alive_enemies),
+            1,
+        )
+
+        # HPを0にする
+        self.engine.enemy_hp = 0
+
+        # 生存敵が0体になる
+        alive_enemies = (
+            self.engine
+            .get_alive_enemy_combatants()
+        )
+
+        self.assertEqual(
+            len(alive_enemies),
+            0,
+        )
+
+
+    def test_select_random_alive_enemy(self):
+        """
+        生存している敵の中から
+        ランダムでターゲットを選べることを確認。
+        """
+
+        second_enemy_data = Enemy.objects.create(
+            name="2体目スライム",
+            max_hp=40,
+            max_mp=0,
+            strength=6,
+            intelligence=3,
+            dexterity=5,
+            agility=5,
+            vitality=5,
+            luck=3,
+            attribute="grass",
+            exp_min=7,
+            exp_max=12,
+        )
+
+        second_enemy = EnemyCombatant(
+            second_enemy_data
+        )
+
+        self.engine.enemy_combatants.append(
+            second_enemy
+        )
+
+        # ランダム選択結果を
+        # 2体目(index=1)に固定する
+        with patch(
+            "apps.battle.services.random.choice",
+            return_value=1,
+        ):
+            result = (
+                self.engine
+                .select_random_alive_enemy()
+            )
+
+        self.assertTrue(result)
+
+        self.assertEqual(
+            self.engine.current_enemy_index,
+            1,
+        )
+
+        self.assertEqual(
+            self.engine.enemy.name,
+            "2体目スライム",
+        )
+
+        self.assertEqual(
+            self.engine.enemy_hp,
+            40,
+        )
+
+
 class CombatantTests(TestCase):
 
     def setUp(self):

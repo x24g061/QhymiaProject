@@ -112,8 +112,9 @@ class BattleEngine:
 
 
     def __init__(self, character, enemy):
+
+
         self.character = character
-        self.enemy = enemy
 
 
         # ============================================================
@@ -126,9 +127,19 @@ class BattleEngine:
             character
         )
 
-        self.enemy_combatant = EnemyCombatant(
-            enemy
-        )
+        # ============================================================
+        # 戦闘に参加する敵
+        # ============================================================
+
+        # 現在は1体だけだが、
+        # 将来最大3体まで入れられるように
+        # リストで管理する。
+        self.enemy_combatants = [
+            EnemyCombatant(enemy)
+        ]
+
+        # 現在攻撃対象になっている敵の位置
+        self.current_enemy_index = 0
 
 
         # ========================================
@@ -353,6 +364,103 @@ class BattleEngine:
         """
 
         self.player_combatant.initiative = value
+
+
+    # ============================================================
+    # 敵関連のプロパティ
+    # ============================================================
+
+    @property
+    def enemy(self):
+        """
+        現在ターゲット中のEnemyモデルを返す。
+
+        既存コードの
+        self.enemy.name
+        self.enemy.agility
+        などをそのまま使えるようにする。
+        """
+
+        return (
+            self.enemy_combatant.enemy
+        )
+
+
+
+    def get_alive_enemy_combatants(self):
+        """
+        まだ生きている敵だけを返す。
+        """
+
+        return [
+            enemy
+            for enemy
+            in self.enemy_combatants
+            if enemy.is_alive()
+        ]
+
+
+    def select_random_alive_enemy(self):
+        """
+        現在生存している敵の中から
+        ランダムで1体を攻撃対象にする。
+
+        生存敵がいなければFalseを返す。
+        """
+
+        alive_indexes = [
+            index
+            for index, enemy
+            in enumerate(
+                self.enemy_combatants
+            )
+            if enemy.is_alive()
+        ]
+
+        if not alive_indexes:
+            return False
+
+        self.current_enemy_index = (
+            random.choice(
+                alive_indexes
+            )
+        )
+
+        return True
+
+
+    # ============================================================
+    # 現在の攻撃対象
+    # ============================================================
+
+    @property
+    def enemy_combatant(self):
+        """
+        現在攻撃対象になっている敵を返す。
+
+        既存コードでは
+        self.enemy_combatant
+        を大量に使用しているため、
+
+        内部をリスト化しても
+        今までと同じ書き方で使えるようにする。
+        """
+
+        return self.enemy_combatants[
+            self.current_enemy_index
+        ]
+
+    def get_alive_enemy_combatants(self):
+        """
+        まだ生きている敵だけを返す。
+        """
+
+        return [
+            enemy
+            for enemy
+            in self.enemy_combatants
+            if enemy.is_alive()
+        ]
 
 
     # ============================================================
