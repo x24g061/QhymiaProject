@@ -131,9 +131,26 @@ class Enemy(models.Model):
 
     ATTRIBUTE_CHOICES = Skill.ATTRIBUTE_CHOICES
 
+    #==== 名前 =====
+
     name = models.CharField(
         max_length=50,
     )
+
+    # ===== 出現階層 =====
+
+    floor = models.PositiveIntegerField(
+        default=1,
+        help_text="出現する探索階層",
+    )
+
+    # ===== ボス判定 =====
+
+    is_boss = models.BooleanField(
+        default=False,
+    )
+
+    # ===== レベル =====
 
     level = models.PositiveIntegerField(
         default=1,
