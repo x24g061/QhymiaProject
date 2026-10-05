@@ -164,6 +164,7 @@ def battle(request):
     engine = BattleEngine(
         character,
         enemies,
+        floor=selected_floor,
     )
 
     battle_result = engine.run()
@@ -172,17 +173,12 @@ def battle(request):
     # ========================================================
     # EXP / レベルアップ
     # ========================================================
-    #
-    # 1探索 = 1戦闘なので、
-    # EXP獲得も1回だけ。
-    #
-    # 敵の数が増えても
-    # 1戦闘につき1回だけEXPを与える。
-    # ========================================================
 
     growth_result = None
 
-    if battle_result["winner"] == "player":
+    # 勝利・敗北を問わず、
+    # EXPがある場合は成長処理を実行する
+    if battle_result["exp_gained"] > 0:
 
         growth_result = apply_exploration_exp(
             character,
@@ -190,15 +186,8 @@ def battle(request):
         )
 
     else:
-        # ====================================================
-        # 敗北・引き分け
-        # ====================================================
-        #
-        # EXPは獲得しない。
-        #
-        # 探索終了なので
-        # HP / MPは全回復する。
-        # ====================================================
+        # 引き分けなどEXPがない場合も
+        # 探索終了時にHP / MPを全回復する
 
         character.current_hp = (
             character.max_hp
@@ -215,7 +204,6 @@ def battle(request):
                 "updated_at",
             ]
         )
-
 
     # ========================================================
     # 戦闘画面表示

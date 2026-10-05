@@ -111,7 +111,12 @@ class BattleEngine:
         return max_mp
 
 
-    def __init__(self, character, enemies):
+    def __init__(
+        self,
+        character,
+        enemies,
+        floor=None,
+    ):
 
         self.character = character
 
@@ -147,6 +152,23 @@ class BattleEngine:
 
         # 最初のターゲット
         self.current_enemy_index = 0
+
+
+        # ============================================================
+        # 今回戦闘している探索階層
+        # ============================================================
+
+        if floor is not None:
+            self.floor = floor
+
+        else:
+            # 既存テストなどでfloorが渡されなかった場合は、
+            # 最初の敵の階層を使用する。
+            self.floor = (
+                self.enemy_combatants[0]
+                .enemy
+                .floor
+            )
 
 
         # ========================================
@@ -286,6 +308,21 @@ class BattleEngine:
         # 自分の行動終了ごとにAGI +1%
         # 最大+10%
         self.elf_agility_bonus = 0.0
+
+
+    def get_floor_exp_range(self):
+        """
+        探索階層に応じた
+        1戦闘あたりのEXP範囲を返す。
+        """
+
+        if self.floor <= 4:
+            return 7, 12
+
+        if self.floor <= 8:
+            return 8, 14
+
+        return 10, 16
 
 
     # ============================================================
@@ -1349,9 +1386,13 @@ class BattleEngine:
             #
             # の階層依存へ変更する。
 
+            exp_min, exp_max = (
+                self.get_floor_exp_range()
+            )
+
             exp_gained = random.randint(
-                self.enemy.exp_min,
-                self.enemy.exp_max,
+                exp_min,
+                exp_max,
             )
 
             self.logs.append(
@@ -1362,9 +1403,17 @@ class BattleEngine:
 
             winner = "enemy"
 
+            # 敗北時は階層に関係なく
+            # 8EXPを獲得する
+            exp_gained = 8
+
             self.logs.append(
                 f"{self.character.name}"
                 "は倒れた……"
+            )
+
+            self.logs.append(
+                "敗北したが8EXPを獲得した！"
             )
 
         else:
@@ -1403,7 +1452,7 @@ class BattleEngine:
             ),
 
             "exp_gained": exp_gained,
-            
+
             # 今回戦った敵全員の最終状態
             "enemies": [
                 {
