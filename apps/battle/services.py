@@ -111,18 +111,14 @@ class BattleEngine:
         return max_mp
 
 
-    def __init__(self, character, enemy):
-
+    def __init__(self, character, enemies):
 
         self.character = character
 
-
         # ============================================================
-        # 新しい戦闘参加者クラス
+        # プレイヤー
         # ============================================================
 
-        # 今は旧処理を残したまま、
-        # 新しいクラスも同時に用意する。
         self.player_combatant = PlayerCombatant(
             character
         )
@@ -131,14 +127,25 @@ class BattleEngine:
         # 戦闘に参加する敵
         # ============================================================
 
-        # 現在は1体だけだが、
-        # 将来最大3体まで入れられるように
-        # リストで管理する。
+        # 既存の1体指定にも対応する
+        if not isinstance(
+            enemies,
+            (list, tuple),
+        ):
+            enemies = [enemies]
+
+        # 敵は1～3体
+        if not 1 <= len(enemies) <= 3:
+            raise ValueError(
+                "敵の数は1～3体で指定してください。"
+            )
+
         self.enemy_combatants = [
             EnemyCombatant(enemy)
+            for enemy in enemies
         ]
 
-        # 現在攻撃対象になっている敵の位置
+        # 最初のターゲット
         self.current_enemy_index = 0
 
 
@@ -1396,6 +1403,28 @@ class BattleEngine:
             ),
 
             "exp_gained": exp_gained,
+            
+            # 今回戦った敵全員の最終状態
+            "enemies": [
+                {
+                    "name": enemy.name,
+                    "hp": max(
+                        0,
+                        enemy.hp,
+                    ),
+                    "max_hp": enemy.max_hp,
+                    "mp": max(
+                        0,
+                        enemy.mp,
+                    ),
+                    "max_mp": enemy.max_mp,
+                    "attribute": (
+                        enemy.enemy.attribute
+                    ),
+                }
+                for enemy
+                in self.enemy_combatants
+            ],
         }
 
     def finish_player_action(self, action_code):

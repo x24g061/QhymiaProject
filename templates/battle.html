@@ -37,7 +37,12 @@
         <section class="encounter-message">
 
             <p>
-                {{ enemy.name }} が襲いかかってきた！
+                {{ selected_floor }}階層で
+                {% for enemy_result in battle_result.enemies %}
+                    {{ enemy_result.name }}
+                    {% if not forloop.last %}、{% endif %}
+                {% endfor %}
+                が襲いかかってきた！
             </p>
 
         </section>
@@ -133,68 +138,78 @@
             <!-- =========================
                  敵
             ========================== -->
-            <div class="fighter enemy">
+            <div class="enemy-party">
 
-                <h2 class="fighter-name">
-                    {{ enemy.name }}
-                </h2>
+                {% for enemy_result in battle_result.enemies %}
 
+                    <div class="fighter enemy">
 
-                <!-- 敵画像は後で実装 -->
-                <div class="fighter-icon">
-                    敵アイコン
-                </div>
+                        <h2 class="fighter-name">
+                            {{ enemy_result.name }}
+                        </h2>
 
+                        <div class="fighter-icon">
+                            敵アイコン
+                        </div>
 
-                <div class="action-gauge">
-                    <div class="action-gauge-fill"></div>
-                </div>
+                        <div class="action-gauge">
+                            <div class="action-gauge-fill"></div>
+                        </div>
 
+                        <!-- HP -->
+                        <div class="status">
 
-                <!-- HP -->
-                <div class="status">
+                            <p>HP</p>
 
-                    <p>HP</p>
+                            {% widthratio enemy_result.hp enemy_result.max_hp 100 as enemy_hp_percent %}
 
-                    {% widthratio battle_result.enemy_hp enemy.max_hp 100 as enemy_hp_percent %}
+                            <div class="status-bar">
 
-                    <div class="status-bar">
+                                <div
+                                    class="hp-fill enemy-hp"
+                                    style="width: {{ enemy_hp_percent }}%;"
+                                ></div>
 
-                        <div
-                            class="hp-fill enemy-hp"
-                            style="width: {{ enemy_hp_percent }}%;"
-                        ></div>
+                            </div>
+
+                            <span>
+                                {{ enemy_result.hp }}
+                                /
+                                {{ enemy_result.max_hp }}
+                            </span>
+
+                        </div>
+
+                        <!-- MP -->
+                        <div class="status">
+
+                            <p>MP</p>
+
+                            <div class="status-bar">
+
+                                {% if enemy_result.max_mp > 0 %}
+                                    {% widthratio enemy_result.mp enemy_result.max_mp 100 as enemy_mp_percent %}
+                                {% else %}
+                                    {% widthratio 0 1 100 as enemy_mp_percent %}
+                                {% endif %}
+                                <div
+                                    class="stamina-fill enemy-stamina"
+                                    style="width: {{ enemy_mp_percent }}%;"
+                                ></div>
+
+                            </div>
+
+                            <span>
+                                {{ enemy_result.mp }}
+                                /
+                                {{ enemy_result.max_mp }}
+                            </span>
+
+                        </div>
 
                     </div>
 
-                    <span>
-                        {{ battle_result.enemy_hp }}
-                        /
-                        {{ enemy.max_hp }}
-                    </span>
-
-                </div>
-
-
-                <!-- 敵MP -->
-                <div class="status">
-
-                    <p>MP</p>
-
-                    <div class="status-bar">
-
-                        <div
-                            class="stamina-fill enemy-stamina"
-                            style="width: 0%;"
-                        ></div>
-
-                    </div>
-
-                    <span>
-                        {{ enemy.max_mp }}
-                    </span>
-
-                </div>
+                {% endfor %}
 
             </div>
 

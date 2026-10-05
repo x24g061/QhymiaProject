@@ -21,6 +21,33 @@ body {
 
 
 /* =========================
+   複数敵
+========================= */
+
+.enemy-party {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+
+    max-width: 650px;
+}
+
+.enemy-party .fighter {
+    width: 190px;
+}
+
+.enemy-party .fighter-icon {
+    width: 100px;
+    height: 100px;
+}
+
+.enemy-party .fighter-name {
+    font-size: 18px;
+}
+
+
+/* =========================
    ヘッダー
 ========================= */
 
