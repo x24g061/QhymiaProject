@@ -264,6 +264,9 @@ def arena_battle(request):
 
     # ========================================
     # 探索・闘技場共通CTチェック
+    #
+    # 探索または闘技場を実行してCT中の場合、
+    # 新しく闘技場戦闘を開始できない。
     # ========================================
 
     if (
@@ -283,7 +286,7 @@ def arena_battle(request):
     # 対戦相手取得
     #
     # 自分と同じ闘技場階にいる
-    # 別キャラクターをランダムで1人取得
+    # 別キャラクターをランダムで1人取得する。
     # ========================================
 
     opponent = (
@@ -298,6 +301,7 @@ def arena_battle(request):
         .first()
     )
 
+    # 同じ階に相手がいなければ戦闘しない
     if opponent is None:
         messages.warning(
             request,
@@ -307,10 +311,11 @@ def arena_battle(request):
         return redirect("home")
 
     # ========================================
-    # 闘技場戦闘用HP
+    # 戦闘用一時HP
     #
     # DB上の current_hp はまだ変更しない。
-    # この戦闘内だけで使う一時HP。
+    #
+    # この闘技場戦闘の中だけで使用するHP。
     # ========================================
 
     character_battle_hp = character.current_hp
@@ -319,144 +324,187 @@ def arena_battle(request):
     # ========================================
     # 先攻判定
     #
-    # AGIが高い方が先攻。
-    # 同値の場合はランダム。
+    # AGIが高い方を先攻にする。
+    #
+    # AGIが同じ場合だけランダム。
     # ========================================
 
     if character.agility > opponent.agility:
+
         first_attacker = character
         second_attacker = opponent
 
     elif character.agility < opponent.agility:
+
         first_attacker = opponent
         second_attacker = character
 
     else:
+
         if random.choice([True, False]):
+
             first_attacker = character
             second_attacker = opponent
+
         else:
+
             first_attacker = opponent
             second_attacker = character
 
     # ========================================
-    # 先攻側の命中率計算
+    # 戦闘ログ
     #
-    # 基本80%
-    # + 攻撃側DEX
-    # - 防御側DEX
+    # 各攻撃結果をリストに保存して、
+    # 最後にHTMLへ渡す。
     #
-    # 最低10%
-    # 最大95%
-    # ========================================
-
-    first_hit_rate = 80 + (
-        first_attacker.dexterity
-        - second_attacker.dexterity
-    )
-
-    first_hit_rate = max(
-        10,
-        min(
-            95,
-            first_hit_rate
-        )
-    )
-
-    # ========================================
-    # 先攻側の命中判定
-    # ========================================
-
-    first_hit_roll = random.randint(
-        1,
-        100
-    )
-
-    first_attack_hit = (
-        first_hit_roll <= first_hit_rate
-    )
-
-    # ========================================
-    # 先攻側のダメージ計算
+    # 例：
     #
-    # STR - VIT
+    # 1ターン目
+    # test の攻撃
+    # 命中
+    # 3ダメージ
     #
-    # 命中時は最低1ダメージ
+    # ArenaTwo の攻撃
+    # ミス
     # ========================================
 
-    first_damage = 0
-
-    if first_attack_hit:
-        first_damage = (
-            first_attacker.strength
-            - second_attacker.vitality
-        )
-
-        first_damage = max(
-            1,
-            first_damage
-        )
+    battle_logs = []
 
     # ========================================
-    # 先攻側の攻撃をHPへ反映
+    # ターン設定
     #
-    # DBにはまだ保存しない。
-    # ========================================
-
-    if second_attacker == character:
-
-        if first_attack_hit:
-            character_battle_hp = max(
-                0,
-                character_battle_hp
-                - first_damage
-            )
-
-    else:
-
-        if first_attack_hit:
-            opponent_battle_hp = max(
-                0,
-                opponent_battle_hp
-                - first_damage
-            )
-
-    # ========================================
-    # 後攻側の反撃準備
+    # 1ターン目から開始。
     #
-    # 先攻の攻撃でHPが0になった場合は
-    # 反撃させない。
+    # 万が一、お互い倒れない状態になっても
+    # 無限ループしないよう最大100ターン。
     # ========================================
 
-    second_can_attack = True
-
-    if second_attacker == character:
-        if character_battle_hp <= 0:
-            second_can_attack = False
-
-    else:
-        if opponent_battle_hp <= 0:
-            second_can_attack = False
+    turn = 1
+    max_turns = 100
 
     # ========================================
-    # 後攻側の初期値
+    # 戦闘ループ
     #
-    # 反撃できない場合でも
-    # テンプレートで安全に表示できるようにする。
+    # 自分と相手のHPが両方残っている間、
+    # ターンを繰り返す。
     # ========================================
 
-    second_hit_rate = 0
-    second_attack_hit = False
-    second_damage = 0
-
-    # ========================================
-    # 後攻側の反撃
-    # ========================================
-
-    if second_can_attack:
+    while (
+        character_battle_hp > 0
+        and opponent_battle_hp > 0
+        and turn <= max_turns
+    ):
 
         # ====================================
-        # 後攻側の命中率
+        # 先攻側の命中率計算
+        #
+        # 基本命中率 80%
+        #
+        # ＋ 攻撃側DEX
+        # － 防御側DEX
+        #
+        # 最低10%
+        # 最大95%
+        # ====================================
+
+        first_hit_rate = 80 + (
+            first_attacker.dexterity
+            - second_attacker.dexterity
+        )
+
+        first_hit_rate = max(
+            10,
+            min(
+                95,
+                first_hit_rate
+            )
+        )
+
+        # ====================================
+        # 先攻側の命中判定
+        # ====================================
+
+        first_attack_hit = (
+            random.randint(1, 100)
+            <= first_hit_rate
+        )
+
+        # ミスした場合は0ダメージ
+        first_damage = 0
+
+        # ====================================
+        # 先攻側のダメージ計算
+        #
+        # STR - VIT
+        #
+        # 命中時は最低1ダメージ保証。
+        # ====================================
+
+        if first_attack_hit:
+
+            first_damage = max(
+                1,
+                (
+                    first_attacker.strength
+                    - second_attacker.vitality
+                )
+            )
+
+            # =================================
+            # 攻撃対象が自分の場合
+            # =================================
+
+            if second_attacker == character:
+
+                character_battle_hp = max(
+                    0,
+                    character_battle_hp
+                    - first_damage
+                )
+
+            # =================================
+            # 攻撃対象が相手の場合
+            # =================================
+
+            else:
+
+                opponent_battle_hp = max(
+                    0,
+                    opponent_battle_hp
+                    - first_damage
+                )
+
+        # ====================================
+        # 先攻側の攻撃結果をログへ保存
+        # ====================================
+
+        battle_logs.append(
+            {
+                "turn": turn,
+                "attacker": first_attacker.name,
+                "hit": first_attack_hit,
+                "hit_rate": first_hit_rate,
+                "damage": first_damage,
+                "character_hp": character_battle_hp,
+                "opponent_hp": opponent_battle_hp,
+            }
+        )
+
+        # ====================================
+        # 先攻側の攻撃だけで決着した場合
+        #
+        # HP0のキャラクターは反撃できないため、
+        # ここで戦闘ループを終了する。
+        # ====================================
+
+        if (
+            character_battle_hp <= 0
+            or opponent_battle_hp <= 0
+        ):
+            break
+
+        # ====================================
+        # 後攻側の命中率計算
         # ====================================
 
         second_hit_rate = 80 + (
@@ -476,54 +524,178 @@ def arena_battle(request):
         # 後攻側の命中判定
         # ====================================
 
-        second_hit_roll = random.randint(
-            1,
-            100
+        second_attack_hit = (
+            random.randint(1, 100)
+            <= second_hit_rate
         )
 
-        second_attack_hit = (
-            second_hit_roll <= second_hit_rate
-        )
+        second_damage = 0
 
         # ====================================
         # 後攻側のダメージ計算
         # ====================================
 
         if second_attack_hit:
-            second_damage = (
-                second_attacker.strength
-                - first_attacker.vitality
-            )
 
             second_damage = max(
                 1,
-                second_damage
+                (
+                    second_attacker.strength
+                    - first_attacker.vitality
+                )
             )
 
-        # ====================================
-        # 後攻側の攻撃をHPへ反映
-        # ====================================
+            # =================================
+            # 攻撃対象が自分の場合
+            # =================================
 
-        if first_attacker == character:
+            if first_attacker == character:
 
-            if second_attack_hit:
                 character_battle_hp = max(
                     0,
                     character_battle_hp
                     - second_damage
                 )
 
-        else:
+            # =================================
+            # 攻撃対象が相手の場合
+            # =================================
 
-            if second_attack_hit:
+            else:
+
                 opponent_battle_hp = max(
                     0,
                     opponent_battle_hp
                     - second_damage
                 )
 
+        # ====================================
+        # 後攻側の攻撃結果をログへ保存
+        # ====================================
+
+        battle_logs.append(
+            {
+                "turn": turn,
+                "attacker": second_attacker.name,
+                "hit": second_attack_hit,
+                "hit_rate": second_hit_rate,
+                "damage": second_damage,
+                "character_hp": character_battle_hp,
+                "opponent_hp": opponent_battle_hp,
+            }
+        )
+
+        # ====================================
+        # 次のターンへ
+        # ====================================
+
+        turn += 1
+
+    # ========================================
+# 勝敗判定
+#
+# 相手HPが0
+# → 挑戦者の勝利
+#
+# 自分HPが0
+# → 挑戦者の敗北
+#
+# 100ターン以内に決着しなかった場合も
+# 挑戦者の敗北とする。
+# ========================================
+
+    if (
+    character_battle_hp > 0
+    and opponent_battle_hp <= 0
+):
+
+        battle_result = "win"
+
+    else:
+
+    # 自分のHPが0になった場合
+    # または
+    # 100ターンで決着しなかった場合
+        battle_result = "loss"
+
+      # ========================================
+      # 闘技場報酬
+      # ========================================
+
+    if battle_result == "win":
+        gained_exp = random.randint(9, 12)
+    else:
+        gained_exp = 7
+
+    character.exp += gained_exp
+
+    item_drop_rate = min(
+        1 + character.arena_win_streak,
+        10
+    )
+
+    dropped_item = None
+
+    roll = random.randint(1, 100)
+
+    if roll <= item_drop_rate:
+
+        dropped_item = (
+            Item.objects
+            .filter(category=Item.Category.MATERIAL)
+            .order_by("?")
+            .first()
+        )
+
+    if dropped_item:
+
+        inventory_item, created = (
+            InventoryItem.objects.get_or_create(
+                character=character,
+                item=dropped_item,
+                defaults={
+                    "quantity": 1
+                }
+            )
+        )
+
+        if not created:
+            inventory_item.quantity += 1
+
+            inventory_item.save(
+                update_fields=[
+                    "quantity",
+                    "updated_at",
+                ]
+            )
+        # ========================================
+# 闘技場戦績更新
+#
+# 勝利：
+# ・連勝数 +1
+# ・直近結果を win
+#
+# 敗北：
+# ・連勝数を0に戻す
+# ・直近結果を loss
+# ・次の階への挑戦を解禁
+# ========================================
+
+    if battle_result == "win":
+
+        character.arena_win_streak += 1
+        character.arena_last_result = "win"
+
+    else:
+
+        character.arena_win_streak = 0
+        character.arena_last_result = "loss"
+        character.arena_next_floor_unlocked = True
     # ========================================
     # 共通CT開始
+    #
+    # 闘技場を1回実行したので、
+    # 探索と共通のCTを開始する。
     # ========================================
 
     cooldown_seconds = (
@@ -538,71 +710,56 @@ def arena_battle(request):
     )
 
     character.save(
-        update_fields=[
-            "exploration_cooldown_until",
-            "updated_at",
-        ]
-    )
-
-    # ========================================
-    # 闘技場画面表示
-    #
-    # 今回は
-    #
-    # ・先攻
-    # ・先攻側命中率
-    # ・先攻側命中結果
-    # ・先攻側ダメージ
-    # ・後攻側反撃有無
-    # ・後攻側命中率
-    # ・後攻側命中結果
-    # ・後攻側ダメージ
-    # ・戦闘後の一時HP
-    #
-    # を渡す。
-    # ========================================
+    update_fields=[
+        "exp",
+        "arena_win_streak",
+        "arena_last_result",
+        "arena_next_floor_unlocked",
+        "exploration_cooldown_until",
+        "updated_at",
+    ]
+)
+   # ========================================
+# 闘技場画面表示
+#
+# HTMLへ戦闘結果を渡す。
+# ========================================
 
     return render(
-        request,
-        "arena_battle.html",
-        {
-            "character": character,
-            "opponent": opponent,
+    request,
+    "arena_battle.html",
+    {
+        "character": character,
+        "opponent": opponent,
 
-            "cooldown_seconds":
-                cooldown_seconds,
+        # 最初に誰が先攻だったか
+        "first_attacker": first_attacker,
 
-            "first_attacker":
-                first_attacker,
+        # 全ターンの戦闘ログ
+        "battle_logs": battle_logs,
 
-            "second_attacker":
-                second_attacker,
+        # win / loss
+        "battle_result": battle_result,
 
-            "first_hit_rate":
-                first_hit_rate,
+        # 戦闘終了時の自分HP
+        "character_battle_hp": character_battle_hp,
 
-            "first_attack_hit":
-                first_attack_hit,
+        # 戦闘終了時の相手HP
+        "opponent_battle_hp": opponent_battle_hp,
 
-            "first_damage":
-                first_damage,
+        # 最終ターン数
+        "turn_count": turn,
 
-            "second_can_attack":
-                second_can_attack,
+        # 共通CT
+        "cooldown_seconds": cooldown_seconds,
 
-            "second_hit_rate":
-                second_hit_rate,
+        # 獲得経験値
+        "gained_exp": gained_exp,
 
-            "second_attack_hit":
-                second_attack_hit,
+        # アイテムドロップ率
+        "item_drop_rate": item_drop_rate,
 
-            "second_damage":
-                second_damage,
-
-            "character_battle_hp":
-                character_battle_hp,
-
-            "opponent_battle_hp":
-                opponent_battle_hp,
-        }
-    )
+        # 実際に落ちたアイテム
+        "dropped_item": dropped_item,
+    }
+)
