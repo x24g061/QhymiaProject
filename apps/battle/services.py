@@ -709,6 +709,37 @@ class BattleEngine:
             self.character,
             stat_name,
         )
+        # ============================
+        # 装備ステータス補正
+        # ============================
+        #
+        # 装備戦闘力 ÷ 2
+        # × 各ステータス補正率
+        #
+        # で求めた値を
+        # キャラクターの元ステータスへ加算する。
+        # ============================
+
+        equipped_items = (
+            self.character
+            .owned_equipments
+            .filter(
+                is_equipped=True,
+            )
+            .select_related(
+                "equipment",
+            )
+        )
+
+        equipment_bonus = sum(
+            owned.get_stat_bonus(
+                stat_name
+            )
+            for owned
+            in equipped_items
+        )
+
+        value += equipment_bonus
 
         # ===== 職業補正 =====
 

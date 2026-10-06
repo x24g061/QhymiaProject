@@ -262,6 +262,47 @@
                     {{ exp_gained }} EXPを獲得した。
                 </p>
 
+            {% if drop_result %}
+
+                <div class="drop-result">
+
+                    {% if drop_result.kind == "equipment" %}
+
+                        <p>
+                            アイテムドロップ！
+                        </p>
+
+                        <p>
+                            【{{ drop_result.rank }}ランク】
+                            {{ drop_result.name }}
+                            を入手した！
+                        </p>
+
+                        <p>
+                            {{ drop_result.slot }}
+                            /
+                            戦闘力
+                            {{ drop_result.battle_power }}
+                        </p>
+
+                    {% else %}
+
+                        <p>
+                            アイテムドロップ！
+                        </p>
+
+                        <p>
+                            {{ drop_result.name }}
+                            ×{{ drop_result.quantity }}
+                            を入手した！
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+            {% endif %}
+
             {% elif battle_result.winner == "enemy" %}
 
                 <p class="result-text">

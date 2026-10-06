@@ -12,6 +12,7 @@ from apps.accounts.growth import apply_exploration_exp
 
 from .models import Enemy, Skill, SkillPreset
 from .services import BattleEngine
+from .drops import grant_exploration_drop
 
 
 
@@ -169,6 +170,22 @@ def battle(request):
 
     battle_result = engine.run()
 
+    # ========================================================
+    # 探索ドロップ
+    # ========================================================
+
+    drop_result = None
+
+    # 敵を倒した場合だけドロップ抽選
+    if battle_result["winner"] == "player":
+
+        drop_result = (
+            grant_exploration_drop(
+                character=character,
+                floor=selected_floor,
+            )
+        )
+
 
     # ========================================================
     # EXP / レベルアップ
@@ -239,6 +256,9 @@ def battle(request):
 
             # クールタイム
             "cooldown_seconds": cooldown_seconds,
+
+            # ドロップ結果
+            "drop_result": drop_result,
         },
     )
 

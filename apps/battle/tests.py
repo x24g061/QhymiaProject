@@ -10,6 +10,21 @@ from apps.battle.combatants import (
     PlayerCombatant,
     EnemyCombatant,
 )
+from apps.inventory.models import (
+    Equipment,
+    InventoryItem,
+    Item,
+    OwnedEquipment,
+)
+
+from apps.battle.models import (
+    Enemy,
+    FloorDropItem,
+)
+
+from apps.battle.drops import (
+    grant_exploration_drop,
+)
 
 
 class BattleEngineTests(TestCase):
@@ -1021,6 +1036,213 @@ class BattleEngineTests(TestCase):
         )
 
 
+    def test_enemy_statuses_are_independent(self):
+        """
+        複数敵の状態異常が
+        敵ごとに独立していることを確認する。
+        """
+
+        enemy2 = Enemy.objects.create(
+            name="状態異常テスト敵2",
+            max_hp=30,
+            max_mp=0,
+        )
+
+        engine = BattleEngine(
+            self.character,
+            [
+                self.enemy,
+                enemy2,
+            ],
+        )
+
+        # 敵1だけに状態異常を付与
+        engine.current_enemy_index = 0
+
+        engine.enemy_poison_turns = 5
+        engine.enemy_sleep_turns = 3
+        engine.enemy_paralysis_turns = 2
+
+        # 敵2へ切り替える
+        engine.current_enemy_index = 1
+
+        # 敵2には影響していない
+        self.assertEqual(
+            engine.enemy_poison_turns,
+            0,
+        )
+
+        self.assertEqual(
+            engine.enemy_sleep_turns,
+            0,
+        )
+
+        self.assertEqual(
+            engine.enemy_paralysis_turns,
+            0,
+        )
+
+
+    def test_sleep_only_stops_affected_enemy(self):
+        """
+        睡眠状態の敵だけが行動不能になり、
+        他の敵は通常通り行動できることを確認する。
+        """
+
+        enemy2 = Enemy.objects.create(
+            name="睡眠テスト敵2",
+            max_hp=30,
+            max_mp=0,
+            strength=5,
+            dexterity=5,
+            agility=5,
+        )
+
+        engine = BattleEngine(
+            self.character,
+            [
+                self.enemy,
+                enemy2,
+            ],
+        )
+
+        # 敵1だけ睡眠
+        engine.current_enemy_index = 0
+        engine.enemy_sleep_turns = 1
+
+        before_hp = engine.player_hp
+
+        # 敵1は眠っているので攻撃できない
+        engine.enemy_turn()
+
+        self.assertEqual(
+            engine.player_hp,
+            before_hp,
+        )
+
+        # 敵2へ変更
+        engine.current_enemy_index = 1
+
+        # 命中を確定させる
+        with patch.object(
+            engine,
+            "roll_percent",
+            return_value=True,
+        ):
+            engine.enemy_turn()
+
+        # 敵2は普通に攻撃できる
+        self.assertLess(
+            engine.player_hp,
+            before_hp,
+        )
+
+
+    def test_shadow_step_reflects_to_attacking_enemy(self):
+        """
+        複数敵戦闘でシャドウステップの反射が
+        実際に攻撃してきた敵へ返ることを確認する。
+        """
+
+        enemy2 = Enemy.objects.create(
+            name="反射テスト敵2",
+            max_hp=30,
+            max_mp=0,
+            strength=5,
+            dexterity=5,
+            agility=5,
+        )
+
+        engine = BattleEngine(
+            self.character,
+            [
+                self.enemy,
+                enemy2,
+            ],
+        )
+
+        engine.shadow_step_turns = 3
+
+        # 敵2が攻撃する
+        engine.current_enemy_index = 1
+
+        with patch.object(
+            engine,
+            "roll_percent",
+            return_value=True,
+        ):
+            engine.enemy_attack()
+
+        # 攻撃していない敵1には反射されない
+        self.assertEqual(
+            engine.enemy_combatants[0].hp,
+            engine.enemy_combatants[0].max_hp,
+        )
+
+        # 攻撃した敵2だけ反射ダメージ
+        self.assertLess(
+            engine.enemy_combatants[1].hp,
+            engine.enemy_combatants[1].max_hp,
+        )
+
+
+    def test_counter_hits_attacking_enemy(self):
+        """
+        複数敵戦闘で反撃が
+        実際に攻撃してきた敵へ当たることを確認する。
+        """
+
+        enemy2 = Enemy.objects.create(
+            name="反撃テスト敵2",
+            max_hp=30,
+            max_mp=0,
+            strength=5,
+            dexterity=5,
+            agility=5,
+            vitality=5,
+            luck=3,
+        )
+
+        engine = BattleEngine(
+            self.character,
+            [
+                self.enemy,
+                enemy2,
+            ],
+        )
+
+        engine.counter_stance_turns = 2
+        engine.counter_remaining = 3
+
+        # 敵2が攻撃する
+        engine.current_enemy_index = 1
+
+        with patch.object(
+            engine,
+            "roll_percent",
+            return_value=True,
+        ):
+            engine.enemy_attack()
+
+        # 敵1は無傷
+        self.assertEqual(
+            engine.enemy_combatants[0].hp,
+            engine.enemy_combatants[0].max_hp,
+        )
+
+        # 攻撃した敵2に反撃
+        self.assertLess(
+            engine.enemy_combatants[1].hp,
+            engine.enemy_combatants[1].max_hp,
+        )
+
+        # 反撃可能回数も3 → 2
+        self.assertEqual(
+            engine.counter_remaining,
+            2,
+        )
+
+
 class CombatantTests(TestCase):
 
     def setUp(self):
@@ -1116,4 +1338,237 @@ class CombatantTests(TestCase):
         self.assertEqual(
             player.mp,
             105,
+        )
+
+    def test_equipment_bonus_is_added_to_battle_stat(
+        self,
+    ):
+        """
+        装備補正が戦闘ステータスへ
+        加算されることを確認。
+        """
+
+        item = Item.objects.create(
+            name="戦闘テスト鉄の剣",
+            category=Item.Category.EQUIPMENT,
+        )
+
+        equipment = Equipment.objects.create(
+            item=item,
+            rank=Equipment.Rank.E,
+            slot=Equipment.Slot.WEAPON,
+            style=Equipment.Style.PHYSICAL,
+            base_battle_power=120,
+
+            strength_rate=60,
+            intelligence_rate=0,
+            dexterity_rate=20,
+            agility_rate=10,
+            vitality_rate=0,
+            luck_rate=10,
+        )
+
+        OwnedEquipment.objects.create(
+            character=self.character,
+            equipment=equipment,
+            battle_power=120,
+            is_equipped=True,
+        )
+
+        # 元STR5
+        # 装備補正+36
+        # = 41
+        #
+        # テストキャラがwandererなので
+        # STRには職業補正なし。
+
+        engine = BattleEngine(
+            self.character,
+            self.enemy,
+        )
+
+        self.assertEqual(
+            engine.get_player_stat(
+                "strength"
+            ),
+            41,
+        )
+
+
+class ExplorationDropTests(TestCase):
+
+    def setUp(self):
+
+        self.user = User.objects.create_user(
+            user_id="drop_test_user",
+            email="drop@example.com",
+            password="testpass123",
+        )
+
+        self.character = (
+            Character.objects.create(
+                user=self.user,
+                name="ドロップテスト",
+            )
+        )
+
+
+    def test_no_drop_when_roll_fails(self):
+        """
+        1%抽選に外れた場合、
+        何も獲得しない。
+        """
+
+        item = Item.objects.create(
+            name="テスト素材",
+            category=Item.Category.MATERIAL,
+        )
+
+        FloorDropItem.objects.create(
+            floor=1,
+            item=item,
+            drop_weight=100,
+        )
+
+        with patch(
+            "apps.battle.drops.random.random",
+            return_value=0.50,
+        ):
+
+            result = (
+                grant_exploration_drop(
+                    self.character,
+                    1,
+                )
+            )
+
+        self.assertIsNone(result)
+
+        self.assertFalse(
+            InventoryItem.objects.filter(
+                character=self.character,
+                item=item,
+            ).exists()
+        )
+
+
+    def test_normal_item_drop(self):
+        """
+        通常アイテムが当選した場合、
+        InventoryItemへ追加される。
+        """
+
+        item = Item.objects.create(
+            name="テスト素材",
+            category=Item.Category.MATERIAL,
+        )
+
+        FloorDropItem.objects.create(
+            floor=1,
+            item=item,
+            drop_weight=100,
+        )
+
+        with patch(
+            "apps.battle.drops.random.random",
+            return_value=0.0,
+        ):
+
+            result = (
+                grant_exploration_drop(
+                    self.character,
+                    1,
+                )
+            )
+
+        inventory = (
+            InventoryItem.objects.get(
+                character=self.character,
+                item=item,
+            )
+        )
+
+        self.assertEqual(
+            inventory.quantity,
+            1,
+        )
+
+        self.assertEqual(
+            result["kind"],
+            "item",
+        )
+
+
+    def test_equipment_drop_creates_owned_equipment(
+        self,
+    ):
+        """
+        装備品が当選した場合、
+        OwnedEquipmentを1つ生成する。
+        """
+
+        item = Item.objects.create(
+            name="鉄の剣",
+            category=Item.Category.EQUIPMENT,
+        )
+
+        equipment = Equipment.objects.create(
+            item=item,
+            rank=Equipment.Rank.E,
+            slot=Equipment.Slot.WEAPON,
+            style=Equipment.Style.PHYSICAL,
+
+            base_battle_power=120,
+
+            strength_rate=60,
+            intelligence_rate=0,
+            dexterity_rate=20,
+            agility_rate=10,
+            vitality_rate=0,
+            luck_rate=10,
+        )
+
+        FloorDropItem.objects.create(
+            floor=1,
+            item=item,
+            drop_weight=100,
+        )
+
+        with patch(
+            "apps.battle.drops.random.random",
+            return_value=0.0,
+        ):
+
+            result = (
+                grant_exploration_drop(
+                    self.character,
+                    1,
+                )
+            )
+
+        owned = (
+            OwnedEquipment.objects.get(
+                character=self.character,
+                equipment=equipment,
+            )
+        )
+
+        self.assertEqual(
+            owned.enhancement_level,
+            0,
+        )
+
+        self.assertEqual(
+            owned.battle_power,
+            120,
+        )
+
+        self.assertEqual(
+            result["kind"],
+            "equipment",
+        )
+
+        self.assertEqual(
+            result["rank"],
+            "E",
         )

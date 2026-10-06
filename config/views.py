@@ -14,20 +14,28 @@ def home(request):
 
     main_attribute_name = "-"
     main_attribute_value = 0
+
+    # 装備戦闘力
+    equipment_battle_power = 0
+
+    # 総合戦闘力
     battle_power = 0
 
     exploration_cooldown_remaining = 0
     exploration_cooldown_reduced = False
 
     arena_max_floor = 100
+
     if character:
-        # 得意属性はCharacter側の共通処理を使用
+
+        # ========================================
+        # 得意属性
+        # ========================================
+
         main_attribute_name = (
             character.get_main_attribute_display()
         )
 
-        # 戦闘力計算用。
-        # 今までと同じく6属性の最高値を使う。
         main_attribute_value = max(
             character.fire,
             character.water,
@@ -36,6 +44,22 @@ def home(request):
             character.light,
             character.dark,
         )
+
+        # ========================================
+        # 装備戦闘力
+        # ========================================
+
+        equipment_battle_power = sum(
+            owned.battle_power
+            for owned
+            in character.owned_equipments.filter(
+                is_equipped=True
+            )
+        )
+
+        # ========================================
+        # 総合戦闘力
+        # ========================================
 
         battle_power = (
             character.max_hp
@@ -47,32 +71,46 @@ def home(request):
             + character.vitality
             + character.luck
             + main_attribute_value
+            + equipment_battle_power
         )
 
+        # ========================================
+        # 探索CT
+        # ========================================
+
         exploration_cooldown_remaining = (
-            character.get_exploration_cooldown_remaining()
+            character
+            .get_exploration_cooldown_remaining()
         )
 
         exploration_cooldown_reduced = (
-            character.is_exploration_cooldown_reduced()
+            character
+            .is_exploration_cooldown_reduced()
         )
 
     context = {
         "character": character,
-        "main_attribute_name": main_attribute_name,
-        "main_attribute_value": main_attribute_value,
-        "battle_power": battle_power,
+        "main_attribute_name":
+            main_attribute_name,
+        "main_attribute_value":
+            main_attribute_value,
+        "battle_power":
+            battle_power,
         "exploration_cooldown_remaining":
             exploration_cooldown_remaining,
         "exploration_cooldown_reduced":
             exploration_cooldown_reduced,
-        "arena_max_floor": arena_max_floor,
+        "arena_max_floor":
+            arena_max_floor,
     }
 
+    return render(
+        request,
+        "home.html",
+        context,
+    )
 
-   
-
-    return render(request, "home.html", context)
+    
 
 def generate_reincarnation_bonus(character):
     total_points = (character.reincarnation_count + 1) * 125

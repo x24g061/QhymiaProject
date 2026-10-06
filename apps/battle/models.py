@@ -215,7 +215,11 @@ class Enemy(models.Model):
 
 
 class FloorDropItem(models.Model):
-    """探索階層ごとの装備品ドロップ候補。"""
+    """
+    探索階層ごとのドロップ候補。
+
+    装備品・通常アイテムの両方を登録できる。
+    """
 
     floor = models.PositiveIntegerField(
         help_text="探索階層",
@@ -227,18 +231,29 @@ class FloorDropItem(models.Model):
         related_name="floor_drops",
     )
 
-    class Meta:
-        ordering = [
-            "floor",
-            "item__name",
-        ]
-
-        constraints = [
-            models.UniqueConstraint(
-                fields=["floor", "item"],
-                name="unique_floor_drop_item",
+    drop_weight = (
+        models.PositiveIntegerField(
+            default=100,
+            help_text=(
+                "ドロップ候補内での抽選重み。"
+                "小さいほど出にくい。"
             ),
-        ]
+        )
+    )
+
+
+class Meta:
+    ordering = [
+        "floor",
+        "item__name",
+    ]
+
+    constraints = [
+        models.UniqueConstraint(
+            fields=["floor", "item"],
+            name="unique_floor_drop_item",
+        ),
+    ]
 
     def __str__(self):
         return (

@@ -453,7 +453,6 @@
     border: 1px solid #566a70;
 }
 
-
 .item-header,
 .item-row,
 .equipment-header,
@@ -461,7 +460,10 @@
     display: grid;
 
     grid-template-columns:
-        150px minmax(220px, 1fr) 150px;
+        130px
+        minmax(220px, 1fr)
+        140px
+        130px;
 }
 
 
@@ -679,12 +681,48 @@
         width: 100%;
     }
 
-    .item-header,
-    .item-row,
-    .equipment-header,
-    .equipment-row {
-        grid-template-columns:
-            100px minmax(150px, 1fr) 80px;
-    }
+}
 
+/* ========================================
+装備操作ボタン
+======================================== */
+
+.equipment-action-button {
+    min-width: 82px;
+
+    padding: 7px 10px;
+
+    color: white;
+
+    background: var(--main);
+
+    border: 1px solid var(--main-dark);
+
+    border-radius: 4px;
+
+    font-size: 11px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.15s;
+}
+
+
+.equipment-action-button:hover {
+    background: var(--main-dark);
+}
+
+
+.equipment-action-button.remove {
+    color: var(--text);
+
+    background: #f4f5f4;
+
+    border-color: #87969a;
+}
+
+
+.equipment-action-button.remove:hover {
+    background: #e0e6e7;
 }
