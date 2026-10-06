@@ -105,8 +105,7 @@
 
                     <p>ST</p>
 
-                    {% widthratio character.current_stamina character.max_stamina 100 as player_stamina_percent %}
-
+                    {% widthratio battle_result.player_stamina battle_result.player_max_stamina 100 as player_stamina_percent %}
                     <div class="status-bar">
 
                         <div
@@ -117,9 +116,9 @@
                     </div>
 
                     <span>
-                        {{ character.current_stamina }}
+                        {{ battle_result.player_stamina }}
                         /
-                        {{ character.max_stamina }}
+                        {{ battle_result.player_max_stamina }}
                     </span>
 
                 </div>

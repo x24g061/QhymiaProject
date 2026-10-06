@@ -111,11 +111,45 @@ class BattleEngine:
         return max_mp
 
 
+    def get_stamina_stat_multiplier(self):
+        """
+        現在STから疲労による能力補正を返す。
+
+        100ST → 1.00倍
+         50ST → 0.75倍
+          0ST → 0.50倍
+
+        0STでも能力値の50%は残る。
+        """
+
+        if self.player_max_stamina <= 0:
+            return 0.50
+
+        stamina_ratio = (
+            self.player_stamina
+            / self.player_max_stamina
+        )
+
+        stamina_ratio = min(
+            1.0,
+            max(
+                0.0,
+                stamina_ratio,
+            ),
+        )
+
+        return (
+            0.50
+            + stamina_ratio * 0.50
+        )
+
+
     def __init__(
         self,
         character,
         enemies,
         floor=None,
+        starting_stamina=100,
     ):
 
         self.character = character
@@ -125,7 +159,8 @@ class BattleEngine:
         # ============================================================
 
         self.player_combatant = PlayerCombatant(
-            character
+            character,
+            starting_stamina=starting_stamina,
         )
 
         # ============================================================
@@ -379,6 +414,28 @@ class BattleEngine:
         """
 
         self.player_combatant.mp = value
+
+
+    # ============================================================
+    # プレイヤースタミナ
+    # ============================================================
+
+    @property
+    def player_stamina(self):
+        """現在の戦闘中スタミナを返す。"""
+
+        return (
+            self.player_combatant.stamina
+        )
+
+
+    @property
+    def player_max_stamina(self):
+        """戦闘中の最大スタミナを返す。"""
+
+        return (
+            self.player_combatant.max_stamina
+        )
 
 
     # ============================================================
@@ -808,6 +865,29 @@ class BattleEngine:
             and stat_name == "vitality"
         ):
             value *= 1.20
+
+        # ============================
+        # スタミナによる戦闘疲労
+        # ============================
+        #
+        # STが減るほど、
+        # DEX・AGI・VIT・LUKが低下する。
+        # STR・INTは疲労の影響を受けない。
+        # ============================
+
+        if stat_name in (
+            "dexterity",
+            "agility",
+            "vitality",
+            "luck",
+        ):
+
+            value *= (
+                self.get_stamina_stat_multiplier()
+            )
+
+        return value
+
 
         return value
 
@@ -1429,7 +1509,9 @@ class BattleEngine:
         # ========================================================
 
         return {
+            
             "winner": winner,
+            
             "logs": self.logs,
 
             "player_hp": max(
@@ -1474,6 +1556,14 @@ class BattleEngine:
                 for enemy
                 in self.enemy_combatants
             ],
+
+            "player_stamina": (
+                self.player_stamina
+            ),
+
+            "player_max_stamina": (
+                self.player_max_stamina
+            ),
         }
 
 
@@ -1783,6 +1873,24 @@ class BattleEngine:
             self.logs.append(
                 "森の加護！ "
                 f"AGI補正が+{percent}%になった！"
+            )
+
+        # ============================
+        # スタミナ消費
+        # ============================
+        #
+        # プレイヤーが実際に1行動するごとに
+        # 5ST消費する。
+        #
+        # 一撃必殺の反動など、
+        # 行動そのものができなかった場合は
+        # 消費しない。
+        # ============================
+
+        if action_code != "skip":
+
+            self.player_combatant.consume_stamina(
+                5
             )
 
 

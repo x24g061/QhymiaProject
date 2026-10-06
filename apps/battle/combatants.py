@@ -116,7 +116,11 @@ class PlayerCombatant(Combatant):
     戦闘中のプレイヤーを表すクラス。
     """
 
-    def __init__(self, character):
+    def __init__(
+        self,
+        character,
+        starting_stamina=100,
+    ):
 
         self.character = character
 
@@ -180,6 +184,47 @@ class PlayerCombatant(Combatant):
             max_mp=max_mp,
             hp=current_hp,
             mp=current_mp,
+        )
+
+        # ========================================
+        # 戦闘中スタミナ
+        # ========================================
+        #
+        # 探索戦闘では100STから開始する。
+        #
+        # DB上のcurrent_staminaは直接変更せず、
+        # 今回の戦闘中だけこの値を使用する。
+        #
+        # starting_staminaを外から渡せるようにしておくことで、
+        # 将来の闘技場では前戦のSTを引き継げる。
+        # ========================================
+
+        self.max_stamina = (
+            character.max_stamina
+        )
+
+        self.stamina = min(
+            self.max_stamina,
+            max(
+                0,
+                starting_stamina,
+            ),
+        )
+
+
+    def consume_stamina(
+        self,
+        amount,
+    ):
+        """
+        戦闘中スタミナを消費する。
+
+        0未満にはならない。
+        """
+
+        self.stamina = max(
+            0,
+            self.stamina - amount,
         )
 
 

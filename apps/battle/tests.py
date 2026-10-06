@@ -913,6 +913,114 @@ class BattleEngineTests(TestCase):
         )
 
 
+    def test_battle_starts_with_100_stamina(self):
+        """
+        探索戦闘はDB上のSTに関係なく
+        100STから始まることを確認する。
+        """
+
+        self.character.current_stamina = 30
+        self.character.save(
+            update_fields=[
+                "current_stamina",
+            ]
+        )
+
+        engine = BattleEngine(
+            self.character,
+            self.enemy,
+        )
+
+        self.assertEqual(
+            engine.player_stamina,
+            100,
+        )
+
+
+    def test_stamina_reduces_battle_stats(self):
+        """
+        ST低下によって
+        DEX・AGI・VIT・LUKが低下することを確認する。
+        """
+
+        engine = BattleEngine(
+            self.character,
+            self.enemy,
+        )
+
+        target_stats = (
+            "dexterity",
+            "agility",
+            "vitality",
+            "luck",
+        )
+
+        # ST100時の値
+        full_stats = {
+            stat: engine.get_player_stat(
+                stat
+            )
+            for stat in target_stats
+        }
+
+        # ST50
+        engine.player_combatant.stamina = 50
+
+        for stat in target_stats:
+
+            self.assertAlmostEqual(
+                engine.get_player_stat(stat),
+                full_stats[stat] * 0.75,
+            )
+
+        # ST0
+        engine.player_combatant.stamina = 0
+
+        for stat in target_stats:
+
+            self.assertAlmostEqual(
+                engine.get_player_stat(stat),
+                full_stats[stat] * 0.50,
+            )
+
+
+    def test_player_action_consumes_stamina_without_saving_db(self):
+        """
+        1行動で5ST消費するが、
+        CharacterのDB上のSTは変更されないことを確認。
+        """
+
+        self.character.current_stamina = 100
+        self.character.save(
+            update_fields=[
+                "current_stamina",
+            ]
+        )
+
+        engine = BattleEngine(
+            self.character,
+            self.enemy,
+        )
+
+        engine.finish_player_action(
+            "normal"
+        )
+
+        # 戦闘中は5減る
+        self.assertEqual(
+            engine.player_stamina,
+            95,
+        )
+
+        # DBには保存しない
+        self.character.refresh_from_db()
+
+        self.assertEqual(
+            self.character.current_stamina,
+            100,
+        )
+
+
 class CombatantTests(TestCase):
 
     def setUp(self):
