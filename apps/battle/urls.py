@@ -12,16 +12,11 @@ urlpatterns = [
     ),
 
     path(
-        "arena/result/<str:result>/",
-        views.arena_result,
-        name="arena_result",
+        "arena/",
+        views.arena_battle,
+        name="arena_battle",
     ),
 
-    path(
-    "arena/",
-    views.arena_battle,
-    name="arena_battle",
-    ),
     path(
         "arena/next-floor/",
         views.arena_next_floor,

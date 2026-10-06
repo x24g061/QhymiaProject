@@ -913,8 +913,8 @@
 
 
             <!-- =============================
-                 探索
-            ============================== -->
+     戦闘
+============================== -->
 
             <section class="home-card exploration-card">
 
@@ -923,11 +923,11 @@
                     <div>
 
                         <p class="section-label">
-                            EXPLORATION
+                            BATTLE
                         </p>
 
                         <h2>
-                            探索
+                            戦闘
                         </h2>
 
                     </div>
@@ -936,70 +936,155 @@
 
 
                 <p class="card-description">
-                    探索する階層を選択してください。
-                    選択した場所で戦闘を開始します。
+                    探索または闘技場を選択して戦闘を開始します。
                 </p>
 
 
-                <div class="exploration-form">
+                <!-- =====================================
+         共通クールタイム
+    ====================================== -->
 
-                    <div class="select-area">
+                {% if exploration_cooldown_remaining > 0 %}
 
-                        <label for="exploration-floor">
-                            探索場所
-                        </label>
+                <div class="battle-cooldown">
+
+                    <p>
+                        次の戦闘まであと
+                        <strong>
+                            <span id="exploration-cooldown-seconds">
+                                {{ exploration_cooldown_remaining }}
+                            </span>
+                            秒
+                        </strong>
+                    </p>
+
+                    <!--
+                JavaScript用。
+                画面には表示しない。
+            -->
+                    <div id="exploration-cooldown-button" data-remaining="{{ exploration_cooldown_remaining }}" hidden>
+                    </div>
+
+                </div>
+
+                {% endif %}
 
 
-                        <select id="exploration-floor">
+                <!-- =====================================
+         探索
+    ====================================== -->
 
-                            <option>
-                                一階層：草原
-                            </option>
+                <div class="battle-choice">
 
-                            <option>
-                                二階層
-                            </option>
+                    <div class="battle-choice-info">
 
-                            <option>
-                                三階層
-                            </option>
+                        <h3>
+                            探索
+                        </h3>
 
-                        </select>
+                        <p>
+                            探索する階層を選択して戦闘を開始します。
+                        </p>
+
+                    </div>
+
+
+                    <div class="exploration-form">
+
+                        <div class="select-area">
+
+                            <label for="exploration-floor">
+                                探索場所
+                            </label>
+
+                            <select id="exploration-floor">
+
+                                <option>
+                                    一階層：草原
+                                </option>
+
+                                <option>
+                                    二階層
+                                </option>
+
+                                <option>
+                                    三階層
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        {% if exploration_cooldown_remaining > 0 %}
+
+                        <button type="button" class="explore-button explore-button-disabled" disabled>
+                            戦闘待機中
+                        </button>
+
+                        {% else %}
+
+                        <a href="{% url 'battle:battle' %}" class="explore-button">
+                            探索を開始する
+                            <span>→</span>
+                        </a>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- =====================================
+         闘技場
+    ====================================== -->
+
+                <div class="battle-choice">
+
+                    <div class="battle-choice-info">
+
+                        <h3>
+                            闘技場
+                        </h3>
+
+                        <p>
+                            現在の階層にいる対戦相手へ挑戦します。
+                        </p>
+
+                        <p>
+                            現在階層：
+                            <strong>
+                                {{ character.arena_floor }}階
+                            </strong>
+                        </p>
+
+                        <p>
+                            現在の連勝数：
+                            <strong>
+                                {{ character.arena_win_streak }}連勝
+                            </strong>
+                        </p>
 
                     </div>
 
 
                     {% if exploration_cooldown_remaining > 0 %}
 
-                    <button type="button" class="explore-button explore-button-disabled"
-                        id="exploration-cooldown-button" data-remaining="{{ exploration_cooldown_remaining }}" disabled>
-                        あと
-                        <span id="exploration-cooldown-seconds">
-                            {{ exploration_cooldown_remaining }}
-                        </span>
-                        秒
+                    <button type="button" class="explore-button explore-button-disabled" disabled>
+                        戦闘待機中
                     </button>
-                    {% if exploration_cooldown_reduced %}
-                    <p class="cooldown-status">
-                        探索CT短縮中：20秒
-                    </p>
-                    {% else %}
-                    <p class="cooldown-status">
-                        通常探索CT：40秒
-                    </p>
-                    {% endif %}
+
                     {% else %}
 
-                    <a href="{% url 'battle:battle' %}" class="explore-button">
-                        探索を開始する
+                    <a href="{% url 'battle:arena_battle' %}" class="explore-button">
+                        闘技場へ挑戦
                         <span>→</span>
                     </a>
 
                     {% endif %}
 
                 </div>
-
-
 
             </section>
             <!-- =============================
