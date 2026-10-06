@@ -24,7 +24,7 @@
 
         <div class="inventory-count">
             <span>所持アイテム</span>
-            <strong>3</strong>
+            <strong>{{ total_item_count }}</strong>
             <span>個</span>
         </div>
 
@@ -63,11 +63,7 @@
                 アイテムメニュー
             </h2>
 
-            <button
-                type="button"
-                class="side-button active"
-                data-target="equipment"
-            >
+            <button type="button" class="side-button active" data-target="equipment">
                 <span>装備中アイテム</span>
                 <span>▶</span>
             </button>
@@ -77,11 +73,7 @@
             </p>
 
 
-            <button
-                type="button"
-                class="side-button"
-                data-target="items"
-            >
+            <button type="button" class="side-button" data-target="items">
                 <span>所持アイテム</span>
                 <span>▶</span>
             </button>
@@ -101,10 +93,7 @@
                  装備中アイテム
             ================================ -->
 
-            <section
-                id="equipment-panel"
-                class="inventory-panel active-panel"
-            >
+            <section id="equipment-panel" class="inventory-panel active-panel">
 
                 <div class="inventory-toolbar">
 
@@ -256,43 +245,24 @@
                  所持アイテム
             ================================ -->
 
-            <section
-                id="items-panel"
-                class="inventory-panel"
-            >
+            <section id="items-panel" class="inventory-panel">
 
                 <!-- カテゴリ -->
                 <nav class="category-tabs">
 
-                    <button
-                        type="button"
-                        class="category-button active"
-                        data-category="all"
-                    >
+                    <button type="button" class="category-button active" data-category="all">
                         すべて
                     </button>
 
-                    <button
-                        type="button"
-                        class="category-button"
-                        data-category="equipment"
-                    >
+                    <button type="button" class="category-button" data-category="equipment">
                         装備品
                     </button>
 
-                    <button
-                        type="button"
-                        class="category-button"
-                        data-category="consumable"
-                    >
+                    <button type="button" class="category-button" data-category="consumable">
                         消耗品
                     </button>
 
-                    <button
-                        type="button"
-                        class="category-button"
-                        data-category="material"
-                    >
+                    <button type="button" class="category-button" data-category="material">
                         素材
                     </button>
 
@@ -316,11 +286,7 @@
 
                     <div class="toolbar-controls">
 
-                        <input
-                            type="search"
-                            id="search"
-                            placeholder="アイテム名で検索"
-                        >
+                        <input type="search" id="search" placeholder="アイテム名で検索">
 
                         <select id="sort">
 
@@ -360,125 +326,105 @@
                         </div>
 
 
-                        <div id="items" class="table-body">
+                        <div class="item-header">
 
-                            <article
-                                class="item-row"
-                                data-item
-                                data-name="回復薬"
-                                data-category="consumable"
-                                data-quantity="5"
-                            >
-
-                                <div class="table-cell">
-
-                                    <span class="category-tag">
-                                        消耗品
-                                    </span>
-
-                                </div>
-
-                                <div class="table-cell item-name-cell">
-
-                                    <strong>
-                                        回復薬
-                                    </strong>
-
-                                </div>
-
-                                <div class="table-cell quantity-cell">
-
-                                    <strong>
-                                        5
-                                    </strong>
-
-                                    個
-
-                                </div>
-
-                            </article>
-
-
-                            <article
-                                class="item-row"
-                                data-item
-                                data-name="木の剣"
-                                data-category="equipment"
-                                data-quantity="1"
-                            >
-
-                                <div class="table-cell">
-
-                                    <span class="category-tag">
-                                        装備品
-                                    </span>
-
-                                </div>
-
-                                <div class="table-cell item-name-cell">
-
-                                    <strong>
-                                        木の剣
-                                    </strong>
-
-                                </div>
-
-                                <div class="table-cell quantity-cell">
-
-                                    <strong>
-                                        1
-                                    </strong>
-
-                                    個
-
-                                </div>
-
-                            </article>
-
-
-                            <article
-                                class="item-row"
-                                data-item
-                                data-name="スライムの核"
-                                data-category="material"
-                                data-quantity="8"
-                            >
-
-                                <div class="table-cell">
-
-                                    <span class="category-tag">
-                                        素材
-                                    </span>
-
-                                </div>
-
-                                <div class="table-cell item-name-cell">
-
-                                    <strong>
-                                        スライムの核
-                                    </strong>
-
-                                </div>
-
-                                <div class="table-cell quantity-cell">
-
-                                    <strong>
-                                        8
-                                    </strong>
-
-                                    個
-
-                                </div>
-
-                            </article>
+                            <div>種類</div>
+                            <div>アイテム名</div>
+                            <div>個数</div>
+                            <div>操作</div>
 
                         </div>
 
 
-                        <div
-                            id="search-empty"
-                            class="empty-items hidden"
-                        >
+                        <div id="items" class="table-body">
+
+                            {% for inventory_item in inventory_items %}
+
+                            <article class="item-row" data-item data-name="{{ inventory_item.item.name }}"
+                                data-category="{{ inventory_item.item.category }}"
+                                data-quantity="{{ inventory_item.quantity }}">
+
+                                <!-- 種類 -->
+                                <div class="table-cell">
+
+                                    <span class="category-tag">
+                                        {{ inventory_item.item.get_category_display }}
+                                    </span>
+
+                                </div>
+
+
+                                <!-- アイテム名 -->
+                                <div class="table-cell item-name-cell">
+
+                                    <strong>
+                                        {{ inventory_item.item.name }}
+                                    </strong>
+
+                                    {% if inventory_item.item.description %}
+                                    <small>
+                                        {{ inventory_item.item.description }}
+                                    </small>
+                                    {% endif %}
+
+                                </div>
+
+
+                                <!-- 所持数 -->
+                                <div class="table-cell quantity-cell">
+
+                                    <strong>
+                                        {{ inventory_item.quantity }}
+                                    </strong>
+
+                                    個
+
+                                </div>
+
+
+                                <!-- 使用ボタン -->
+                                <div class="table-cell item-action-cell">
+
+                                    {% if inventory_item.item.is_usable %}
+
+                                    <form method="post" action="{% url 'inventory:use_item' inventory_item.id %}">
+                                        {% csrf_token %}
+
+                                        <button type="submit" class="item-use-button">
+                                            使用する
+                                        </button>
+
+                                    </form>
+
+                                    {% else %}
+
+                                    <span class="item-not-usable">
+                                        使用不可
+                                    </span>
+
+                                    {% endif %}
+
+                                </div>
+
+                            </article>
+
+                            {% empty %}
+
+                            <div class="empty-items">
+                                現在所持しているアイテムはありません。
+                            </div>
+
+                            {% endfor %}
+
+                        </div>
+
+
+                        <div id="search-empty" class="empty-items hidden">
+                            条件に一致するアイテムがありません。
+                        </div>
+
+
+                        <div id="search-empty" class="empty-items hidden">
                             条件に一致するアイテムがありません。
                         </div>
 
