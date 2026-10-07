@@ -141,6 +141,9 @@ ACCOUNT_ADAPTER = "apps.accounts.adapter.AccountAdapter"
 # 「Googleでログイン → 続ける」の確認画面をスキップ
 SOCIALACCOUNT_LOGIN_ON_GET = True
 
+# Google認証後、可能ならそのままユーザー登録を行う
+SOCIALACCOUNT_AUTO_SIGNUP = True
+
 # ログインが必要なページで未ログインだった場合
 LOGIN_URL = "/login/"
 

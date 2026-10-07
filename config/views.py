@@ -12,6 +12,21 @@ def home(request):
         user=request.user
     ).first()
 
+    # ==============================
+    # キャラクター未作成ユーザー
+    # ==============================
+
+    # Googleログイン直後など、
+    # Userは存在するがCharacterがまだ存在しない場合は
+    # キャラクター作成画面へ移動する
+    if character is None:
+        return redirect("accounts:character_create")
+
+
+    # ==============================
+    # 初期値
+    # ==============================
+
     previous_arena_character = None
     next_arena_character = None
 
@@ -23,12 +38,13 @@ def home(request):
     exploration_cooldown_reduced = False
 
     arena_max_floor = 100
-    if character:
+
 
     # ==============================
     # 闘技場：前の階の相手を取得
     # ==============================
-     if character.arena_floor > 1:
+
+    if character.arena_floor > 1:
         previous_arena_character = (
             Character.objects
             .filter(
@@ -38,9 +54,11 @@ def home(request):
             .first()
         )
 
+
     # ==============================
     # 闘技場：次の階の相手を取得
     # ==============================
+
     if character.arena_floor < arena_max_floor:
         next_arena_character = (
             Character.objects
@@ -50,6 +68,11 @@ def home(request):
             .exclude(id=character.id)
             .first()
         )
+
+
+    # ==============================
+    # メイン属性
+    # ==============================
 
     attributes = {
         "火": character.fire,
@@ -99,74 +122,44 @@ def home(request):
         character.is_exploration_cooldown_reduced()
     )
 
+
+    # ==============================
+    # テンプレートへ渡すデータ
+    # ==============================
+
     context = {
         "character": character,
-        "main_attribute_name": main_attribute_name,
-        "main_attribute_value": main_attribute_value,
-        "battle_power": battle_power,
+
+        "main_attribute_name":
+            main_attribute_name,
+
+        "main_attribute_value":
+            main_attribute_value,
+
+        "battle_power":
+            battle_power,
+
         "exploration_cooldown_remaining":
             exploration_cooldown_remaining,
+
         "exploration_cooldown_reduced":
             exploration_cooldown_reduced,
-        "arena_max_floor": arena_max_floor,
+
+        "arena_max_floor":
+            arena_max_floor,
+
         "previous_arena_character":
             previous_arena_character,
+
         "next_arena_character":
             next_arena_character,
     }
 
-
-   
-
-    return render(request, "home.html", context)
-
-def generate_reincarnation_bonus(character):
-    total_points = (character.reincarnation_count + 1) * 125
-
-    stat_names = [
-        "max_hp",
-        "max_mp",
-        "strength",
-        "intelligence",
-        "dexterity",
-        "agility",
-        "vitality",
-        "luck",
-        "fire",
-        "water",
-        "grass",
-        "rock",
-        "light",
-        "dark",
-    ]
-
-    bonus_points = {stat: 0 for stat in stat_names}
-
-    for _ in range(total_points):
-        selected_stat = random.choice(stat_names)
-        bonus_points[selected_stat] += 1
-
-    return bonus_points
-
-def calculate_reincarnation_stats(bonus_points):
-    return {
-        "max_hp": 30 + bonus_points["max_hp"] * 5,
-        "max_mp": 10 + bonus_points["max_mp"] * 2,
-
-        "strength": 5 + bonus_points["strength"],
-        "intelligence": 5 + bonus_points["intelligence"],
-        "dexterity": 5 + bonus_points["dexterity"],
-        "agility": 5 + bonus_points["agility"],
-        "vitality": 5 + bonus_points["vitality"],
-        "luck": 5 + bonus_points["luck"],
-
-        "fire": bonus_points["fire"],
-        "water": bonus_points["water"],
-        "grass": bonus_points["grass"],
-        "rock": bonus_points["rock"],
-        "light": bonus_points["light"],
-        "dark": bonus_points["dark"],
-    }
+    return render(
+        request,
+        "home.html",
+        context
+    )
 
 @login_required
 def again(request):
