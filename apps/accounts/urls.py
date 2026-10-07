@@ -2,6 +2,7 @@ from django.urls import path
 
 from .views import (
     character_create_view,
+    character_list_view,
     login_view,
     logout_view,
     signup_view,
@@ -9,6 +10,7 @@ from .views import (
     terms_view,
     tokushoho_view,
     privacy_view,
+
 )
 
 
@@ -48,5 +50,12 @@ urlpatterns = [
         "character/create/",
         character_create_view,
         name="character_create",
+    ),
+
+    # キャラクター一覧
+    path(
+        "character/list/",
+        character_list_view,
+        name="character_list",
     ),
 ]

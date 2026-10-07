@@ -1,0 +1,317 @@
+/* ========================================
+   character list画面だけbase.htmlの制限を解除
+======================================== */
+
+body {
+    margin: 0;
+    background: #dceef3;
+}
+
+body > header {
+    display: none;
+}
+
+main {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+/* ========================================
+   キャラクター一覧ページ
+======================================== */
+
+.character-list-page {
+    width: 100%;
+    min-height: 100vh;
+
+    box-sizing: border-box;
+
+    padding: 24px 32px 40px;
+
+    color: #164e69;
+
+    /* 新規登録画面と同じ背景を使用 */
+    background-image:
+        linear-gradient(
+            rgba(255, 255, 255, 0.45),
+            rgba(255, 255, 255, 0.45)
+        ),
+        url("../images/character-list-bg.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+
+/* ========================================
+   上部
+======================================== */
+
+.character-list-header {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        1fr
+        1fr;
+
+    align-items: center;
+
+    margin-bottom: 28px;
+    padding: 14px 18px;
+
+    background: rgba(255, 255, 255, 0.62);
+
+    border-bottom: 1px solid rgba(22, 78, 105, 0.35);
+
+    box-sizing: border-box;
+}
+
+
+/* 戻る */
+.back-link {
+    justify-self: start;
+
+    color: #164e69;
+
+    text-decoration: none;
+
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+
+/* タイトル */
+.character-list-title {
+    margin: 0;
+
+    justify-self: center;
+
+    color: #164e69;
+
+    font-size: 30px;
+    font-weight: normal;
+
+    letter-spacing: 5px;
+
+    white-space: nowrap;
+}
+
+
+/* 説明 */
+.character-list-guide {
+    margin: 0;
+
+    justify-self: end;
+
+    color: #164e69;
+
+    font-size: 14px;
+
+    letter-spacing: 2px;
+
+    white-space: nowrap;
+}
+
+
+/* ========================================
+   キャラクター一覧
+======================================== */
+
+.character-grid {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns: repeat(10, 1fr);
+
+    column-gap: 24px;
+    row-gap: 28px;
+
+    box-sizing: border-box;
+}
+
+
+/* ========================================
+   キャラクター1件
+======================================== */
+
+.character-item {
+    width: 100%;
+
+    padding: 0;
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    text-align: center;
+}
+
+
+/* ========================================
+   キャラクター画像枠
+======================================== */
+
+.character-image {
+    width: 110px;
+    height: 110px;
+
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255, 255, 255, 0.75);
+
+    border: 2px solid rgba(22, 78, 105, 0.65);
+
+    border-radius: 6px;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s,
+        background 0.2s;
+}
+
+
+/* 実際のキャラクター画像 */
+.character-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    image-rendering: pixelated;
+}
+
+
+/* 画像がない場合 */
+.character-placeholder {
+    color: #333;
+
+    font-size: 20px;
+
+    line-height: 1.2;
+
+    letter-spacing: 3px;
+}
+
+
+/* ========================================
+   No.
+======================================== */
+
+.character-number {
+    margin: 6px 0 0;
+
+    color: #164e69;
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+
+/* ========================================
+   hover
+======================================== */
+
+.character-item:hover .character-image {
+    transform: translateY(-4px);
+
+    background: rgba(255, 255, 255, 0.95);
+
+    box-shadow:
+        0 6px 14px rgba(0, 0, 0, 0.18);
+}
+
+
+/* ========================================
+   ページ切り替え
+======================================== */
+
+.character-pagination {
+    margin-top: 36px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 45px;
+}
+
+
+.pagination-button {
+    padding: 5px 14px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #164e69;
+
+    cursor: pointer;
+
+    font-size: 20px;
+}
+
+
+.pagination-number {
+    color: #164e69;
+
+    font-size: 20px;
+}
+
+
+/* ========================================
+   画面が少し狭い場合
+======================================== */
+
+@media (max-width: 1300px) {
+
+    .character-grid {
+        grid-template-columns:
+            repeat(8, 1fr);
+    }
+}
+
+
+@media (max-width: 1000px) {
+
+    .character-grid {
+        grid-template-columns:
+            repeat(5, 1fr);
+    }
+
+    .character-list-header {
+        grid-template-columns: 1fr;
+
+        gap: 10px;
+    }
+
+    .back-link,
+    .character-list-title,
+    .character-list-guide {
+        justify-self: center;
+    }
+}

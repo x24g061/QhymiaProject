@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from .forms import SignUpForm
 from .models import Character, User
 from django.contrib.auth.decorators import login_required
+from django.contrib.staticfiles import finders
 
 
 def logout_view(request):
@@ -131,6 +132,28 @@ def character_create_view(request):
         },
     )
 
+@login_required
+def character_list_view(request):
+    characters = []
+
+    for number in range(1, 101):
+        image_path = f"images/characters/{number:03d}.png"
+
+        # 画像が存在するか確認
+        image_exists = finders.find(image_path) is not None
+
+        characters.append({
+            "number": number,
+            "image": image_path if image_exists else None,
+        })
+
+    return render(
+        request,
+        "character_list.html",
+        {
+            "characters": characters,
+        },
+    )
 
 # プロフィール
 @login_required
