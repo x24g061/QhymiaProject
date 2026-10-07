@@ -12,6 +12,9 @@ def home(request):
         user=request.user
     ).first()
 
+    previous_arena_character = None
+    next_arena_character = None
+
     main_attribute_name = "-"
     main_attribute_value = 0
 
@@ -26,7 +29,50 @@ def home(request):
 
     arena_max_floor = 100
 
+    previous_arena_character = None
+    next_arena_character = None
+    equipment_battle_power = 0
     if character:
+
+        # ========================================
+        # 闘技場：前の階の相手を取得
+        # ========================================
+
+        if character.arena_floor > 1:
+
+            previous_arena_character = (
+                Character.objects
+                .filter(
+                    arena_floor=(
+                        character.arena_floor - 1
+                    )
+                )
+                .exclude(
+                    id=character.id
+                )
+                .first()
+            )
+
+
+        # ========================================
+        # 闘技場：次の階の相手を取得
+        # ========================================
+
+        if character.arena_floor < arena_max_floor:
+
+            next_arena_character = (
+                Character.objects
+                .filter(
+                    arena_floor=(
+                        character.arena_floor + 1
+                    )
+                )
+                .exclude(
+                    id=character.id
+                )
+                .first()
+            )
+
 
         # ========================================
         # 得意属性
@@ -45,6 +91,7 @@ def home(request):
             character.dark,
         )
 
+
         # ========================================
         # 装備戦闘力
         # ========================================
@@ -56,6 +103,7 @@ def home(request):
                 is_equipped=True
             )
         )
+
 
         # ========================================
         # 総合戦闘力
@@ -74,6 +122,7 @@ def home(request):
             + equipment_battle_power
         )
 
+
         # ========================================
         # 探索CT
         # ========================================
@@ -88,20 +137,33 @@ def home(request):
             .is_exploration_cooldown_reduced()
         )
 
+
     context = {
         "character": character,
+
         "main_attribute_name":
             main_attribute_name,
+
         "main_attribute_value":
             main_attribute_value,
+
         "battle_power":
             battle_power,
+
         "exploration_cooldown_remaining":
             exploration_cooldown_remaining,
+
         "exploration_cooldown_reduced":
             exploration_cooldown_reduced,
+
         "arena_max_floor":
             arena_max_floor,
+
+        "previous_arena_character":
+            previous_arena_character,
+
+        "next_arena_character":
+            next_arena_character,
     }
 
     return render(

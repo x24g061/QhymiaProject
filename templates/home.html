@@ -1012,6 +1012,80 @@
 
         </section>
         <!-- =============================
+            闘技場
+        ============================== -->
+
+        <section class="home-card exploration-card">
+
+            <div class="card-heading">
+
+                <div>
+
+                    <p class="section-label">
+                        ARENA
+                    </p>
+
+                    <h2>
+                        闘技場
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <p class="card-description">
+                現在の階層にいる対戦相手へ挑戦します。
+            </p>
+
+
+            <div class="battle-choice">
+
+                <div class="battle-choice-info">
+
+                    <p>
+                        現在階層：
+                        <strong>
+                            {{ character.arena_floor }}階
+                        </strong>
+                    </p>
+
+                    <p>
+                        現在の連勝数：
+                        <strong>
+                            {{ character.arena_win_streak }}連勝
+                        </strong>
+                    </p>
+
+                </div>
+
+
+                {% if exploration_cooldown_remaining > 0 %}
+
+                    <button
+                        type="button"
+                        class="explore-button explore-button-disabled"
+                        disabled
+                    >
+                        戦闘待機中
+                    </button>
+
+                {% else %}
+
+                    <a
+                        href="{% url 'battle:arena_battle' %}"
+                        class="explore-button"
+                    >
+                        闘技場へ挑戦
+                        <span>→</span>
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+        <!-- =============================
              オープンチャット
             ============================== -->
 

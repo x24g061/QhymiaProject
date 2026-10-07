@@ -46,6 +46,12 @@ class Item(models.Model):
         help_text="使用可能なアイテムか",
     )
 
+    cooldown_reduction_days = models.PositiveIntegerField(
+    null=True,
+    blank=True,
+    help_text="探索・闘技場のCT短縮効果日数。対象外アイテムは未設定",
+    )
+
     npc_purchasable = models.BooleanField(
     default=False,
     help_text="NPCショップから購入できるか",

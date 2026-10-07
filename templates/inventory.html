@@ -200,29 +200,30 @@
 
 
                                     <!-- 操作 -->
-                                    <div class="table-cell">
+                                    <div class="table-cell item-action-cell">
 
-                                        {% if slot.owned %}
+                                        {% if inventory_item.item.is_usable %}
 
                                             <form
                                                 method="post"
-                                                action="{% url 'inventory:unequip_equipment' slot.owned.id %}"
+                                                action="{% url 'inventory:use_item' inventory_item.id %}"
                                             >
-
                                                 {% csrf_token %}
 
                                                 <button
                                                     type="submit"
                                                     class="equipment-action-button"
                                                 >
-                                                    外す
+                                                    使用する
                                                 </button>
 
                                             </form>
 
                                         {% else %}
 
-                                            -
+                                            <span class="item-not-usable">
+                                                使用不可
+                                            </span>
 
                                         {% endif %}
 
@@ -488,12 +489,25 @@
 
                                     <div class="table-cell item-name-cell">
 
-                                        <strong>
-                                            {{ inventory_item.item.name }}
-                                        </strong>
+                                        <div>
+
+                                            <strong>
+                                                {{ inventory_item.item.name }}
+                                            </strong>
+
+                                            {% if inventory_item.item.description %}
+
+                                                <br>
+
+                                                <small>
+                                                    {{ inventory_item.item.description }}
+                                                </small>
+
+                                            {% endif %}
+
+                                        </div>
 
                                     </div>
-
 
                                     <div class="table-cell quantity-cell">
 

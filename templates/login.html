@@ -1,65 +1,331 @@
 {% extends "base.html" %}
+{% load static %}
 {% load socialaccount %}
+
 {% block content %}
 
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+
 <div class="login-page">
-    <div class="login-card">
 
-        <h1 class="login-logo">Qhymia</h1>
-        <p class="login-title">ログイン</p>
+    <div class="login-container">
 
-        {% if error_message %}
-            <p class="error-message">
-                {{ error_message }}
-            </p>
-        {% endif %}
-
-        <form method="post" class="login-form">
-            {% csrf_token %}
-
-            <div class="form-group">
-                <label for="user_id">固有ID または メールアドレス</label>
-                <input
-                    type="text"
-                    id="user_id"
-                    name="user_id"
-                    placeholder="固有ID または メールアドレスを入力"
-                    required
-                >
-            </div>
-
-            <div class="form-group">
-                <label for="password">パスワード</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    placeholder="パスワードを入力"
-                    required
-                >
-            </div>
-
-            <button type="submit" class="login-button">
-                ログイン
-            </button>
-        </form>
-
-        <div class="separator">
-            <span>または</span>
+        <!-- =========================
+             ロゴ
+        ========================== -->
+        <div class="login-brand">
+            <img src="{% static 'images/logo.png' %}" alt="Qhymia" class="login-logo">
         </div>
 
-      <a href="{% provider_login_url 'google' %}" class="google-button">
-    <span class="google-mark">G</span>
-    Googleでログイン
-</a>
-    <div class="separator">
-    <span>アカウントをお持ちでない方</span>
+
+        <!-- =========================
+             メインコンテンツ
+        ========================== -->
+        <section class="login-content">
+
+            <!-- =========================
+                 ログイン
+            ========================== -->
+            <h1 class="login-title">
+                ログイン
+            </h1>
+
+            {% if error_message %}
+            <div class="login-error">
+                {{ error_message }}
+            </div>
+            {% endif %}
+
+            <form method="post" class="login-form">
+                {% csrf_token %}
+
+                <div class="login-form-group">
+                    <label for="user_id">
+                        ユーザーID または メールアドレス
+                    </label>
+
+                    <input type="text" id="user_id" name="user_id" placeholder="ユーザーID または メールアドレス"
+                        autocomplete="username" required>
+                </div>
+
+                <div class="login-form-group">
+                    <label for="password">
+                        パスワード
+                    </label>
+
+                    <input type="password" id="password" name="password" placeholder="パスワード"
+                        autocomplete="current-password" required>
+                </div>
+
+                <button type="submit" class="login-button">
+                    ログイン
+                    <span>＞</span>
+                </button>
+
+            </form>
+
+
+            <!-- Googleログイン -->
+            <div class="login-separator">
+                <span>または</span>
+            </div>
+
+            <a href="{% provider_login_url 'google' %}" class="google-login-button">
+                <span class="google-icon">G</span>
+                Googleでログイン
+                <span class="button-arrow">＞</span>
+            </a>
+
+
+            <!-- 新規登録 -->
+            <div class="login-separator">
+                <span>アカウントをお持ちでない方</span>
+            </div>
+
+            <a href="{% url 'accounts:signup' %}" class="register-button">
+                新規登録
+                <span>＞</span>
+            </a>
+
+
+            <!-- =========================
+                 現在のログイン数
+            ========================== -->
+            <div class="login-status">
+                現在のログイン数：
+                <strong>
+                    {% if current_login_count %}
+                    {{ current_login_count }}
+                    {% else %}
+                    0
+                    {% endif %}
+                </strong>
+                人
+            </div>
+
+
+            <!-- =========================
+                 利用規約
+            ========================== -->
+            <div class="terms-notice">
+
+                <p class="terms-notice-title">
+                    ゲームを始める前に
+                </p>
+
+                <p>
+                    ゲームを始める前に
+                    <a href="{% url 'accounts:terms' %}?from=login">
+                        利用規約
+                    </a>
+                    を必ず確認ください。
+                </p>
+
+            </div>
+
+
+            <!-- =========================
+                 ゲーム概要
+            ========================== -->
+            <section class="login-info-section">
+
+                <h2 class="login-section-title">
+                    ゲーム概要
+                </h2>
+
+                <div class="login-info-box">
+
+                    <p>
+                        Qhymiaはキャラクターを育成し、
+                        探索・戦闘・闘技場などを楽しむ
+                        ブラウザゲームです。
+                    </p>
+
+                    <p>
+                        キャラクターを成長させながら、
+                        より高い階層を目指しましょう。
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 管理者からのメッセージ
+            ========================== -->
+            <section class="login-info-section">
+
+                <h2 class="login-section-title">
+                    管理者からのメッセージ
+                </h2>
+
+                <div class="login-info-box">
+
+                    <p>
+                        Qhymiaへようこそ。
+                    </p>
+
+                    <p>
+                        現在ゲームの開発・調整を行っています。
+                        不具合や気になる点がありましたら、
+                        今後の改善に活用していきます。
+                    </p>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 ランキング
+            ========================== -->
+            <section class="login-info-section">
+
+                <h2 class="login-section-title">
+                    ランキング
+                </h2>
+
+                <div class="ranking-box">
+
+                    <table class="ranking-table">
+
+                        <thead>
+                            <tr>
+                                <th>順位</th>
+                                <th>キャラクター</th>
+                                <th>Lv</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% if ranking %}
+
+                            {% for character in ranking %}
+                            <tr>
+                                <td>
+                                    {{ forloop.counter }}
+                                </td>
+
+                                <td>
+                                    {{ character.name }}
+                                </td>
+
+                                <td>
+                                    {{ character.level }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                            {% else %}
+
+                            <tr>
+                                <td>1</td>
+                                <td>---</td>
+                                <td>---</td>
+                            </tr>
+
+                            <tr>
+                                <td>2</td>
+                                <td>---</td>
+                                <td>---</td>
+                            </tr>
+
+                            <tr>
+                                <td>3</td>
+                                <td>---</td>
+                                <td>---</td>
+                            </tr>
+
+                            {% endif %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- =========================
+                 更新情報
+            ========================== -->
+            <section class="login-info-section">
+
+                <h2 class="login-section-title">
+                    更新情報
+                </h2>
+
+                <div class="update-box">
+
+                    <div class="update-item">
+                        <span class="update-date">
+                            2026/09/29
+                        </span>
+
+                        <span class="update-text">
+                            ログイン画面を更新しました。
+                        </span>
+                    </div>
+
+                    <div class="update-item">
+                        <span class="update-date">
+                            2026/09/25
+                        </span>
+
+                        <span class="update-text">
+                            ホーム画面のUIを更新しました。
+                        </span>
+                    </div>
+
+                    <div class="update-item">
+                        <span class="update-date">
+                            2026/09/18
+                        </span>
+
+                        <span class="update-text">
+                            各種規約ページを追加しました。
+                        </span>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </section>
+
+    </div>
+
 </div>
 
-<a href="{% url 'accounts:signup' %}" class="login-button">
-    新規作成
-</a>
+
+<!-- =========================
+     フッター
+========================== -->
+<footer class="login-footer">
+
+    <p class="login-copyright">
+        商標登録及び著作権
+    </p>
+
+    <div class="login-footer-links">
+
+        <a href="{% url 'accounts:terms' %}?from=login">
+            利用規約
+        </a>
+
+        <a href="{% url 'accounts:tokushoho' %}?from=login">
+            特定商取引法
+        </a>
+
+        <a href="{% url 'accounts:privacy' %}?from=login">
+            プライバシーポリシー
+        </a>
+
     </div>
-</div>
+
+</footer>
 
 {% endblock %}
