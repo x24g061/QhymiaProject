@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+キャラクター一覧 | Qhymia
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/character_list.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="character-list-page">
+
+    <!-- ========================================
+         上部
+    ======================================== -->
+    <header class="character-list-header">
+
+        <a href="{% url 'accounts:character_create' %}"
+           class="back-link">
+            ＜　選択画面に戻る
+        </a>
+
+        <h1 class="character-list-title">
+            キャラクター一覧
+        </h1>
+
+        <p class="character-list-guide">
+            クリックorタップで選択できます。
+        </p>
+
+    </header>
+
+
+    <!-- ========================================
+         キャラクター一覧
+    ======================================== -->
+    <div class="character-grid">
+
+    {% for character in characters %}
+
+    <button
+        type="button"
+        class="character-item"
+        data-character-number="{{ character.number }}"
+    >
+
+        <div class="character-image">
+
+            {% if character.image %}
+
+                <img
+                    src="{% static character.image %}"
+                    alt="キャラクター No.{{ character.number|stringformat:'03d' }}"
+                >
+
+            {% else %}
+
+                <span class="character-placeholder">
+                    いら<br>
+                    すと
+                </span>
+
+            {% endif %}
+
+        </div>
+
+        <p class="character-number">
+            No. {{ character.number|stringformat:"03d" }}
+        </p>
+
+    </button>
+
+    {% endfor %}
+
+</div>
+
+
+    <!-- ========================================
+         ページ切り替え
+    ======================================== -->
+    <div class="character-pagination">
+
+        <button type="button"
+                class="pagination-button">
+            ＜
+        </button>
+
+        <span class="pagination-number">
+            01/01
+        </span>
+
+        <button type="button"
+                class="pagination-button">
+            ＞
+        </button>
+
+    </div>
+
+</div>
+
+{% endblock %}
