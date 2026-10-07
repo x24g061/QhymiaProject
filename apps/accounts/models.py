@@ -71,6 +71,8 @@ class User(AbstractUser):
 
 class Character(models.Model):
 
+
+
     # ユーザーとキャラクターを1対1で紐づける
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
@@ -223,6 +225,16 @@ class Character(models.Model):
         help_text="闇属性値"
     )
 
+    # 属性成長ウェイト
+    # 値が高い属性ほど、
+    # レベルアップ時に成長しやすくなる。
+    fire_growth_weight = models.PositiveIntegerField(default=1)
+    water_growth_weight = models.PositiveIntegerField(default=1)
+    grass_growth_weight = models.PositiveIntegerField(default=1)
+    rock_growth_weight = models.PositiveIntegerField(default=1)
+    light_growth_weight = models.PositiveIntegerField(default=1)
+    dark_growth_weight = models.PositiveIntegerField(default=1)
+
     # ===== 所持情報 =====
 
     gold = models.PositiveIntegerField(
@@ -343,3 +355,86 @@ class Character(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_main_attribute(self):
+        """
+        キャラクターの得意属性を返す。
+
+        条件:
+        ・6属性の中で最高値が1つだけ
+        ・その最高値が平均値×1.5を超えている
+
+        条件を満たさない場合は無属性。
+        """
+
+        attributes = {
+            "fire": self.fire,
+            "water": self.water,
+            "grass": self.grass,
+            "rock": self.rock,
+            "light": self.light,
+            "dark": self.dark,
+        }
+
+        values = list(
+            attributes.values()
+        )
+
+        average = (
+            sum(values)
+            / len(values)
+        )
+
+        max_value = max(values)
+
+        # 最高値の属性を全部取得
+        max_attributes = [
+            attribute
+            for attribute, value
+            in attributes.items()
+            if value == max_value
+        ]
+
+        # 最高値が複数なら無属性
+        if len(max_attributes) != 1:
+            return "neutral"
+
+        # 平均値×1.5を超えていなければ無属性
+        if max_value <= average * 1.5:
+            return "neutral"
+
+        return max_attributes[0]
+
+
+    def get_main_attribute_display(self):
+        """
+        得意属性を日本語表示で返す。
+        """
+
+        display_names = {
+            "fire": "火",
+            "water": "水",
+            "grass": "草",
+            "rock": "岩",
+            "light": "光",
+            "dark": "闇",
+            "neutral": "無",
+        }
+
+        return display_names[
+            self.get_main_attribute()
+        ]
+
+    def get_equipment_fusion_multiplier(self):
+        """
+        装備合成成功率に掛ける
+        種族補正を返す。
+
+        ドワーフ:
+        成功率 ×1.5
+        """
+
+        if self.race == "dwarf":
+            return 1.5
+
+        return 1.0

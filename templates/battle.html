@@ -2,12 +2,11 @@
 
 <!DOCTYPE html>
 <html lang="ja">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>闘技場 | キュメイア</title>
+    <title>戦闘画面 | キュメイア</title>
 
     <link rel="stylesheet" href="{% static 'css/battle.css' %}">
 </head>
@@ -16,13 +15,13 @@
 
     <main class="battle-screen">
 
-        <!-- ========================================
+        <!-- ==================================================
              上部
-        ========================================= -->
+        =================================================== -->
         <header class="battle-header">
 
             <p class="turn-count">
-                闘技場{{ character.arena_floor }}階
+                戦闘終了
             </p>
 
             <h1 class="game-title">
@@ -32,36 +31,44 @@
         </header>
 
 
-        <!-- ========================================
-             対戦開始メッセージ
-        ========================================= -->
+        <!-- ==================================================
+             敵出現メッセージ
+        =================================================== -->
         <section class="encounter-message">
 
             <p>
-                {{ opponent.name }} との闘技場戦！
+                {{ selected_floor }}階層で
+                {% for enemy_result in battle_result.enemies %}
+                    {{ enemy_result.name }}
+                    {% if not forloop.last %}、{% endif %}
+                {% endfor %}
+                が襲いかかってきた！
             </p>
 
         </section>
 
 
-        <!-- ========================================
+        <!-- ==================================================
              戦闘エリア
-        ========================================= -->
+        =================================================== -->
         <section class="battle-field">
 
 
-            <!-- ====================================
+            <!-- =========================
                  プレイヤー
-            ===================================== -->
+            ========================== -->
             <div class="fighter player">
 
                 <h2 class="fighter-name">
                     {{ character.name }}
                 </h2>
 
+
+                <!-- キャラクター画像は後で実装 -->
                 <div class="fighter-icon">
-                    {{ character.name|slice:":1" }}
+                    プレイヤーアイコン
                 </div>
+
 
                 <div class="action-gauge">
                     <div class="action-gauge-fill"></div>
@@ -73,38 +80,45 @@
 
                     <p>HP</p>
 
+                    {% widthratio battle_result.player_hp battle_result.player_max_hp 100 as player_hp_percent %}
+
                     <div class="status-bar">
 
-                        <div class="hp-fill player-hp js-arena-hp" data-current="{{ character_battle_hp }}"
-                            data-max="{{ character.max_hp }}"></div>
+                        <div
+                            class="hp-fill player-hp"
+                            style="width: {{ player_hp_percent }}%;"
+                        ></div>
 
                     </div>
 
                     <span>
-                        {{ character_battle_hp }}
+                        {{ battle_result.player_hp }}
                         /
-                        {{ character.max_hp }}
+                        {{ battle_result.player_max_hp }}
                     </span>
 
                 </div>
 
 
-                <!-- ST -->
+                <!-- スタミナ -->
                 <div class="status">
 
                     <p>ST</p>
 
+                    {% widthratio battle_result.player_stamina battle_result.player_max_stamina 100 as player_stamina_percent %}
                     <div class="status-bar">
 
-                        <div class="stamina-fill player-stamina js-arena-stamina"
-                            data-current="{{ character.current_stamina }}" data-max="{{ character.max_stamina }}"></div>
+                        <div
+                            class="stamina-fill player-stamina"
+                            style="width: {{ player_stamina_percent }}%;"
+                        ></div>
 
                     </div>
 
                     <span>
-                        {{ character.current_stamina }}
+                        {{ battle_result.player_stamina }}
                         /
-                        {{ character.max_stamina }}
+                        {{ battle_result.player_max_stamina }}
                     </span>
 
                 </div>
@@ -112,81 +126,98 @@
             </div>
 
 
-            <!-- ====================================
+            <!-- =========================
                  VS
-            ===================================== -->
+            ========================== -->
             <div class="vs">
                 VS
             </div>
 
 
-            <!-- ====================================
-                 対戦相手
-            ===================================== -->
-            <div class="fighter enemy">
+            <!-- =========================
+                 敵
+            ========================== -->
+            <div class="enemy-party">
 
-                <h2 class="fighter-name">
-                    {{ opponent.name }}
-                </h2>
+                {% for enemy_result in battle_result.enemies %}
 
-                <div class="fighter-icon">
-                    {{ opponent.name|slice:":1" }}
-                </div>
+                    <div class="fighter enemy">
 
-                <div class="action-gauge">
-                    <div class="action-gauge-fill"></div>
-                </div>
+                        <h2 class="fighter-name">
+                            {{ enemy_result.name }}
+                        </h2>
 
+                        <div class="fighter-icon">
+                            敵アイコン
+                        </div>
 
-                <!-- HP -->
-                <div class="status">
+                        <div class="action-gauge">
+                            <div class="action-gauge-fill"></div>
+                        </div>
 
-                    <p>HP</p>
+                        <!-- HP -->
+                        <div class="status">
 
-                    <div class="status-bar">
+                            <p>HP</p>
 
-                        <div class="hp-fill enemy-hp js-arena-hp" data-current="{{ opponent_battle_hp }}"
-                            data-max="{{ opponent.max_hp }}"></div>
+                            {% widthratio enemy_result.hp enemy_result.max_hp 100 as enemy_hp_percent %}
+
+                            <div class="status-bar">
+
+                                <div
+                                    class="hp-fill enemy-hp"
+                                    style="width: {{ enemy_hp_percent }}%;"
+                                ></div>
+
+                            </div>
+
+                            <span>
+                                {{ enemy_result.hp }}
+                                /
+                                {{ enemy_result.max_hp }}
+                            </span>
+
+                        </div>
+
+                        <!-- MP -->
+                        <div class="status">
+
+                            <p>MP</p>
+
+                            <div class="status-bar">
+
+                                {% if enemy_result.max_mp > 0 %}
+                                    {% widthratio enemy_result.mp enemy_result.max_mp 100 as enemy_mp_percent %}
+                                {% else %}
+                                    {% widthratio 0 1 100 as enemy_mp_percent %}
+                                {% endif %}
+                                <div
+                                    class="stamina-fill enemy-stamina"
+                                    style="width: {{ enemy_mp_percent }}%;"
+                                ></div>
+
+                            </div>
+
+                            <span>
+                                {{ enemy_result.mp }}
+                                /
+                                {{ enemy_result.max_mp }}
+                            </span>
+
+                        </div>
 
                     </div>
 
-                    <span>
-                        {{ opponent_battle_hp }}
-                        /
-                        {{ opponent.max_hp }}
-                    </span>
-
-                </div>
-
-
-                <!-- ST -->
-                <div class="status">
-
-                    <p>ST</p>
-
-                    <div class="status-bar">
-
-                        <div class="stamina-fill enemy-stamina js-arena-stamina"
-                            data-current="{{ opponent.current_stamina }}" data-max="{{ opponent.max_stamina }}"></div>
-
-                    </div>
-
-                    <span>
-                        {{ opponent.current_stamina }}
-                        /
-                        {{ opponent.max_stamina }}
-                    </span>
-
-                </div>
+                {% endfor %}
 
             </div>
 
         </section>
 
 
-        <!-- ========================================
+        <!-- ==================================================
              戦闘ログ
-        ========================================= -->
+        =================================================== -->
         <section class="battle-log">
 
             <h2>
@@ -194,151 +225,180 @@
             </h2>
 
 
-            <!-- ====================================
-                 ステータス確認
-            ===================================== -->
-            <p>
-                {{ character.name }}
-                ：STR {{ character.strength }}
-                / INT {{ character.intelligence }}
-                / DEX {{ character.dexterity }}
-                / AGI {{ character.agility }}
-                / VIT {{ character.vitality }}
-                / LUK {{ character.luck }}
-            </p>
+            {% if battle_logs %}
 
-            <p>
-                {{ opponent.name }}
-                ：STR {{ opponent.strength }}
-                / INT {{ opponent.intelligence }}
-                / DEX {{ opponent.dexterity }}
-                / AGI {{ opponent.agility }}
-                / VIT {{ opponent.vitality }}
-                / LUK {{ opponent.luck }}
-            </p>
+                {% for log in battle_logs %}
 
+                    <p>
+                        {{ log }}
+                    </p>
 
-            <!-- ====================================
-                 先攻
-            ===================================== -->
-            <p>
-                先攻：
-                {{ first_attacker.name }}
-            </p>
-
-
-            <!-- ====================================
-                 先攻側の攻撃
-            ===================================== -->
-            <hr>
-
-            <p>
-                {{ first_attacker.name }} の攻撃！
-            </p>
-
-            <p>
-                命中率：
-                {{ first_hit_rate }}%
-            </p>
-
-
-            {% if first_attack_hit %}
-
-            <p>
-                攻撃は命中した！
-            </p>
-
-            <p>
-                {{ first_damage }}
-                ダメージ！
-            </p>
+                {% endfor %}
 
             {% else %}
 
-            <p>
-                攻撃は外れた！
-            </p>
+                <p>
+                    戦闘ログがありません。
+                </p>
 
             {% endif %}
-
-
-            <!-- ====================================
-                 後攻側の反撃
-            ===================================== -->
-            <hr>
-
-
-            {% if second_can_attack %}
-
-            <p>
-                {{ second_attacker.name }} の反撃！
-            </p>
-
-            <p>
-                命中率：
-                {{ second_hit_rate }}%
-            </p>
-
-
-            {% if second_attack_hit %}
-
-            <p>
-                攻撃は命中した！
-            </p>
-
-            <p>
-                {{ second_damage }}
-                ダメージ！
-            </p>
-
-            {% else %}
-
-            <p>
-                攻撃は外れた！
-            </p>
-
-            {% endif %}
-
-            {% else %}
-
-            <p>
-                {{ second_attacker.name }}
-                は倒れたため反撃できない。
-            </p>
-
-            {% endif %}
-
-
-            <!-- ====================================
-                 1ターン終了後HP
-            ===================================== -->
-            <hr>
-
-            <p>
-                {{ character.name }}
-                HP：
-                {{ character_battle_hp }}
-                /
-                {{ character.max_hp }}
-            </p>
-
-            <p>
-                {{ opponent.name }}
-                HP：
-                {{ opponent_battle_hp }}
-                /
-                {{ opponent.max_hp }}
-            </p>
 
         </section>
 
 
-        <!-- ========================================
+        <!-- ==================================================
+             戦闘結果
+        =================================================== -->
+        <section class="battle-result">
+
+
+            {% if battle_result.winner == "player" %}
+
+                <p class="result-text">
+                    {{ character.name }}は勝利した！
+                </p>
+
+                <p>
+                    {{ exp_gained }} EXPを獲得した。
+                </p>
+
+            {% if drop_result %}
+
+                <div class="drop-result">
+
+                    {% if drop_result.kind == "equipment" %}
+
+                        <p>
+                            アイテムドロップ！
+                        </p>
+
+                        <p>
+                            【{{ drop_result.rank }}ランク】
+                            {{ drop_result.name }}
+                            を入手した！
+                        </p>
+
+                        <p>
+                            {{ drop_result.slot }}
+                            /
+                            戦闘力
+                            {{ drop_result.battle_power }}
+                        </p>
+
+                    {% else %}
+
+                        <p>
+                            アイテムドロップ！
+                        </p>
+
+                        <p>
+                            {{ drop_result.name }}
+                            ×{{ drop_result.quantity }}
+                            を入手した！
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+            {% endif %}
+
+            {% elif battle_result.winner == "enemy" %}
+
+                <p class="result-text">
+                    {{ character.name }}は敗北した…。
+                </p>
+
+                <p>
+                    {{ exp_gained }} EXPを獲得した。
+                </p>
+
+            {% else %}
+
+                <p class="result-text">
+                    戦闘は決着がつかなかった。
+                </p>
+
+                <p>
+                    EXPは獲得できなかった。
+                </p>
+
+            {% endif %}
+
+
+            <!-- ========================================
+                レベルアップ
+            ========================================= -->
+
+            {% if growth_result and growth_result.level_up_count %}
+
+                <div class="level-up-result">
+
+                    <h2>
+                        LEVEL UP!
+                    </h2>
+
+                    {% for level_up in growth_result.level_ups %}
+
+                        <div class="level-up-detail">
+
+                            <h3>
+                                Lv.{{ level_up.level }}
+                            </h3>
+
+                            <p>
+                                基礎能力成長
+                            </p>
+
+                            <ul>
+                                {% for growth in level_up.growths %}
+                                    <li>
+                                        {{ growth }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+
+                            <p>
+                                属性成長
+                            </p>
+
+                            <ul>
+                                {% for growth in level_up.attribute_growths %}
+                                    <li>
+                                        {{ growth }}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+
+                        </div>
+
+                    {% endfor %}
+
+                    <p>
+                        現在 Lv.{{ growth_result.current_level }}
+                    </p>
+
+                    <p>
+                        EXP
+                        {{ growth_result.remaining_exp }}
+                        / 100
+                    </p>
+
+                </div>
+
+            {% endif %}
+        </section>
+
+
+        <!-- ==================================================
              街に戻る
-        ========================================= -->
+        =================================================== -->
         <div class="return-area">
 
-            <a href="{% url 'home' %}" class="return-button">
+            <a
+                href="{% url 'home' %}"
+                class="return-button"
+            >
                 街に戻る
             </a>
 
@@ -346,61 +406,5 @@
 
     </main>
 
-
-    <!-- ============================================
-         HP / STゲージ
-
-         current / max × 100
-         でゲージ幅を決定する。
-    ============================================= -->
-    <script>
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            function () {
-
-                document
-                    .querySelectorAll(
-                        ".js-arena-hp, .js-arena-stamina"
-                    )
-                    .forEach(function (gauge) {
-
-                        const current = Number(
-                            gauge.dataset.current
-                        );
-
-                        const max = Number(
-                            gauge.dataset.max
-                        );
-
-                        let percent = 0;
-
-                        if (max > 0) {
-
-                            percent = (
-                                current / max
-                            ) * 100;
-
-                        }
-
-                        percent = Math.max(
-                            0,
-                            Math.min(
-                                100,
-                                percent
-                            )
-                        );
-
-                        gauge.style.width =
-                            percent + "%";
-
-                    });
-
-            }
-        );
-
-    </script>
-
 </body>
-
 </html>

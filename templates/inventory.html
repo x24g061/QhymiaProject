@@ -4,7 +4,7 @@
 {% block title %}倉庫 | Qhymia{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/inventory.css' %}">
+<link rel="stylesheet" href="{% static 'css/inventory.css' %}?v=2">
 {% endblock %}
 
 {% block content %}
@@ -24,7 +24,11 @@
 
         <div class="inventory-count">
             <span>所持アイテム</span>
-            <strong>{{ total_item_count }}</strong>
+
+            <strong>
+                {{ inventory_count }}
+            </strong>
+
             <span>個</span>
         </div>
 
@@ -63,7 +67,11 @@
                 アイテムメニュー
             </h2>
 
-            <button type="button" class="side-button active" data-target="equipment">
+            <button
+                type="button"
+                class="side-button active"
+                data-target="equipment"
+            >
                 <span>装備中アイテム</span>
                 <span>▶</span>
             </button>
@@ -73,7 +81,11 @@
             </p>
 
 
-            <button type="button" class="side-button" data-target="items">
+            <button
+                type="button"
+                class="side-button"
+                data-target="items"
+            >
                 <span>所持アイテム</span>
                 <span>▶</span>
             </button>
@@ -93,7 +105,10 @@
                  装備中アイテム
             ================================ -->
 
-            <section id="equipment-panel" class="inventory-panel active-panel">
+            <section
+                id="equipment-panel"
+                class="inventory-panel active-panel"
+            >
 
                 <div class="inventory-toolbar">
 
@@ -121,115 +136,102 @@
                             <div>種類</div>
                             <div>アイテム名</div>
                             <div>戦闘力</div>
+                            <div>操作</div>
 
                         </div>
 
 
                         <div class="table-body">
 
-                            <article class="equipment-row">
+                            {% for slot in equipment_slots %}
 
-                                <div class="table-cell">
-                                    <span class="category-tag">
-                                        武器
-                                    </span>
-                                </div>
+                                <article class="equipment-row">
 
-                                <div class="table-cell item-name-cell">
-                                    <strong>
-                                        鉄の剣
-                                    </strong>
-                                </div>
+                                    <!-- 部位 -->
+                                    <div class="table-cell">
 
-                                <div class="table-cell power-cell">
-                                    120
-                                </div>
+                                        <span class="category-tag">
+                                            {{ slot.label }}
+                                        </span>
 
-                            </article>
+                                    </div>
 
 
-                            <article class="equipment-row">
+                                    <!-- 装備名 -->
+                                    <div class="table-cell item-name-cell">
 
-                                <div class="table-cell">
-                                    <span class="category-tag">
-                                        頭具
-                                    </span>
-                                </div>
+                                        {% if slot.owned %}
 
-                                <div class="table-cell item-name-cell">
-                                    <strong>
-                                        革の帽子
-                                    </strong>
-                                </div>
+                                            <strong>
 
-                                <div class="table-cell power-cell">
-                                    30
-                                </div>
+                                                【{{ slot.owned.equipment.rank }}】
 
-                            </article>
+                                                {{ slot.owned.equipment.item.name }}
 
+                                                +{{ slot.owned.enhancement_level }}
 
-                            <article class="equipment-row">
+                                            </strong>
 
-                                <div class="table-cell">
-                                    <span class="category-tag">
-                                        防具
-                                    </span>
-                                </div>
+                                        {% else %}
 
-                                <div class="table-cell item-name-cell">
-                                    <strong>
-                                        革の鎧
-                                    </strong>
-                                </div>
+                                            <span>
+                                                未装備
+                                            </span>
 
-                                <div class="table-cell power-cell">
-                                    70
-                                </div>
+                                        {% endif %}
 
-                            </article>
+                                    </div>
 
 
-                            <article class="equipment-row">
+                                    <!-- 戦闘力 -->
+                                    <div class="table-cell power-cell">
 
-                                <div class="table-cell">
-                                    <span class="category-tag">
-                                        足具
-                                    </span>
-                                </div>
+                                        {% if slot.owned %}
 
-                                <div class="table-cell item-name-cell">
-                                    <strong>
-                                        革の靴
-                                    </strong>
-                                </div>
+                                            {{ slot.owned.battle_power }}
 
-                                <div class="table-cell power-cell">
-                                    25
-                                </div>
+                                        {% else %}
 
-                            </article>
+                                            -
+
+                                        {% endif %}
+
+                                    </div>
 
 
-                            <article class="equipment-row">
+                                    <!-- 操作 -->
+                                    <div class="table-cell item-action-cell">
 
-                                <div class="table-cell">
-                                    <span class="category-tag">
-                                        アクセサリー
-                                    </span>
-                                </div>
+                                        {% if inventory_item.item.is_usable %}
 
-                                <div class="table-cell item-name-cell">
-                                    <strong>
-                                        銀の指輪
-                                    </strong>
-                                </div>
+                                            <form
+                                                method="post"
+                                                action="{% url 'inventory:use_item' inventory_item.id %}"
+                                            >
+                                                {% csrf_token %}
 
-                                <div class="table-cell power-cell">
-                                    15
-                                </div>
+                                                <button
+                                                    type="submit"
+                                                    class="equipment-action-button"
+                                                >
+                                                    使用する
+                                                </button>
 
-                            </article>
+                                            </form>
+
+                                        {% else %}
+
+                                            <span class="item-not-usable">
+                                                使用不可
+                                            </span>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                </article>
+
+                            {% endfor %}
 
                         </div>
 
@@ -245,24 +247,43 @@
                  所持アイテム
             ================================ -->
 
-            <section id="items-panel" class="inventory-panel">
+            <section
+                id="items-panel"
+                class="inventory-panel"
+            >
 
                 <!-- カテゴリ -->
                 <nav class="category-tabs">
 
-                    <button type="button" class="category-button active" data-category="all">
+                    <button
+                        type="button"
+                        class="category-button active"
+                        data-category="all"
+                    >
                         すべて
                     </button>
 
-                    <button type="button" class="category-button" data-category="equipment">
+                    <button
+                        type="button"
+                        class="category-button"
+                        data-category="equipment"
+                    >
                         装備品
                     </button>
 
-                    <button type="button" class="category-button" data-category="consumable">
+                    <button
+                        type="button"
+                        class="category-button"
+                        data-category="consumable"
+                    >
                         消耗品
                     </button>
 
-                    <button type="button" class="category-button" data-category="material">
+                    <button
+                        type="button"
+                        class="category-button"
+                        data-category="material"
+                    >
                         素材
                     </button>
 
@@ -286,7 +307,11 @@
 
                     <div class="toolbar-controls">
 
-                        <input type="search" id="search" placeholder="アイテム名で検索">
+                        <input
+                            type="search"
+                            id="search"
+                            placeholder="アイテム名で検索"
+                        >
 
                         <select id="sort">
 
@@ -321,16 +346,7 @@
 
                             <div>種類</div>
                             <div>アイテム名</div>
-                            <div>個数</div>
-
-                        </div>
-
-
-                        <div class="item-header">
-
-                            <div>種類</div>
-                            <div>アイテム名</div>
-                            <div>個数</div>
+                            <div>個数 / 戦闘力</div>
                             <div>操作</div>
 
                         </div>
@@ -338,93 +354,186 @@
 
                         <div id="items" class="table-body">
 
+                            <!-- ========================================
+                                所持装備
+                            ========================================= -->
+
+                            {% for owned in owned_equipments %}
+
+                                <article
+                                    class="item-row"
+                                    data-item
+                                    data-name="{{ owned.equipment.item.name }}"
+                                    data-category="equipment"
+                                    data-quantity="1"
+                                >
+
+                                    <div class="table-cell">
+
+                                        <span class="category-tag">
+                                            装備品
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="table-cell item-name-cell">
+
+                                        <div>
+
+                                            <strong>
+                                                【{{ owned.equipment.rank }}】
+                                                {{ owned.equipment.item.name }}
+                                                +{{ owned.enhancement_level }}
+                                            </strong>
+
+                                            <br>
+
+                                            <small>
+
+                                                {{ owned.equipment.get_slot_display }}
+
+                                                /
+
+                                                {{ owned.equipment.get_style_display }}
+
+                                            </small>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="table-cell quantity-cell">
+
+                                        戦闘力
+
+                                        <strong>
+                                            {{ owned.battle_power }}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <div class="table-cell">
+
+                                        {% if owned.is_equipped %}
+
+                                            <form
+                                                method="post"
+                                                action="{% url 'inventory:unequip_equipment' owned.id %}"
+                                            >
+
+                                                {% csrf_token %}
+
+                                                <button
+                                                    type="submit"
+                                                    class="equipment-action-button remove"
+                                                >
+                                                    外す
+                                                </button>
+
+                                            </form>
+
+                                        {% else %}
+
+                                            <form
+                                                method="post"
+                                                action="{% url 'inventory:equip_equipment' owned.id %}"
+                                            >
+
+                                                {% csrf_token %}
+
+                                                <button
+                                                    type="submit"
+                                                    class="equipment-action-button"
+                                                >
+                                                    装備する
+                                                </button>
+
+                                            </form>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                </article>
+
+                            {% endfor %}
+
+
+                            <!-- ========================================
+                                通常アイテム
+                            ========================================= -->
+
                             {% for inventory_item in inventory_items %}
 
-                            <article class="item-row" data-item data-name="{{ inventory_item.item.name }}"
-                                data-category="{{ inventory_item.item.category }}"
-                                data-quantity="{{ inventory_item.quantity }}">
+                                <article
+                                    class="item-row"
+                                    data-item
+                                    data-name="{{ inventory_item.item.name }}"
+                                    data-category="{{ inventory_item.item.category }}"
+                                    data-quantity="{{ inventory_item.quantity }}"
+                                >
 
-                                <!-- 種類 -->
-                                <div class="table-cell">
+                                    <div class="table-cell">
 
-                                    <span class="category-tag">
-                                        {{ inventory_item.item.get_category_display }}
-                                    </span>
+                                        <span class="category-tag">
 
-                                </div>
+                                            {{ inventory_item.item.get_category_display }}
 
+                                        </span>
 
-                                <!-- アイテム名 -->
-                                <div class="table-cell item-name-cell">
-
-                                    <strong>
-                                        {{ inventory_item.item.name }}
-                                    </strong>
-
-                                    {% if inventory_item.item.description %}
-                                    <small>
-                                        {{ inventory_item.item.description }}
-                                    </small>
-                                    {% endif %}
-
-                                </div>
+                                    </div>
 
 
-                                <!-- 所持数 -->
-                                <div class="table-cell quantity-cell">
+                                    <div class="table-cell item-name-cell">
 
-                                    <strong>
-                                        {{ inventory_item.quantity }}
-                                    </strong>
+                                        <div>
 
-                                    個
+                                            <strong>
+                                                {{ inventory_item.item.name }}
+                                            </strong>
 
-                                </div>
+                                            {% if inventory_item.item.description %}
+
+                                                <br>
+
+                                                <small>
+                                                    {{ inventory_item.item.description }}
+                                                </small>
+
+                                            {% endif %}
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="table-cell quantity-cell">
+
+                                        <strong>
+                                            {{ inventory_item.quantity }}
+                                        </strong>
+
+                                        個
+
+                                    </div>
 
 
-                                <!-- 使用ボタン -->
-                                <div class="table-cell item-action-cell">
+                                    <div class="table-cell">
+                                        -
+                                    </div>
 
-                                    {% if inventory_item.item.is_usable %}
-
-                                    <form method="post" action="{% url 'inventory:use_item' inventory_item.id %}">
-                                        {% csrf_token %}
-
-                                        <button type="submit" class="item-use-button">
-                                            使用する
-                                        </button>
-
-                                    </form>
-
-                                    {% else %}
-
-                                    <span class="item-not-usable">
-                                        使用不可
-                                    </span>
-
-                                    {% endif %}
-
-                                </div>
-
-                            </article>
-
-                            {% empty %}
-
-                            <div class="empty-items">
-                                現在所持しているアイテムはありません。
-                            </div>
+                                </article>
 
                             {% endfor %}
 
                         </div>
 
-
-                        <div id="search-empty" class="empty-items hidden">
-                            条件に一致するアイテムがありません。
-                        </div>
-
-
-                        <div id="search-empty" class="empty-items hidden">
+                        <div
+                            id="search-empty"
+                            class="empty-items hidden"
+                        >
                             条件に一致するアイテムがありません。
                         </div>
 

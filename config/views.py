@@ -17,108 +17,162 @@ def home(request):
 
     main_attribute_name = "-"
     main_attribute_value = 0
+
+    # 装備戦闘力
+    equipment_battle_power = 0
+
+    # 総合戦闘力
     battle_power = 0
 
     exploration_cooldown_remaining = 0
     exploration_cooldown_reduced = False
 
     arena_max_floor = 100
+
+    previous_arena_character = None
+    next_arena_character = None
+    equipment_battle_power = 0
     if character:
 
-    # ==============================
-    # 闘技場：前の階の相手を取得
-    # ==============================
-     if character.arena_floor > 1:
-        previous_arena_character = (
-            Character.objects
-            .filter(
-                arena_floor=character.arena_floor - 1
+        # ========================================
+        # 闘技場：前の階の相手を取得
+        # ========================================
+
+        if character.arena_floor > 1:
+
+            previous_arena_character = (
+                Character.objects
+                .filter(
+                    arena_floor=(
+                        character.arena_floor - 1
+                    )
+                )
+                .exclude(
+                    id=character.id
+                )
+                .first()
             )
-            .exclude(id=character.id)
-            .first()
+
+
+        # ========================================
+        # 闘技場：次の階の相手を取得
+        # ========================================
+
+        if character.arena_floor < arena_max_floor:
+
+            next_arena_character = (
+                Character.objects
+                .filter(
+                    arena_floor=(
+                        character.arena_floor + 1
+                    )
+                )
+                .exclude(
+                    id=character.id
+                )
+                .first()
+            )
+
+
+        # ========================================
+        # 得意属性
+        # ========================================
+
+        main_attribute_name = (
+            character.get_main_attribute_display()
         )
 
-    # ==============================
-    # 闘技場：次の階の相手を取得
-    # ==============================
-    if character.arena_floor < arena_max_floor:
-        next_arena_character = (
-            Character.objects
-            .filter(
-                arena_floor=character.arena_floor + 1
-            )
-            .exclude(id=character.id)
-            .first()
+        main_attribute_value = max(
+            character.fire,
+            character.water,
+            character.grass,
+            character.rock,
+            character.light,
+            character.dark,
         )
 
-    attributes = {
-        "火": character.fire,
-        "水": character.water,
-        "草": character.grass,
-        "岩": character.rock,
-        "光": character.light,
-        "闇": character.dark,
-    }
 
-    main_attribute_name = max(
-        attributes,
-        key=attributes.get
-    )
+        # ========================================
+        # 装備戦闘力
+        # ========================================
 
-    main_attribute_value = attributes[
-        main_attribute_name
-    ]
+        equipment_battle_power = sum(
+            owned.battle_power
+            for owned
+            in character.owned_equipments.filter(
+                is_equipped=True
+            )
+        )
 
 
-    # ==============================
-    # 戦闘力
-    # ==============================
+        # ========================================
+        # 総合戦闘力
+        # ========================================
 
-    battle_power = (
-        character.max_hp
-        + character.max_mp
-        + character.strength
-        + character.intelligence
-        + character.dexterity
-        + character.agility
-        + character.vitality
-        + character.luck
-        + main_attribute_value
-    )
+        battle_power = (
+            character.max_hp
+            + character.max_mp
+            + character.strength
+            + character.intelligence
+            + character.dexterity
+            + character.agility
+            + character.vitality
+            + character.luck
+            + main_attribute_value
+            + equipment_battle_power
+        )
 
 
-    # ==============================
-    # 探索CT
-    # ==============================
+        # ========================================
+        # 探索CT
+        # ========================================
 
-    exploration_cooldown_remaining = (
-        character.get_exploration_cooldown_remaining()
-    )
+        exploration_cooldown_remaining = (
+            character
+            .get_exploration_cooldown_remaining()
+        )
 
-    exploration_cooldown_reduced = (
-        character.is_exploration_cooldown_reduced()
-    )
+        exploration_cooldown_reduced = (
+            character
+            .is_exploration_cooldown_reduced()
+        )
+
 
     context = {
         "character": character,
-        "main_attribute_name": main_attribute_name,
-        "main_attribute_value": main_attribute_value,
-        "battle_power": battle_power,
+
+        "main_attribute_name":
+            main_attribute_name,
+
+        "main_attribute_value":
+            main_attribute_value,
+
+        "battle_power":
+            battle_power,
+
         "exploration_cooldown_remaining":
             exploration_cooldown_remaining,
+
         "exploration_cooldown_reduced":
             exploration_cooldown_reduced,
-        "arena_max_floor": arena_max_floor,
+
+        "arena_max_floor":
+            arena_max_floor,
+
         "previous_arena_character":
             previous_arena_character,
+
         "next_arena_character":
             next_arena_character,
     }
 
+    return render(
+        request,
+        "home.html",
+        context,
+    )
 
-   
-
-    return render(request, "home.html", context)
+    
 
 def generate_reincarnation_bonus(character):
     total_points = (character.reincarnation_count + 1) * 125

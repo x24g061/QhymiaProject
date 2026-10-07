@@ -56,8 +56,9 @@ INSTALLED_APPS = [
     "apps.inventory",
     "apps.shop.apps.ShopConfig",
     'apps.sns',
-     'apps.payment',
-      'apps.chat.apps.ChatConfig',
+    'apps.payment',
+    'apps.chat.apps.ChatConfig',
+    "apps.battle.apps.BattleConfig",
 ]
 
 

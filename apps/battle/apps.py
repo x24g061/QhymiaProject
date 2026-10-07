@@ -2,4 +2,5 @@ from django.apps import AppConfig
 
 
 class BattleConfig(AppConfig):
-    name = 'battle'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "apps.battle"
