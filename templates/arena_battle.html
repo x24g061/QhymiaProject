@@ -62,8 +62,19 @@
                     キャラクター画像実装までは
                     名前の最初の1文字を表示する。
                 -->
-                <div class="fighter-icon">
+                <div class="arena-card-avatar">
+
+                    {% if character.character_image_path %}
+
+                    <img src="{% static character.character_image_path %}" alt="{{ character.name }}"
+                        class="arena-card-avatar-image">
+
+                    {% else %}
+
                     {{ character.name|slice:":1" }}
+
+                    {% endif %}
+
                 </div>
 
 

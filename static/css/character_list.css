@@ -221,13 +221,22 @@ main {
 ======================================== */
 
 .character-number {
+    display: inline-block;
+
     margin: 6px 0 0;
+    padding: 3px 8px;
 
     color: #164e69;
 
     font-size: 13px;
-
     font-weight: bold;
+
+    background: rgba(255, 255, 255, 0.68);
+
+    border-radius: 6px;
+
+    box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 
@@ -249,15 +258,29 @@ main {
    ページ切り替え
 ======================================== */
 
+/* ========================================
+   ページ切り替え
+======================================== */
+
 .character-pagination {
+    width: 100%;
+
     margin-top: 36px;
+    padding: 16px 20px;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
     gap: 45px;
+
+    background: rgba(255, 255, 255, 0.72);
+
+    border-top: 1px solid rgba(22, 78, 105, 0.35);
+
+    box-sizing: border-box;
+
+    backdrop-filter: blur(3px);
 }
 
 
@@ -265,21 +288,21 @@ main {
     padding: 5px 14px;
 
     border: none;
-
     background: transparent;
 
     color: #164e69;
 
     cursor: pointer;
 
-    font-size: 20px;
+    font-size: 22px;
+    font-weight: bold;
 }
-
 
 .pagination-number {
     color: #164e69;
 
-    font-size: 20px;
+    font-size: 21px;
+    font-weight: bold;
 }
 
 

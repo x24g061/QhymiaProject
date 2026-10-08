@@ -122,6 +122,14 @@ class Character(models.Model):
         help_text="キャラクターの職業",
     )
 
+    # ===== キャラクター画像 =====
+
+    character_image_id = models.PositiveIntegerField(
+        null=True,
+        blank=True,
+        help_text="使用するキャラクター画像番号",
+    )
+
     # ===== 成長情報 =====
 
     level = models.PositiveIntegerField(
@@ -355,6 +363,16 @@ class Character(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def character_image_path(self):
+        if not self.character_image_id:
+            return None
+
+        return (
+            f"images/characters/"
+            f"{self.character_image_id:03d}.png"
+        )
 
     def get_main_attribute(self):
         """

@@ -89,174 +89,178 @@
      右：次の階
 ====================================== -->
 
-<section
-    class="arena-panel collapsible-section"
-    data-collapse-id="arena"
->
+    <section class="arena-panel collapsible-section" data-collapse-id="arena">
 
-    <div class="arena-collapse-heading">
+        <div class="arena-collapse-heading">
 
-        <div>
+            <div>
 
-            <p class="section-label">
-                ARENA
-            </p>
+                <p class="section-label">
+                    ARENA
+                </p>
 
-            <h2>
-                闘技場
-            </h2>
+                <h2>
+                    闘技場
+                </h2>
+
+            </div>
+
+            <button type="button" class="collapse-toggle" aria-expanded="true">
+                <span class="collapse-toggle-icon">
+                    ▼
+                </span>
+            </button>
 
         </div>
 
-        <button
-            type="button"
-            class="collapse-toggle"
-            aria-expanded="true"
-        >
-            <span class="collapse-toggle-icon">
-                ▼
-            </span>
-        </button>
 
-    </div>
+        <div class="collapsible-content">
+
+            <!-- 3つの表示枠を横並びにする箱 -->
+            <div class="arena-card-list">
 
 
-    <div class="collapsible-content">
-
-        <!-- 3つの表示枠を横並びにする箱 -->
-        <div class="arena-card-list">
-
-
-            <!-- =====================================
+                <!-- =====================================
              左側：前の階
         ====================================== -->
 
-            <div class="arena-card-slot">
+                <div class="arena-card-slot">
 
-                <!--
+                    <!--
                 現在が2階以上なら
                 「1つ前の階」のカードを表示する
             -->
-                {% if character.arena_floor > 1 %}
+                    {% if character.arena_floor > 1 %}
 
-                <div class="arena-card">
+                    <div class="arena-card">
 
-                    <!-- 前の階の見出し -->
-                    <div class="arena-card-header">
-                        闘技場{{ character.arena_floor|add:"-1" }}階
-                    </div>
+                        <!-- 前の階の見出し -->
+                        <div class="arena-card-header">
+                            闘技場{{ character.arena_floor|add:"-1" }}階
+                        </div>
 
-                    <div class="arena-card-body">
+                        <div class="arena-card-body">
 
-                        <!--
+                            <!--
                             今は前の階のキャラクターデータがないので
                             仮で「？」を表示
                         -->
-                        <div class="arena-card-avatar">
-                            ?
-                        </div>
-
-
-                        <!-- 仮の名前 -->
-                        <h3 class="arena-card-name">
-                            前の階の相手
-                        </h3>
-
-
-                        <!-- 仮HPバー -->
-                        <div class="arena-card-gauge hp-gauge">
-                            <div class="arena-card-gauge-fill" style="width: 100%;">
+                            <div class="arena-card-avatar">
+                                ?
                             </div>
-                        </div>
 
 
-                        <!-- 仮MPバー -->
-                        <div class="arena-card-gauge mp-gauge">
-                            <div class="arena-card-gauge-fill" style="width: 100%;">
+                            <!-- 仮の名前 -->
+                            <h3 class="arena-card-name">
+                                前の階の相手
+                            </h3>
+
+
+                            <!-- 仮HPバー -->
+                            <div class="arena-card-gauge hp-gauge">
+                                <div class="arena-card-gauge-fill" style="width: 100%;">
+                                </div>
                             </div>
-                        </div>
 
 
-                        <!--
+                            <!-- 仮MPバー -->
+                            <div class="arena-card-gauge mp-gauge">
+                                <div class="arena-card-gauge-fill" style="width: 100%;">
+                                </div>
+                            </div>
+
+
+                            <!--
                             今は前の階の戦績データがないので
                             仮テキスト
                         -->
-                        <p class="arena-card-streak">
-                            前の階
-                        </p>
+                            <p class="arena-card-streak">
+                                前の階
+                            </p>
 
-                        <p class="arena-card-result">
-                            ひとつ下の階です
-                        </p>
+                            <p class="arena-card-result">
+                                ひとつ下の階です
+                            </p>
+
+                        </div>
 
                     </div>
 
-                </div>
 
+                    {% else %}
 
-                {% else %}
-
-                <!--
+                    <!--
                     現在が1階なら
                     前の階は存在しないので
                     カードの代わりに案内文を表示
                 -->
-                <div class="arena-edge-message arena-edge-left">
+                    <div class="arena-edge-message arena-edge-left">
 
-                    <span>
-                        ←
-                    </span>
+                        <span>
+                            ←
+                        </span>
 
-                    <p>
-                        これより下の階はありません
-                    </p>
+                        <p>
+                            これより下の階はありません
+                        </p>
+
+                    </div>
+
+                    {% endif %}
 
                 </div>
 
-                {% endif %}
-
-            </div>
 
 
-
-            <!-- =====================================
+                <!-- =====================================
              中央：現在いる階
         ====================================== -->
 
-            <div class="arena-card-slot">
+                <div class="arena-card-slot">
 
-                <!--
+                    <!--
                 現在いる階なので
                 arena-card-current を付けて強調表示
             -->
-                <div class="arena-card arena-card-current">
+                    <div class="arena-card arena-card-current">
 
 
-                    <!-- 現在の闘技場階 -->
-                    <div class="arena-card-header">
-                        闘技場{{ character.arena_floor }}階
-                    </div>
-
-
-                    <div class="arena-card-body">
-
-
-                        <!--
-                        現在はキャラクター画像がないので
-                        名前の先頭1文字をアイコン代わりに表示
-                    -->
-                        <div class="arena-card-avatar">
-                            {{ character.name|slice:":1" }}
+                        <!-- 現在の闘技場階 -->
+                        <div class="arena-card-header">
+                            闘技場{{ character.arena_floor }}階
                         </div>
 
 
-                        <!--
+                        <div class="arena-card-body">
+
+
+                            <!--
+                        現在はキャラクター画像がないので
+                        名前の先頭1文字をアイコン代わりに表示
+                    -->
+                            <div class="arena-card-avatar">
+
+                                {% if character.character_image_path %}
+
+                                <img src="{% static character.character_image_path %}" alt="{{ character.name }}"
+                                    class="arena-card-avatar-image">
+
+                                {% else %}
+
+                                {{ character.name|slice:":1" }}
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <!--
                         キャラクター名
 
                         メイン属性によって
                         名前の色を変更する
                     -->
-                        <h3 class="
+                            <h3 class="
                             arena-card-name
 
                             {% if main_attribute_name == '火' %}
@@ -279,17 +283,17 @@
 
                             {% endif %}
                         ">
-                            {{ character.name }}
-                        </h3>
+                                {{ character.name }}
+                            </h3>
 
 
-                        <!-- =====================================
+                            <!-- =====================================
                          HPバー
                     ====================================== -->
 
-                        <div class="arena-card-gauge hp-gauge">
+                            <div class="arena-card-gauge hp-gauge">
 
-                            <!--
+                                <!--
                             HP / MP の値は data 属性に入れて、
                             画面下部のJavaScriptで百分率に変換している。
 
@@ -297,140 +301,140 @@
                             style属性へ直接書かずに済むので、
                             VS CodeのCSS警告を回避できる。
                         -->
-                            <div class="arena-card-gauge-fill js-arena-gauge-fill"
-                                data-current="{{ character.current_hp }}" data-max="{{ character.max_hp }}">
+                                <div class="arena-card-gauge-fill js-arena-gauge-fill"
+                                    data-current="{{ character.current_hp }}" data-max="{{ character.max_hp }}">
+                                </div>
+
                             </div>
 
-                        </div>
 
-
-                        <!-- =====================================
+                            <!-- =====================================
                          MPバー
                     ====================================== -->
 
-                        <div class="arena-card-gauge mp-gauge">
+                            <div class="arena-card-gauge mp-gauge">
 
-                            <div class="arena-card-gauge-fill js-arena-gauge-fill"
-                                data-current="{{ character.current_mp }}" data-max="{{ character.max_mp }}">
+                                <div class="arena-card-gauge-fill js-arena-gauge-fill"
+                                    data-current="{{ character.current_mp }}" data-max="{{ character.max_mp }}">
+                                </div>
+
                             </div>
 
-                        </div>
 
-
-                        <!--
+                            <!--
                         連勝数はまだDB化していないので
                         今はいったん固定表示
                     -->
-                        <p class="arena-card-streak">
-                            0連勝中
-                        </p>
+                            <p class="arena-card-streak">
+                                0連勝中
+                            </p>
 
 
-                        <!--
+                            <!--
                         直近結果もまだDB化していないので
                         仮表示
                     -->
-                        <p class="arena-card-result">
-                            現在の階
-                        </p>
+                            <p class="arena-card-result">
+                                現在の階
+                            </p>
+
+                        </div>
 
                     </div>
 
                 </div>
 
-            </div>
 
 
-
-            <!-- =====================================
+                <!-- =====================================
              右側：次の階
         ====================================== -->
 
-            <div class="arena-card-slot">
+                <div class="arena-card-slot">
 
-                <!--
+                    <!--
                 現在階が最上階より下なら
                 「次の階」のカードを表示する
 
                 arena_max_floor は
                 config/views.py から渡している値
             -->
-                {% if character.arena_floor < arena_max_floor %} <div class="arena-card">
+                    {% if character.arena_floor < arena_max_floor %} <div class="arena-card">
 
-                    <!-- 次の階 -->
-                    <div class="arena-card-header">
-                        闘技場{{ character.arena_floor|add:"1" }}階
-                    </div>
-
-                    <div class="arena-card-body">
-
-
-                        <!-- 仮アイコン -->
-                        <div class="arena-card-avatar">
-                            ?
+                        <!-- 次の階 -->
+                        <div class="arena-card-header">
+                            闘技場{{ character.arena_floor|add:"1" }}階
                         </div>
 
-
-                        <!-- 仮名前 -->
-                        <h3 class="arena-card-name">
-                            次の階の相手
-                        </h3>
+                        <div class="arena-card-body">
 
 
-                        <!-- 仮HP -->
-                        <div class="arena-card-gauge hp-gauge">
-                            <div class="arena-card-gauge-fill" style="width: 100%;">
+                            <!-- 仮アイコン -->
+                            <div class="arena-card-avatar">
+                                ?
                             </div>
-                        </div>
 
 
-                        <!-- 仮MP -->
-                        <div class="arena-card-gauge mp-gauge">
-                            <div class="arena-card-gauge-fill" style="width: 100%;">
+                            <!-- 仮名前 -->
+                            <h3 class="arena-card-name">
+                                次の階の相手
+                            </h3>
+
+
+                            <!-- 仮HP -->
+                            <div class="arena-card-gauge hp-gauge">
+                                <div class="arena-card-gauge-fill" style="width: 100%;">
+                                </div>
                             </div>
+
+
+                            <!-- 仮MP -->
+                            <div class="arena-card-gauge mp-gauge">
+                                <div class="arena-card-gauge-fill" style="width: 100%;">
+                                </div>
+                            </div>
+
+
+                            <p class="arena-card-streak">
+                                次の階
+                            </p>
+
+                            <p class="arena-card-result">
+                                ひとつ上の階です
+                            </p>
+
                         </div>
 
-
-                        <p class="arena-card-streak">
-                            次の階
-                        </p>
-
-                        <p class="arena-card-result">
-                            ひとつ上の階です
-                        </p>
-
-                    </div>
-
-            </div>
+                </div>
 
 
-            {% else %}
+                {% else %}
 
-            <!--
+                <!--
                     最上階なら
                     次の階が存在しないので
                     カードの代わりに案内文を表示
                 -->
-            <div class="arena-edge-message arena-edge-right">
+                <div class="arena-edge-message arena-edge-right">
 
-                <p>
-                    これより上の階はありません
-                </p>
+                    <p>
+                        これより上の階はありません
+                    </p>
 
-                <span>
-                    →
-                </span>
+                    <span>
+                        →
+                    </span>
+
+                </div>
+
+                {% endif %}
 
             </div>
 
-            {% endif %}
 
         </div>
 
-
-        </div>
-
-    </div>
+</div>
 
 </section>
 
@@ -445,277 +449,281 @@
              左：ステータス
         ================================== -->
 
-<section
-    class="home-card status-card collapsible-section"
-    data-collapse-id="status"
->
+    <section class="home-card status-card collapsible-section" data-collapse-id="status">
 
-<div class="card-heading">
-
-    <div>
-
-        <p class="section-label">
-            CHARACTER STATUS
-        </p>
-
-        <h2>
-            ステータス
-        </h2>
-
-    </div>
-
-
-    <div class="card-heading-actions">
-
-        <span class="level-badge">
-            Lv.{{ character.level }}
-        </span>
-
-        <button
-            type="button"
-            class="collapse-toggle"
-            aria-expanded="true"
-        >
-            <span class="collapse-toggle-icon">
-                ▼
-            </span>
-        </button>
-
-    </div>
-
-</div>
-
-
-<div class="collapsible-content">
-
-        <div class="character-header">
-
-            <div class="character-avatar">
-                {{ character.name|slice:":1" }}
-            </div>
-
+        <div class="card-heading">
 
             <div>
 
-                <h3>
-                    {{ character.name }}
-                </h3>
-
-                <p>
-                    {{ main_attribute_name }} 属性
+                <p class="section-label">
+                    CHARACTER STATUS
                 </p>
 
+                <h2>
+                    ステータス
+                </h2>
+
             </div>
 
-        </div>
 
+            <div class="card-heading-actions">
 
-
-        <!-- EXP -->
-
-        <div class="exp-area">
-
-            <div class="status-line">
-
-                <span>
-                    EXP
+                <span class="level-badge">
+                    Lv.{{ character.level }}
                 </span>
 
-                <strong>
-                    {{ character.exp }} / 100
-                </strong>
-
-            </div>
-
-
-            <div class="progress-bar">
-
-                <div class="progress-fill exp-fill" style="--exp-width: {{ character.exp }}%;"></div>
-            </div>
-
-        </div>
-
-
-
-        <!-- HP -->
-
-        <div class="resource-area">
-
-            <div class="status-line">
-
-                <span>
-                    HP
-                </span>
-
-                <strong>
-                    {{ character.current_hp }}
-                    /
-                    {{ character.max_hp }}
-                </strong>
+                <button type="button" class="collapse-toggle" aria-expanded="true">
+                    <span class="collapse-toggle-icon">
+                        ▼
+                    </span>
+                </button>
 
             </div>
 
         </div>
 
 
+        <div class="collapsible-content">
 
-        <!-- MP -->
+            <div class="character-header">
 
-        <div class="resource-area">
+                <div class="character-avatar">
 
-            <div class="status-line">
+                    {% if character.character_image_path %}
 
-                <span>
-                    MP
-                </span>
+                    <img src="{% static character.character_image_path %}" alt="{{ character.name }}"
+                        class="character-avatar-image">
 
-                <strong>
-                    {{ character.current_mp }}
-                    /
-                    {{ character.max_mp }}
-                </strong>
+                    {% else %}
+
+                    {{ character.name|slice:":1" }}
+
+                    {% endif %}
+
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        {{ character.name }}
+                    </h3>
+
+                    <p>
+                        {{ main_attribute_name }} 属性
+                    </p>
+
+                </div>
 
             </div>
 
+
+
+            <!-- EXP -->
+
+            <div class="exp-area">
+
+                <div class="status-line">
+
+                    <span>
+                        EXP
+                    </span>
+
+                    <strong>
+                        {{ character.exp }} / 100
+                    </strong>
+
+                </div>
+
+
+                <div class="progress-bar">
+
+                    <div class="progress-fill exp-fill" style="--exp-width: {{ character.exp }}%;"></div>
+                </div>
+
+            </div>
+
+
+
+            <!-- HP -->
+
+            <div class="resource-area">
+
+                <div class="status-line">
+
+                    <span>
+                        HP
+                    </span>
+
+                    <strong>
+                        {{ character.current_hp }}
+                        /
+                        {{ character.max_hp }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- MP -->
+
+            <div class="resource-area">
+
+                <div class="status-line">
+
+                    <span>
+                        MP
+                    </span>
+
+                    <strong>
+                        {{ character.current_mp }}
+                        /
+                        {{ character.max_mp }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- 能力値 -->
+
+            <div class="status-table">
+
+                <div class="status-box">
+
+                    <span>
+                        STR
+                    </span>
+
+                    <strong>
+                        {{ character.strength }}
+                    </strong>
+
+                </div>
+
+
+                <div class="status-box">
+
+                    <span>
+                        INT
+                    </span>
+
+                    <strong>
+                        {{ character.intelligence }}
+                    </strong>
+
+                </div>
+
+
+                <div class="status-box">
+
+                    <span>
+                        DEX
+                    </span>
+
+                    <strong>
+                        {{ character.dexterity }}
+                    </strong>
+
+                </div>
+
+
+                <div class="status-box">
+
+                    <span>
+                        AGI
+                    </span>
+
+                    <strong>
+                        {{ character.agility }}
+                    </strong>
+
+                </div>
+
+
+                <div class="status-box">
+
+                    <span>
+                        VIT
+                    </span>
+
+                    <strong>
+                        {{ character.vitality }}
+                    </strong>
+
+                </div>
+
+
+                <div class="status-box">
+
+                    <span>
+                        LUK
+                    </span>
+
+                    <strong>
+                        {{ character.luck }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- その他 -->
+
+            <div class="character-meta">
+
+                <div>
+
+                    <span>
+                        所持キュー
+                    </span>
+
+                    <strong>
+                        {{ character.gold }} Q
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        回帰回数
+                    </span>
+
+                    <strong>
+                        {{ character.reincarnation_count }} 回
+                    </strong>
+
+                </div>
+
+
+                <div>
+
+                    <span>
+                        最大到達階数
+                    </span>
+
+                    <strong>
+                        1 階
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <a href="{% url 'accounts:profile' %}" class="secondary-button">
+                プロフィールを見る
+            </a>
         </div>
-
-
-
-        <!-- 能力値 -->
-
-        <div class="status-table">
-
-            <div class="status-box">
-
-                <span>
-                    STR
-                </span>
-
-                <strong>
-                    {{ character.strength }}
-                </strong>
-
-            </div>
-
-
-            <div class="status-box">
-
-                <span>
-                    INT
-                </span>
-
-                <strong>
-                    {{ character.intelligence }}
-                </strong>
-
-            </div>
-
-
-            <div class="status-box">
-
-                <span>
-                    DEX
-                </span>
-
-                <strong>
-                    {{ character.dexterity }}
-                </strong>
-
-            </div>
-
-
-            <div class="status-box">
-
-                <span>
-                    AGI
-                </span>
-
-                <strong>
-                    {{ character.agility }}
-                </strong>
-
-            </div>
-
-
-            <div class="status-box">
-
-                <span>
-                    VIT
-                </span>
-
-                <strong>
-                    {{ character.vitality }}
-                </strong>
-
-            </div>
-
-
-            <div class="status-box">
-
-                <span>
-                    LUK
-                </span>
-
-                <strong>
-                    {{ character.luck }}
-                </strong>
-
-            </div>
-
-        </div>
-
-
-
-        <!-- その他 -->
-
-        <div class="character-meta">
-
-            <div>
-
-                <span>
-                    所持キュー
-                </span>
-
-                <strong>
-                    {{ character.gold }} Q
-                </strong>
-
-            </div>
-
-
-            <div>
-
-                <span>
-                    回帰回数
-                </span>
-
-                <strong>
-                    {{ character.reincarnation_count }} 回
-                </strong>
-
-            </div>
-
-
-            <div>
-
-                <span>
-                    最大到達階数
-                </span>
-
-                <strong>
-                    1 階
-                </strong>
-
-            </div>
-
-        </div>
-
-
-
-        <a href="{% url 'accounts:profile' %}" class="secondary-button">
-            プロフィールを見る
-        </a>
-</div>
     </section>
 
 
@@ -731,175 +739,168 @@
                  行動メニュー
             ============================== -->
 
-        <section
-    class="home-card action-card collapsible-section"
-    data-collapse-id="action"
->
+        <section class="home-card action-card collapsible-section" data-collapse-id="action">
 
-<div class="card-heading">
+            <div class="card-heading">
 
-    <div>
+                <div>
 
-        <p class="section-label">
-            ACTION MENU
-        </p>
+                    <p class="section-label">
+                        ACTION MENU
+                    </p>
 
-        <h2>
-            行動メニュー
-        </h2>
+                    <h2>
+                        行動メニュー
+                    </h2>
 
-    </div>
+                </div>
 
 
-    <button
-        type="button"
-        class="collapse-toggle"
-        aria-expanded="true"
-    >
-        <span class="collapse-toggle-icon">
-            ▼
-        </span>
-    </button>
-
-</div>
-
-<div class="collapsible-content">
-            <div class="action-grid">
-
-
-                <a href="{% url 'sns' %}" class="home-action-button">
-
-                    <span class="action-icon">
-                        ◇
+                <button type="button" class="collapse-toggle" aria-expanded="true">
+                    <span class="collapse-toggle-icon">
+                        ▼
                     </span>
+                </button>
 
-                    <span class="action-text">
+            </div>
 
-                        <strong>
-                            SNS
-                        </strong>
-
-                        <small>
-                            他の冒険者の投稿を見る
-                        </small>
-
-                    </span>
-
-                    <span class="action-arrow">
-                        →
-                    </span>
-
-                </a>
+            <div class="collapsible-content">
+                <div class="action-grid">
 
 
+                    <a href="{% url 'sns' %}" class="home-action-button">
 
-                <a href="{% url 'inventory:inventory' %}" class="home-action-button">
+                        <span class="action-icon">
+                            ◇
+                        </span>
 
-                    <span class="action-icon">
-                        ▣
-                    </span>
+                        <span class="action-text">
 
-                    <span class="action-text">
+                            <strong>
+                                SNS
+                            </strong>
 
-                        <strong>
-                            倉庫
-                        </strong>
+                            <small>
+                                他の冒険者の投稿を見る
+                            </small>
 
-                        <small>
-                            所持品を整理する
-                        </small>
+                        </span>
 
-                    </span>
+                        <span class="action-arrow">
+                            →
+                        </span>
 
-                    <span class="action-arrow">
-                        →
-                    </span>
-
-                </a>
+                    </a>
 
 
 
-                <a href="{% url 'battle:tactics' %}" class="home-action-button">
+                    <a href="{% url 'inventory:inventory' %}" class="home-action-button">
 
-                    <span class="action-icon">
-                        ⚔️
-                    </span>
+                        <span class="action-icon">
+                            ▣
+                        </span>
 
-                    <span class="action-text">
+                        <span class="action-text">
 
-                        <strong>
-                            戦術
-                        </strong>
+                            <strong>
+                                倉庫
+                            </strong>
 
-                        <small>
-                            スキルを設定する
-                        </small>
+                            <small>
+                                所持品を整理する
+                            </small>
 
-                    </span>
+                        </span>
 
-                    <span class="action-arrow">
-                        →
-                    </span>
+                        <span class="action-arrow">
+                            →
+                        </span>
 
-                </a>
-
-
-
-                <a href="{% url 'again' %}" class="home-action-button">
-
-                    <span class="action-icon">
-                        ↻
-                    </span>
-
-                    <span class="action-text">
-
-                        <strong>
-                            回帰
-                        </strong>
-
-                        <small>
-                            キャラクターを回帰させる
-                        </small>
-
-                    </span>
-
-                    <span class="action-arrow">
-                        →
-                    </span>
-
-                </a>
+                    </a>
 
 
 
-                <a href="{% url 'shop:shop' %}" class="home-action-button">
+                    <a href="{% url 'battle:tactics' %}" class="home-action-button">
 
-                    <span class="action-icon">
-                        ◈
-                    </span>
+                        <span class="action-icon">
+                            ⚔️
+                        </span>
 
-                    <span class="action-text">
+                        <span class="action-text">
 
-                        <strong>
-                            ショップ
-                        </strong>
+                            <strong>
+                                戦術
+                            </strong>
 
-                        <small>
-                            装備やアイテムを購入する
-                        </small>
+                            <small>
+                                スキルを設定する
+                            </small>
 
-                    </span>
+                        </span>
 
-                    <span class="action-arrow">
-                        →
-                    </span>
+                        <span class="action-arrow">
+                            →
+                        </span>
 
-                </a>
+                    </a>
 
-    </div>
 
-</div>
 
-</section>
+                    <a href="{% url 'again' %}" class="home-action-button">
+
+                        <span class="action-icon">
+                            ↻
+                        </span>
+
+                        <span class="action-text">
+
+                            <strong>
+                                回帰
+                            </strong>
+
+                            <small>
+                                キャラクターを回帰させる
+                            </small>
+
+                        </span>
+
+                        <span class="action-arrow">
+                            →
+                        </span>
+
+                    </a>
+
+
+
+                    <a href="{% url 'shop:shop' %}" class="home-action-button">
+
+                        <span class="action-icon">
+                            ◈
+                        </span>
+
+                        <span class="action-text">
+
+                            <strong>
+                                ショップ
+                            </strong>
+
+                            <small>
+                                装備やアイテムを購入する
+                            </small>
+
+                        </span>
+
+                        <span class="action-arrow">
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
 
 
 
@@ -907,23 +908,23 @@
                  探索
             ============================== -->
 
-      <section class="home-card exploration-card">
+        <section class="home-card exploration-card">
 
             <div class="card-heading">
 
-    <div>
+                <div>
 
-        <p class="section-label">
-            EXPLORATION
-        </p>
+                    <p class="section-label">
+                        EXPLORATION
+                    </p>
 
-        <h2>
-            探索
-        </h2>
+                    <h2>
+                        探索
+                    </h2>
 
-    </div>
+                </div>
 
-</div>
+            </div>
 
 
             <p class="card-description">
@@ -932,81 +933,67 @@
             </p>
 
 
-<div class="exploration-form">
+            <div class="exploration-form">
 
-    <form
-        method="post"
-        action="{% url 'battle:battle' %}"
-    >
-        {% csrf_token %}
+                <form method="post" action="{% url 'battle:battle' %}">
+                    {% csrf_token %}
 
-        <div class="select-area">
+                    <div class="select-area">
 
-            <label for="exploration-floor">
-                探索場所
-            </label>
+                        <label for="exploration-floor">
+                            探索場所
+                        </label>
 
-            <select
-                id="exploration-floor"
-                name="floor"
-            >
-                <option value="1">
-                    一階層：草原
-                </option>
+                        <select id="exploration-floor" name="floor">
+                            <option value="1">
+                                一階層：草原
+                            </option>
 
-                <option value="2">
-                    二階層
-                </option>
+                            <option value="2">
+                                二階層
+                            </option>
 
-                <option value="3">
-                    三階層
-                </option>
-            </select>
+                            <option value="3">
+                                三階層
+                            </option>
+                        </select>
 
-        </div>
+                    </div>
 
 
-        {% if exploration_cooldown_remaining > 0 %}
+                    {% if exploration_cooldown_remaining > 0 %}
 
-            <button
-                type="button"
-                class="explore-button explore-button-disabled"
-                id="exploration-cooldown-button"
-                data-remaining="{{ exploration_cooldown_remaining }}"
-                disabled
-            >
-                あと
-                <span id="exploration-cooldown-seconds">
-                    {{ exploration_cooldown_remaining }}
-                </span>
-                秒
-            </button>
+                    <button type="button" class="explore-button explore-button-disabled"
+                        id="exploration-cooldown-button" data-remaining="{{ exploration_cooldown_remaining }}" disabled>
+                        あと
+                        <span id="exploration-cooldown-seconds">
+                            {{ exploration_cooldown_remaining }}
+                        </span>
+                        秒
+                    </button>
 
-            {% if exploration_cooldown_reduced %}
-                <p class="cooldown-status">
-                    探索CT短縮中：20秒
-                </p>
-            {% else %}
-                <p class="cooldown-status">
-                    通常探索CT：40秒
-                </p>
-            {% endif %}
+                    {% if exploration_cooldown_reduced %}
+                    <p class="cooldown-status">
+                        探索CT短縮中：20秒
+                    </p>
+                    {% else %}
+                    <p class="cooldown-status">
+                        通常探索CT：40秒
+                    </p>
+                    {% endif %}
 
-        {% else %}
+                    {% else %}
 
-            <button
-                type="submit"
-                class="explore-button"
-            >
-                探索を開始する
-                <span>→</span>
-            </button>
+                    <button type="submit" class="explore-button">
+                        探索を開始する
+                        <span>→</span>
+                    </button>
 
-        {% endif %}
+                    {% endif %}
 
-    </form>
+                </form>
 
-</div>
+            </div>
 
 
 
@@ -1062,23 +1049,16 @@
 
                 {% if exploration_cooldown_remaining > 0 %}
 
-                    <button
-                        type="button"
-                        class="explore-button explore-button-disabled"
-                        disabled
-                    >
-                        戦闘待機中
-                    </button>
+                <button type="button" class="explore-button explore-button-disabled" disabled>
+                    戦闘待機中
+                </button>
 
                 {% else %}
 
-                    <a
-                        href="{% url 'battle:arena_battle' %}"
-                        class="explore-button"
-                    >
-                        闘技場へ挑戦
-                        <span>→</span>
-                    </a>
+                <a href="{% url 'battle:arena_battle' %}" class="explore-button">
+                    闘技場へ挑戦
+                    <span>→</span>
+                </a>
 
                 {% endif %}
 
@@ -1089,62 +1069,55 @@
              オープンチャット
             ============================== -->
 
-        <section
-            class="home-card chat-card collapsible-section"
-            data-collapse-id="chat"
-        >
+        <section class="home-card chat-card collapsible-section" data-collapse-id="chat">
 
-<div class="card-heading">
+            <div class="card-heading">
 
-    <div>
+                <div>
 
-        <p class="section-label">
-            OPEN CHAT
-        </p>
+                    <p class="section-label">
+                        OPEN CHAT
+                    </p>
 
-        <h2>
-            オープンチャット
-        </h2>
+                    <h2>
+                        オープンチャット
+                    </h2>
 
-    </div>
+                </div>
 
 
-    <button
-        type="button"
-        class="collapse-toggle"
-        aria-expanded="true"
-    >
-        <span class="collapse-toggle-icon">
-            ▼
-        </span>
-    </button>
-
-</div>
-
-<div class="collapsible-content">
-            <div id="chat-messages" class="chat-messages">
-
-                <p class="chat-loading">
-                    メッセージを読み込み中...
-                </p>
-
-            </div>
-
-
-            <div class="chat-form">
-
-                {% csrf_token %}
-
-                <input id="chat-input" type="text" maxlength="200" placeholder="メッセージを入力..." autocomplete="off">
-
-                <button id="chat-send-button" type="button">
-                    送信
+                <button type="button" class="collapse-toggle" aria-expanded="true">
+                    <span class="collapse-toggle-icon">
+                        ▼
+                    </span>
                 </button>
 
             </div>
 
-            <p id="chat-error" class="chat-error"></p>
-</div>
+            <div class="collapsible-content">
+                <div id="chat-messages" class="chat-messages">
+
+                    <p class="chat-loading">
+                        メッセージを読み込み中...
+                    </p>
+
+                </div>
+
+
+                <div class="chat-form">
+
+                    {% csrf_token %}
+
+                    <input id="chat-input" type="text" maxlength="200" placeholder="メッセージを入力..." autocomplete="off">
+
+                    <button id="chat-send-button" type="button">
+                        送信
+                    </button>
+
+                </div>
+
+                <p id="chat-error" class="chat-error"></p>
+            </div>
         </section>
 
 
@@ -1152,61 +1125,54 @@
                  お知らせ
             ============================== -->
 
-       <section
-    class="home-card notice-card collapsible-section"
-    data-collapse-id="notice"
->
+        <section class="home-card notice-card collapsible-section" data-collapse-id="notice">
 
             <div class="card-heading">
 
-    <div>
+                <div>
 
-        <p class="section-label">
-            INFORMATION
-        </p>
+                    <p class="section-label">
+                        INFORMATION
+                    </p>
 
-        <h2>
-            お知らせ
-        </h2>
-
-    </div>
-
-
-    <button
-        type="button"
-        class="collapse-toggle"
-        aria-expanded="true"
-    >
-        <span class="collapse-toggle-icon">
-            ▼
-        </span>
-    </button>
-
-</div>
-
-<div class="collapsible-content">
-            <div class="notice-list">
-
-                <div class="notice-item">
-
-                    <span class="notice-tag">
-                        INFO
-                    </span>
-
-                    <div>
-
-                        <strong>
-                            Qhymiaへようこそ！
-                        </strong>
-
-                        <p>
-                            冒険の準備をして探索へ向かいましょう。
-                        </p>
-
-                    </div>
+                    <h2>
+                        お知らせ
+                    </h2>
 
                 </div>
-</div>
+
+
+                <button type="button" class="collapse-toggle" aria-expanded="true">
+                    <span class="collapse-toggle-icon">
+                        ▼
+                    </span>
+                </button>
+
+            </div>
+
+            <div class="collapsible-content">
+                <div class="notice-list">
+
+                    <div class="notice-item">
+
+                        <span class="notice-tag">
+                            INFO
+                        </span>
+
+                        <div>
+
+                            <strong>
+                                Qhymiaへようこそ！
+                            </strong>
+
+                            <p>
+                                冒険の準備をして探索へ向かいましょう。
+                            </p>
+
+                        </div>
+
+                    </div>
+                </div>
 
                 <div class="notice-item">
 
