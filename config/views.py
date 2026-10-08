@@ -1,10 +1,296 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-
+from django.conf import settings
 from apps.accounts.models import Character
+from apps.sns.models import Post
 
 import random
+
+# ========================================
+# プレイヤー検索 / 管理者コマンド入口
+# ========================================
+@login_required
+def player_search(request):
+    if request.method != "POST":
+        return redirect("home")
+
+    query = request.POST.get("query", "").strip()
+
+    if not query:
+        messages.error(
+            request,
+            "検索内容を入力してください。",
+        )
+        return redirect("home")
+
+    # 管理者モード起動コマンド
+    if query == "/admin":
+        return redirect("admin_mode_login")
+
+    # 管理者モード解除コマンド
+    if query == "/adminoff":
+        request.session["admin_mode"] = False
+
+        messages.success(
+            request,
+            "管理者モードを解除しました。",
+        )
+
+        return redirect("home")
+
+    # 通常のプレイヤー検索
+    character = Character.objects.filter(
+        name__iexact=query
+    ).first()
+
+    if character is None:
+        messages.error(
+            request,
+            "プレイヤーが見つかりませんでした。",
+        )
+        return redirect("home")
+
+    messages.success(
+        request,
+        (
+            f"{character.name} / "
+            f"Lv.{character.level} / "
+            f"{character.gold}Q"
+        ),
+    )
+
+    return redirect("home")
+
+
+# ========================================
+# 管理者モード認証
+# ========================================
+@login_required
+def admin_mode_login(request):
+    if request.method == "POST":
+        password = request.POST.get(
+            "password",
+            "",
+        )
+
+        if password == settings.ADMIN_MODE_PASSWORD:
+            request.session["admin_mode"] = True
+
+            messages.success(
+                request,
+                "管理者モードを有効にしました。",
+            )
+
+            return redirect("home")
+
+        messages.error(
+            request,
+            "管理者パスワードが違います。",
+        )
+
+    return render(
+        request,
+        "admin_mode_login.html",
+    )
+
+@login_required
+def admin_panel(request):
+
+    # 管理者モードでなければ入れない
+    if not request.session.get("admin_mode"):
+        messages.error(
+            request,
+            "管理者モードを有効にしてください。",
+        )
+        return redirect("home")
+
+    # 検索文字列
+    query = request.GET.get("q", "").strip()
+
+    characters = (
+        Character.objects
+        .select_related("user")
+        .order_by("name")
+    )
+
+    # 名前で部分一致検索
+    if query:
+        characters = characters.filter(
+            name__icontains=query
+        )
+
+    posts = (
+            Post.objects
+            .select_related(
+                "user",
+                "user__character",
+            )
+            .order_by("-created_at")
+        )
+
+
+    return render(
+    request,
+    "admin_panel.html",
+    {
+        "characters": characters,
+        "query": query,
+        "posts": posts,
+    },
+)
+
+    
+
+@login_required
+def admin_player_edit(request, character_id):
+
+    # 管理者モードでなければ拒否
+    if not request.session.get("admin_mode"):
+        messages.error(
+            request,
+            "管理者モードを有効にしてください。",
+        )
+        return redirect("home")
+
+    character = Character.objects.filter(
+        id=character_id
+    ).first()
+
+    if character is None:
+        messages.error(
+            request,
+            "対象プレイヤーが見つかりません。",
+        )
+        return redirect("admin_panel")
+
+    if request.method == "POST":
+
+        try:
+            character.level = int(
+                request.POST.get(
+                    "level",
+                    character.level,
+                )
+            )
+
+            character.exp = int(
+                request.POST.get(
+                    "exp",
+                    character.exp,
+                )
+            )
+
+            character.gold = int(
+                request.POST.get(
+                    "gold",
+                    character.gold,
+                )
+            )
+
+            character.max_hp = int(
+                request.POST.get(
+                    "max_hp",
+                    character.max_hp,
+                )
+            )
+
+            character.current_hp = min(
+                character.current_hp,
+                character.max_hp,
+            )
+
+            character.max_mp = int(
+                request.POST.get(
+                    "max_mp",
+                    character.max_mp,
+                )
+            )
+
+            character.current_mp = min(
+                character.current_mp,
+                character.max_mp,
+            )
+
+            character.strength = int(
+                request.POST.get(
+                    "strength",
+                    character.strength,
+                )
+            )
+
+            character.intelligence = int(
+                request.POST.get(
+                    "intelligence",
+                    character.intelligence,
+                )
+            )
+
+            character.dexterity = int(
+                request.POST.get(
+                    "dexterity",
+                    character.dexterity,
+                )
+            )
+
+            character.agility = int(
+                request.POST.get(
+                    "agility",
+                    character.agility,
+                )
+            )
+
+            character.vitality = int(
+                request.POST.get(
+                    "vitality",
+                    character.vitality,
+                )
+            )
+
+            character.luck = int(
+                request.POST.get(
+                    "luck",
+                    character.luck,
+                )
+            )
+
+            character.save()
+
+            messages.success(
+                request,
+                f"{character.name}の情報を更新しました。",
+            )
+
+            return redirect("admin_panel")
+
+        except ValueError:
+            messages.error(
+                request,
+                "数値項目には数字を入力してください。",
+            )
+
+    return render(
+        request,
+        "admin_player_edit.html",
+        {
+            "character": character,
+        },
+    )
+
+@login_required
+def admin_mode_logout(request):
+
+    if request.method != "POST":
+        return redirect("admin_panel")
+
+    request.session["admin_mode"] = False
+
+    messages.success(
+        request,
+        "管理者モードを解除しました。",
+    )
+
+    return redirect("home")
 
 @login_required
 def home(request):

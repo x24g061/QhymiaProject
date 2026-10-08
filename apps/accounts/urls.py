@@ -5,6 +5,7 @@ from .views import (
     character_list_view,
     login_view,
     logout_view,
+    logout_view,
     signup_view,
     profile_view,
     terms_view,

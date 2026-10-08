@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+
+{% block title %}
+プレイヤー編集 | Qhymia
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-edit-page">
+
+    <div class="admin-edit-header">
+
+        <div>
+            <p class="admin-panel-label">
+                ADMIN PLAYER EDIT
+            </p>
+
+            <h1>
+                {{ character.name }} を編集
+            </h1>
+
+            <p>
+                プレイヤーの各種ステータスを変更できます。
+            </p>
+        </div>
+
+        <a href="{% url 'admin_panel' %}">
+            ← 管理者メニューへ戻る
+        </a>
+
+    </div>
+
+
+    <form method="post" class="admin-edit-form">
+
+        {% csrf_token %}
+
+
+        <!-- =========================
+             基本情報
+        ========================== -->
+
+        <section class="admin-edit-section">
+
+            <h2>
+                基本情報
+            </h2>
+
+            <div class="admin-edit-grid">
+
+                <label>
+                    レベル
+
+                    <input type="number" name="level" value="{{ character.level }}" min="1">
+                </label>
+
+
+                <label>
+                    EXP
+
+                    <input type="number" name="exp" value="{{ character.exp }}" min="0">
+                </label>
+
+
+                <label>
+                    所持Q
+
+                    <input type="number" name="gold" value="{{ character.gold }}" min="0">
+                </label>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             HP / MP
+        ========================== -->
+
+        <section class="admin-edit-section">
+
+            <h2>
+                HP / MP
+            </h2>
+
+            <div class="admin-edit-grid">
+
+                <label>
+                    最大HP
+
+                    <input type="number" name="max_hp" value="{{ character.max_hp }}" min="1">
+                </label>
+
+
+                <label>
+                    最大MP
+
+                    <input type="number" name="max_mp" value="{{ character.max_mp }}" min="0">
+                </label>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             基礎ステータス
+        ========================== -->
+
+        <section class="admin-edit-section">
+
+            <h2>
+                基礎ステータス
+            </h2>
+
+            <div class="admin-edit-grid">
+
+                <label>
+                    STR
+
+                    <input type="number" name="strength" value="{{ character.strength }}" min="0">
+                </label>
+
+
+                <label>
+                    INT
+
+                    <input type="number" name="intelligence" value="{{ character.intelligence }}" min="0">
+                </label>
+
+
+                <label>
+                    DEX
+
+                    <input type="number" name="dexterity" value="{{ character.dexterity }}" min="0">
+                </label>
+
+
+                <label>
+                    AGI
+
+                    <input type="number" name="agility" value="{{ character.agility }}" min="0">
+                </label>
+
+
+                <label>
+                    VIT
+
+                    <input type="number" name="vitality" value="{{ character.vitality }}" min="0">
+                </label>
+
+
+                <label>
+                    LUK
+
+                    <input type="number" name="luck" value="{{ character.luck }}" min="0">
+                </label>
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             保存
+        ========================== -->
+
+        <div class="admin-edit-actions">
+
+            <button type="submit">
+                変更を保存する
+            </button>
+
+            <a href="{% url 'admin_panel' %}">
+                キャンセル
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

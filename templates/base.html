@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>
         {% block title %}Qhymia{% endblock %}
@@ -14,8 +12,8 @@
 
     {% load static %}
 
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
-<link rel="stylesheet" href="{% static 'css/sns.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sns.css' %}">
 
     {% block extra_css %}
     {% endblock %}
@@ -23,26 +21,49 @@
 
 <body>
 
-    <header>
-        <h1>Qhymia</h1>
+    <header class="site-header">
 
-        {% if user.is_authenticated %}
+        <h1>
+            Qhymia
+        </h1>
+
+
+        <div class="header-right">
+
+            {% if user.is_authenticated %}
+
+            {% if request.session.admin_mode %}
+
+            <span class="admin-mode-badge">
+                ADMIN MODE
+            </span>
+
+            <a href="{% url 'admin_panel' %}" class="admin-menu-link">
+                管理者メニュー
+            </a>
+
+            {% endif %}
+
             <a href="{% url 'accounts:logout' %}">
                 ログアウト
             </a>
-        {% endif %}
+
+            {% endif %}
+
+        </div>
+
     </header>
 
     <main>
 
         {% if messages %}
-            <div class="message-area">
-                {% for message in messages %}
-                    <div class="message {{ message.tags }}">
-                        {{ message }}
-                    </div>
-                {% endfor %}
+        <div class="message-area">
+            {% for message in messages %}
+            <div class="message {{ message.tags }}">
+                {{ message }}
             </div>
+            {% endfor %}
+        </div>
         {% endif %}
 
         {% block content %}
@@ -58,9 +79,9 @@
     {% include "sns.html" %}
 
 
-    <script
-        src="{% static 'js/sns.js' %}">
+    <script src="{% static 'js/sns.js' %}">
     </script>
 
 </body>
+
 </html>
