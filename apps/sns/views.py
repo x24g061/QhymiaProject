@@ -6,6 +6,36 @@ from .models import Favorite, Like, Post
 from django.http import JsonResponse
 
 @login_required
+def admin_delete_post(request, post_id):
+
+    # 管理者モードでなければ削除不可
+    if not request.session.get("admin_mode"):
+        return JsonResponse(
+            {
+                "error": "管理者権限がありません。"
+            },
+            status=403,
+        )
+
+    # POST以外では削除しない
+    if request.method != "POST":
+        return JsonResponse(
+            {
+                "error": "不正なリクエストです。"
+            },
+            status=405,
+        )
+
+    post = get_object_or_404(
+        Post,
+        id=post_id,
+    )
+
+    post.delete()
+
+    return redirect("admin_panel")
+
+@login_required
 def sns_page(request):
     view_mode = request.GET.get("view", "all")
 

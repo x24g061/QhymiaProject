@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+
+{% block title %}
+管理者メニュー | Qhymia
+{% endblock %}
+
+{% block content %}
+
+<div class="admin-panel-page">
+
+    <div class="admin-panel-header">
+
+        <div>
+            <p class="admin-panel-label">
+                ADMIN PANEL
+            </p>
+
+            <h1>
+                管理者メニュー
+            </h1>
+
+            <p>
+                登録されているプレイヤーを確認できます。
+            </p>
+        </div>
+
+        <a href="{% url 'home' %}">
+            ← ホームへ戻る
+        </a>
+
+        <form method="post" action="{% url 'admin_mode_logout' %}">
+            {% csrf_token %}
+
+            <button type="submit">
+                管理者モードを解除
+            </button>
+        </form>
+
+    </div>
+
+    <form method="get" action="{% url 'admin_panel' %}" class="admin-player-search">
+
+        <input type="text" name="q" value="{{ query }}" placeholder="プレイヤー名を検索" autocomplete="off">
+
+        <button type="submit">
+            検索
+        </button>
+
+        {% if query %}
+        <a href="{% url 'admin_panel' %}">
+            クリア
+        </a>
+        {% endif %}
+
+    </form>
+
+    <div class="admin-player-list">
+
+        <div class="admin-player-header">
+
+            <div>キャラクター名</div>
+            <div>レベル</div>
+            <div>EXP</div>
+            <div>所持Q</div>
+            <div>闘技場階層</div>
+            <div>操作</div>
+
+        </div>
+
+
+        {% for character in characters %}
+
+        <div class="admin-player-row">
+
+            <div>
+                <strong>
+                    {{ character.name }}
+                </strong>
+            </div>
+
+            <div>
+                Lv.{{ character.level }}
+            </div>
+
+            <div>
+                {{ character.exp }}
+            </div>
+
+            <div>
+                {{ character.gold }}Q
+            </div>
+
+            <div>
+                {{ character.arena_floor }}階
+            </div>
+            <div>
+                <a href="{% url 'admin_player_edit' character.id %}" class="admin-edit-button">
+                    編集
+                </a>
+            </div>
+        </div>
+
+        {% empty %}
+
+        <p>
+            プレイヤーが登録されていません。
+        </p>
+
+        {% endfor %}
+
+    </div>
+    <section class="admin-sns-section">
+
+        <div class="admin-panel-header">
+
+            <div>
+                <p class="admin-panel-label">
+                    SNS POSTS
+                </p>
+
+                <h2>
+                    SNS投稿管理
+                </h2>
+
+                <p>
+                    投稿内容を確認し、必要に応じて削除できます。
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="admin-sns-list">
+
+            {% for post in posts %}
+
+            <article class="admin-sns-post">
+
+                <div class="admin-sns-post-info">
+
+                    <div>
+                        <strong>
+                            {% if post.user.character %}
+                            {{ post.user.character.name }}
+                            {% else %}
+                            {{ post.user }}
+                            {% endif %}
+                        </strong>
+                    </div>
+
+                    <div>
+                        {{ post.created_at|date:"Y/m/d H:i" }}
+                    </div>
+
+                </div>
+
+
+                <div class="admin-sns-post-content">
+
+                    {% if post.text %}
+                    <p>
+                        {{ post.text }}
+                    </p>
+                    {% endif %}
+
+                    {% if post.image %}
+                    <p>
+                        画像投稿あり
+                    </p>
+                    {% endif %}
+
+                </div>
+
+
+                <div class="admin-sns-post-actions">
+
+                    <form method="post" action="{% url 'admin_delete_post' post.id %}">
+                        {% csrf_token %}
+
+                        <button type="submit" onclick="return confirm('この投稿を削除しますか？');">
+                            削除
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </article>
+
+            {% empty %}
+
+            <p>
+                SNS投稿はありません。
+            </p>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+</div>
+
+{% endblock %}
