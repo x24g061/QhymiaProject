@@ -39,6 +39,33 @@
 }
 
 
+/* ========================================
+   上部プレイヤー検索
+======================================== */
+
+.home-player-search-top {
+    margin: 16px 0 14px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.home-player-search-top .player-search-form {
+    display: flex;
+    gap: 6px;
+    width: 100%;
+    max-width: 360px;
+}
+
+.home-player-search-top input {
+    flex: 1;
+    min-width: 0;
+    padding: 8px 10px;
+}
+
+.home-player-search-top button {
+    padding: 8px 14px;
+    cursor: pointer;
+}
 
 /* ========================================
    HOME HERO
@@ -1811,8 +1838,7 @@
 
 /* 閉じたら横向きにする */
 
-.collapsible-section.is-collapsed
-.collapse-toggle-icon {
+.collapsible-section.is-collapsed .collapse-toggle-icon {
     transform: rotate(-90deg);
 }
 
@@ -1826,16 +1852,14 @@
 
 /* 折りたたみ時 */
 
-.collapsible-section.is-collapsed
-> .collapsible-content {
+.collapsible-section.is-collapsed>.collapsible-content {
     display: none;
 }
 
 
 /* 通常カードを閉じた時の余白調整 */
 
-.home-card.collapsible-section.is-collapsed
-.card-heading {
+.home-card.collapsible-section.is-collapsed .card-heading {
     margin-bottom: 0;
 }
 
@@ -1898,16 +1922,14 @@
 }
 
 
-.arena-panel
-> .collapsible-content {
+.arena-panel>.collapsible-content {
     width: 100%;
 }
 
 
 /* 閉じた時 */
 
-.arena-panel.is-collapsed
-.arena-collapse-heading {
+.arena-panel.is-collapsed .arena-collapse-heading {
     margin-bottom: 0;
 }
 

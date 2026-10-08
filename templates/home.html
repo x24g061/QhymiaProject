@@ -9,6 +9,28 @@
 
 <div class="qh-home">
 
+    <!-- =============================
+                 プレイヤー検索
+            ============================== -->
+
+    <div class="home-player-search">
+
+        <form method="post" action="{% url 'player_search' %}" class="player-search-form">
+
+            {% csrf_token %}
+
+            <input type="text" name="query" placeholder="プレイヤー検索" autocomplete="off">
+
+            <button type="submit">
+                検索
+            </button>
+
+        </form>
+
+    </div>
+
+
+
     <!-- =====================================
          HOME ヘッダー
     ====================================== -->
@@ -405,26 +427,6 @@
 
     <div class="home-left">
 
-
-        <!-- =============================
-                 プレイヤー検索
-            ============================== -->
-
-        <div class="home-player-search">
-
-            <form method="post" action="{% url 'player_search' %}" class="player-search-form">
-
-                {% csrf_token %}
-
-                <input type="text" name="query" placeholder="プレイヤー検索" autocomplete="off">
-
-                <button type="submit">
-                    検索
-                </button>
-
-            </form>
-
-        </div>
 
 
         <!-- =============================
