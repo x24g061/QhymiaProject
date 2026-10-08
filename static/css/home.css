@@ -1930,3 +1930,43 @@
     }
 
 }
+
+/* ========================================
+   キャラクター画像
+======================================== */
+
+.character-avatar,
+.arena-card-avatar {
+    overflow: hidden;
+}
+
+.character-avatar-image,
+.arena-card-avatar-image {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    image-rendering: pixelated;
+}
+
+/* ========================================
+   闘技場キャラクター画像
+======================================== */
+
+.arena-card-avatar {
+    overflow: hidden;
+}
+
+.arena-card-avatar-image {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    image-rendering: pixelated;
+}

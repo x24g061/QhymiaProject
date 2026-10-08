@@ -60,133 +60,162 @@
         =============================== -->
         <section class="selected-character-section">
 
-            <div class="selected-character-preview">
-                <div class="character-image-placeholder">
-                    選択番号の<br>
-                    イラスト
-                </div>
-            </div>
+            <<div class="selected-character-preview">
 
-            <div class="selected-character-info">
+                <div class="character-image-placeholder" id="selected-character-preview">
 
-                <div class="character-status-row">
+                    {% if selected_character %}
 
-                    <div class="status-item">
-                        <span class="status-label">直接入力：</span>
+                    <img id="selected-character-image" src="{% static selected_character.image %}" alt="選択中キャラクター">
 
-                        <input type="number" id="character_number" name="character_number" value="053" min="1">
-                    </div>
+                    {% else %}
 
-                    <div class="status-item">
-                        <label for="race" class="status-label">
-                            種族：
-                        </label>
+                    <span id="selected-character-placeholder">
+                        キャラクター画像が<br>
+                        登録されていません
+                    </span>
 
-                        <select name="race" id="race" class="status-select" required>
-                            <option value="human">ヒューマン</option>
-                            <option value="elf">エルフ</option>
-                            <option value="dwarf">ドワーフ</option>
-                            <option value="dragonia">ドラゴニア</option>
-                            <option value="witch">ウィッチ</option>
-                            <option value="fairy">フェアリー</option>
-                            <option value="demonia">デモニア</option>
-                        </select>
-                    </div>
-
-                    <div class="status-item">
-                        <label for="job" class="status-label">
-                            職業：
-                        </label>
-
-                        <select name="job" id="job" class="status-select" required>
-                            <option value="grappler">拳闘士</option>
-                            <option value="warrior">重戦士</option>
-                            <option value="hunter">狩人</option>
-                            <option value="wizard">ウィザード</option>
-                            <option value="priest">プリースト</option>
-                            <option value="wanderer">放浪人</option>
-                            <option value="assassin">暗殺者</option>
-                        </select>
-                    </div>
+                    {% endif %}
 
                 </div>
 
+</div>
+
+<div class="selected-character-info">
+
+    <div class="character-status-row">
+
+        <div class="status-item">
+            <span class="status-label">直接入力：</span>
+
+            <input type="number" id="character_number" name="character_image_id"
+                value="{% if selected_character %}{{ selected_character.number }}{% endif %}" min="1">
+        </div>
+
+        <div class="status-item">
+            <label for="race" class="status-label">
+                種族：
+            </label>
+
+            <select name="race" id="race" class="status-select" required>
+                <option value="human">ヒューマン</option>
+                <option value="elf">エルフ</option>
+                <option value="dwarf">ドワーフ</option>
+                <option value="dragonia">ドラゴニア</option>
+                <option value="witch">ウィッチ</option>
+                <option value="fairy">フェアリー</option>
+                <option value="demonia">デモニア</option>
+            </select>
+        </div>
+
+        <div class="status-item">
+            <label for="job" class="status-label">
+                職業：
+            </label>
+
+            <select name="job" id="job" class="status-select" required>
+                <option value="grappler">拳闘士</option>
+                <option value="warrior">重戦士</option>
+                <option value="hunter">狩人</option>
+                <option value="wizard">ウィザード</option>
+                <option value="priest">プリースト</option>
+                <option value="wanderer">放浪人</option>
+                <option value="assassin">暗殺者</option>
+            </select>
+        </div>
+
+    </div>
 
 
-                <div class="character-links">
 
-                    <div class="character-image-select-info">
-                        <p class="character-select-text">
-                            キャラクター画像から選ぶ
-                        </p>
+    <div class="character-links">
 
-                        <a href="{% url 'accounts:character_list' %}" class="character-link">
-                            →キャラクター一覧
-                        </a>
-                    </div>
+        <div class="character-image-select-info">
+            <p class="character-select-text">
+                キャラクター画像から選ぶ
+            </p>
 
-                    <a href="#" class="character-link passive-link">
-                        種族ごとのパッシブ詳細
-                    </a>
+            <a href="{% url 'accounts:character_list' %}" class="character-link">
+                →キャラクター一覧
+            </a>
+        </div>
 
-                </div>
+        <a href="#" class="character-link passive-link">
+            種族ごとのパッシブ詳細
+        </a>
 
-            </div>
+    </div>
 
-        </section>
+</div>
+
+</section>
 
 
-        <!-- ==============================
+<!-- ==============================
              ランダムキャラクター
         =============================== -->
-        <section class="random-character-section">
+<section class="random-character-section">
 
-            <div class="random-header">
+    <div class="random-header">
 
-                <p class="random-description">
-                    ●ランダムで選ぶ
-                    <span>
-                        （※クリックorタップで画像選択ができます）
-                    </span>
-                </p>
+        <p class="random-description">
+            ●ランダムで選ぶ
+            <span>
+                （※クリックorタップで画像選択ができます）
+            </span>
+        </p>
 
-                <button type="button" class="random-button">
-                    再度ランダム
-                </button>
+        <button type="button" class="random-button">
+            再度ランダム
+        </button>
 
-            </div>
-
-
-            <div class="character-list">
-
-                {% for i in "12345678" %}
-
-                <button type="button" class="character-card">
-                    <span>
-                        イラスト
-                    </span>
-                </button>
-
-                {% endfor %}
-
-            </div>
-
-        </section>
+    </div>
 
 
-        <!-- ==============================
-             作成ボタン
-        =============================== -->
-        <div class="submit-area">
+    <div class="character-list">
 
-            <button type="submit" class="create-character-button">
-                あなたの冒険を始める！
+        <div class="character-list" id="random-character-list">
+
+            {% for character in random_characters %}
+
+            <button type="button" class="character-card" data-character-number="{{ character.number }}">
+
+                <img src="{% static character.image %}" alt="No.{{ character.number|stringformat:'03d' }}">
+
             </button>
+
+            {% empty %}
+
+            <p>
+                キャラクター画像がまだ登録されていません。
+            </p>
+
+            {% endfor %}
 
         </div>
 
-    </form>
+    </div>
+
+</section>
+
+
+<!-- ==============================
+             作成ボタン
+        =============================== -->
+<div class="submit-area">
+
+    <button type="submit" class="create-character-button">
+        あなたの冒険を始める！
+    </button>
 
 </div>
+
+</form>
+
+</div>
+
+{{ available_numbers|json_script:"available-character-numbers" }}
+
+<script src="{% static 'js/character-create.js' %}"></script>
 
 {% endblock %}
