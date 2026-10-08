@@ -1,78 +1,25 @@
 import random
 import math
+from apps.battle.engine.calculations import (
+    ATTRIBUTE_MULTIPLIERS,
+    calculate_hit_rate,
+    calculate_physical_damage,
+    roll_percent,
+)
+
+from apps.battle.engine.skills.grappler import (
+    GrapplerSkillsMixin,
+)
+
 from apps.battle.combatants import (
     PlayerCombatant,
     EnemyCombatant,
 )
 
-ATTRIBUTE_MULTIPLIERS = {
-    "fire": {
-        "fire": 1.0,
-        "water": 0.8,
-        "grass": 1.2,
-        "rock": 1.0,
-        "light": 1.0,
-        "dark": 1.0,
-        "neutral": 1.0,
-    },
-    "water": {
-        "fire": 1.2,
-        "water": 1.0,
-        "grass": 0.8,
-        "rock": 1.0,
-        "light": 1.0,
-        "dark": 1.0,
-        "neutral": 1.0,
-    },
-    "grass": {
-        "fire": 0.8,
-        "water": 1.2,
-        "grass": 1.0,
-        "rock": 1.2,
-        "light": 1.0,
-        "dark": 1.0,
-        "neutral": 1.0,
-    },
-    "rock": {
-        "fire": 1.2,
-        "water": 1.0,
-        "grass": 0.8,
-        "rock": 0.8,
-        "light": 1.0,
-        "dark": 1.0,
-        "neutral": 1.0,
-    },
-    "light": {
-        "fire": 1.0,
-        "water": 1.0,
-        "grass": 1.0,
-        "rock": 1.0,
-        "light": 1.0,
-        "dark": 1.2,
-        "neutral": 1.0,
-    },
-    "dark": {
-        "fire": 1.0,
-        "water": 1.0,
-        "grass": 1.0,
-        "rock": 1.0,
-        "light": 1.2,
-        "dark": 1.0,
-        "neutral": 1.0,
-    },
-    "neutral": {
-        "fire": 1.0,
-        "water": 1.0,
-        "grass": 1.0,
-        "rock": 1.0,
-        "light": 1.0,
-        "dark": 1.0,
-        "neutral": 1.0,
-    },
-}
 
-
-class BattleEngine:
+class BattleEngine(
+    GrapplerSkillsMixin,
+):
 
 
     def get_player_max_hp(self):
@@ -2692,200 +2639,6 @@ class BattleEngine:
 #==== プレイヤースキル実装 ===
 
 
-#==== 拳闘士スキル ====
-
-    # ============================
-    # ダブルパンチ
-    # ============================
-
-    def skill_double_punch(self):
-        """
-        ダブルパンチ
-
-        無属性・物理
-
-        STR ×2.0 の攻撃を
-        2回行う。
-
-        各攻撃ごとに
-        命中・クリティカル判定を行う。
-        """
-
-        strength = self.get_player_stat(
-            "strength"
-        )
-
-        # 2回攻撃
-        for hit_number in range(1, 3):
-
-            # 1撃目で敵を倒した場合、
-            # 2撃目は発生させない。
-            if self.enemy_hp <= 0:
-                break
-
-            base_damage = (
-                strength * 2.0
-            )
-
-            self.player_physical_skill_hit(
-                skill_name="ダブルパンチ",
-                base_damage=base_damage,
-                attribute="neutral",
-                hit_label=(
-                    f"ダブルパンチ "
-                    f"{hit_number}撃目"
-                ),
-            )
-
-    # ============================
-    # 衝撃波
-    # ============================
-
-    def skill_shock_wave(self):
-        """
-        衝撃波
-
-        光属性・物理
-
-        STR ×1.5
-
-        本来は全体攻撃。
-        現在のBattleEngineは1対1なので、
-        今は現在の敵1体へ攻撃する。
-
-        複数敵戦闘を実装した際に
-        全敵へ処理するよう拡張する。
-        """
-
-        strength = self.get_player_stat(
-            "strength"
-        )
-
-        base_damage = (
-            strength * 1.5
-        )
-
-        self.player_physical_skill_hit_all(
-            skill_name="衝撃波",
-            base_damage=base_damage,
-            attribute="light",
-        )
-
-    # ============================
-    # 怒涛連打
-    # ============================
-
-    def skill_rapid_barrage(self):
-        """
-        怒涛連打
-
-        炎属性・物理
-
-        STR ×0.5 の攻撃を
-        ランダムで1～10回行う。
-
-        各ヒットごとに
-        命中・クリティカル判定を行う。
-        """
-
-        strength = self.get_player_stat(
-            "strength"
-        )
-
-        # 攻撃回数を1～10回から決定
-        hit_count = random.randint(
-            1,
-            10,
-        )
-
-        self.logs.append(
-            f"怒涛連打！ "
-            f"{hit_count}回攻撃！"
-        )
-
-        for hit_number in range(
-            1,
-            hit_count + 1,
-        ):
-
-            # 途中で敵を倒した場合は終了
-            if self.enemy_hp <= 0:
-                break
-
-            base_damage = (
-                strength * 0.5
-            )
-
-            self.player_physical_skill_hit(
-                skill_name="怒涛連打",
-                base_damage=base_damage,
-                attribute="fire",
-                hit_label=(
-                    f"怒涛連打 "
-                    f"{hit_number}撃目"
-                ),
-            )
-
-    # ============================
-    # 闘魂
-    # ============================
-
-    def skill_fighting_spirit(self):
-        """
-        闘魂
-
-        炎属性・補助
-
-        次の3行動の間、
-        STR ×1.10。
-
-        同じ効果は重複させず、
-        再使用した場合は
-        残り行動数を3へ戻す。
-        """
-
-        self.fighting_spirit_turns = 3
-
-        self.logs.append(
-            "闘魂！ "
-            "3行動の間、STRが10%上昇！"
-        )
-
-    # ============================
-    # 真拳一殺
-    # ============================
-
-    def skill_true_fist(self):
-        """
-        真拳一殺
-
-        無属性・物理
-
-        基礎ダメージ:
-        STR ×2.0
-        + LUK ×1.5
-        """
-
-        strength = self.get_player_stat(
-            "strength"
-        )
-
-        luck = self.get_player_stat(
-            "luck"
-        )
-
-        base_damage = (
-            strength * 2.0
-            + luck * 1.5
-        )
-
-        self.player_physical_skill_hit(
-            skill_name="真拳一殺",
-            base_damage=base_damage,
-            attribute="neutral",
-        )
-
-
 #==== 重戦士スキル ====
 
     # ============================
@@ -4343,66 +4096,23 @@ class BattleEngine:
         60 + 39 × DEX / (DEX + 敵AGI)
         """
 
-        denominator = (
-            attacker_dex
-            + defender_agi
+        return calculate_hit_rate(
+            attacker_dex,
+            defender_agi,
         )
 
-        if denominator <= 0:
-            return 60
-
-        hit_rate = (
-            60
-            + 39
-            * attacker_dex
-            / denominator
-        )
-
-        return min(
-            99,
-            max(
-                0,
-                hit_rate,
-            ),
-        )
 
     @staticmethod
     def calculate_physical_damage(
         strength,
         defender_vit,
     ):
-        """
-        通常攻撃
-        STR ×1.0
-
-        最終ダメージ
-        基礎ダメージ - 敵VIT ×0.5
-        """
-
-        base_damage = (
-            strength
-            * 1.0
+        return calculate_physical_damage(
+            strength,
+            defender_vit,
         )
 
-        damage = (
-            base_damage
-            - defender_vit
-            * 0.5
-        )
-
-        # 通常攻撃は最低1ダメージ
-        return max(
-            1,
-            int(damage),
-        )
 
     @staticmethod
     def roll_percent(rate):
-        """%判定。"""
-
-        roll = random.uniform(
-            0,
-            100,
-        )
-
-        return roll < rate
+        return roll_percent(rate)
