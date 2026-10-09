@@ -720,3 +720,99 @@ class BattleAttacksMixin:
                 base_damage=base_damage,
                 attribute="neutral",
             )
+
+
+    # ========================================================
+    # 生存中の敵index
+    # ========================================================
+
+    def get_alive_enemy_indexes(self):
+        """
+        生存している敵のindex一覧を返す。
+        """
+
+        return [
+            index
+            for index, enemy
+            in enumerate(
+                self.enemy_combatants
+            )
+            if enemy.is_alive()
+        ]
+
+
+    # ========================================================
+    # 物理全体攻撃
+    # ========================================================
+
+    def player_physical_skill_hit_all(
+        self,
+        skill_name,
+        base_damage,
+        attribute,
+    ):
+        """
+        生存している敵全員へ
+        物理スキルを1回ずつ当てる。
+        """
+
+        original_index = (
+            self.current_enemy_index
+        )
+
+        alive_indexes = (
+            self.get_alive_enemy_indexes()
+        )
+
+        for index in alive_indexes:
+
+            self.current_enemy_index = index
+
+            self.player_physical_skill_hit(
+                skill_name=skill_name,
+                base_damage=base_damage,
+                attribute=attribute,
+            )
+
+        # 元々狙っていた敵へ戻す
+        self.current_enemy_index = (
+            original_index
+        )
+
+
+    # ========================================================
+    # 魔法全体攻撃
+    # ========================================================
+
+    def player_magic_skill_hit_all(
+        self,
+        skill_name,
+        base_damage,
+        attribute,
+    ):
+        """
+        生存している敵全員へ
+        魔法スキルを1回ずつ当てる。
+        """
+
+        original_index = (
+            self.current_enemy_index
+        )
+
+        alive_indexes = (
+            self.get_alive_enemy_indexes()
+        )
+
+        for index in alive_indexes:
+
+            self.current_enemy_index = index
+
+            self.player_magic_skill_hit(
+                skill_name=skill_name,
+                base_damage=base_damage,
+                attribute=attribute,
+            )
+
+        self.current_enemy_index = (
+            original_index
+        )
