@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+キャラクター変更 | Qhymia
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/character_image_change.css' %}">
+
+<div class="character-change-page">
+
+    <section class="character-change-header">
+
+        <div>
+            <p class="character-change-label">
+                CHARACTER CHANGE
+            </p>
+
+            <h1>
+                キャラクター変更
+            </h1>
+
+            <p>
+                使用するキャラクター画像を変更できます。
+            </p>
+        </div>
+
+        <a href="{% url 'home' %}" class="character-change-back">
+            ← ホームへ戻る
+        </a>
+
+    </section>
+
+
+    <section class="current-character">
+
+        <p class="character-change-label">
+            CURRENT CHARACTER
+        </p>
+
+        <h2>
+            現在のキャラクター
+        </h2>
+
+        <div class="current-character-content">
+
+            <div class="current-character-image">
+
+                {% if character.character_image_path %}
+
+                <img src="{% static character.character_image_path %}" alt="{{ character.name }}">
+
+                {% else %}
+
+                <span>?</span>
+
+                {% endif %}
+
+            </div>
+
+
+            <div>
+
+                <strong>
+                    {{ character.name }}
+                </strong>
+
+                <p>
+                    現在の画像：
+
+                    {% if character.character_image_id %}
+
+                    No.{{ character.character_image_id|stringformat:"03d" }}
+
+                    {% else %}
+
+                    未設定
+
+                    {% endif %}
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="character-selection">
+
+    <p class="character-change-label">
+        CHARACTER LIST
+    </p>
+
+    <h2>
+        変更するキャラクターを選択
+    </h2>
+
+
+    <form method="post">
+
+        {% csrf_token %}
+
+        <div class="character-change-grid">
+
+            {% for item in available_characters %}
+
+            <button
+                type="submit"
+                name="character_image_id"
+                value="{{ item.number }}"
+                class="character-change-card {% if character.character_image_id == item.number %}character-change-card-current{% endif %}"
+            >
+
+                <img
+                    src="{% static item.image %}"
+                    alt="No.{{ item.number|stringformat:'03d' }}"
+                >
+
+                <span>
+                    No.{{ item.number|stringformat:"03d" }}
+                </span>
+
+                {% if character.character_image_id == item.number %}
+
+                <small class="current-label">
+                    使用中
+                </small>
+
+                {% endif %}
+
+            </button>
+
+            {% empty %}
+
+            <p>
+                使用できるキャラクター画像がありません。
+            </p>
+
+            {% endfor %}
+
+        </div>
+
+    </form>
+
+</section>
+
+</div>
+
+{% endblock %}

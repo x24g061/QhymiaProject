@@ -1,17 +1,18 @@
 from django.urls import path
 
+from django.urls import path
+
 from .views import (
     character_create_view,
     character_list_view,
+    character_image_change_view,
     login_view,
-    logout_view,
     logout_view,
     signup_view,
     profile_view,
     terms_view,
     tokushoho_view,
     privacy_view,
-
 )
 
 
@@ -58,5 +59,12 @@ urlpatterns = [
         "character/list/",
         character_list_view,
         name="character_list",
+    ),
+
+        # キャラクター画像変更
+    path(
+        "character/image/change/",
+        character_image_change_view,
+        name="character_image_change",
     ),
 ]

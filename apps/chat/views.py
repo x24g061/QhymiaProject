@@ -2,6 +2,7 @@ import json
 
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.templatetags.static import static
 from django.views.decorators.http import require_GET, require_POST
 
 from .models import ChatMessage
@@ -20,6 +21,11 @@ def get_messages(request):
         {
             "id": chat.id,
             "character_name": chat.character.name,
+            "character_image_url": (
+                static(chat.character.character_image_path)
+                if chat.character.character_image_path
+                else None
+            ),
             "message": chat.message,
             "created_at": chat.created_at.strftime("%H:%M"),
         }
@@ -36,37 +42,54 @@ def get_messages(request):
 def send_message(request):
     try:
         data = json.loads(request.body)
+
     except json.JSONDecodeError:
         return JsonResponse(
-            {"error": "送信データが正しくありません"},
-            status=400
+            {
+                "error":
+                    "送信データが正しくありません"
+            },
+            status=400,
         )
 
-    message = data.get("message", "").strip()
+    message = data.get(
+        "message",
+        ""
+    ).strip()
 
     if not message:
         return JsonResponse(
-            {"error": "メッセージを入力してください"},
-            status=400
+            {
+                "error":
+                    "メッセージを入力してください"
+            },
+            status=400,
         )
 
     if len(message) > 200:
         return JsonResponse(
-            {"error": "メッセージは200文字以内で入力してください"},
-            status=400
+            {
+                "error":
+                    "メッセージは200文字以内で入力してください"
+            },
+            status=400,
         )
 
     try:
         character = request.user.character
+
     except Exception:
         return JsonResponse(
-            {"error": "キャラクターが作成されていません"},
-            status=400
+            {
+                "error":
+                    "キャラクターが作成されていません"
+            },
+            status=400,
         )
 
     chat = ChatMessage.objects.create(
         character=character,
-        message=message
+        message=message,
     )
 
     return JsonResponse({
@@ -74,7 +97,15 @@ def send_message(request):
         "message": {
             "id": chat.id,
             "character_name": character.name,
+            "character_image_url": (
+                static(
+                    character.character_image_path
+                )
+                if character.character_image_path
+                else None
+            ),
             "message": chat.message,
-            "created_at": chat.created_at.strftime("%H:%M"),
+            "created_at":
+                chat.created_at.strftime("%H:%M"),
         }
     })
