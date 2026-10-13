@@ -1,12 +1,7 @@
 import random
-import math
-
 
 from apps.battle.engine.calculations import (
-    ATTRIBUTE_MULTIPLIERS,
-    calculate_hit_rate,
-    calculate_physical_damage,
-    roll_percent,
+    BattleCalculationsMixin,
 )
 from apps.battle.engine.state import (
     BattleStateMixin,
@@ -60,6 +55,7 @@ from apps.battle.combatants import (
 
 
 class BattleEngine(
+    BattleCalculationsMixin,
     BattleStateMixin,
     BattleStatsMixin,
     BattleTurnsMixin,
@@ -277,34 +273,3 @@ class BattleEngine(
         # 最大+10%
         self.elf_agility_bonus = 0.0
         
-
-    @staticmethod
-    def calculate_hit_rate(
-        attacker_dex,
-        defender_agi,
-    ):
-        """
-        命中率
-        60 + 39 × DEX / (DEX + 敵AGI)
-        """
-
-        return calculate_hit_rate(
-            attacker_dex,
-            defender_agi,
-        )
-
-
-    @staticmethod
-    def calculate_physical_damage(
-        strength,
-        defender_vit,
-    ):
-        return calculate_physical_damage(
-            strength,
-            defender_vit,
-        )
-
-
-    @staticmethod
-    def roll_percent(rate):
-        return roll_percent(rate)

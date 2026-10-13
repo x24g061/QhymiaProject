@@ -140,3 +140,54 @@ def roll_percent(rate):
     )
 
     return roll < rate
+
+
+# ============================================================
+# BattleEngine 互換用Mixin
+# ============================================================
+
+class BattleCalculationsMixin:
+
+    @staticmethod
+    def calculate_hit_rate(
+        attacker_dex,
+        defender_agi,
+    ):
+        """
+        BattleEngineから
+        self.calculate_hit_rate(...)
+        と呼べるようにする。
+        """
+
+        return calculate_hit_rate(
+            attacker_dex,
+            defender_agi,
+        )
+
+
+    @staticmethod
+    def calculate_physical_damage(
+        strength,
+        defender_vit,
+    ):
+        """
+        BattleEngineから
+        self.calculate_physical_damage(...)
+        と呼べるようにする。
+        """
+
+        return calculate_physical_damage(
+            strength,
+            defender_vit,
+        )
+
+
+    @staticmethod
+    def roll_percent(rate):
+        """
+        BattleEngineから
+        self.roll_percent(...)
+        と呼べるようにする。
+        """
+
+        return roll_percent(rate)
