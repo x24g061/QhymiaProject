@@ -5,6 +5,11 @@ from django.conf import settings
 from apps.accounts.models import Character
 from apps.sns.models import Post
 
+from apps.battle.progression import (
+    MAX_EXPLORATION_FLOOR,
+    get_max_unlocked_floor,
+)
+
 import random
 
 # ========================================
@@ -298,6 +303,8 @@ def home(request):
         user=request.user
     ).first()
 
+    max_unlocked_floor = 1
+
     previous_arena_character = None
     next_arena_character = None
 
@@ -319,6 +326,17 @@ def home(request):
     next_arena_character = None
     equipment_battle_power = 0
     if character:
+
+        # ========================================
+        # 探索進行
+        # ========================================
+
+        max_unlocked_floor = (
+            get_max_unlocked_floor(
+                character
+            )
+        )
+
 
         # ========================================
         # 闘技場：前の階の相手を取得
@@ -450,6 +468,18 @@ def home(request):
 
         "next_arena_character":
             next_arena_character,
+
+        "max_unlocked_floor":
+            max_unlocked_floor,
+
+        "max_exploration_floor":
+            MAX_EXPLORATION_FLOOR,
+
+        "exploration_floors":
+            range(
+                1,
+                MAX_EXPLORATION_FLOOR + 1,
+            ),
     }
 
     return render(

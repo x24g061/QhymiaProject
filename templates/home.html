@@ -705,7 +705,7 @@
                         </span>
 
                         <strong>
-                            1 階
+                            {{ max_unlocked_floor }} 階
                         </strong>
 
                     </div>
@@ -1048,20 +1048,24 @@
                             探索場所
                         </label>
 
-
                         <select id="exploration-floor" name="floor">
 
-                            <option value="1">
-                                一階層：草原
-                            </option>
+                            {% for floor in exploration_floors %}
 
-                            <option value="2">
-                                二階層
-                            </option>
+                                <option
+                                    value="{{ floor }}"
+                                    {% if floor > max_unlocked_floor %}
+                                        disabled
+                                    {% endif %}
+                                >
+                                    {{ floor }}階層
 
-                            <option value="3">
-                                三階層
-                            </option>
+                                    {% if floor > max_unlocked_floor %}
+                                        🔒 未解放
+                                    {% endif %}
+                                </option>
+
+                            {% endfor %}
 
                         </select>
 
