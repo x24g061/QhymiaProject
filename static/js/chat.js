@@ -50,10 +50,10 @@ document.addEventListener("DOMContentLoaded", function () {
         if (messages.length === 0) {
 
             chatMessages.innerHTML = `
-                <p class="chat-empty">
-                    まだメッセージはありません。
-                </p>
-            `;
+            <p class="chat-empty">
+                まだメッセージはありません。
+            </p>
+        `;
 
             return;
         }
@@ -63,6 +63,47 @@ document.addEventListener("DOMContentLoaded", function () {
             const item = document.createElement("div");
             item.classList.add("chat-message");
 
+
+            // ========================================
+            // アイコン + メッセージ本体
+            // ========================================
+
+            const body = document.createElement("div");
+            body.classList.add("chat-message-body");
+
+
+            // キャラクターアイコン
+            const avatar = document.createElement("div");
+            avatar.classList.add("chat-message-avatar");
+
+            if (chat.character_image_url) {
+
+                const image = document.createElement("img");
+
+                image.src = chat.character_image_url;
+                image.alt = chat.character_name;
+
+                avatar.appendChild(image);
+
+            } else {
+
+                const fallback = document.createElement("span");
+
+                fallback.textContent =
+                    chat.character_name
+                        ? chat.character_name.charAt(0)
+                        : "?";
+
+                avatar.appendChild(fallback);
+            }
+
+
+            // 右側の本文エリア
+            const content = document.createElement("div");
+            content.classList.add("chat-message-content");
+
+
+            // 名前 + 時刻
             const header = document.createElement("div");
             header.classList.add("chat-message-header");
 
@@ -72,20 +113,30 @@ document.addEventListener("DOMContentLoaded", function () {
             const time = document.createElement("span");
             time.textContent = chat.created_at;
 
+
+            // メッセージ本文
             const text = document.createElement("p");
             text.textContent = chat.message;
+
 
             header.appendChild(name);
             header.appendChild(time);
 
-            item.appendChild(header);
-            item.appendChild(text);
+            content.appendChild(header);
+            content.appendChild(text);
+
+            body.appendChild(avatar);
+            body.appendChild(content);
+
+            item.appendChild(body);
 
             chatMessages.appendChild(item);
         });
 
+
         // 一番下までスクロール
-        chatMessages.scrollTop = chatMessages.scrollHeight;
+        chatMessages.scrollTop =
+            chatMessages.scrollHeight;
     }
 
 

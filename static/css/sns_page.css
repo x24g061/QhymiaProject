@@ -548,31 +548,46 @@
 }
 
 
+/* ========================================
+   SNS キャラクターアイコン
+======================================== */
+
 .sns-character-placeholder {
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
     width: 42px;
     height: 42px;
 
     flex-shrink: 0;
 
-    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    background:
-        linear-gradient(
-            135deg,
-            var(--main),
-            var(--main-dark)
-        );
+    overflow: hidden;
 
-    border: 1px solid var(--main-dark);
+    border-radius: 8px;
 
-    border-radius: 3px;
+    background: linear-gradient(
+        180deg,
+        #f7fbfd 0%,
+        #d8edf5 100%
+    );
 
-    font-size: 14px;
+    border: 2px solid #1b6b86;
+
+    box-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.sns-character-image {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    image-rendering: pixelated;
 }
 
 
