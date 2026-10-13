@@ -287,3 +287,22 @@ class BattleCoreMixin:
                 self.player_max_stamina
             ),
         }
+
+
+    # ========================================================
+    # 階層別EXP
+    # ========================================================
+
+    def get_floor_exp_range(self):
+        """
+        探索階層に応じた
+        1戦闘あたりのEXP範囲を返す。
+        """
+
+        if self.floor <= 4:
+            return 7, 12
+
+        if self.floor <= 8:
+            return 8, 14
+
+        return 10, 16

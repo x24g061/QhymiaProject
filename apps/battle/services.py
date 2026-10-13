@@ -77,75 +77,6 @@ class BattleEngine(
 ):
 
 
-    def get_player_max_hp(self):
-        """
-        戦闘中の最大HPを返す。
-
-        プリースト:
-        最大HP +5%
-        """
-
-        max_hp = self.character.max_hp
-
-        if self.character.job == "priest":
-            max_hp = math.ceil(
-                max_hp * 1.05
-            )
-
-        return max_hp
-
-
-    def get_player_max_mp(self):
-        """
-        戦闘中の最大MPを返す。
-
-        プリースト:
-        最大MP +5%
-        """
-
-        max_mp = self.character.max_mp
-
-        if self.character.job == "priest":
-            max_mp = math.ceil(
-                max_mp * 1.05
-            )
-
-        return max_mp
-
-
-    def get_stamina_stat_multiplier(self):
-        """
-        現在STから疲労による能力補正を返す。
-
-        100ST → 1.00倍
-         50ST → 0.75倍
-          0ST → 0.50倍
-
-        0STでも能力値の50%は残る。
-        """
-
-        if self.player_max_stamina <= 0:
-            return 0.50
-
-        stamina_ratio = (
-            self.player_stamina
-            / self.player_max_stamina
-        )
-
-        stamina_ratio = min(
-            1.0,
-            max(
-                0.0,
-                stamina_ratio,
-            ),
-        )
-
-        return (
-            0.50
-            + stamina_ratio * 0.50
-        )
-
-
     def __init__(
         self,
         character,
@@ -345,21 +276,6 @@ class BattleEngine(
         # 自分の行動終了ごとにAGI +1%
         # 最大+10%
         self.elf_agility_bonus = 0.0
-
-
-    def get_floor_exp_range(self):
-        """
-        探索階層に応じた
-        1戦闘あたりのEXP範囲を返す。
-        """
-
-        if self.floor <= 4:
-            return 7, 12
-
-        if self.floor <= 8:
-            return 8, 14
-
-        return 10, 16
         
 
     @staticmethod
