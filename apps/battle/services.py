@@ -1,5 +1,6 @@
 import random
 
+
 from apps.battle.engine.calculations import (
     BattleCalculationsMixin,
 )
