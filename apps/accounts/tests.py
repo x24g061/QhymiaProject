@@ -10,7 +10,11 @@ User = get_user_model()
 
 class CharacterModelTests(TestCase):
     def setUp(self):
-        self.user = User.objects.create(user_id="test_user")
+        self.user = User.objects.create(
+            user_id="test_user",
+            email="test_user@example.com",
+        )
+
         self.character = Character.objects.create(
             user=self.user,
             name="テストキャラ",
@@ -64,7 +68,10 @@ class CharacterModelTests(TestCase):
                 )
 
     def test_character_name_must_be_unique(self):
-        another_user = User.objects.create(user_id="another_user")
+        another_user = User.objects.create(
+            user_id="another_user",
+            email="another_user@example.com",
+        )
 
         with self.assertRaises(IntegrityError):
             with transaction.atomic():
