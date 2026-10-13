@@ -16,6 +16,12 @@ urlpatterns = [
     ),
 
     path(
+        "synthesis/",
+        views.synthesis,
+        name="synthesis",
+    ),
+
+    path(
 
         "equipment/<int:owned_equipment_id>/equip/",
         views.equip_equipment,
