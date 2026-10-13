@@ -10,7 +10,18 @@ from django.views.decorators.http import require_POST
 
 from apps.accounts.growth import apply_exploration_exp
 
-from .models import Enemy, Skill, SkillPreset
+from .models import (
+    Enemy,
+    Skill,
+    SkillPreset,
+    FloorProgress,
+)
+
+from .progression import (
+    MAX_EXPLORATION_FLOOR,
+    get_max_unlocked_floor,
+)
+
 from .services import BattleEngine
 from .drops import grant_exploration_drop
 
@@ -83,12 +94,42 @@ def battle(request):
         selected_floor = 1
 
 
-    # 今は1～3階を自由に探索可能
-    if selected_floor not in (1, 2, 3):
+    # ========================================================
+    # 探索可能な階層か確認
+    # ========================================================
+
+    if not (
+        1
+        <= selected_floor
+        <= MAX_EXPLORATION_FLOOR
+    ):
 
         messages.error(
             request,
             "存在しない探索階層です。",
+        )
+
+        return redirect("home")
+
+
+    # ========================================================
+    # 階層解放チェック
+    # ========================================================
+
+    max_unlocked_floor = (
+        get_max_unlocked_floor(
+            character
+        )
+    )
+
+    if selected_floor > max_unlocked_floor:
+
+        messages.warning(
+            request,
+            (
+                f"{selected_floor}階は"
+                "まだ解放されていません。"
+            ),
         )
 
         return redirect("home")
@@ -114,6 +155,26 @@ def battle(request):
         )
 
         return redirect("home")
+
+
+    # ========================================================
+    # 階層探索回数を記録
+    # ========================================================
+
+    floor_progress, created = (
+        FloorProgress.objects.get_or_create(
+            character=character,
+            floor=selected_floor,
+        )
+    )
+
+    floor_progress.exploration_count += 1
+
+    floor_progress.save(
+        update_fields=[
+            "exploration_count",
+        ]
+    )
 
 
     # ========================================================
