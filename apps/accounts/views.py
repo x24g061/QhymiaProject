@@ -252,6 +252,69 @@ def character_list_view(request):
         },
     )
 
+# キャラクター画像変更
+@login_required
+def character_image_change_view(request):
+    character = getattr(
+        request.user,
+        "character",
+        None,
+    )
+
+    if character is None:
+        return redirect(
+            "accounts:character_create"
+        )
+
+    available_characters = (
+        get_available_character_images()
+    )
+
+    available_numbers = {
+        item["number"]
+        for item in available_characters
+    }
+
+    if request.method == "POST":
+        character_image_id = request.POST.get(
+            "character_image_id"
+        )
+
+        try:
+            character_image_id = int(
+                character_image_id
+            )
+        except (TypeError, ValueError):
+            character_image_id = None
+
+        # 実際に存在する画像だけ変更可能
+        if (
+            character_image_id
+            in available_numbers
+        ):
+            character.character_image_id = (
+                character_image_id
+            )
+
+            character.save(
+                update_fields=[
+                    "character_image_id"
+                ]
+            )
+
+            return redirect(
+                "accounts:character_image_change"
+            )
+
+    return render(
+        request,
+        "character_image_change.html",
+        {
+            "character": character,
+            "available_characters":
+                available_characters,
+        },
+    )
 # プロフィール
 @login_required
 def profile_view(request):
