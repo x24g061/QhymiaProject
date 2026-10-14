@@ -1,6 +1,7 @@
 from unittest.mock import patch
 
 from django.test import TestCase
+from django.urls import reverse
 
 from apps.accounts.models import Character, User
 from apps.accounts.growth import apply_exploration_exp
@@ -20,6 +21,12 @@ from apps.inventory.models import (
 from apps.battle.models import (
     Enemy,
     FloorDropItem,
+    FloorProgress,
+)
+
+from apps.battle.progression import (
+    get_max_unlocked_floor,
+    should_encounter_boss,
 )
 
 from apps.battle.drops import (
@@ -1571,4 +1578,253 @@ class ExplorationDropTests(TestCase):
         self.assertEqual(
             result["rank"],
             "E",
+        )
+
+
+# ============================================================
+# 探索ボス進行テスト
+# ============================================================
+
+class ExplorationBossProgressionTests(TestCase):
+
+    def setUp(self):
+        """
+        ボス探索テスト用の
+        ユーザー・キャラクター・ボスを作成する。
+        """
+
+        self.user = User.objects.create_user(
+            user_id="boss_test_user",
+            email="boss_test@example.com",
+            password="testpass123",
+        )
+
+        self.character = Character.objects.create(
+            user=self.user,
+            name="ボステスト勇者",
+            race="human",
+            job="wanderer",
+        )
+
+        # 1階ボス
+        self.boss = Enemy.objects.create(
+            name="テストキングスライム",
+            floor=1,
+            is_boss=True,
+            max_hp=150,
+            max_mp=20,
+            strength=10,
+            intelligence=10,
+            dexterity=10,
+            agility=10,
+            vitality=10,
+            luck=10,
+            attribute="grass",
+            exp_min=7,
+            exp_max=12,
+        )
+
+        self.client.force_login(
+            self.user
+        )
+
+
+    def test_boss_appears_with_05_percent_roll(self):
+        """
+        探索200回未満でも、
+        0.5%抽選に当選すれば
+        ボスが出現することを確認する。
+        """
+
+        progress = FloorProgress.objects.create(
+            character=self.character,
+            floor=1,
+            exploration_count=1,
+        )
+
+        # 0.0049 = 0.49%
+        # 0.5%未満なので当選
+        with patch(
+            "apps.battle.progression.random.random",
+            return_value=0.0049,
+        ):
+
+            result = should_encounter_boss(
+                progress
+            )
+
+        self.assertTrue(
+            result
+        )
+
+
+    def test_boss_is_guaranteed_at_200_explorations(self):
+        """
+        0.5%抽選に外れる値でも、
+        200回探索していれば
+        ボスが確定出現することを確認する。
+        """
+
+        progress = FloorProgress.objects.create(
+            character=self.character,
+            floor=1,
+            exploration_count=200,
+        )
+
+        with patch(
+            "apps.battle.progression.random.random",
+            return_value=0.999,
+        ):
+
+            result = should_encounter_boss(
+                progress
+            )
+
+        self.assertTrue(
+            result
+        )
+
+
+    def test_defeated_boss_does_not_reappear(self):
+        """
+        すでに撃破済みのボスは、
+        200回以上探索していても
+        再出現しないことを確認する。
+        """
+
+        progress = FloorProgress.objects.create(
+            character=self.character,
+            floor=1,
+            exploration_count=200,
+            boss_defeated=True,
+        )
+
+        with patch(
+            "apps.battle.progression.random.random",
+            return_value=0.0,
+        ):
+
+            result = should_encounter_boss(
+                progress
+            )
+
+        self.assertFalse(
+            result
+        )
+
+
+    def test_boss_win_unlocks_next_floor(self):
+        """
+        ボス撃破時に
+        boss_defeated=Trueとなり、
+        次の階が解放されることを確認する。
+        """
+
+        progress = FloorProgress.objects.create(
+            character=self.character,
+            floor=1,
+            exploration_count=50,
+        )
+
+        battle_result = {
+            "winner": "player",
+            "logs": [],
+            "exp_gained": 0,
+        }
+
+        with patch(
+            "apps.battle.views.should_encounter_boss",
+            return_value=True,
+        ), patch(
+            "apps.battle.views.BattleEngine"
+        ) as mock_engine, patch(
+            "apps.battle.views.grant_exploration_drop",
+            return_value=None,
+        ):
+
+            mock_engine.return_value.run.return_value = (
+                battle_result
+            )
+
+            response = self.client.post(
+                reverse(
+                    "battle:battle"
+                ),
+                {
+                    "floor": 1,
+                },
+            )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        progress.refresh_from_db()
+
+        self.assertTrue(
+            progress.boss_defeated
+        )
+
+        self.assertEqual(
+            get_max_unlocked_floor(
+                self.character
+            ),
+            2,
+        )
+
+
+    def test_boss_loss_resets_exploration_count(self):
+        """
+        ボス戦に負けた場合、
+        その階層の探索回数が
+        0へ戻ることを確認する。
+        """
+
+        progress = FloorProgress.objects.create(
+            character=self.character,
+            floor=1,
+            exploration_count=199,
+        )
+
+        battle_result = {
+            "winner": "enemy",
+            "logs": [],
+            "exp_gained": 0,
+        }
+
+        with patch(
+            "apps.battle.views.should_encounter_boss",
+            return_value=True,
+        ), patch(
+            "apps.battle.views.BattleEngine"
+        ) as mock_engine:
+
+            mock_engine.return_value.run.return_value = (
+                battle_result
+            )
+
+            response = self.client.post(
+                reverse(
+                    "battle:battle"
+                ),
+                {
+                    "floor": 1,
+                },
+            )
+
+        self.assertEqual(
+            response.status_code,
+            200,
+        )
+
+        progress.refresh_from_db()
+
+        self.assertEqual(
+            progress.exploration_count,
+            0,
+        )
+
+        self.assertFalse(
+            progress.boss_defeated
         )

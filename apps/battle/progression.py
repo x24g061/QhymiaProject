@@ -1,4 +1,44 @@
 from .models import FloorProgress
+import random
+
+
+# ============================================================
+# ボス出現設定
+# ============================================================
+
+BOSS_ENCOUNTER_RATE = 0.005
+
+BOSS_GUARANTEE_COUNT = 200
+
+
+def should_encounter_boss(
+    floor_progress,
+):
+    """
+    ボスと遭遇するか判定する。
+
+    条件:
+    ・すでにボス撃破済みなら出現しない
+    ・探索200回以上で確定出現
+    ・それ未満でも0.5%で出現
+    """
+
+    # 撃破済みボスは再出現しない
+    if floor_progress.boss_defeated:
+        return False
+
+    # 200回到達で確定
+    if (
+        floor_progress.exploration_count
+        >= BOSS_GUARANTEE_COUNT
+    ):
+        return True
+
+    # 通常時は0.5%
+    return (
+        random.random()
+        < BOSS_ENCOUNTER_RATE
+    )
 
 
 # ============================================================

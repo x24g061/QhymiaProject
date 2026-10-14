@@ -20,6 +20,7 @@ from .models import (
 from .progression import (
     MAX_EXPLORATION_FLOOR,
     get_max_unlocked_floor,
+    should_encounter_boss,
 )
 
 from .services import BattleEngine
@@ -136,29 +137,7 @@ def battle(request):
 
 
     # ========================================================
-    # 選択階層の通常敵を取得
-    # ========================================================
-
-    enemy_candidates = list(
-        Enemy.objects.filter(
-            floor=selected_floor,
-            is_boss=False,
-        )
-    )
-
-
-    if not enemy_candidates:
-
-        messages.error(
-            request,
-            "この階層には敵が登録されていません。",
-        )
-
-        return redirect("home")
-
-
-    # ========================================================
-    # 階層探索回数を記録
+    # 階層進行データを取得
     # ========================================================
 
     floor_progress, created = (
@@ -167,6 +146,11 @@ def battle(request):
             floor=selected_floor,
         )
     )
+
+
+    # ========================================================
+    # 探索回数を1回加算
+    # ========================================================
 
     floor_progress.exploration_count += 1
 
@@ -178,23 +162,79 @@ def battle(request):
 
 
     # ========================================================
-    # 出現数を1～3体からランダム決定
+    # ボス出現判定
     # ========================================================
 
-    enemy_count = random.randint(
-        1,
-        min(
-            3,
-            len(enemy_candidates),
-        ),
+    boss_encounter = (
+        should_encounter_boss(
+            floor_progress
+        )
     )
 
 
-    # 同じ戦闘では同じ敵種類を重複させず選ぶ
-    enemies = random.sample(
-        enemy_candidates,
-        enemy_count,
-    )
+    # ========================================================
+    # 出現する敵を決定
+    # ========================================================
+
+    if boss_encounter:
+
+        # ボス戦は1体のみ
+        boss = (
+            Enemy.objects.filter(
+                floor=selected_floor,
+                is_boss=True,
+            )
+            .first()
+        )
+
+        if boss is None:
+
+            messages.error(
+                request,
+                "この階層のボスが登録されていません。",
+            )
+
+            return redirect("home")
+
+        enemies = [
+            boss
+        ]
+
+    else:
+
+        # 通常敵を取得
+        enemy_candidates = list(
+            Enemy.objects.filter(
+                floor=selected_floor,
+                is_boss=False,
+            )
+        )
+
+        if not enemy_candidates:
+
+            messages.error(
+                request,
+                "この階層には敵が登録されていません。",
+            )
+
+            return redirect("home")
+
+
+        # 出現数を1～3体からランダム決定
+        enemy_count = random.randint(
+            1,
+            min(
+                3,
+                len(enemy_candidates),
+            ),
+        )
+
+
+        # 同じ戦闘では同じ敵種類を重複させない
+        enemies = random.sample(
+            enemy_candidates,
+            enemy_count,
+        )
 
 
     # ========================================================
@@ -236,6 +276,47 @@ def battle(request):
     )
 
     battle_result = engine.run()
+
+
+    # ========================================================
+    # ボス戦の勝敗による階層進行更新
+    # ========================================================
+
+    if boss_encounter:
+
+        # ----------------------------------------------------
+        # ボス撃破
+        # ----------------------------------------------------
+
+        if battle_result["winner"] == "player":
+
+            floor_progress.boss_defeated = True
+
+            floor_progress.save(
+                update_fields=[
+                    "boss_defeated",
+                ]
+            )
+
+        # ----------------------------------------------------
+        # ボス戦敗北・引き分け
+        # ----------------------------------------------------
+
+        else:
+
+            # ボスに勝てなかった場合は
+            # 探索回数を0に戻す。
+            #
+            # 再び0.5%を引くか、
+            # 200回探索する必要がある。
+            floor_progress.exploration_count = 0
+
+            floor_progress.save(
+                update_fields=[
+                    "exploration_count",
+                ]
+            )
+
 
     # ========================================================
     # 探索ドロップ
@@ -308,6 +389,9 @@ def battle(request):
             # 探索した階層
             "selected_floor": selected_floor,
 
+            # ボス戦かどうか
+            "boss_encounter": boss_encounter,
+
             # BattleEngineの結果全部
             "battle_result": battle_result,
 
@@ -323,7 +407,6 @@ def battle(request):
 
             # クールタイム
             "cooldown_seconds": cooldown_seconds,
-
 
             # ドロップ結果
             "drop_result": drop_result,
@@ -1050,5 +1133,6 @@ def arena_battle(request):
 
         # 実際に落ちたアイテム
         "dropped_item": dropped_item,
+        
     }
 )
