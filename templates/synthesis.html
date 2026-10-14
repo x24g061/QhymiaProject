@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>装備合成</h1>
+
+<p>
+    本日の合成回数：
+    {{ character.daily_synthesis_count }}
+</p>
+
+<p>
+    次回合成料金：
+    {% if synthesis_cost == 0 %}
+    無料
+    {% else %}
+    {{ synthesis_cost }}Q
+    {% endif %}
+</p>
+
+<p>
+    所持Q：
+    {{ character.gold }}Q
+</p>
+
+<hr>
+
+{% if messages %}
+
+{% for message in messages %}
+<p>
+    {{ message }}
+</p>
+{% endfor %}
+
+{% endif %}
+
+
+<form method="post">
+
+    {% csrf_token %}
+
+    <p>
+        同じ装備・同じ+値の装備を
+        3つ選択してください。
+    </p>
+
+    {% for owned in owned_equipments %}
+
+    <label>
+
+        <input type="checkbox" name="equipment_ids" value="{{ owned.id }}">
+
+        [{{ owned.equipment.rank }}]
+
+        {{ owned.equipment.item.name }}
+
+        +{{ owned.enhancement_level }}
+
+        戦闘力：
+        {{ owned.battle_power }}
+
+    </label>
+
+    <br>
+
+    {% empty %}
+
+    <p>
+        合成可能な装備を所持していません。
+    </p>
+
+    {% endfor %}
+
+    <br>
+
+    <button type="submit">
+        合成する
+    </button>
+
+</form>
+
+<hr>
+
+<a href="{% url 'home' %}">
+    ホームへ戻る
+</a>
+
+{% endblock %}

@@ -6,6 +6,7 @@ from .views import (
     character_create_view,
     character_list_view,
     character_image_change_view,
+    palm_view,
     login_view,
     logout_view,
     signup_view,
@@ -28,6 +29,13 @@ urlpatterns = [
         "profile/",
         profile_view,
         name="profile",
+    ),
+
+        # 手相
+    path(
+        "palm/",
+        palm_view,
+        name="palm",
     ),
 
     # 利用規約

@@ -20,6 +20,7 @@ from .models import (
 )
 from .services import (
     equip_item,
+    synthesize_equipments,
     unequip_item,
 )
 
@@ -160,6 +161,181 @@ def inventory(request):
         },
     )
 
+
+# ============================================================
+# 装備合成
+# ============================================================
+
+@login_required
+def synthesis(request):
+    """
+    装備合成画面。
+
+    GET:
+        合成に使用できる装備を表示する。
+
+    POST:
+        選択された3つの装備を合成する。
+    """
+
+    character = request.user.character
+
+
+    # ========================================================
+    # 合成実行
+    # ========================================================
+
+    if request.method == "POST":
+
+        selected_ids = request.POST.getlist(
+            "equipment_ids"
+        )
+
+        # 3つ選択されているか確認
+        if len(selected_ids) != 3:
+
+            messages.error(
+                request,
+                "合成する装備を3つ選んでください。",
+            )
+
+            return redirect(
+                "inventory:synthesis"
+            )
+
+
+        # ====================================================
+        # 自分が所持している装備だけ取得
+        # ====================================================
+
+        equipments = list(
+            OwnedEquipment.objects
+            .filter(
+                id__in=selected_ids,
+                character=character,
+            )
+            .select_related(
+                "equipment",
+                "equipment__item",
+            )
+        )
+
+
+        # 不正なIDなどで3つ取得できなかった場合
+        if len(equipments) != 3:
+
+            messages.error(
+                request,
+                "選択された装備を確認できませんでした。",
+            )
+
+            return redirect(
+                "inventory:synthesis"
+            )
+
+
+        # ====================================================
+        # 合成処理
+        # ====================================================
+
+        try:
+
+            result = synthesize_equipments(
+                character,
+                equipments,
+            )
+
+        except ValueError as error:
+
+            messages.error(
+                request,
+                str(error),
+            )
+
+            return redirect(
+                "inventory:synthesis"
+            )
+
+
+        # ====================================================
+        # 合成結果メッセージ
+        # ====================================================
+
+        if result["result"] == "failure":
+
+            messages.error(
+                request,
+                "合成に失敗しました。装備3つを失いました。",
+            )
+
+        elif result["result"] == "success":
+
+            messages.success(
+                request,
+                "合成成功！ +1強化されました。",
+            )
+
+        elif result["result"] == "great_success":
+
+            messages.success(
+                request,
+                "大成功！ +2強化されました。",
+            )
+
+        elif result["result"] == "super_success":
+
+            messages.success(
+                request,
+                "超大成功！ +3強化されました。",
+            )
+
+        return redirect(
+            "inventory:synthesis"
+        )
+
+
+    # ========================================================
+    # 合成可能な所持装備
+    # ========================================================
+
+    owned_equipments = (
+        OwnedEquipment.objects
+        .filter(
+            character=character,
+            is_equipped=False,
+        )
+        .select_related(
+            "equipment",
+            "equipment__item",
+        )
+        .order_by(
+            "equipment__rank",
+            "equipment__item__name",
+            "enhancement_level",
+        )
+    )
+
+
+    # ========================================================
+    # 次回の合成料金
+    # ========================================================
+
+    synthesis_cost = (
+        character.get_synthesis_cost()
+    )
+
+
+    return render(
+        request,
+        "synthesis.html",
+        {
+            "character": character,
+            "owned_equipments":
+                owned_equipments,
+            "synthesis_cost":
+                synthesis_cost,
+        },
+    )
 
 # ============================================================
 # 装備する

@@ -250,6 +250,19 @@ class Character(models.Model):
         help_text="現在の所持金"
     )
 
+        # ===== 装備合成 =====
+
+    daily_synthesis_count = models.PositiveIntegerField(
+        default=0,
+        help_text="本日の装備合成回数",
+    )
+
+    last_synthesis_date = models.DateField(
+        null=True,
+        blank=True,
+        help_text="最後に装備合成を行った日",
+    )
+
     # ===== スタミナ =====
 
     max_stamina = models.PositiveIntegerField(
@@ -442,17 +455,66 @@ class Character(models.Model):
         return display_names[
             self.get_main_attribute()
         ]
-
+    
     def get_equipment_fusion_multiplier(self):
         """
         装備合成成功率に掛ける
         種族補正を返す。
 
         ドワーフ:
-        成功率 ×1.5
+        成功率 1.5倍
         """
 
         if self.race == "dwarf":
             return 1.5
 
         return 1.0
+    
+    def reset_daily_synthesis_count_if_needed(self):
+        """
+        日付が変わっていたら、
+        本日の合成回数を0に戻す。
+        """
+        from django.utils import timezone
+
+        today = timezone.localdate()
+
+        if self.last_synthesis_date != today:
+            self.daily_synthesis_count = 0
+            self.last_synthesis_date = today
+
+            self.save(
+                update_fields=[
+                    "daily_synthesis_count",
+                    "last_synthesis_date",
+                ]
+            )
+
+
+    def get_synthesis_cost(self):
+        """
+        次の装備合成に必要なQを返す。
+
+        1日3回までは無料。
+        4回目以降は10Q。
+        """
+        self.reset_daily_synthesis_count_if_needed()
+
+        if self.daily_synthesis_count < 3:
+            return 0
+
+        return 10
+
+    def record_synthesis_attempt(self):
+        """
+        装備合成を1回行ったことを記録する。
+        """
+        self.reset_daily_synthesis_count_if_needed()
+
+        self.daily_synthesis_count += 1
+
+        self.save(
+            update_fields=[
+                "daily_synthesis_count",
+            ]
+        )
