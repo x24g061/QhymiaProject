@@ -332,6 +332,76 @@ def profile_view(request):
         },
     )
 
+    
+# 手相
+@login_required
+def palm_view(request):
+    character = getattr(
+        request.user,
+        "character",
+        None,
+    )
+
+    if character is None:
+        return redirect(
+            "accounts:character_create"
+        )
+
+    palm_labels = [
+        "火",
+        "水",
+        "草",
+        "岩",
+        "光",
+        "闇",
+    ]
+
+    palm_values = [
+        character.fire_growth_weight,
+        character.water_growth_weight,
+        character.grass_growth_weight,
+        character.rock_growth_weight,
+        character.light_growth_weight,
+        character.dark_growth_weight,
+    ]
+
+    palm_items = [
+        {
+            "name": "火",
+            "value": character.fire_growth_weight,
+        },
+        {
+            "name": "水",
+            "value": character.water_growth_weight,
+        },
+        {
+            "name": "草",
+            "value": character.grass_growth_weight,
+        },
+        {
+            "name": "岩",
+            "value": character.rock_growth_weight,
+        },
+        {
+            "name": "光",
+            "value": character.light_growth_weight,
+        },
+        {
+            "name": "闇",
+            "value": character.dark_growth_weight,
+        },
+    ]
+
+    return render(
+        request,
+        "palm.html",
+        {
+            "character": character,
+            "palm_labels": palm_labels,
+            "palm_values": palm_values,
+            "palm_items": palm_items,
+        },
+    )
 
 # 利用規約
 def terms_view(request):

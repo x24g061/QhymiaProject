@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+手相 | Qhymia
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/palm.css' %}">
+
+<div class="palm-page">
+
+    <section class="palm-header">
+
+        <div>
+            <p class="palm-label">
+                PALM READING
+            </p>
+
+            <h1>
+                手相
+            </h1>
+
+            <p class="palm-description">
+                あなたの属性成長傾向を確認できます。<br>
+                数値が高い属性ほど成長しやすくなります。
+            </p>
+        </div>
+
+        <a href="{% url 'home' %}" class="palm-back">
+            ← ホームへ戻る
+        </a>
+
+    </section>
+
+
+    <section class="palm-card">
+
+        <div class="palm-character">
+
+            <div class="palm-character-image">
+
+                {% if character.character_image_path %}
+
+                <img src="{% static character.character_image_path %}" alt="{{ character.name }}">
+
+                {% else %}
+
+                <span>?</span>
+
+                {% endif %}
+
+            </div>
+
+            <div class="palm-character-info">
+
+                <p class="palm-label">
+                    CHARACTER
+                </p>
+
+                <h2>
+                    {{ character.name }}
+                </h2>
+
+                <p>
+                    属性の成長しやすさを手相として表示しています。
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section class="palm-card">
+
+        <p class="palm-label">
+            GROWTH CHART
+        </p>
+
+        <h2>
+            属性成長傾向
+        </h2>
+
+        <div class="palm-chart-wrapper">
+
+            <canvas id="palm-chart"></canvas>
+
+        </div>
+
+    </section>
+
+
+    <section class="palm-card">
+
+        <p class="palm-label">
+            DETAIL
+        </p>
+
+        <h2>
+            属性別成長ウェイト
+        </h2>
+
+        <div class="palm-grid">
+
+            {% for item in palm_items %}
+
+            <div class="palm-status">
+
+                <strong>
+                    {{ item.name }}
+                </strong>
+
+                <span>
+                    {{ item.value }}
+                </span>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const palmLabels = {{ palm_labels| safe }};
+    const palmValues = {{ palm_values| safe }};
+
+    const canvas =
+        document.getElementById("palm-chart");
+
+    new Chart(canvas, {
+        type: "radar",
+
+        data: {
+            labels: palmLabels,
+
+            datasets: [
+                {
+                    label: "属性成長傾向",
+
+                    data: palmValues,
+
+                    fill: true,
+
+                    backgroundColor:
+                        "rgba(70, 185, 205, 0.25)",
+
+                    borderColor:
+                        "rgba(70, 185, 205, 1)",
+
+                    borderWidth: 2,
+
+                    pointRadius: 4,
+                }
+            ]
+        },
+
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+
+            scales: {
+                r: {
+                    beginAtZero: true,
+
+                    ticks: {
+                        stepSize: 1,
+                    },
+
+                    pointLabels: {
+                        font: {
+                            size: 16,
+                            weight: "bold",
+                        }
+                    }
+                }
+            },
+
+            plugins: {
+                legend: {
+                    display: false,
+                }
+            }
+        }
+    });
+</script>
+
+{% endblock %}
