@@ -214,6 +214,60 @@ class Enemy(models.Model):
         return self.name
 
 
+class FloorProgress(models.Model):
+    """
+    キャラクターごとの探索階層進行状況。
+
+    各階層について、
+    ・探索回数
+    ・ボス撃破済みか
+    を保存する。
+    """
+
+    character = models.ForeignKey(
+        Character,
+        on_delete=models.CASCADE,
+        related_name="floor_progresses",
+    )
+
+    floor = models.PositiveIntegerField(
+        help_text="探索階層",
+    )
+
+    exploration_count = models.PositiveIntegerField(
+        default=0,
+        help_text="この階層を探索した回数",
+    )
+
+    boss_defeated = models.BooleanField(
+        default=False,
+        help_text="この階層のボスを撃破済みか",
+    )
+
+    class Meta:
+        ordering = [
+            "character",
+            "floor",
+        ]
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=[
+                    "character",
+                    "floor",
+                ],
+                name="unique_character_floor_progress",
+            ),
+        ]
+
+    def __str__(self):
+        return (
+            f"{self.character.name} "
+            f"{self.floor}階 "
+            f"探索{self.exploration_count}回"
+        )
+
+
 class FloorDropItem(models.Model):
     """
     探索階層ごとのドロップ候補。

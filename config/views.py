@@ -10,7 +10,10 @@ from apps.accounts.models import Character
 
 from apps.sns.models import Post
 
-
+from apps.battle.progression import (
+    MAX_EXPLORATION_FLOOR,
+    get_max_unlocked_floor,
+)
 
 import random
 
@@ -554,7 +557,7 @@ def home(request):
 
     ).first()
 
-
+    max_unlocked_floor = 1
 
     previous_arena_character = None
 
@@ -598,6 +601,17 @@ def home(request):
 
     if character:
 
+
+
+        # ========================================
+        # 探索進行
+        # ========================================
+
+        max_unlocked_floor = (
+            get_max_unlocked_floor(
+                character
+            )
+        )
 
 
         # ========================================
@@ -812,53 +826,49 @@ def home(request):
 
         "character": character,
 
-
-
         "main_attribute_name":
 
             main_attribute_name,
-
-
 
         "main_attribute_value":
 
             main_attribute_value,
 
-
-
         "battle_power":
 
             battle_power,
-
-
 
         "exploration_cooldown_remaining":
 
             exploration_cooldown_remaining,
 
-
-
         "exploration_cooldown_reduced":
 
             exploration_cooldown_reduced,
-
-
 
         "arena_max_floor":
 
             arena_max_floor,
 
-
-
         "previous_arena_character":
 
             previous_arena_character,
 
-
-
         "next_arena_character":
 
             next_arena_character,
+
+        "max_unlocked_floor":
+            max_unlocked_floor,
+
+        "max_exploration_floor":
+            MAX_EXPLORATION_FLOOR,
+
+        "exploration_floors":
+            range(
+                1,
+                MAX_EXPLORATION_FLOOR + 1,
+            ),
 
     }
 
