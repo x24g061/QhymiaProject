@@ -1,0 +1,231 @@
+/* ========================================
+   手相画面
+======================================== */
+
+.palm-page {
+    width: min(1000px, 92%);
+    margin: 0 auto;
+    padding: 40px 0 80px;
+}
+
+
+/* ========================================
+   ヘッダー
+======================================== */
+
+.palm-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    gap: 30px;
+
+    margin-bottom: 28px;
+}
+
+.palm-label {
+    margin: 0 0 6px;
+
+    color: #6f95a8;
+
+    font-size: 11px;
+    font-weight: bold;
+
+    letter-spacing: 3px;
+}
+
+.palm-header h1 {
+    margin: 0 0 10px;
+
+    color: #204f63;
+}
+
+.palm-description {
+    margin: 0;
+
+    color: #54727f;
+
+    line-height: 1.8;
+}
+
+.palm-back {
+    padding: 10px 18px;
+
+    border-radius: 8px;
+
+    background: #39758c;
+
+    color: #fff;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    transition: 0.2s;
+}
+
+.palm-back:hover {
+    opacity: 0.85;
+}
+
+
+/* ========================================
+   共通カード
+======================================== */
+
+.palm-card {
+    margin-bottom: 24px;
+    padding: 26px;
+
+    border: 1px solid #d9e7ed;
+    border-radius: 14px;
+
+    background: #fff;
+
+    box-shadow:
+        0 4px 14px
+        rgba(40, 80, 95, 0.06);
+}
+
+.palm-card h2 {
+    margin-top: 0;
+
+    color: #204f63;
+}
+
+
+/* ========================================
+   キャラクター
+======================================== */
+
+.palm-character {
+    display: flex;
+    align-items: center;
+
+    gap: 22px;
+}
+
+.palm-character-image {
+    width: 90px;
+    height: 90px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    border: 2px solid #39758c;
+    border-radius: 12px;
+
+    background: #edf6f9;
+}
+
+.palm-character-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    image-rendering: pixelated;
+}
+
+.palm-character-image span {
+    color: #39758c;
+
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.palm-character-info h2 {
+    margin: 0 0 8px;
+}
+
+.palm-character-info p:last-child {
+    margin: 0;
+
+    color: #67808b;
+}
+
+
+/* ========================================
+   レーダーチャート
+======================================== */
+
+.palm-chart-wrapper {
+    width: 100%;
+    max-width: 600px;
+
+    height: 500px;
+
+    margin: 20px auto 0;
+}
+
+
+/* ========================================
+   属性一覧
+======================================== */
+
+.palm-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 14px;
+
+    margin-top: 20px;
+}
+
+.palm-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 16px 18px;
+
+    border: 1px solid #d9e7ed;
+    border-radius: 10px;
+
+    background: #f8fbfc;
+}
+
+.palm-status strong {
+    color: #365f70;
+
+    font-size: 16px;
+}
+
+.palm-status span {
+    color: #247b96;
+
+    font-size: 22px;
+    font-weight: bold;
+}
+
+
+/* ========================================
+   レスポンシブ
+======================================== */
+
+@media (max-width: 700px) {
+
+    .palm-header {
+        flex-direction: column;
+    }
+
+    .palm-character {
+        align-items: flex-start;
+    }
+
+    .palm-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .palm-chart-wrapper {
+        height: 380px;
+    }
+}
