@@ -17,21 +17,26 @@ from apps.inventory.models import (
     Item,
     OwnedEquipment,
 )
-
 from apps.battle.models import (
     Enemy,
     FloorDropItem,
     FloorProgress,
 )
-
 from apps.battle.progression import (
     get_max_unlocked_floor,
     should_encounter_boss,
 )
-
 from apps.battle.drops import (
     grant_exploration_drop,
 )
+from apps.battle.arena_engine import (
+    ArenaBattleEngine,
+)
+from apps.battle.models import (
+    ArenaFloor,
+    ArenaState,
+)
+
 
 
 class PlayerCombatantArenaTests(TestCase):
@@ -102,6 +107,113 @@ class PlayerCombatantArenaTests(TestCase):
             combatant.mp,
             40,
         )
+
+
+class ArenaBattleEngineTests(TestCase):
+
+    def setUp(self):
+        self.challenger_user = User.objects.create_user(
+            user_id="arena_challenger",
+            email="arena_challenger@example.com",
+            password="testpass123",
+        )
+
+        self.defender_user = User.objects.create_user(
+            user_id="arena_defender",
+            email="arena_defender@example.com",
+            password="testpass123",
+        )
+
+        self.challenger = Character.objects.create(
+            user=self.challenger_user,
+            name="挑戦者",
+            max_hp=100,
+            current_hp=100,
+            max_mp=50,
+            current_mp=50,
+        )
+
+        self.defender = Character.objects.create(
+            user=self.defender_user,
+            name="防衛者",
+            max_hp=120,
+            current_hp=120,
+            max_mp=60,
+            current_mp=60,
+        )
+
+        self.floor = ArenaFloor.objects.get(
+            floor=1,
+        )
+
+        self.challenger_state = ArenaState.objects.create(
+            character=self.challenger,
+            floor=self.floor,
+            current_hp=35,
+            current_mp=20,
+        )
+
+        self.defender_state = ArenaState.objects.create(
+            character=self.defender,
+            floor=self.floor,
+            current_hp=70,
+            current_mp=15,
+        )
+
+    def test_arena_engine_uses_arena_hp_and_mp(self):
+        engine = ArenaBattleEngine(
+            challenger=self.challenger,
+            defender=self.defender,
+            challenger_state=self.challenger_state,
+            defender_state=self.defender_state,
+        )
+
+        self.assertEqual(
+            engine.challenger_hp,
+            35,
+        )
+
+        self.assertEqual(
+            engine.challenger_mp,
+            20,
+        )
+
+        self.assertEqual(
+            engine.defender_hp,
+            70,
+        )
+
+        self.assertEqual(
+            engine.defender_mp,
+            15,
+        )
+
+    def test_arena_stamina_always_starts_at_100(self):
+        engine = ArenaBattleEngine(
+            challenger=self.challenger,
+            defender=self.defender,
+            challenger_state=self.challenger_state,
+            defender_state=self.defender_state,
+        )
+
+        self.assertEqual(
+            engine.challenger_combatant.stamina,
+            100,
+        )
+
+        self.assertEqual(
+            engine.defender_combatant.stamina,
+            100,
+        )
+
+    def test_cannot_battle_against_self(self):
+        with self.assertRaises(ValueError):
+            ArenaBattleEngine(
+                challenger=self.challenger,
+                defender=self.challenger,
+                challenger_state=self.challenger_state,
+                defender_state=self.challenger_state,
+            )
 
 
 class BattleEngineTests(TestCase):
