@@ -4,6 +4,9 @@ from django.test import TestCase
 
 from .models import Character
 
+from unittest.mock import patch
+
+from .growth import increase_attribute_growth_weight
 
 User = get_user_model()
 
@@ -119,4 +122,137 @@ class UserManagerTests(TestCase):
             User.objects.create_user(
                 user_id="",
                 password="test-password-123",
+            )
+            
+class AttributeGrowthWeightTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create(
+            user_id="growth_test_user",
+            email="growth_test@example.com",
+        )
+
+        self.character = Character.objects.create(
+            user=self.user,
+            name="属性成長テスト",
+        )
+
+    def test_only_target_increases_when_no_decrease_candidate(self):
+        """
+        他属性がすべて1の場合、
+        対象属性だけ+1される。
+        """
+
+        result = increase_attribute_growth_weight(
+            self.character,
+            "fire",
+        )
+
+        self.character.refresh_from_db()
+
+        self.assertEqual(
+            self.character.fire_growth_weight,
+            2,
+        )
+
+        self.assertEqual(
+            self.character.water_growth_weight,
+            1,
+        )
+
+        self.assertIsNone(
+            result["decreased"]
+        )
+
+    def test_other_attribute_decreases_by_one(self):
+        """
+        下げられる属性がある場合、
+        対象属性+1、
+        他属性1つ-1。
+        """
+
+        self.character.water_growth_weight = 3
+        self.character.save(
+            update_fields=[
+                "water_growth_weight",
+            ]
+        )
+
+        with patch(
+            "apps.accounts.growth.random.choice",
+            return_value="water",
+        ):
+            result = increase_attribute_growth_weight(
+                self.character,
+                "fire",
+            )
+
+        self.character.refresh_from_db()
+
+        self.assertEqual(
+            self.character.fire_growth_weight,
+            2,
+        )
+
+        self.assertEqual(
+            self.character.water_growth_weight,
+            2,
+        )
+
+        self.assertEqual(
+            result["decreased"],
+            "water",
+        )
+
+    def test_growth_weight_never_goes_below_one(self):
+        """
+        下限1の属性は減少候補にならない。
+        """
+
+        self.character.water_growth_weight = 1
+        self.character.grass_growth_weight = 2
+
+        self.character.save(
+            update_fields=[
+                "water_growth_weight",
+                "grass_growth_weight",
+            ]
+        )
+
+        with patch(
+            "apps.accounts.growth.random.choice",
+            return_value="grass",
+        ):
+            increase_attribute_growth_weight(
+                self.character,
+                "fire",
+            )
+
+        self.character.refresh_from_db()
+
+        self.assertEqual(
+            self.character.water_growth_weight,
+            1,
+        )
+
+        self.assertEqual(
+            self.character.grass_growth_weight,
+            1,
+        )
+
+    def test_cannot_increase_over_fifteen(self):
+        """
+        対象属性が15なら使用不可。
+        """
+
+        self.character.fire_growth_weight = 15
+        self.character.save(
+            update_fields=[
+                "fire_growth_weight",
+            ]
+        )
+
+        with self.assertRaises(ValueError):
+            increase_attribute_growth_weight(
+                self.character,
+                "fire",
             )

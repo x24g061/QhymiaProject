@@ -559,20 +559,14 @@ def increase_attribute_growth_weight(
     """
     属性成長ウェイトを増加させる。
 
-    将来、
-    属性成長アイテムを使用したときに使う。
-
-    例:
-    炎ウェイト 1
-    ↓
-    アイテム使用
-    ↓
-    炎ウェイト 2
+    仕様:
+    ・対象属性を+1
+    ・対象属性の上限は15
+    ・他属性のうち1より大きいものから
+      ランダムで1つ選んで-1
+    ・下げられる属性がない場合は
+      対象属性だけ+1
     """
-
-    field_name = (
-        f"{attribute_name}_growth_weight"
-    )
 
     # 存在しない属性名を防止
     if attribute_name not in ATTRIBUTE_DISPLAY_NAMES:
@@ -580,24 +574,104 @@ def increase_attribute_growth_weight(
             "存在しない属性です。"
         )
 
+    field_name = (
+        f"{attribute_name}_growth_weight"
+    )
+
     current_weight = getattr(
         character,
         field_name,
     )
 
+    # 上限15
+    if current_weight >= 15:
+        raise ValueError(
+            "この属性成長値はすでに上限です。"
+        )
+
+    # 対象属性を+1
     setattr(
         character,
         field_name,
         current_weight + amount,
     )
 
-    character.save(
-        update_fields=[
-            field_name,
-        ]
-    )
+    # ========================================================
+    # 他属性から下げられる候補を探す
+    # ========================================================
 
-    return getattr(
-        character,
-        field_name,
-    )
+    decrease_candidates = []
+
+    for other_attribute in ATTRIBUTE_DISPLAY_NAMES:
+
+        # 今回上げる属性自身は除外
+        if other_attribute == attribute_name:
+            continue
+
+        other_field_name = (
+            f"{other_attribute}_growth_weight"
+        )
+
+        other_weight = getattr(
+            character,
+            other_field_name,
+        )
+
+        # 下限1なので、
+        # 1より大きい属性だけ候補
+        if other_weight > 1:
+            decrease_candidates.append(
+                other_attribute
+            )
+
+    # ========================================================
+    # 下げられる属性があればランダムで-1
+    # ========================================================
+
+    decreased_attribute = None
+
+    if decrease_candidates:
+
+        decreased_attribute = random.choice(
+            decrease_candidates
+        )
+
+        decreased_field_name = (
+            f"{decreased_attribute}_growth_weight"
+        )
+
+        decreased_value = getattr(
+            character,
+            decreased_field_name,
+        )
+
+        setattr(
+            character,
+            decreased_field_name,
+            decreased_value - 1,
+        )
+
+        character.save(
+            update_fields=[
+                field_name,
+                decreased_field_name,
+            ]
+        )
+
+    else:
+        # 他属性が全部1なら
+        # 対象属性だけ+1
+        character.save(
+            update_fields=[
+                field_name,
+            ]
+        )
+
+    return {
+        "increased": attribute_name,
+        "decreased": decreased_attribute,
+        "new_value": getattr(
+            character,
+            field_name,
+        ),
+    }
