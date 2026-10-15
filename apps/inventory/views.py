@@ -12,6 +12,7 @@ from django.utils import timezone
 from django.views.decorators.http import require_POST
 
 from apps.accounts.models import Character
+from apps.accounts.growth import increase_attribute_growth_weight
 
 from .models import (
     Equipment,
@@ -442,7 +443,9 @@ def use_item(
     """
     所持アイテムを使用する。
 
-    現在はCT短縮時計の効果を実装。
+    対応:
+    ・CT短縮時計
+    ・属性成長の種
     """
 
     # POST以外では使用できない
@@ -515,7 +518,130 @@ def use_item(
         )
 
 
-    # 現在はCT短縮時計のみ対応
+    # ========================================================
+    # 属性成長の種
+    # ========================================================
+
+    seed_attributes = {
+        "火の種": "fire",
+        "水の種": "water",
+        "草の種": "grass",
+        "岩の種": "rock",
+        "光の種": "light",
+        "闇の種": "dark",
+    }
+
+    attribute_display_names = {
+        "fire": "火",
+        "water": "水",
+        "grass": "草",
+        "rock": "岩",
+        "light": "光",
+        "dark": "闇",
+    }
+
+
+    if item.name in seed_attributes:
+
+        attribute_name = (
+            seed_attributes[
+                item.name
+            ]
+        )
+
+        try:
+
+            result = (
+                increase_attribute_growth_weight(
+                    character,
+                    attribute_name,
+                )
+            )
+
+        except ValueError as error:
+
+            # 上限15などで使用できなかった場合
+            # アイテムは消費しない
+            messages.error(
+                request,
+                str(error),
+            )
+
+            return redirect(
+                "inventory:inventory"
+            )
+
+
+        # ====================================================
+        # 種を1個消費
+        # ====================================================
+
+        if inventory_item.quantity <= 1:
+
+            inventory_item.delete()
+
+        else:
+
+            inventory_item.quantity -= 1
+
+            inventory_item.save(
+                update_fields=[
+                    "quantity",
+                ]
+            )
+
+
+        increased_name = (
+            attribute_display_names[
+                result["increased"]
+            ]
+        )
+
+        decreased_attribute = (
+            result["decreased"]
+        )
+
+
+        # 他属性が下がった場合
+        if decreased_attribute:
+
+            decreased_name = (
+                attribute_display_names[
+                    decreased_attribute
+                ]
+            )
+
+            messages.success(
+                request,
+                (
+                    f"{item.name}を使用しました。"
+                    f"{increased_name}属性の成長値が+1、"
+                    f"{decreased_name}属性の成長値が-1されました。"
+                ),
+            )
+
+        # 全属性が下限1で、
+        # 下げられる属性が無かった場合
+        else:
+
+            messages.success(
+                request,
+                (
+                    f"{item.name}を使用しました。"
+                    f"{increased_name}属性の成長値が+1されました。"
+                ),
+            )
+
+
+        return redirect(
+            "inventory:inventory"
+        )
+
+
+    # ========================================================
+    # CT短縮時計
+    # ========================================================
+
     if not item.cooldown_reduction_days:
 
         messages.error(
