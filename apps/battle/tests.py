@@ -1470,6 +1470,10 @@ class ExplorationDropTests(TestCase):
             category=Item.Category.MATERIAL,
         )
 
+        FloorDropItem.objects.filter(
+        floor=1
+        ).delete()
+
         FloorDropItem.objects.create(
             floor=1,
             item=item,
@@ -1534,6 +1538,11 @@ class ExplorationDropTests(TestCase):
             vitality_rate=0,
             luck_rate=10,
         )
+
+        FloorDropItem.objects.filter(
+            floor=1
+        ).delete()
+
 
         FloorDropItem.objects.create(
             floor=1,
