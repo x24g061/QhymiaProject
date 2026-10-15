@@ -34,6 +34,76 @@ from apps.battle.drops import (
 )
 
 
+class PlayerCombatantArenaTests(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create_user(
+            user_id="arena_combatant_user",
+            email="arena_combatant@example.com",
+            password="testpass123",
+        )
+
+        self.character = Character.objects.create(
+            user=self.user,
+            name="闘技場戦士",
+            race="human",
+            job="wanderer",
+            max_hp=100,
+            current_hp=80,
+            max_mp=50,
+            current_mp=40,
+        )
+
+    def test_arena_starting_hp_and_mp_override_character_values(self):
+        """
+        闘技場用HP / MPを指定した場合、
+        Character.current_hp / current_mpではなく
+        指定値から戦闘を開始する。
+        """
+
+        combatant = PlayerCombatant(
+            self.character,
+            starting_stamina=100,
+            starting_hp=25,
+            starting_mp=12,
+        )
+
+        self.assertEqual(
+            combatant.hp,
+            25,
+        )
+
+        self.assertEqual(
+            combatant.mp,
+            12,
+        )
+
+        self.assertEqual(
+            combatant.stamina,
+            100,
+        )
+
+    def test_default_starting_hp_and_mp_still_use_character_values(self):
+        """
+        闘技場用HP / MPを指定しない場合は、
+        従来通りCharacterの値を使用する。
+        """
+
+        combatant = PlayerCombatant(
+            self.character,
+        )
+
+        self.assertEqual(
+            combatant.hp,
+            80,
+        )
+
+        self.assertEqual(
+            combatant.mp,
+            40,
+        )
+
+
 class BattleEngineTests(TestCase):
 
     def setUp(self):

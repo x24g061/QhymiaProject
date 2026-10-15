@@ -120,6 +120,8 @@ class PlayerCombatant(Combatant):
         self,
         character,
         starting_stamina=100,
+        starting_hp=None,
+        starting_mp=None,
     ):
 
         self.character = character
@@ -147,12 +149,20 @@ class PlayerCombatant(Combatant):
         # 戦闘開始時HP
         # ========================================
 
-        # DB上で全回復状態なら、
-        # 職業補正後の最大HPから開始する。
-        if (
+        if starting_hp is not None:
+            # 闘技場など、
+            # 外部から開始HPを指定する場合
+            current_hp = min(
+                max(0, starting_hp),
+                max_hp,
+            )
+
+        elif (
             character.current_hp
             >= character.max_hp
         ):
+            # 通常探索で全回復状態なら、
+            # 職業補正後の最大HPから開始する
             current_hp = max_hp
 
         else:
@@ -165,7 +175,15 @@ class PlayerCombatant(Combatant):
         # 戦闘開始時MP
         # ========================================
 
-        if (
+        if starting_mp is not None:
+            # 闘技場など、
+            # 外部から開始MPを指定する場合
+            current_mp = min(
+                max(0, starting_mp),
+                max_mp,
+            )
+
+        elif (
             character.current_mp
             >= character.max_mp
         ):
