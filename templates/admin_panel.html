@@ -1,10 +1,25 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block title %}
 管理者メニュー | Qhymia
 {% endblock %}
 
 {% block content %}
+
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
+
+<div class="admin-mode-banner">
+
+    <strong>
+        ADMIN MODE
+    </strong>
+
+    <span>
+        管理者権限で操作しています
+    </span>
+
+</div>
+
 
 <div class="admin-panel-page">
 
@@ -109,6 +124,91 @@
         {% endfor %}
 
     </div>
+
+
+    <!-- ========================================
+         管理者モードアクセス履歴
+    ========================================= -->
+
+    <section class="admin-access-log-section">
+
+        <div class="admin-panel-header">
+
+            <div>
+                <p class="admin-panel-label">
+                    ADMIN ACCESS LOG
+                </p>
+
+                <h2>
+                    管理者モード履歴
+                </h2>
+
+                <p>
+                    直近15件の管理者モード有効化履歴です。
+                </p>
+            </div>
+
+            <a href="{% url 'admin_access_history' %}">
+                詳細を見る →
+            </a>
+
+        </div>
+
+
+        <div class="admin-access-log-list">
+
+            <div class="admin-access-log-header">
+
+                <div>
+                    キャラクター名
+                </div>
+
+                <div>
+                    アカウントID
+                </div>
+
+                <div>
+                    有効化日時
+                </div>
+
+            </div>
+
+
+            {% for log in admin_access_logs %}
+
+            <div class="admin-access-log-row">
+
+                <div>
+                    {% if log.character_name %}
+                    {{ log.character_name }}
+                    {% else %}
+                    -
+                    {% endif %}
+                </div>
+
+                <div>
+                    {{ log.account_id }}
+                </div>
+
+                <div>
+                    {{ log.activated_at|date:"Y/m/d H:i:s" }}
+                </div>
+
+            </div>
+
+            {% empty %}
+
+            <p class="admin-access-log-empty">
+                管理者モード履歴はまだありません。
+            </p>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+
     <section class="admin-sns-section">
 
         <div class="admin-panel-header">
@@ -191,6 +291,101 @@
 
             <p>
                 SNS投稿はありません。
+            </p>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+    <!-- ========================================
+     管理者変更履歴
+======================================== -->
+
+    <section class="admin-change-log-section">
+
+        <div class="admin-panel-header">
+
+            <div>
+                <p class="admin-panel-label">
+                    ADMIN CHANGE LOG
+                </p>
+
+                <h2>
+                    管理者変更履歴
+                </h2>
+
+                <p>
+                    直近15件の管理者によるプレイヤー変更履歴です。
+                </p>
+            </div>
+            <a href="{% url 'admin_change_history' %}">
+                詳細を見る →
+            </a>
+
+        </div>
+
+
+        <div class="admin-change-log-list">
+
+            <div class="admin-change-log-header">
+
+                <div>操作者</div>
+                <div>対象プレイヤー</div>
+                <div>変更内容</div>
+                <div>変更日時</div>
+
+            </div>
+
+
+            {% for log in admin_change_logs %}
+
+            <div class="admin-change-log-row">
+
+                <div>
+                    {% if log.character_name %}
+                    {{ log.character_name }}
+                    {% else %}
+                    {{ log.account_id }}
+                    {% endif %}
+                </div>
+
+                <div>
+                    {{ log.target_character_name }}
+                </div>
+
+                <div class="admin-change-log-changes">
+
+                    {% for field_name, change in log.changes.items %}
+
+                    <div>
+                        <strong>
+                            {{ change.label }}
+                        </strong>
+
+                        {{ change.before }}
+                        →
+                        {{ change.after }}
+                    </div>
+
+                    {% empty %}
+
+                    -
+
+                    {% endfor %}
+
+                </div>
+
+                <div>
+                    {{ log.created_at|date:"Y/m/d H:i:s" }}
+                </div>
+
+            </div>
+
+            {% empty %}
+
+            <p class="admin-change-log-empty">
+                管理者変更履歴はまだありません。
             </p>
 
             {% endfor %}

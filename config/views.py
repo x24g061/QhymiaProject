@@ -6,7 +6,11 @@ from django.shortcuts import render, redirect
 
 from django.conf import settings
 
-from apps.accounts.models import Character
+from apps.accounts.models import (
+    Character,
+    AdminModeAccessLog,
+    AdminChangeLog,
+)
 
 from apps.sns.models import Post
 
@@ -165,6 +169,21 @@ def admin_mode_login(request):
 
             request.session["admin_mode"] = True
 
+            character = getattr(
+                request.user,
+                "character",
+                None,
+            )
+
+            AdminModeAccessLog.objects.create(
+                user=request.user,
+                account_id=request.user.user_id,
+                character_name=(
+                    character.name
+                    if character
+                    else ""
+                ),
+            )
 
 
             messages.success(
@@ -254,46 +273,94 @@ def admin_panel(request):
 
 
     posts = (
-
-            Post.objects
-
-            .select_related(
-
-                "user",
-
-                "user__character",
-
-            )
-
-            .order_by("-created_at")
-
+        Post.objects
+        .select_related(
+            "user",
+            "user__character",
         )
+        .order_by("-created_at")
+    )
 
+    admin_access_logs = (
+        AdminModeAccessLog.objects
+        .select_related("user")
+        .order_by("-activated_at")[:15]
+    )
 
-
-
+    admin_change_logs = (
+        AdminChangeLog.objects
+        .select_related(
+            "user",
+            "target_character",
+        )
+        .order_by("-created_at")[:15]
+    )
 
     return render(
+        request,
+        "admin_panel.html",
+        {
+            "characters": characters,
+            "query": query,
+            "posts": posts,
+            "admin_access_logs": admin_access_logs,
+            "admin_change_logs": admin_change_logs,
+        },
+    )
+@login_required
+def admin_access_history(request):
 
-    request,
+    # 管理者モードでなければ入れない
+    if not request.session.get("admin_mode"):
+        messages.error(
+            request,
+            "管理者モードを有効にしてください。",
+        )
+        return redirect("home")
 
-    "admin_panel.html",
+    admin_access_logs = (
+        AdminModeAccessLog.objects
+        .select_related("user")
+        .order_by("-activated_at")[:100]
+    )
 
-    {
-
-        "characters": characters,
-
-        "query": query,
-
-        "posts": posts,
-
-    },
-
-)
-
-
+    return render(
+        request,
+        "admin_access_history.html",
+        {
+            "admin_access_logs": admin_access_logs,
+        },
+    )
 
 
+
+@login_required
+def admin_change_history(request):
+
+    # 管理者モードでなければ入れない
+    if not request.session.get("admin_mode"):
+        messages.error(
+            request,
+            "管理者モードを有効にしてください。",
+        )
+        return redirect("home")
+
+    admin_change_logs = (
+        AdminChangeLog.objects
+        .select_related(
+            "user",
+            "target_character",
+        )
+        .order_by("-created_at")[:100]
+    )
+
+    return render(
+        request,
+        "admin_change_history.html",
+        {
+            "admin_change_logs": admin_change_logs,
+        },
+    )
 
 
 
@@ -321,6 +388,20 @@ def admin_player_edit(request, character_id):
         return redirect("admin_panel")
 
     if request.method == "POST":
+
+        before_values = {
+            "level": character.level,
+            "exp": character.exp,
+            "gold": character.gold,
+            "max_hp": character.max_hp,
+            "max_mp": character.max_mp,
+            "strength": character.strength,
+            "intelligence": character.intelligence,
+            "dexterity": character.dexterity,
+            "agility": character.agility,
+            "vitality": character.vitality,
+            "luck": character.luck,
+        }
 
         try:
             character.level = int(
@@ -411,7 +492,62 @@ def admin_player_edit(request, character_id):
             )
 
             character.save()
+            # =================================================
+            # 管理者変更履歴
+            # =================================================
 
+            field_labels = {
+                "level": "レベル",
+                "exp": "EXP",
+                "gold": "所持Q",
+                "max_hp": "最大HP",
+                "max_mp": "最大MP",
+                "strength": "STR",
+                "intelligence": "INT",
+                "dexterity": "DEX",
+                "agility": "AGI",
+                "vitality": "VIT",
+                "luck": "LUK",
+            }
+
+            changes = {}
+
+            for field_name, before_value in before_values.items():
+
+                after_value = getattr(
+                    character,
+                    field_name,
+                )
+
+                if before_value != after_value:
+
+                    changes[field_name] = {
+                        "label": field_labels[field_name],
+                        "before": before_value,
+                        "after": after_value,
+                    }
+
+            if changes:
+
+                admin_character = getattr(
+                    request.user,
+                    "character",
+                    None,
+                )
+
+                AdminChangeLog.objects.create(
+                    user=request.user,
+                    account_id=request.user.user_id,
+                    character_name=(
+                        admin_character.name
+                        if admin_character
+                        else ""
+                    ),
+                    target_character=character,
+                    target_character_name=character.name,
+                    action_type="player_update",
+                    changes=changes,
+                )
             # =================================================
             # 装備付与
             # =================================================
@@ -479,7 +615,45 @@ def admin_player_edit(request, character_id):
                         battle_power=battle_power,
                         is_equipped=False,
                     )
+                                # =================================================
+                # 管理者変更履歴：装備付与
+                # =================================================
 
+                admin_character = getattr(
+                    request.user,
+                    "character",
+                    None,
+                )
+
+                AdminChangeLog.objects.create(
+                    user=request.user,
+                    account_id=request.user.user_id,
+                    character_name=(
+                        admin_character.name
+                        if admin_character
+                        else ""
+                    ),
+                    target_character=character,
+                    target_character_name=character.name,
+                    action_type="equipment_grant",
+                    changes={
+                        "equipment": {
+                            "label": "装備",
+                            "before": "-",
+                            "after": equipment.item.name,
+                        },
+                        "quantity": {
+                            "label": "個数",
+                            "before": "-",
+                            "after": grant_quantity,
+                        },
+                        "enhancement_level": {
+                            "label": "強化値",
+                            "before": "-",
+                            "after": f"+{grant_enhancement_level}",
+                        },
+                    },
+                )
             messages.success(
                 request,
                 f"{character.name}の情報を更新しました。",

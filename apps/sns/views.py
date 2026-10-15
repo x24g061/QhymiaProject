@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from .forms import PostForm
 from .models import Favorite, Like, Post
 from django.http import JsonResponse
-
+from apps.accounts.models import AdminChangeLog
 @login_required
 def admin_delete_post(request, post_id):
 
@@ -27,10 +27,76 @@ def admin_delete_post(request, post_id):
         )
 
     post = get_object_or_404(
-        Post,
+        Post.objects.select_related(
+            "user",
+            "user__character",
+        ),
         id=post_id,
     )
 
+    # 操作した管理者
+    admin_character = getattr(
+        request.user,
+        "character",
+        None,
+    )
+
+    # 投稿したキャラクター
+    post_character = getattr(
+        post.user,
+        "character",
+        None,
+    )
+
+    changes = {
+        "sns_action": {
+            "label": "SNS投稿",
+            "before": "投稿あり",
+            "after": "削除済み",
+        },
+        "post_id": {
+            "label": "投稿ID",
+            "before": post.id,
+            "after": "削除済み",
+        },
+        "text": {
+            "label": "投稿内容",
+            "before": (
+                post.text
+                if post.text
+                else "(本文なし)"
+            ),
+            "after": "削除済み",
+        },
+    }
+
+    if post.image:
+        changes["image"] = {
+            "label": "画像",
+            "before": "画像あり",
+            "after": "削除済み",
+        }
+
+    # 削除する前に履歴を保存
+    AdminChangeLog.objects.create(
+        user=request.user,
+        account_id=request.user.user_id,
+        character_name=(
+            admin_character.name
+            if admin_character
+            else ""
+        ),
+        target_character=post_character,
+        target_character_name=(
+            post_character.name
+            if post_character
+            else str(post.user)
+        ),
+        action_type="sns_post_delete",
+        changes=changes,
+    )
+
+    # 履歴保存後に投稿を削除
     post.delete()
 
     return redirect("admin_panel")

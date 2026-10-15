@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 
 {% block title %}
 管理者モード認証 | Qhymia
@@ -6,37 +7,83 @@
 
 {% block content %}
 
+<link
+    rel="stylesheet"
+    href="{% static 'css/admin.css' %}"
+>
+
+
+<!-- =============================
+     管理者ログイン専用ヘッダー
+============================== -->
+
+<div class="admin-login-header">
+
+    <div class="admin-login-logo">
+        Qhymia
+    </div>
+
+    <div class="admin-login-header-title">
+        ADMIN MODE
+    </div>
+
+</div>
+
+
+<!-- =============================
+     管理者認証
+============================== -->
+
 <div class="admin-login-page">
 
-    <div class="admin-login-card">
-
-        <p class="admin-login-label">
-            ADMIN MODE
-        </p>
+    <section class="admin-login-area">
 
         <h1>
             管理者モード認証
         </h1>
 
-        <p>
-            管理者用パスワードを入力してください。
-        </p>
 
-        <form method="post">
+        <form method="post" class="admin-login-form">
 
             {% csrf_token %}
 
-            <input type="password" name="password" placeholder="管理者パスワード" required>
+            <input
+                type="password"
+                name="password"
+                placeholder="パスワード"
+                required
+            >
 
             <button type="submit">
-                管理者モードを有効にする
+                有効にする
             </button>
 
         </form>
 
-        <a href="{% url 'home' %}">
-            ← ホームへ戻る
+
+        <a
+            href="{% url 'home' %}"
+            class="admin-login-home"
+        >
+            ホームへ戻る
         </a>
+
+    </section>
+
+
+    <!-- =============================
+         警告
+    ============================== -->
+
+    <div class="admin-login-warning">
+
+        <p>
+            不正なアクセスは無期限のアカウント停止になります。
+        </p>
+
+        <p>
+            ＜ホームへ戻る＞からお戻りください。
+        </p>
 
     </div>
 

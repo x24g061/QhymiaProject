@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+管理者変更履歴 | Qhymia
+{% endblock %}
+
+{% block content %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'css/admin.css' %}"
+>
+
+<div class="admin-mode-banner">
+
+    <strong>
+        ADMIN MODE
+    </strong>
+
+    <span>
+        管理者権限で操作しています
+    </span>
+
+</div>
+
+
+<div class="admin-panel-page">
+
+    <div class="admin-panel-header">
+
+        <div>
+            <p class="admin-panel-label">
+                ADMIN CHANGE LOG
+            </p>
+
+            <h1>
+                管理者変更履歴
+            </h1>
+
+            <p>
+                直近100件の管理者による変更履歴を表示しています。
+            </p>
+        </div>
+
+        <a href="{% url 'admin_panel' %}">
+            ← 管理者メニューへ戻る
+        </a>
+
+    </div>
+
+
+    <div class="admin-change-log-list">
+
+        <div class="admin-change-log-header">
+
+            <div>操作者</div>
+            <div>対象プレイヤー</div>
+            <div>変更内容</div>
+            <div>変更日時</div>
+
+        </div>
+
+
+        {% for log in admin_change_logs %}
+
+        <div class="admin-change-log-row">
+
+            <div>
+                {% if log.character_name %}
+                    {{ log.character_name }}
+                {% else %}
+                    {{ log.account_id }}
+                {% endif %}
+            </div>
+
+            <div>
+                {{ log.target_character_name }}
+            </div>
+
+            <div class="admin-change-log-changes">
+
+                {% for field_name, change in log.changes.items %}
+
+                <div>
+                    <strong>
+                        {{ change.label }}
+                    </strong>
+
+                    {{ change.before }}
+                    →
+                    {{ change.after }}
+                </div>
+
+                {% empty %}
+
+                -
+
+                {% endfor %}
+
+            </div>
+
+            <div>
+                {{ log.created_at|date:"Y/m/d H:i:s" }}
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <p class="admin-change-log-empty">
+            管理者変更履歴はまだありません。
+        </p>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

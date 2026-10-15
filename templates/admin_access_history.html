@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+管理者モード履歴 | Qhymia
+{% endblock %}
+
+{% block content %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'css/admin.css' %}"
+>
+
+<div class="admin-mode-banner">
+
+    <strong>
+        ADMIN MODE
+    </strong>
+
+    <span>
+        管理者権限で操作しています
+    </span>
+
+</div>
+
+
+<div class="admin-panel-page">
+
+    <div class="admin-panel-header">
+
+        <div>
+            <p class="admin-panel-label">
+                ADMIN ACCESS LOG
+            </p>
+
+            <h1>
+                管理者モード履歴
+            </h1>
+
+            <p>
+                直近100件の管理者モード有効化履歴を表示しています。
+            </p>
+        </div>
+
+        <a href="{% url 'admin_panel' %}">
+            ← 管理者メニューへ戻る
+        </a>
+
+    </div>
+
+
+    <div class="admin-access-log-list">
+
+        <div class="admin-access-log-header">
+
+            <div>
+                キャラクター名
+            </div>
+
+            <div>
+                アカウントID
+            </div>
+
+            <div>
+                有効化日時
+            </div>
+
+        </div>
+
+
+        {% for log in admin_access_logs %}
+
+        <div class="admin-access-log-row">
+
+            <div>
+                {% if log.character_name %}
+                    {{ log.character_name }}
+                {% else %}
+                    -
+                {% endif %}
+            </div>
+
+            <div>
+                {{ log.account_id }}
+            </div>
+
+            <div>
+                {{ log.activated_at|date:"Y/m/d H:i:s" }}
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <p class="admin-access-log-empty">
+            管理者モード履歴はまだありません。
+        </p>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}
