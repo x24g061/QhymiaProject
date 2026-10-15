@@ -314,3 +314,181 @@ class Meta:
             f"{self.floor}階層 - "
             f"{self.item.name}"
         )
+
+# ============================================================
+# 闘技場
+# ============================================================
+
+class ArenaFloor(models.Model):
+    """
+    闘技場の各階層を管理する。
+    """
+
+    floor = models.PositiveSmallIntegerField(
+        primary_key=True,
+        help_text="闘技場階層",
+    )
+
+    master = models.OneToOneField(
+        Character,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="mastered_arena_floor",
+    )
+
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                condition=(
+                    models.Q(floor__gte=1)
+                    & models.Q(floor__lte=100)
+                ),
+                name="arena_floor_between_1_and_100",
+            ),
+        ]
+
+    def __str__(self):
+        if self.master:
+            return (
+                f"闘技場{self.floor}階 "
+                f"- {self.master.name}"
+            )
+
+        return (
+            f"闘技場{self.floor}階 "
+            "- 空席"
+        )
+
+
+class ArenaState(models.Model):
+    """
+    キャラクターごとの闘技場状態。
+
+    Character.current_hp / current_mp とは別管理。
+
+    闘技場からHOMEへ戻っても回復せず、
+    フロアマスターの防衛戦では
+    HP・MPを次の戦闘へ持ち越す。
+    """
+
+    character = models.OneToOneField(
+        Character,
+        on_delete=models.CASCADE,
+        related_name="arena_state",
+    )
+
+    # 現在いる闘技場階層。
+    #
+    # ArenaFloorを直接参照することで、
+    # 存在しない階に移動できないようにする。
+    floor = models.ForeignKey(
+        ArenaFloor,
+        on_delete=models.PROTECT,
+        related_name="players",
+    )
+
+    # 通常キャラクターとは別の
+    # 闘技場専用HP / MP。
+    current_hp = models.PositiveIntegerField(
+        default=0,
+    )
+
+    current_mp = models.PositiveIntegerField(
+        default=0,
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
+
+    def __str__(self):
+        return (
+            f"{self.character.name} "
+            f"- 闘技場{self.floor_id}階"
+        )
+
+
+class ArenaBattleHistory(models.Model):
+    """
+    闘技場の対戦履歴。
+
+    挑戦者視点で勝敗を保存する。
+    """
+
+    class Result(models.TextChoices):
+        WIN = "win", "勝利"
+        LOSS = "loss", "敗北"
+        DRAW = "draw", "引き分け"
+
+    challenger = models.ForeignKey(
+        Character,
+        on_delete=models.CASCADE,
+        related_name="arena_challenge_histories",
+    )
+
+    defender = models.ForeignKey(
+        Character,
+        on_delete=models.CASCADE,
+        related_name="arena_defense_histories",
+    )
+
+    # 戦闘が行われた階層。
+    floor = models.PositiveSmallIntegerField()
+
+    # 挑戦者視点の結果。
+    result = models.CharField(
+        max_length=10,
+        choices=Result.choices,
+    )
+
+    # BattleEngineが生成したログを
+    # そのまま保存できるようJSONFieldを使う。
+    battle_logs = models.JSONField(
+        default=list,
+        blank=True,
+    )
+
+    # 戦闘終了時の闘技場HP / MP。
+    #
+    # 後から戦歴を見返した時にも
+    # 当時の状態が分かるよう保存する。
+    challenger_hp_after = models.PositiveIntegerField(
+        default=0,
+    )
+
+    challenger_mp_after = models.PositiveIntegerField(
+        default=0,
+    )
+
+    defender_hp_after = models.PositiveIntegerField(
+        default=0,
+    )
+
+    defender_mp_after = models.PositiveIntegerField(
+        default=0,
+    )
+
+    # 挑戦後に両者がどの階へ移動したか。
+    challenger_floor_after = models.PositiveSmallIntegerField()
+
+    defender_floor_after = models.PositiveSmallIntegerField()
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    class Meta:
+        ordering = [
+            "-created_at",
+        ]
+
+    def __str__(self):
+        return (
+            f"{self.floor}階 "
+            f"{self.challenger.name} "
+            f"vs {self.defender.name} "
+            f"({self.get_result_display()})"
+        )
+
+

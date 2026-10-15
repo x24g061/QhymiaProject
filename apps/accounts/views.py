@@ -1,12 +1,21 @@
+import random
+
 from django.contrib.auth import authenticate, login, logout
+from django.db import transaction
 from django.shortcuts import render, redirect
-from .forms import SignUpForm
-from .models import Character, User
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.staticfiles import finders
+
+from apps.battle.models import (
+    ArenaFloor,
+    ArenaState,
+)
 from pathlib import Path
-from django.conf import settings
-import random
+from .forms import SignUpForm
+from .models import Character, User
+
+
 
 def logout_view(request):
     logout(request)
@@ -201,15 +210,49 @@ def character_create_view(request):
             )
 
         else:
-            Character.objects.create(
-                user=request.user,
-                name=character_name,
-                race=race,
-                job=job,
-                character_image_id=character_image_id,
-            )
+            # ========================================================
+            # キャラクター作成
+            # ========================================================
+            #
+            # CharacterとArenaStateはセットで作成する。
+            #
+            # 途中でArenaStateの作成に失敗した場合、
+            # Characterだけが残らないようtransaction.atomic()を使う。
+            # ========================================================
+
+            with transaction.atomic():
+
+                character = Character.objects.create(
+                    user=request.user,
+                    name=character_name,
+                    race=race,
+                    job=job,
+                    character_image_id=character_image_id,
+                )
+
+                # ================================================
+                # 闘技場初期状態
+                # ================================================
+                #
+                # 新規キャラクターは必ず1階から開始。
+                #
+                # 通常HP / MPとは別に、
+                # 闘技場専用HP / MPを最大値で初期化する。
+                # ================================================
+
+                arena_floor = ArenaFloor.objects.get(
+                    floor=1,
+                )
+
+                ArenaState.objects.create(
+                    character=character,
+                    floor=arena_floor,
+                    current_hp=character.max_hp,
+                    current_mp=character.max_mp,
+                )
 
             return redirect("home")
+
 
     return render(
         request,
@@ -229,6 +272,8 @@ def character_create_view(request):
             ],
         },
     )
+
+    
 @login_required
 def character_list_view(request):
     characters = []
