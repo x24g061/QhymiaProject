@@ -1,5 +1,18 @@
 from apps.battle.combatants import PlayerCombatant
 
+from apps.battle.engine.calculations import (
+    calculate_hit_rate,
+    calculate_physical_damage,
+    calculate_critical_rate,
+    calculate_critical_multiplier,
+    roll_percent,
+)
+
+from apps.battle.engine.character_stats import (
+    get_character_combat_stat,
+    apply_character_damage_race_bonus,
+    apply_character_received_damage_race_bonus,
+)
 
 class ArenaBattleEngine:
     """
@@ -75,6 +88,264 @@ class ArenaBattleEngine:
 
         # 戦闘ログ
         self.logs = []
+
+    # ========================================================
+    # 戦闘中ステータス
+    # ========================================================
+
+    def get_combat_stat(
+        self,
+        character,
+        combatant,
+        stat_name,
+    ):
+        """
+        探索と同じ共通計算を使って、
+        闘技場での有効ステータスを取得する。
+        """
+
+        return get_character_combat_stat(
+            character,
+            stat_name,
+
+            current_hp=combatant.hp,
+            max_hp=combatant.max_hp,
+
+            current_stamina=combatant.stamina,
+            max_stamina=combatant.max_stamina,
+        )
+
+
+    # ========================================================
+    # PvP通常攻撃
+    # ========================================================
+
+    def normal_attack(
+        self,
+        attacker,
+        attacker_combatant,
+        defender,
+        defender_combatant,
+    ):
+        """
+        プレイヤー同士の通常攻撃。
+
+        探索と同じ
+
+        ・命中率
+        ・物理ダメージ
+        ・クリティカル
+        ・種族補正
+        ・ST補正
+
+        を使用する。
+        """
+
+        # ========================================
+        # 命中率
+        # ========================================
+
+        attacker_dex = self.get_combat_stat(
+            attacker,
+            attacker_combatant,
+            "dexterity",
+        )
+
+        defender_agi = self.get_combat_stat(
+            defender,
+            defender_combatant,
+            "agility",
+        )
+
+        hit_rate = calculate_hit_rate(
+            attacker_dex=attacker_dex,
+            defender_agi=defender_agi,
+        )
+
+        # ========================================
+        # 命中判定
+        # ========================================
+
+        if not roll_percent(hit_rate):
+
+            self.logs.append(
+                f"{attacker.name}の攻撃！ "
+                "しかし外れた！"
+            )
+
+            # 攻撃したのでSTは消費
+            attacker_combatant.consume_stamina(
+                5
+            )
+
+            return {
+                "hit": False,
+                "critical": False,
+                "damage": 0,
+            }
+
+        # ========================================
+        # 物理ダメージ
+        # ========================================
+
+        attacker_strength = (
+            self.get_combat_stat(
+                attacker,
+                attacker_combatant,
+                "strength",
+            )
+        )
+
+        defender_vitality = (
+            self.get_combat_stat(
+                defender,
+                defender_combatant,
+                "vitality",
+            )
+        )
+
+        damage = calculate_physical_damage(
+            strength=attacker_strength,
+            defender_vit=defender_vitality,
+        )
+
+        # ========================================
+        # クリティカル
+        # ========================================
+
+        attacker_luck = self.get_combat_stat(
+            attacker,
+            attacker_combatant,
+            "luck",
+        )
+
+        defender_luck = self.get_combat_stat(
+            defender,
+            defender_combatant,
+            "luck",
+        )
+
+        critical_rate = calculate_critical_rate(
+            attacker_luck=attacker_luck,
+            defender_luck=defender_luck,
+        )
+
+        is_critical = roll_percent(
+            critical_rate
+        )
+
+        if is_critical:
+
+            damage *= (
+                calculate_critical_multiplier(
+                    attacker_luck
+                )
+            )
+
+        # ========================================
+        # 種族による与ダメージ補正
+        # ========================================
+
+        damage = apply_character_damage_race_bonus(
+            attacker,
+            damage,
+        )
+
+        # ========================================
+        # 種族による被ダメージ補正
+        # ========================================
+
+        damage = (
+            apply_character_received_damage_race_bonus(
+                defender,
+                damage,
+            )
+        )
+
+        # ========================================
+        # 最終ダメージ
+        # ========================================
+
+        damage = max(
+            1,
+            int(damage),
+        )
+
+        defender_combatant.take_damage(
+            damage
+        )
+
+        # ========================================
+        # ログ
+        # ========================================
+
+        if is_critical:
+
+            self.logs.append(
+                f"{attacker.name}の攻撃！ "
+                "クリティカル！ "
+                f"{defender.name}に"
+                f"{damage}ダメージ！"
+            )
+
+        else:
+
+            self.logs.append(
+                f"{attacker.name}の攻撃！ "
+                f"{defender.name}に"
+                f"{damage}ダメージ！"
+            )
+
+        # ========================================
+        # ST消費
+        # ========================================
+
+        attacker_combatant.consume_stamina(
+            5
+        )
+
+        return {
+            "hit": True,
+            "critical": is_critical,
+            "damage": damage,
+        }
+
+
+    # ========================================================
+    # 挑戦者 → 防衛者
+    # ========================================================
+
+    def challenger_normal_attack(self):
+
+        return self.normal_attack(
+            attacker=self.challenger,
+            attacker_combatant=(
+                self.challenger_combatant
+            ),
+            defender=self.defender,
+            defender_combatant=(
+                self.defender_combatant
+            ),
+        )
+
+
+    # ========================================================
+    # 防衛者 → 挑戦者
+    # ========================================================
+
+    def defender_normal_attack(self):
+
+        return self.normal_attack(
+            attacker=self.defender,
+            attacker_combatant=(
+                self.defender_combatant
+            ),
+            defender=self.challenger,
+            defender_combatant=(
+                self.challenger_combatant
+            ),
+        )
+
 
     @property
     def challenger_hp(self):

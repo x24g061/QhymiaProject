@@ -306,3 +306,43 @@ def get_character_combat_stat(
         )
 
     return value
+
+
+# ============================================================
+# 与ダメージ種族補正
+# ============================================================
+
+def apply_character_damage_race_bonus(
+    character,
+    damage,
+):
+    """
+    キャラクターが与えるダメージへの
+    種族補正を適用する。
+    """
+
+    # デモニア
+    if character.race == "demonia":
+        damage *= 1.10
+
+    return damage
+
+
+# ============================================================
+# 被ダメージ種族補正
+# ============================================================
+
+def apply_character_received_damage_race_bonus(
+    character,
+    damage,
+):
+    """
+    キャラクターが受けるダメージへの
+    種族補正を適用する。
+    """
+
+    # デモニア
+    if character.race == "demonia":
+        damage *= 1.10
+
+    return damage
