@@ -130,6 +130,57 @@ def calculate_physical_damage(
 
 
 # ============================================================
+# クリティカル率
+# ============================================================
+
+def calculate_critical_rate(
+    attacker_luck,
+    defender_luck,
+):
+    """
+    攻撃側・防御側のLUKから
+    クリティカル率を計算する。
+    """
+
+    denominator = (
+        attacker_luck
+        + defender_luck
+    )
+
+    if denominator <= 0:
+        return 5
+
+    return (
+        5
+        + 45
+        * attacker_luck
+        / denominator
+    )
+
+
+# ============================================================
+# クリティカル倍率
+# ============================================================
+
+def calculate_critical_multiplier(
+    luck,
+):
+    """
+    攻撃側LUKから
+    クリティカル倍率を計算する。
+    """
+
+    return (
+        1.5
+        + (
+            luck
+            / (luck + 1000)
+        )
+        * 1.5
+    )
+
+
+# ============================================================
 # 確率判定
 # ============================================================
 
@@ -191,3 +242,23 @@ class BattleCalculationsMixin:
         """
 
         return roll_percent(rate)
+
+
+    @staticmethod
+    def calculate_critical_rate(
+        attacker_luck,
+        defender_luck,
+    ):
+        return calculate_critical_rate(
+            attacker_luck,
+            defender_luck,
+        )
+
+
+    @staticmethod
+    def calculate_critical_multiplier(
+        luck,
+    ):
+        return calculate_critical_multiplier(
+            luck,
+        )

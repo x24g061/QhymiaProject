@@ -27,7 +27,7 @@ class BattleStatsMixin:
         vitality
         luck
         """
-        
+
 
         value = get_character_base_combat_stat(
             self.character,
@@ -140,47 +140,6 @@ class BattleStatsMixin:
         return (
             self.character
             .get_main_attribute()
-        )
-
-
-    # ========================================================
-    # クリティカル率
-    # ========================================================
-
-    @staticmethod
-    def calculate_critical_rate(
-        attacker_luck,
-        defender_luck,
-    ):
-        denominator = (
-            attacker_luck
-            + defender_luck
-        )
-
-        if denominator <= 0:
-            return 5
-
-        return (
-            5
-            + 45
-            * attacker_luck
-            / denominator
-        )
-
-
-    # ========================================================
-    # クリティカル倍率
-    # ========================================================
-
-    @staticmethod
-    def calculate_critical_multiplier(luck):
-        return (
-            1.5
-            + (
-                luck
-                / (luck + 1000)
-            )
-            * 1.5
         )
 
 
