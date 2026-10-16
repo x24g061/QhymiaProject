@@ -1,7 +1,8 @@
 import math
 
 from apps.battle.engine.character_stats import (
-    get_character_base_combat_stat,
+    get_character_combat_stat,
+    get_stamina_stat_multiplier as calculate_stamina_stat_multiplier,
 )
 
 
@@ -15,117 +16,63 @@ class BattleStatsMixin:
     # 戦闘中ステータス
     # ========================================================
 
-    def get_player_stat(self, stat_name):
+    def get_player_stat(
+        self,
+        stat_name,
+    ):
         """
         戦闘中の有効ステータスを返す。
 
-        対象:
-        strength
-        intelligence
-        dexterity
-        agility
-        vitality
-        luck
+        実際の計算は、
+        探索・闘技場共通処理へ委譲する。
         """
 
-
-        value = get_character_base_combat_stat(
+        return get_character_combat_stat(
             self.character,
             stat_name,
+
+            current_hp=self.player_hp,
+            max_hp=self.player_max_hp,
+
+            current_stamina=(
+                self.player_stamina
+            ),
+            max_stamina=(
+                self.player_max_stamina
+            ),
+
+            elf_agility_bonus=(
+                self.elf_agility_bonus
+            ),
+
+            fighting_spirit_turns=(
+                self.fighting_spirit_turns
+            ),
+
+            walker_turns=(
+                self.walker_turns
+            ),
+
+            freedom_active=(
+                self.freedom_active
+            ),
+
+            freedom_bonus=(
+                self.freedom_bonus
+            ),
+
+            hunter_eye_turns=(
+                self.hunter_eye_turns
+            ),
+
+            hide_turns=(
+                self.hide_turns
+            ),
+
+            healing_shield_turns=(
+                self.healing_shield_turns
+            ),
         )
-
-
-        # ドラゴニア「竜血覚醒」
-        if (
-            self.character.race == "dragonia"
-            and self.player_hp
-            <= self.player_max_hp * 0.50
-            and stat_name in (
-                "strength",
-                "vitality",
-            )
-        ):
-            value *= 1.10
-
-        # エルフ「森の加護」
-        if (
-            self.character.race == "elf"
-            and stat_name == "agility"
-        ):
-            value *= (
-                1.0
-                + self.elf_agility_bonus
-            )
-
-        # ============================
-        # スキル・バフ補正
-        # ============================
-
-        # 闘魂
-        if (
-            self.fighting_spirit_turns > 0
-            and stat_name == "strength"
-        ):
-            value *= 1.10
-
-        # 歩行者
-        if self.walker_turns > 0:
-
-            if stat_name == "agility":
-                value *= 0.70
-
-            elif stat_name == "strength":
-                value *= 1.20
-
-            elif stat_name == "dexterity":
-                value *= 1.05
-
-        # 行動原理：自由
-        if self.freedom_active:
-            value *= (
-                1.0
-                + self.freedom_bonus
-            )
-
-        # ハンターアイ
-        if self.hunter_eye_turns > 0:
-
-            if stat_name == "dexterity":
-                value *= 1.10
-
-            elif stat_name == "luck":
-                value *= 1.05
-
-        # ハイド
-        if (
-            self.hide_turns > 0
-            and stat_name == "agility"
-        ):
-            value *= 0.90
-
-        # ヒーリングシールド
-        if (
-            self.healing_shield_turns > 0
-            and stat_name == "vitality"
-        ):
-            value *= 1.20
-
-        # ============================
-        # スタミナによる戦闘疲労
-        # ============================
-
-        if stat_name in (
-            "dexterity",
-            "agility",
-            "vitality",
-            "luck",
-        ):
-            value *= (
-                self.get_stamina_stat_multiplier()
-            )
-
-        return value
-
 
     # ========================================================
     # 得意属性
@@ -295,32 +242,12 @@ class BattleStatsMixin:
 
     def get_stamina_stat_multiplier(self):
         """
-        現在STから疲労による能力補正を返す。
+        ST疲労補正。
 
-        100ST → 1.00倍
-         50ST → 0.75倍
-          0ST → 0.50倍
-
-        0STでも能力値の50%は残る。
+        共通計算処理へ委譲する。
         """
 
-        if self.player_max_stamina <= 0:
-            return 0.50
-
-        stamina_ratio = (
-            self.player_stamina
-            / self.player_max_stamina
-        )
-
-        stamina_ratio = min(
-            1.0,
-            max(
-                0.0,
-                stamina_ratio,
-            ),
-        )
-
-        return (
-            0.50
-            + stamina_ratio * 0.50
+        return calculate_stamina_stat_multiplier(
+            self.player_stamina,
+            self.player_max_stamina,
         )

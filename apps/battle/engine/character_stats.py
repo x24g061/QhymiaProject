@@ -125,4 +125,184 @@ def get_character_base_combat_stat(
         value *= 1.05
 
     return value
-    
+
+
+# ============================================================
+# スタミナによる能力補正
+# ============================================================
+
+def get_stamina_stat_multiplier(
+    current_stamina,
+    max_stamina,
+):
+    """
+    現在STから疲労による能力補正を返す。
+
+    100% → 1.00倍
+     50% → 0.75倍
+      0% → 0.50倍
+    """
+
+    if max_stamina <= 0:
+        return 0.50
+
+    stamina_ratio = (
+        current_stamina
+        / max_stamina
+    )
+
+    stamina_ratio = min(
+        1.0,
+        max(
+            0.0,
+            stamina_ratio,
+        ),
+    )
+
+    return (
+        0.50
+        + stamina_ratio * 0.50
+    )
+
+
+# ============================================================
+# 戦闘中の有効ステータス
+# ============================================================
+
+def get_character_combat_stat(
+    character,
+    stat_name,
+    *,
+    current_hp=None,
+    max_hp=None,
+    current_stamina=None,
+    max_stamina=None,
+    elf_agility_bonus=0.0,
+    fighting_spirit_turns=0,
+    walker_turns=0,
+    freedom_active=False,
+    freedom_bonus=0.0,
+    hunter_eye_turns=0,
+    hide_turns=0,
+    healing_shield_turns=0,
+):
+    """
+    探索・闘技場共通の
+    戦闘中有効ステータスを返す。
+
+    Character本体の能力値に加えて、
+
+    ・装備
+    ・職業
+    ・種族
+    ・戦闘中バフ
+    ・ST疲労
+
+    を反映する。
+    """
+
+    value = get_character_base_combat_stat(
+        character,
+        stat_name,
+    )
+
+    # ========================================
+    # 種族パッシブ
+    # ========================================
+
+    # ドラゴニア「竜血覚醒」
+    if (
+        character.race == "dragonia"
+        and current_hp is not None
+        and max_hp is not None
+        and current_hp <= max_hp * 0.50
+        and stat_name in (
+            "strength",
+            "vitality",
+        )
+    ):
+        value *= 1.10
+
+    # エルフ「森の加護」
+    if (
+        character.race == "elf"
+        and stat_name == "agility"
+    ):
+        value *= (
+            1.0
+            + elf_agility_bonus
+        )
+
+    # ========================================
+    # 戦闘中バフ
+    # ========================================
+
+    # 闘魂
+    if (
+        fighting_spirit_turns > 0
+        and stat_name == "strength"
+    ):
+        value *= 1.10
+
+    # 歩行者
+    if walker_turns > 0:
+
+        if stat_name == "agility":
+            value *= 0.70
+
+        elif stat_name == "strength":
+            value *= 1.20
+
+        elif stat_name == "dexterity":
+            value *= 1.05
+
+    # 行動原理：自由
+    if freedom_active:
+        value *= (
+            1.0
+            + freedom_bonus
+        )
+
+    # ハンターアイ
+    if hunter_eye_turns > 0:
+
+        if stat_name == "dexterity":
+            value *= 1.10
+
+        elif stat_name == "luck":
+            value *= 1.05
+
+    # ハイド
+    if (
+        hide_turns > 0
+        and stat_name == "agility"
+    ):
+        value *= 0.90
+
+    # ヒーリングシールド
+    if (
+        healing_shield_turns > 0
+        and stat_name == "vitality"
+    ):
+        value *= 1.20
+
+    # ========================================
+    # ST疲労
+    # ========================================
+
+    if (
+        stat_name in (
+            "dexterity",
+            "agility",
+            "vitality",
+            "luck",
+        )
+        and current_stamina is not None
+        and max_stamina is not None
+    ):
+        value *= get_stamina_stat_multiplier(
+            current_stamina,
+            max_stamina,
+        )
+
+    return value
