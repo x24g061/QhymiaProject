@@ -1,129 +1,151 @@
 /* ========================================
-   手相画面
+   手相画面では共通ヘッダーを非表示
+======================================== */
+
+.site-header {
+    display: none !important;
+}
+
+main {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+}
+body {
+    background: #eef4f6;
+}
+
+
+main {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* ========================================
+   手相占いページ
+======================================== */
+
+main {
+    width: 100%;
+    max-width: none;
+
+    margin: 0;
+    padding: 0;
+}
+
+
+/* ========================================
+   手相占いページ
 ======================================== */
 
 .palm-page {
-    width: min(1000px, 92%);
+    position: relative;
+
+    width: 100%;
+    min-height: 100vh;
+
+    overflow: hidden;
+
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.58),
+            rgba(255, 255, 255, 0.58)),
+        url("../images/palm-bg.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.palm-overlay {
+    display: none;
+}
+
+.palm-container {
+    position: relative;
+
+    z-index: 2;
+
+    width: min(1180px, 94%);
+
     margin: 0 auto;
-    padding: 40px 0 80px;
+
+    padding:
+        38px 0 70px;
 }
 
 
 /* ========================================
-   ヘッダー
+   占い師ヘッダー
 ======================================== */
 
-.palm-header {
+.palm-fortune-header {
     display: flex;
+
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
 
-    gap: 30px;
+    gap: 32px;
 
-    margin-bottom: 28px;
-}
+    padding:
+        24px 30px;
 
-.palm-label {
-    margin: 0 0 6px;
+    border:
+        1px solid rgba(155, 190, 200, 0.55);
 
-    color: #6f95a8;
+    border-radius: 4px;
 
-    font-size: 11px;
-    font-weight: bold;
-
-    letter-spacing: 3px;
-}
-
-.palm-header h1 {
-    margin: 0 0 10px;
-
-    color: #204f63;
-}
-
-.palm-description {
-    margin: 0;
-
-    color: #54727f;
-
-    line-height: 1.8;
-}
-
-.palm-back {
-    padding: 10px 18px;
-
-    border-radius: 8px;
-
-    background: #39758c;
-
-    color: #fff;
-
-    text-decoration: none;
-
-    white-space: nowrap;
-
-    transition: 0.2s;
-}
-
-.palm-back:hover {
-    opacity: 0.85;
-}
-
-
-/* ========================================
-   共通カード
-======================================== */
-
-.palm-card {
-    margin-bottom: 24px;
-    padding: 26px;
-
-    border: 1px solid #d9e7ed;
-    border-radius: 14px;
-
-    background: #fff;
+    background:
+        rgba(255, 255, 255, 0.92);
 
     box-shadow:
-        0 4px 14px
-        rgba(40, 80, 95, 0.06);
-}
-
-.palm-card h2 {
-    margin-top: 0;
-
-    color: #204f63;
+        0 5px 18px rgba(58, 90, 100, 0.12);
 }
 
 
-/* ========================================
-   キャラクター
-======================================== */
-
-.palm-character {
+.palm-fortune-left {
     display: flex;
     align-items: center;
 
     gap: 22px;
 }
 
-.palm-character-image {
-    width: 90px;
-    height: 90px;
+
+/* ========================================
+   キャラクター画像
+======================================== */
+
+.palm-fortune-character {
+    width: 92px;
+    height: 92px;
 
     flex-shrink: 0;
 
     display: flex;
+
     align-items: center;
     justify-content: center;
 
     overflow: hidden;
 
-    border: 2px solid #39758c;
-    border-radius: 12px;
+    border:
+        2px solid #93cad4;
 
-    background: #edf6f9;
+    border-radius: 4px;
+
+    background:
+        linear-gradient(145deg,
+            #edf8fa,
+            #dceff2);
+
+    box-shadow:
+        inset 0 0 0 3px rgba(255, 255, 255, 0.75);
 }
 
-.palm-character-image img {
+
+.palm-fortune-character img {
     width: 100%;
     height: 100%;
 
@@ -132,77 +154,536 @@
     image-rendering: pixelated;
 }
 
-.palm-character-image span {
-    color: #39758c;
 
-    font-size: 26px;
+.palm-fortune-character span {
+    color: #5a9aaa;
+
+    font-size: 30px;
     font-weight: bold;
 }
 
-.palm-character-info h2 {
-    margin: 0 0 8px;
+
+/* ========================================
+   タイトル
+======================================== */
+
+.palm-small-label {
+    margin:
+        0 0 5px;
+
+    color:
+        #78a9b4;
+
+    font-size: 10px;
+    font-weight: bold;
+
+    letter-spacing: 3px;
 }
 
-.palm-character-info p:last-child {
+
+.palm-fortune-message h1 {
+    margin:
+        0 0 8px;
+
+    color:
+        #244d5d;
+
+    font-size: 30px;
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+
+.palm-fortune-text {
     margin: 0;
 
-    color: #67808b;
+    color:
+        #536f79;
+
+    font-size: 14px;
+
+    line-height: 1.8;
 }
 
 
 /* ========================================
-   レーダーチャート
+   手相について
 ======================================== */
 
-.palm-chart-wrapper {
-    width: 100%;
-    max-width: 600px;
+.palm-help {
+    width: 280px;
 
-    height: 500px;
+    flex-shrink: 0;
 
-    margin: 20px auto 0;
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding:
+        14px 16px;
+
+    border-left:
+        1px solid #d7e5e9;
+}
+
+
+.palm-help-icon {
+    width: 32px;
+    height: 32px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border:
+        1px solid #83bcc8;
+
+    border-radius: 50%;
+
+    color:
+        #4f91a1;
+
+    font-weight: bold;
+}
+
+
+.palm-help strong {
+    color:
+        #386777;
+
+    font-size: 13px;
+}
+
+
+.palm-help p {
+    margin:
+        4px 0 0;
+
+    color:
+        #748b94;
+
+    font-size: 11px;
+
+    line-height: 1.5;
 }
 
 
 /* ========================================
-   属性一覧
+   ナビゲーション
 ======================================== */
 
-.palm-grid {
+.palm-navigation {
+    display: flex;
+
+    justify-content: flex-start;
+
+    margin:
+        14px 0 22px;
+}
+
+
+.palm-home-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 145px;
+
+    padding:
+        10px 20px;
+
+    border:
+        1px solid #67afbe;
+
+    border-radius: 3px;
+
+    background:
+        linear-gradient(180deg,
+            #73c5d4,
+            #58adbe);
+
+    color:
+        #ffffff;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    text-decoration: none;
+
+    box-shadow:
+        0 3px 8px rgba(63, 130, 145, 0.18);
+
+    transition:
+        transform 0.15s,
+        box-shadow 0.15s,
+        opacity 0.15s;
+}
+
+
+.palm-home-button:hover {
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 5px 12px rgba(63, 130, 145, 0.25);
+
+    opacity: 0.92;
+}
+
+
+/* ========================================
+   メインレイアウト
+======================================== */
+
+.palm-main-grid {
     display: grid;
 
     grid-template-columns:
-        repeat(3, 1fr);
+        minmax(0, 1.6fr) minmax(310px, 0.8fr);
 
-    gap: 14px;
+    align-items: start;
 
-    margin-top: 20px;
+    gap: 22px;
 }
 
-.palm-status {
+
+/* ========================================
+   共通パネル
+======================================== */
+
+.palm-panel {
+    border:
+        1px solid rgba(164, 193, 202, 0.75);
+
+    border-radius: 4px;
+
+    background:
+        rgba(255, 255, 255, 0.94);
+
+    box-shadow:
+        0 5px 18px rgba(56, 88, 98, 0.1);
+}
+
+
+/* ========================================
+   チャート
+======================================== */
+
+.palm-chart-panel {
+    min-height: 610px;
+
+    padding:
+        28px 32px 25px;
+}
+
+
+.palm-panel-heading {
     display: flex;
+
+    justify-content: space-between;
+
+    gap: 30px;
+
+    padding-bottom: 18px;
+
+    border-bottom:
+        1px solid #e0eaed;
+}
+
+
+.palm-panel-heading h2 {
+    margin: 0;
+
+    color:
+        #315b6b;
+
+    font-size: 22px;
+}
+
+
+.palm-panel-description {
+    max-width: 310px;
+
+    margin: 0;
+
+    color:
+        #738a92;
+
+    font-size: 12px;
+
+    line-height: 1.7;
+
+    text-align: right;
+}
+
+
+.palm-chart-wrapper {
+    width: 100%;
+    height: 490px;
+
+    margin:
+        20px auto 0;
+}
+
+
+/* ========================================
+   右側
+======================================== */
+
+.palm-side {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 13px;
+}
+
+
+/* ========================================
+   折りたたみ
+======================================== */
+
+.palm-detail {
+    overflow: hidden;
+
+    border:
+        1px solid rgba(157, 190, 199, 0.8);
+
+    border-radius: 4px;
+
+    background:
+        rgba(255, 255, 255, 0.95);
+
+    box-shadow:
+        0 4px 14px rgba(58, 90, 100, 0.08);
+}
+
+
+.palm-detail summary {
+    position: relative;
+
+    display: flex;
+
     justify-content: space-between;
     align-items: center;
 
-    padding: 16px 18px;
+    padding:
+        17px 18px;
 
-    border: 1px solid #d9e7ed;
-    border-radius: 10px;
+    cursor: pointer;
 
-    background: #f8fbfc;
-}
+    list-style: none;
 
-.palm-status strong {
-    color: #365f70;
+    color:
+        #426c7b;
 
-    font-size: 16px;
-}
-
-.palm-status span {
-    color: #247b96;
-
-    font-size: 22px;
+    font-size: 14px;
     font-weight: bold;
+
+    user-select: none;
+}
+
+
+.palm-detail summary::-webkit-details-marker {
+    display: none;
+}
+
+
+.palm-detail[open] summary {
+    border-bottom:
+        1px solid #e0eaed;
+
+    background:
+        #f8fcfd;
+}
+
+
+.palm-detail-arrow {
+    color:
+        #6fa9b5;
+
+    font-size: 11px;
+
+    transition:
+        transform 0.2s;
+}
+
+
+.palm-detail[open] .palm-detail-arrow {
+    transform:
+        rotate(180deg);
+}
+
+
+/* ========================================
+   属性詳細
+======================================== */
+
+.palm-detail-content {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+
+    padding:
+        20px 18px;
+}
+
+
+.palm-status {
+    display: grid;
+
+    grid-template-columns:
+        35px 1fr 30px;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.palm-status-name {
+    color:
+        #456b78;
+
+    font-size: 13px;
+    font-weight: bold;
+}
+
+
+.palm-status-bar {
+    position: relative;
+
+    height: 8px;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+
+    background:
+        #e7f0f2;
+}
+
+
+.palm-status-bar-fill {
+    width:
+        min(calc(var(--palm-value) * 10%),
+            100%);
+
+    height: 100%;
+
+    border-radius: inherit;
+
+    background:
+        linear-gradient(90deg,
+            #77c9d7,
+            #47a7ba);
+}
+
+
+.palm-status-value {
+    color:
+        #34899c;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    text-align: right;
+}
+
+
+/* ========================================
+   説明
+======================================== */
+
+.palm-detail-text {
+    padding:
+        17px 18px;
+
+    color:
+        #647e87;
+
+    font-size: 12px;
+
+    line-height: 1.8;
+}
+
+
+.palm-detail-text p {
+    margin:
+        0 0 10px;
+}
+
+
+.palm-detail-text p:last-child {
+    margin-bottom: 0;
+}
+
+
+/* ========================================
+   キャラクター情報
+======================================== */
+
+.palm-character-detail {
+    padding:
+        12px 18px;
+}
+
+
+.palm-character-detail>div {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding:
+        10px 0;
+
+    border-bottom:
+        1px dashed #dce7ea;
+}
+
+
+.palm-character-detail>div:last-child {
+    border-bottom: none;
+}
+
+
+.palm-character-detail span {
+    color:
+        #728990;
+
+    font-size: 12px;
+}
+
+
+.palm-character-detail strong {
+    color:
+        #3d6674;
+
+    font-size: 13px;
+}
+
+
+/* ========================================
+   下部
+======================================== */
+
+.palm-footer {
+    display: flex;
+
+    justify-content: flex-end;
+
+    margin-top: 22px;
 }
 
 
@@ -210,22 +691,107 @@
    レスポンシブ
 ======================================== */
 
-@media (max-width: 700px) {
+@media (max-width: 900px) {
 
-    .palm-header {
+    .palm-fortune-header {
+        align-items: flex-start;
+
         flex-direction: column;
     }
 
-    .palm-character {
-        align-items: flex-start;
+
+    .palm-help {
+        width: 100%;
+
+        box-sizing: border-box;
+
+        border-top:
+            1px solid #d7e5e9;
+
+        border-left: none;
+
+        padding:
+            15px 0 0;
     }
 
-    .palm-grid {
+
+    .palm-main-grid {
         grid-template-columns:
-            repeat(2, 1fr);
+            1fr;
     }
+
+
+    .palm-chart-panel {
+        min-height: auto;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .palm-container {
+        width: 92%;
+
+        padding-top: 22px;
+    }
+
+
+    .palm-fortune-header {
+        padding: 20px;
+    }
+
+
+    .palm-fortune-left {
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+
+    .palm-fortune-character {
+        width: 72px;
+        height: 72px;
+    }
+
+
+    .palm-fortune-message h1 {
+        font-size: 24px;
+    }
+
+
+    .palm-fortune-text {
+        font-size: 12px;
+    }
+
+
+    .palm-chart-panel {
+        padding:
+            22px 15px;
+    }
+
+
+    .palm-panel-heading {
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+
+    .palm-panel-description {
+        max-width: none;
+
+        text-align: left;
+    }
+
 
     .palm-chart-wrapper {
-        height: 380px;
+        height: 370px;
     }
+
+
+    .palm-footer {
+        justify-content: center;
+    }
+
 }
