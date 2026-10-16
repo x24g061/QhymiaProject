@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-手相 | Qhymia
+手相占い | Qhymia
 {% endblock %}
 
 {% block content %}
@@ -11,119 +11,269 @@
 
 <div class="palm-page">
 
-    <section class="palm-header">
+    <div class="palm-overlay"></div>
 
-        <div>
-            <p class="palm-label">
-                PALM READING
-            </p>
+    <div class="palm-container">
 
-            <h1>
-                手相
-            </h1>
+        <!-- ========================================
+             占い師ヘッダー
+        ======================================== -->
+        <section class="palm-fortune-header">
 
-            <p class="palm-description">
-                あなたの属性成長傾向を確認できます。<br>
-                数値が高い属性ほど成長しやすくなります。
-            </p>
-        </div>
+            <div class="palm-fortune-left">
 
-        <a href="{% url 'home' %}" class="palm-back">
-            ← ホームへ戻る
-        </a>
+                <div class="palm-fortune-character">
 
-    </section>
+                    {% if character.character_image_path %}
+
+                    <img src="{% static character.character_image_path %}" alt="{{ character.name }}">
+
+                    {% else %}
+
+                    <span>?</span>
+
+                    {% endif %}
+
+                </div>
 
 
-    <section class="palm-card">
+                <div class="palm-fortune-message">
 
-        <div class="palm-character">
+                    <p class="palm-small-label">
+                        PALM READING
+                    </p>
 
-            <div class="palm-character-image">
+                    <h1>
+                        手相占い
+                    </h1>
 
-                {% if character.character_image_path %}
+                    <p class="palm-fortune-text">
+                        「{{ character.name }}さんの手相を見せてください……。<br>
+                        あなたに秘められた属性の可能性を占ってみましょう。」
+                    </p>
 
-                <img src="{% static character.character_image_path %}" alt="{{ character.name }}">
-
-                {% else %}
-
-                <span>?</span>
-
-                {% endif %}
-
-            </div>
-
-            <div class="palm-character-info">
-
-                <p class="palm-label">
-                    CHARACTER
-                </p>
-
-                <h2>
-                    {{ character.name }}
-                </h2>
-
-                <p>
-                    属性の成長しやすさを手相として表示しています。
-                </p>
+                </div>
 
             </div>
 
-        </div>
 
-    </section>
+            <div class="palm-help">
+                <span class="palm-help-icon">？</span>
 
+                <div>
+                    <strong>
+                        手相占いについて
+                    </strong>
 
-    <section class="palm-card">
-
-        <p class="palm-label">
-            GROWTH CHART
-        </p>
-
-        <h2>
-            属性成長傾向
-        </h2>
-
-        <div class="palm-chart-wrapper">
-
-            <canvas id="palm-chart"></canvas>
-
-        </div>
-
-    </section>
-
-
-    <section class="palm-card">
-
-        <p class="palm-label">
-            DETAIL
-        </p>
-
-        <h2>
-            属性別成長ウェイト
-        </h2>
-
-        <div class="palm-grid">
-
-            {% for item in palm_items %}
-
-            <div class="palm-status">
-
-                <strong>
-                    {{ item.name }}
-                </strong>
-
-                <span>
-                    {{ item.value }}
-                </span>
-
+                    <p>
+                        キャラクターの属性成長傾向を確認できます。
+                    </p>
+                </div>
             </div>
 
-            {% endfor %}
+        </section>
+
+
+        <!-- ========================================
+             上部ナビゲーション
+        ======================================== -->
+        <div class="palm-navigation">
+
+            <a href="{% url 'home' %}" class="palm-home-button">
+                ← ホームに戻る
+            </a>
 
         </div>
 
-    </section>
+
+        <!-- ========================================
+             メイン
+        ======================================== -->
+        <div class="palm-main-grid">
+
+
+            <!-- 左：レーダーチャート -->
+            <section class="palm-panel palm-chart-panel">
+
+                <div class="palm-panel-heading">
+
+                    <div>
+                        <p class="palm-small-label">
+                            GROWTH CHART
+                        </p>
+
+                        <h2>
+                            属性成長傾向
+                        </h2>
+                    </div>
+
+                    <p class="palm-panel-description">
+                        数値が高い属性ほど、
+                        レベルアップ時に成長しやすくなります。
+                    </p>
+
+                </div>
+
+
+                <div class="palm-chart-wrapper">
+                    <canvas id="palm-chart"></canvas>
+                </div>
+
+            </section>
+
+
+            <!-- 右：詳細 -->
+            <aside class="palm-side">
+
+
+                <details class="palm-detail" open>
+
+                    <summary>
+                        <span>
+                            属性成長の詳細
+                        </span>
+
+                        <span class="palm-detail-arrow">
+                            ▼
+                        </span>
+                    </summary>
+
+
+                    <div class="palm-detail-content">
+
+                        {% for item in palm_items %}
+
+                        <div class="palm-status">
+
+                            <div class="palm-status-name">
+                                {{ item.name }}
+                            </div>
+
+                            <div class="palm-status-bar">
+
+                                <div class="palm-status-bar-fill" style="--palm-value: {{ item.value }};"></div>
+
+                            </div>
+
+                            <div class="palm-status-value">
+                                {{ item.value }}
+                            </div>
+
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                </details>
+
+
+                <details class="palm-detail">
+
+                    <summary>
+                        <span>
+                            手相の見方
+                        </span>
+
+                        <span class="palm-detail-arrow">
+                            ▼
+                        </span>
+                    </summary>
+
+
+                    <div class="palm-detail-text">
+
+                        <p>
+                            六角形が大きく伸びている方向ほど、
+                            その属性が成長しやすいことを表します。
+                        </p>
+
+                        <p>
+                            キャラクターごとに異なる成長傾向を持っています。
+                        </p>
+
+                    </div>
+
+                </details>
+
+
+                <details class="palm-detail">
+
+                    <summary>
+                        <span>
+                            キャラクター情報
+                        </span>
+
+                        <span class="palm-detail-arrow">
+                            ▼
+                        </span>
+                    </summary>
+
+
+                    <div class="palm-character-detail">
+
+                        <div>
+                            <span>
+                                名前
+                            </span>
+
+                            <strong>
+                                {{ character.name }}
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>
+                                レベル
+                            </span>
+
+                            <strong>
+                                Lv.{{ character.level }}
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>
+                                種族
+                            </span>
+
+                            <strong>
+                                {{ character.get_race_display }}
+                            </strong>
+                        </div>
+
+                        <div>
+                            <span>
+                                職業
+                            </span>
+
+                            <strong>
+                                {{ character.get_job_display }}
+                            </strong>
+                        </div>
+
+                    </div>
+
+                </details>
+
+
+            </aside>
+
+        </div>
+
+
+        <!-- ========================================
+             下部
+        ======================================== -->
+        <div class="palm-footer">
+
+            <a href="{% url 'home' %}" class="palm-home-button">
+                ← ホームに戻る
+            </a>
+
+        </div>
+
+    </div>
 
 </div>
 
@@ -131,16 +281,23 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-    const palmLabels = {{ palm_labels| safe }};
-    const palmValues = {{ palm_values| safe }};
+
+    const palmLabels =
+        {{ palm_labels| safe }};
+
+    const palmValues =
+        {{ palm_values| safe }};
 
     const canvas =
         document.getElementById("palm-chart");
 
+
     new Chart(canvas, {
+
         type: "radar",
 
         data: {
+
             labels: palmLabels,
 
             datasets: [
@@ -152,46 +309,105 @@
                     fill: true,
 
                     backgroundColor:
-                        "rgba(70, 185, 205, 0.25)",
+                        "rgba(74, 190, 213, 0.22)",
 
                     borderColor:
-                        "rgba(70, 185, 205, 1)",
+                        "rgba(46, 163, 190, 1)",
 
-                    borderWidth: 2,
+                    borderWidth: 3,
 
-                    pointRadius: 4,
+                    pointBackgroundColor:
+                        "rgba(46, 163, 190, 1)",
+
+                    pointBorderColor:
+                        "#ffffff",
+
+                    pointBorderWidth: 2,
+
+                    pointRadius: 5,
+
+                    pointHoverRadius: 7,
                 }
             ]
         },
 
+
         options: {
+
             responsive: true,
+
             maintainAspectRatio: false,
 
             scales: {
+
                 r: {
+
                     beginAtZero: true,
 
+                    angleLines: {
+                        color:
+                            "rgba(75, 110, 125, 0.18)",
+                    },
+
+                    grid: {
+                        color:
+                            "rgba(75, 110, 125, 0.18)",
+                    },
+
                     ticks: {
+
+                        display: false,
+
                         stepSize: 1,
+
                     },
 
                     pointLabels: {
+
+                        color:
+                            "#355e6e",
+
                         font: {
                             size: 16,
                             weight: "bold",
                         }
+
                     }
+
                 }
+
             },
 
+
             plugins: {
+
                 legend: {
                     display: false,
+                },
+
+                tooltip: {
+
+                    displayColors: false,
+
+                    callbacks: {
+
+                        label: function (context) {
+                            return (
+                                "成長ウェイト："
+                                + context.raw
+                            );
+                        }
+
+                    }
+
                 }
+
             }
+
         }
+
     });
+
 </script>
 
 {% endblock %}
