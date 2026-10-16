@@ -1,5 +1,9 @@
 import math
 
+from apps.battle.engine.character_stats import (
+    get_character_base_combat_stat,
+)
+
 
 # ============================================================
 # BattleEngine ステータス・種族補正
@@ -23,89 +27,13 @@ class BattleStatsMixin:
         vitality
         luck
         """
+        
 
-        value = getattr(
+        value = get_character_base_combat_stat(
             self.character,
             stat_name,
         )
 
-        # ============================
-        # 装備ステータス補正
-        # ============================
-
-        equipped_items = (
-            self.character
-            .owned_equipments
-            .filter(
-                is_equipped=True,
-            )
-            .select_related(
-                "equipment",
-            )
-        )
-
-        equipment_bonus = sum(
-            owned.get_stat_bonus(
-                stat_name
-            )
-            for owned
-            in equipped_items
-        )
-
-        value += equipment_bonus
-
-        # ============================
-        # 職業補正
-        # ============================
-
-        job_bonus = {
-            "grappler": {
-                "strength": 1.10,
-            },
-            "warrior": {
-                "vitality": 1.10,
-            },
-            "hunter": {
-                "dexterity": 1.10,
-            },
-            "wizard": {
-                "intelligence": 1.10,
-            },
-            "wanderer": {
-                "luck": 1.10,
-            },
-            "assassin": {
-                "agility": 1.10,
-            },
-        }
-
-        job_modifiers = job_bonus.get(
-            self.character.job,
-            {},
-        )
-
-        value *= job_modifiers.get(
-            stat_name,
-            1.0,
-        )
-
-        # ============================
-        # 種族パッシブ
-        # ============================
-
-        # ヒューマン「努力家」
-        if (
-            self.character.race == "human"
-            and stat_name == "luck"
-        ):
-            value *= 1.15
-
-        # ウィッチ「魔力循環」
-        if (
-            self.character.race == "witch"
-            and stat_name == "intelligence"
-        ):
-            value *= 1.05
 
         # ドラゴニア「竜血覚醒」
         if (
