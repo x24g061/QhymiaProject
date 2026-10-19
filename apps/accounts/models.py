@@ -580,6 +580,7 @@ class AdminChangeLog(models.Model):
     ACTION_CHOICES = [
         ("player_update", "プレイヤー情報変更"),
         ("equipment_grant", "装備付与"),
+         ("item_grant", "アイテム付与"),
         ("sns_post_delete", "SNS投稿削除"),
     ]
 

@@ -4,6 +4,7 @@ from django.db.models.deletion import ProtectedError
 from django.test import TestCase
 from django.urls import reverse
 from django.utils import timezone
+from django.urls import reverse
 
 from apps.accounts.models import Character
 from unittest.mock import patch
@@ -882,4 +883,115 @@ class EquipmentModelTests(TestCase):
                 equipment=self.equipment,
             ).count(),
             3,
+        )
+
+class JobChangeItemTests(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            user_id="job_change_user",
+            password="test-password-123",
+        )
+
+        self.character = Character.objects.create(
+            user=self.user,
+            name="転職テスト",
+            job="hunter",
+        )
+
+        self.item = Item.objects.get(
+            name="拳闘士の証",
+        )
+
+        self.inventory_item = InventoryItem.objects.create(
+            character=self.character,
+            item=self.item,
+            quantity=1,
+        )
+
+        self.client.login(
+            user_id="job_change_user",
+            password="test-password-123",
+        )
+
+    def test_job_change_item_changes_job(self):
+        """
+        転職アイテム使用時に
+        対応する職業へ変更される。
+        """
+
+        self.client.post(
+            reverse(
+                "inventory:use_item",
+                args=[
+                    self.inventory_item.id,
+                ],
+            )
+        )
+
+        self.character.refresh_from_db()
+
+        self.assertEqual(
+            self.character.job,
+            "grappler",
+        )
+
+    def test_job_change_item_is_consumed(self):
+        """
+        転職成功時に
+        転職アイテムが1個消費される。
+        """
+
+        inventory_item_id = (
+            self.inventory_item.id
+        )
+
+        self.client.post(
+            reverse(
+                "inventory:use_item",
+                args=[
+                    inventory_item_id,
+                ],
+            )
+        )
+
+        self.assertFalse(
+            InventoryItem.objects.filter(
+                id=inventory_item_id,
+            ).exists()
+        )
+
+    def test_same_job_cannot_use_item(self):
+        """
+        すでに同じ職業の場合は
+        転職アイテムを使用できない。
+        """
+
+        self.character.job = "grappler"
+
+        self.character.save(
+            update_fields=[
+                "job",
+            ]
+        )
+
+        self.client.post(
+            reverse(
+                "inventory:use_item",
+                args=[
+                    self.inventory_item.id,
+                ],
+            )
+        )
+
+        self.character.refresh_from_db()
+        self.inventory_item.refresh_from_db()
+
+        self.assertEqual(
+            self.character.job,
+            "grappler",
+        )
+
+        self.assertEqual(
+            self.inventory_item.quantity,
+            1,
         )

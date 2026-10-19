@@ -5,10 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<link
-    rel="stylesheet"
-    href="{% static 'css/admin.css' %}"
->
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
 <div class="admin-mode-banner">
     <strong>
         ADMIN MODE
@@ -231,6 +228,57 @@
 
             <p>
                 装備を選択しなければ、
+                通常のプレイヤー情報更新だけを行います。
+            </p>
+
+        </section>
+
+        <!-- =========================
+             アイテム付与
+        ========================== -->
+
+        <section class="admin-edit-section">
+
+            <h2>
+                アイテム付与
+            </h2>
+
+            <div class="admin-edit-grid">
+
+                <label>
+                    アイテム
+
+                    <select name="grant_item_id">
+
+                        <option value="">
+                            選択してください
+                        </option>
+
+                        {% for item in items %}
+
+                        <option value="{{ item.id }}">
+
+                            {{ item.name }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </label>
+
+
+                <label>
+                    個数
+
+                    <input type="number" name="grant_item_quantity" value="1" min="1" max="999">
+                </label>
+
+            </div>
+
+            <p>
+                アイテムを選択しなければ、
                 通常のプレイヤー情報更新だけを行います。
             </p>
 

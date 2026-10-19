@@ -639,6 +639,99 @@ def use_item(
 
 
     # ========================================================
+    # 転職アイテム
+    # ========================================================
+
+    job_change_items = {
+        "拳闘士の証": "grappler",
+        "重戦士の証": "warrior",
+        "狩人の証": "hunter",
+        "ウィザードの証": "wizard",
+        "プリーストの証": "priest",
+        "放浪人の証": "wanderer",
+        "暗殺者の証": "assassin",
+    }
+
+    job_display_names = {
+        "grappler": "拳闘士",
+        "warrior": "重戦士",
+        "hunter": "狩人",
+        "wizard": "ウィザード",
+        "priest": "プリースト",
+        "wanderer": "放浪人",
+        "assassin": "暗殺者",
+    }
+
+
+    if item.name in job_change_items:
+
+        new_job = job_change_items[
+            item.name
+        ]
+
+        # すでに同じ職業なら使用不可
+        if character.job == new_job:
+
+            messages.error(
+                request,
+                (
+                    f"すでに"
+                    f"{job_display_names[new_job]}です。"
+                ),
+            )
+
+            return redirect(
+                "inventory:inventory"
+            )
+
+
+        # ====================================================
+        # 職業変更
+        # ====================================================
+
+        character.job = new_job
+
+        character.save(
+            update_fields=[
+                "job",
+                "updated_at",
+            ]
+        )
+
+
+        # ====================================================
+        # 転職アイテムを1個消費
+        # ====================================================
+
+        if inventory_item.quantity <= 1:
+
+            inventory_item.delete()
+
+        else:
+
+            inventory_item.quantity -= 1
+
+            inventory_item.save(
+                update_fields=[
+                    "quantity",
+                ]
+            )
+
+
+        messages.success(
+            request,
+            (
+                f"{item.name}を使用しました。"
+                f"{job_display_names[new_job]}へ転職しました。"
+            ),
+        )
+
+        return redirect(
+            "inventory:inventory"
+        )
+
+
+    # ========================================================
     # CT短縮時計
     # ========================================================
 
