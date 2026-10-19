@@ -2058,3 +2058,75 @@
 .home-action-button-disabled:hover {
     transform: none;
 }
+
+
+/* ========================================
+   HOME専用 共通ヘッダー
+======================================== */
+
+.site-header {
+    grid-template-columns:
+        1fr
+        1fr
+        1fr;
+}
+
+
+/* 左：ロゴ + ログアウト */
+.site-header .header-left {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 24px;
+}
+
+
+/* 中央は空 */
+.site-header .header-center {
+    min-width: 0;
+}
+
+
+/* 右：ミニSNS */
+.site-header .header-right {
+    grid-column: auto;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+
+/* ロゴ横ログアウト */
+.home-header-logout {
+    font-size: 13px;
+}
+
+
+/* ミニSNSボタン */
+.header-mini-sns-button {
+    padding: 8px 16px;
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.45);
+
+    border-radius: 4px;
+
+    background:
+        rgba(255, 255, 255, 0.12);
+
+    color: #ffffff;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.header-mini-sns-button:hover {
+    background:
+        rgba(255, 255, 255, 0.24);
+}

@@ -3,6 +3,36 @@
 
 {% block title %}ホーム | Qhymia{% endblock %}
 
+
+{% block header_left_extra %}
+
+<a
+    href="{% url 'accounts:logout' %}"
+    class="home-header-logout"
+>
+    ログアウト
+</a>
+
+{% endblock %}
+
+
+{% block header_right_extra %}
+
+<button
+    type="button"
+    id="sns-open-home"
+    class="header-mini-sns-button"
+>
+    ミニSNSを開く
+</button>
+
+{% endblock %}
+
+
+{% block header_logout %}
+{% endblock %}
+
+
 {% block content %}
 
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
@@ -1047,26 +1077,26 @@
                             探索場所
                         </label>
 
-                        <select id="exploration-floor" name="floor">
+<select id="exploration-floor" name="floor">
 
-                            {% for floor in exploration_floors %}
+    {% for floor in exploration_floors %}
 
-                                <option
-                                    value="{{ floor }}"
-                                    {% if floor > max_unlocked_floor %}
-                                        disabled
-                                    {% endif %}
-                                >
-                                    {{ floor }}階層
+    <option
+        value="{{ floor }}"
+        {% if floor > max_unlocked_floor %}
+            disabled
+        {% endif %}
+    >
+        {{ floor }}階層
 
-                                    {% if floor > max_unlocked_floor %}
-                                        🔒 未解放
-                                    {% endif %}
-                                </option>
+        {% if floor > max_unlocked_floor %}
+            🔒 未解放
+        {% endif %}
+    </option>
 
-                            {% endfor %}
+    {% endfor %}
 
-                        </select>
+</select>
 
                     </div>
 

@@ -1,0 +1,741 @@
+/* ========================================
+   合成画面専用
+======================================== */
+
+body {
+    background: #d8d4cd;
+}
+
+.site-header {
+    display: none !important;
+}
+
+main {
+    width: 100%;
+    max-width: none;
+
+    margin: 0;
+    padding: 0;
+}
+
+
+/* ========================================
+   背景
+======================================== */
+
+.synthesis-page {
+    width: 100%;
+    min-height: 100vh;
+
+    background-image:
+        linear-gradient(
+            rgba(255, 255, 255, 0.45),
+            rgba(255, 255, 255, 0.45)
+        ),
+        url("../images/synthesis-bg.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+
+.synthesis-container {
+    width: min(1180px, 96%);
+
+    margin: 0 auto;
+
+    padding:
+        10px 0
+        45px;
+}
+
+
+/* ========================================
+   合成屋ヘッダー
+======================================== */
+
+.synthesis-shop-header {
+    padding:
+        10px 16px;
+
+    border-radius: 8px;
+
+    background:
+        rgba(255, 255, 255, 0.82);
+
+    box-shadow:
+        0 2px 8px
+        rgba(30, 30, 30, 0.12);
+}
+
+
+.synthesis-shop-left {
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+}
+
+
+/* ========================================
+   キャラクター画像
+======================================== */
+
+.synthesis-character-image {
+    width: 62px;
+    height: 62px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+}
+
+
+.synthesis-character-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    image-rendering: pixelated;
+}
+
+
+.synthesis-character-image span {
+    font-size: 28px;
+    font-weight: bold;
+
+    color: #555;
+}
+
+
+/* ========================================
+   タイトル
+======================================== */
+
+.synthesis-label {
+    margin:
+        0 0 2px;
+
+    color: #68757b;
+
+    font-size: 9px;
+    font-weight: bold;
+
+    letter-spacing: 3px;
+}
+
+
+.synthesis-shop-title h1 {
+    margin: 0;
+
+    color: #111;
+
+    font-size: 28px;
+    line-height: 1.1;
+}
+
+
+.synthesis-shop-title p:last-child {
+    margin:
+        3px 0 0;
+
+    color: #333;
+
+    font-size: 14px;
+}
+
+
+/* ========================================
+   ナビゲーション
+======================================== */
+
+.synthesis-navigation {
+    display: flex;
+
+    gap: 12px;
+
+    margin:
+        12px 8px;
+}
+
+
+.synthesis-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding:
+        10px 22px;
+
+    border: none;
+    border-radius: 2px;
+
+    color: white;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    text-decoration: none;
+
+    transition:
+        opacity 0.15s,
+        transform 0.15s;
+}
+
+
+.synthesis-button:hover {
+    opacity: 0.9;
+
+    transform:
+        translateY(-1px);
+}
+
+
+.synthesis-button-blue {
+    background: #1eb6e7;
+}
+
+
+/* ========================================
+   メイン
+======================================== */
+
+.synthesis-main {
+    min-height: 540px;
+
+    padding:
+        18px;
+
+    background:
+        rgba(255, 255, 255, 0.73);
+
+    box-shadow:
+        0 3px 15px
+        rgba(0, 0, 0, 0.08);
+}
+
+
+/* ========================================
+   上部情報
+======================================== */
+
+.synthesis-main-header {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: flex-start;
+
+    gap: 25px;
+
+    padding-bottom: 16px;
+
+    border-bottom:
+        1px solid
+        rgba(0, 0, 0, 0.18);
+}
+
+
+.synthesis-main-header h2 {
+    margin: 0;
+
+    color: #111;
+
+    font-size: 21px;
+}
+
+
+.synthesis-player-info {
+    display: flex;
+
+    gap: 24px;
+}
+
+
+.synthesis-player-info > div {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+    text-align: right;
+}
+
+
+.synthesis-player-info span {
+    color: #666;
+
+    font-size: 11px;
+}
+
+
+.synthesis-player-info strong {
+    color: #111;
+
+    font-size: 15px;
+}
+
+
+/* ========================================
+   メッセージ
+======================================== */
+
+.synthesis-messages {
+    margin-top: 15px;
+}
+
+
+.synthesis-message {
+    margin:
+        0 0 8px;
+
+    padding:
+        10px 14px;
+
+    border:
+        1px solid
+        #8bbdcc;
+
+    background:
+        rgba(234, 249, 252, 0.95);
+
+    color:
+        #315966;
+}
+
+
+/* ========================================
+   合成条件
+======================================== */
+
+.synthesis-form {
+    margin-top: 18px;
+}
+
+
+.synthesis-rule {
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    padding:
+        10px 14px;
+
+    border:
+        1px solid
+        #2d3a3f;
+
+    background:
+        #68767d;
+
+    color:
+        white;
+}
+
+
+.synthesis-rule strong {
+    font-size: 13px;
+}
+
+
+.synthesis-rule span {
+    font-size: 13px;
+}
+
+
+/* ========================================
+   装備一覧
+======================================== */
+
+.synthesis-equipment-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+    margin-top: 12px;
+
+    max-width: 760px;
+}
+
+
+.synthesis-equipment-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    min-height: 62px;
+
+    padding:
+        10px 14px;
+
+    border:
+        1px solid
+        #ccd3d6;
+
+    background:
+        rgba(255, 255, 255, 0.95);
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.15s,
+        background 0.15s,
+        transform 0.15s;
+}
+
+
+.synthesis-equipment-item:hover {
+    border-color:
+        #42b8d8;
+
+    background:
+        #f5fcfe;
+
+    transform:
+        translateX(2px);
+}
+
+
+/* checkbox本体は非表示 */
+.synthesis-equipment-item input {
+    position: absolute;
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+
+.synthesis-equipment-check {
+    width: 28px;
+    height: 28px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border:
+        2px solid
+        #ccd4d7;
+
+    background:
+        #f4f4f4;
+
+    color:
+        transparent;
+
+    font-weight: bold;
+}
+
+
+.synthesis-equipment-item
+input:checked
++
+.synthesis-equipment-check {
+    border-color:
+        #24add5;
+
+    background:
+        #24add5;
+
+    color:
+        white;
+}
+
+
+/* ========================================
+   装備内容
+======================================== */
+
+.synthesis-equipment-main {
+    flex: 1;
+
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+}
+
+
+.synthesis-equipment-name {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.synthesis-rank {
+    min-width: 28px;
+
+    padding:
+        4px 7px;
+
+    border:
+        1px solid
+        #555;
+
+    background:
+        #3f484c;
+
+    color:
+        white;
+
+    font-size: 12px;
+    font-weight: bold;
+
+    text-align: center;
+}
+
+
+.synthesis-equipment-name strong {
+    font-size: 15px;
+}
+
+
+.synthesis-equipment-detail {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+.synthesis-equipment-detail span {
+    color:
+        #777;
+
+    font-size: 11px;
+}
+
+
+.synthesis-equipment-detail strong {
+    margin-right: 12px;
+
+    color:
+        #222;
+
+    font-size: 13px;
+}
+
+
+/* ========================================
+   合成ボタン
+======================================== */
+
+.synthesis-submit-area {
+    display: flex;
+
+    align-items: center;
+
+    gap: 26px;
+
+    max-width: 760px;
+
+    margin-top: 20px;
+
+    padding-top: 18px;
+
+    border-top:
+        2px solid
+        rgba(0, 0, 0, 0.72);
+}
+
+
+.synthesis-price {
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+.synthesis-price span {
+    color: #777;
+
+    font-size: 11px;
+}
+
+
+.synthesis-price strong {
+    color: #111;
+
+    font-size: 19px;
+}
+
+
+.synthesis-submit-button {
+    min-width: 230px;
+
+    padding:
+        15px 26px;
+
+    border: none;
+    border-radius: 0;
+
+    background:
+        #3fc0e8;
+
+    color:
+        white;
+
+    cursor: pointer;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    box-shadow:
+        0 3px 7px
+        rgba(0, 0, 0, 0.12);
+
+    transition:
+        opacity 0.15s,
+        transform 0.15s;
+}
+
+
+.synthesis-submit-button:hover {
+    opacity: 0.9;
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* ========================================
+   装備なし
+======================================== */
+
+.synthesis-empty {
+    padding:
+        35px 20px;
+
+    border:
+        1px dashed
+        #aeb9bd;
+
+    background:
+        rgba(255, 255, 255, 0.8);
+
+    text-align: center;
+}
+
+
+.synthesis-empty strong {
+    font-size: 16px;
+}
+
+
+.synthesis-empty p {
+    margin:
+        8px 0 0;
+
+    color:
+        #777;
+
+    font-size: 13px;
+}
+
+
+/* ========================================
+   下部
+======================================== */
+
+.synthesis-footer {
+    display: flex;
+
+    justify-content: flex-end;
+
+    margin-top: 12px;
+}
+
+
+/* ========================================
+   レスポンシブ
+======================================== */
+
+@media (max-width: 800px) {
+
+    .synthesis-main-header {
+        flex-direction: column;
+    }
+
+
+    .synthesis-player-info {
+        width: 100%;
+
+        justify-content: space-between;
+    }
+
+
+    .synthesis-equipment-main {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+
+    .synthesis-submit-area {
+        align-items: stretch;
+
+        flex-direction: column;
+    }
+
+
+    .synthesis-submit-button {
+        width: 100%;
+    }
+
+}
+
+
+@media (max-width: 520px) {
+
+    .synthesis-character-image {
+        width: 52px;
+        height: 52px;
+    }
+
+
+    .synthesis-shop-title h1 {
+        font-size: 23px;
+    }
+
+
+    .synthesis-player-info {
+        flex-direction: column;
+
+        gap: 8px;
+    }
+
+
+    .synthesis-player-info > div {
+        flex-direction: row;
+
+        justify-content: space-between;
+
+        text-align: left;
+    }
+
+}
