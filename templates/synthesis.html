@@ -1,89 +1,327 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+合成屋 | Qhymia
+{% endblock %}
 
 {% block content %}
 
-<h1>装備合成</h1>
+<link
+    rel="stylesheet"
+    href="{% static 'css/synthesis.css' %}"
+>
 
-<p>
-    本日の合成回数：
-    {{ character.daily_synthesis_count }}
-</p>
+<div class="synthesis-page">
 
-<p>
-    次回合成料金：
-    {% if synthesis_cost == 0 %}
-    無料
-    {% else %}
-    {{ synthesis_cost }}Q
-    {% endif %}
-</p>
+    <div class="synthesis-container">
 
-<p>
-    所持Q：
-    {{ character.gold }}Q
-</p>
+        <!-- ========================================
+             合成屋ヘッダー
+        ======================================== -->
+        <section class="synthesis-shop-header">
 
-<hr>
+            <div class="synthesis-shop-left">
 
-{% if messages %}
+                <div class="synthesis-character-image">
 
-{% for message in messages %}
-<p>
-    {{ message }}
-</p>
-{% endfor %}
+                    {% if character.character_image_path %}
 
-{% endif %}
+                    <img
+                        src="{% static character.character_image_path %}"
+                        alt="{{ character.name }}"
+                    >
+
+                    {% else %}
+
+                    <span>?</span>
+
+                    {% endif %}
+
+                </div>
+
+                <div class="synthesis-shop-title">
+
+                    <p class="synthesis-label">
+                        EQUIPMENT SYNTHESIS
+                    </p>
+
+                    <h1>
+                        合成屋
+                    </h1>
+
+                    <p>
+                        「装備を3つ集めれば合成ができるぞ」
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
 
 
-<form method="post">
+        <!-- ========================================
+             ナビゲーション
+        ======================================== -->
+        <div class="synthesis-navigation">
 
-    {% csrf_token %}
+            <a
+                href="{% url 'home' %}"
+                class="synthesis-button synthesis-button-blue"
+            >
+                ← ホームに戻る
+            </a>
 
-    <p>
-        同じ装備・同じ+値の装備を
-        3つ選択してください。
-    </p>
+        </div>
 
-    {% for owned in owned_equipments %}
 
-    <label>
+        <!-- ========================================
+             メインエリア
+        ======================================== -->
+        <section class="synthesis-main">
 
-        <input type="checkbox" name="equipment_ids" value="{{ owned.id }}">
+            <div class="synthesis-main-header">
 
-        [{{ owned.equipment.rank }}]
+                <div>
+                    <p class="synthesis-label">
+                        SYNTHESIS
+                    </p>
 
-        {{ owned.equipment.item.name }}
+                    <h2>
+                        合成可能な手持ちの装備
+                    </h2>
+                </div>
 
-        +{{ owned.enhancement_level }}
 
-        戦闘力：
-        {{ owned.battle_power }}
+                <div class="synthesis-player-info">
 
-    </label>
+                    <div>
+                        <span>
+                            本日の合成回数
+                        </span>
 
-    <br>
+                        <strong>
+                            {{ character.daily_synthesis_count }}回
+                        </strong>
+                    </div>
 
-    {% empty %}
+                    <div>
+                        <span>
+                            次回合成料金
+                        </span>
 
-    <p>
-        合成可能な装備を所持していません。
-    </p>
+                        <strong>
+                            {% if synthesis_cost == 0 %}
+                                無料
+                            {% else %}
+                                {{ synthesis_cost }}Q
+                            {% endif %}
+                        </strong>
+                    </div>
 
-    {% endfor %}
+                    <div>
+                        <span>
+                            所持Q
+                        </span>
 
-    <br>
+                        <strong>
+                            {{ character.gold }}Q
+                        </strong>
+                    </div>
 
-    <button type="submit">
-        合成する
-    </button>
+                </div>
 
-</form>
+            </div>
 
-<hr>
 
-<a href="{% url 'home' %}">
-    ホームへ戻る
-</a>
+            <!-- ========================================
+                 メッセージ
+            ======================================== -->
+
+            {% if messages %}
+
+            <div class="synthesis-messages">
+
+                {% for message in messages %}
+
+                <p class="synthesis-message">
+                    {{ message }}
+                </p>
+
+                {% endfor %}
+
+            </div>
+
+            {% endif %}
+
+
+            <!-- ========================================
+                 合成フォーム
+            ======================================== -->
+            <form
+                method="post"
+                class="synthesis-form"
+            >
+
+                {% csrf_token %}
+
+
+                <div class="synthesis-rule">
+
+                    <strong>
+                        合成条件
+                    </strong>
+
+                    <span>
+                        同じ装備・同じ強化値の装備を
+                        3つ選択してください。
+                    </span>
+
+                </div>
+
+
+                <div class="synthesis-equipment-list">
+
+                    {% for owned in owned_equipments %}
+
+                    <label class="synthesis-equipment-item">
+
+                        <input
+                            type="checkbox"
+                            name="equipment_ids"
+                            value="{{ owned.id }}"
+                        >
+
+                        <div class="synthesis-equipment-check">
+                            ✓
+                        </div>
+
+
+                        <div class="synthesis-equipment-main">
+
+                            <div class="synthesis-equipment-name">
+
+                                <span class="synthesis-rank">
+                                    {{ owned.equipment.rank }}
+                                </span>
+
+                                <strong>
+                                    {{ owned.equipment.item.name }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="synthesis-equipment-detail">
+
+                                <span>
+                                    強化値
+                                </span>
+
+                                <strong>
+                                    +{{ owned.enhancement_level }}
+                                </strong>
+
+
+                                <span>
+                                    戦闘力
+                                </span>
+
+                                <strong>
+                                    {{ owned.battle_power }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                    </label>
+
+
+                    {% empty %}
+
+                    <div class="synthesis-empty">
+
+                        <strong>
+                            合成可能な装備がありません
+                        </strong>
+
+                        <p>
+                            同じ装備を3つ集めてから
+                            もう一度訪れてください。
+                        </p>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                {% if owned_equipments %}
+
+                <div class="synthesis-submit-area">
+
+                    <div class="synthesis-price">
+
+                        <span>
+                            今回の合成料金
+                        </span>
+
+                        <strong>
+                            {% if synthesis_cost == 0 %}
+                                無料
+                            {% else %}
+                                {{ synthesis_cost }}Q
+                            {% endif %}
+                        </strong>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="synthesis-submit-button"
+                    >
+
+                        {% if synthesis_cost == 0 %}
+
+                            無料で合成する
+
+                        {% else %}
+
+                            {{ synthesis_cost }}Qで合成する
+
+                        {% endif %}
+
+                    </button>
+
+                </div>
+
+                {% endif %}
+
+            </form>
+
+        </section>
+
+
+        <!-- ========================================
+             下部
+        ======================================== -->
+        <div class="synthesis-footer">
+
+            <a
+                href="{% url 'home' %}"
+                class="synthesis-button synthesis-button-blue"
+            >
+                ← ホームに戻る
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
 
 {% endblock %}
