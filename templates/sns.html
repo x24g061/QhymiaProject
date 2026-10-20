@@ -1,50 +1,99 @@
-<div id="mini-sns" class="mini-sns">
+{% load static %}
+
+<div id="mini-sns" class="mini-sns" data-refresh-url="{% url 'mini_sns_feed' %}">
+
+    <!-- =====================
+         ヘッダー
+    ====================== -->
+
     <div class="mini-sns-header">
-        <span class="mini-sns-title">Qhymia SNS</span>
+
+        <button type="button" id="mini-sns-refresh-logo" class="mini-sns-logo-button" title="最新の投稿を取得">
+            Qhymia SNS
+        </button>
+
 
         <div class="mini-sns-controls">
+
+            <button id="mini-sns-refresh" type="button" aria-label="更新" title="更新">
+                ↻
+            </button>
             <button id="sns-minimize" type="button" aria-label="最小化">
                 −
             </button>
+
+
             <button id="sns-close" type="button" aria-label="閉じる">
                 ×
             </button>
+
         </div>
+
     </div>
+
 
     <div id="mini-sns-body" class="mini-sns-body">
 
-        <div class="sns-post">
-            <div class="sns-user">
-                <strong>かずま</strong>
-                <span>Lv.1</span>
+
+        <!-- =====================
+             投稿フォーム
+        ====================== -->
+
+        <form id="mini-sns-post-form" class="mini-sns-post-form" action="{% url 'mini_create_post' %}" method="post"
+            enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+
+            <textarea name="text" class="mini-sns-textarea" maxlength="500" rows="3" placeholder="いま何してる？"></textarea>
+
+
+            <div class="mini-sns-form-bottom">
+
+                <label class="mini-sns-image-button">
+
+                    画像
+
+                    <input type="file" name="image" accept="image/*">
+
+                </label>
+
+
+                <button type="submit" class="mini-sns-submit-button">
+                    投稿する
+                </button>
+
             </div>
 
-            <p>Qhymiaの世界へようこそ！</p>
 
-            <div class="sns-post-footer">
-                <span>♡ 3</span>
-                <span>たった今</span>
-            </div>
+            <p id="mini-sns-post-error" class="mini-sns-post-error">
+            </p>
+
+        </form>
+
+
+        <!-- =====================
+             投稿一覧
+        ====================== -->
+
+        <div
+            id="mini-sns-post-list"
+            class="mini-sns-post-list"
+        >
+
+            {% include "mini_sns_posts.html" %}
+
         </div>
 
-        <div class="sns-post">
-            <div class="sns-user">
-                <strong>冒険者A</strong>
-                <span>Lv.8</span>
-            </div>
 
-            <p>草原を探索中！</p>
+        <!-- =====================
+             通常SNS
+        ====================== -->
 
-            <div class="sns-post-footer">
-                <span>♡ 7</span>
-                <span>5分前</span>
-            </div>
-        </div>
-
-        <button class="sns-open-button" type="button">
-            SNSを開く
-        </button>
+        <a href="{% url 'sns' %}" class="sns-open-button">
+            SNSを開く →
+        </a>
 
     </div>
+
 </div>

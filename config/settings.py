@@ -40,6 +40,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "daphne",
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -92,6 +94,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'apps.sns.context_processors.mini_sns_posts',
             ],
         },
     },
@@ -99,6 +103,18 @@ TEMPLATES = [
 
 
 WSGI_APPLICATION = 'config.wsgi.application'
+
+ASGI_APPLICATION = "config.asgi.application"
+
+
+# ===== Django Channels =====
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND":
+            "channels.layers.InMemoryChannelLayer",
+    },
+}
 
 
 # Database

@@ -2,6 +2,8 @@ asgiref==3.11.1
 certifi==2026.7.22
 charset-normalizer==3.5.1
 Django==6.0.7
+channels==4.3.2
+daphne==4.2.3
 django-allauth==65.19.1
 django-environ==0.14.0
 idna==3.19

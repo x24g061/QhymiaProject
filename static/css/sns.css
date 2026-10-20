@@ -1,6 +1,6 @@
-/* =====================
+/* ========================================
    ミニSNS
-===================== */
+======================================== */
 
 .mini-sns {
     position: fixed;
@@ -25,13 +25,12 @@
 }
 
 
-/* =====================
+/* ========================================
    ヘッダー
-===================== */
+======================================== */
 
 .mini-sns-header {
     display: flex;
-
     justify-content: space-between;
     align-items: center;
 
@@ -44,9 +43,11 @@
     cursor: grab;
 }
 
+
 .mini-sns-header:active {
     cursor: grabbing;
 }
+
 
 .mini-sns-title {
     font-weight: bold;
@@ -55,12 +56,13 @@
 }
 
 
-/* =====================
-   操作ボタン
-===================== */
+/* ========================================
+   ヘッダー操作ボタン
+======================================== */
 
 .mini-sns-controls {
     display: flex;
+
     gap: 6px;
 }
 
@@ -72,7 +74,8 @@
     border: none;
     border-radius: 5px;
 
-    background: rgba(255, 255, 255, 0.15);
+    background:
+        rgba(255, 255, 255, 0.15);
 
     color: white;
 
@@ -83,16 +86,17 @@
 
 
 .mini-sns-controls button:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background:
+        rgba(255, 255, 255, 0.3);
 }
 
 
-/* =====================
+/* ========================================
    SNS本体
-===================== */
+======================================== */
 
 .mini-sns-body {
-    max-height: 360px;
+    max-height: min(70vh, 560px);
 
     overflow-y: auto;
 
@@ -100,56 +104,310 @@
 }
 
 
-/* =====================
-   投稿
-===================== */
+/* ========================================
+   投稿フォーム
+======================================== */
 
-.sns-post {
-    padding: 12px 4px;
+.mini-sns-post-form {
+    margin-bottom: 10px;
+    padding-bottom: 12px;
 
-    border-bottom: 1px solid
+    border-bottom:
+        2px solid
         rgba(92, 70, 48, 0.3);
 }
 
 
-.sns-user {
-    display: flex;
+.mini-sns-textarea {
+    width: 100%;
+    min-height: 68px;
 
+    box-sizing: border-box;
+
+    padding: 9px;
+
+    resize: vertical;
+
+    border: 1px solid #b7a68d;
+    border-radius: 5px;
+
+    background: #fffdf7;
+
+    font: inherit;
+}
+
+
+.mini-sns-textarea:focus {
+    outline: 2px solid
+        rgba(92, 70, 48, 0.25);
+
+    border-color: #7b674e;
+}
+
+
+.mini-sns-form-bottom {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 
     gap: 8px;
+
+    margin-top: 7px;
 }
 
 
-.sns-user span {
+/* ========================================
+   画像選択
+======================================== */
+
+.mini-sns-image-button {
+    padding: 6px 9px;
+
+    border: 1px solid #8c775d;
+    border-radius: 5px;
+
+    background: #eee2ca;
+
     font-size: 12px;
 
-    color: #6d6257;
+    cursor: pointer;
 }
 
 
-.sns-post p {
-    margin: 10px 0;
+.mini-sns-image-button:hover {
+    background: #e5d4b4;
 }
 
 
-.sns-post-footer {
+.mini-sns-image-button input {
+    display: none;
+}
+
+
+/* ========================================
+   投稿ボタン
+======================================== */
+
+.mini-sns-submit-button {
+    padding: 7px 14px;
+
+    border: none;
+    border-radius: 5px;
+
+    background: #263f34;
+
+    color: #ffffff;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.mini-sns-submit-button:hover {
+    background: #345648;
+}
+
+
+.mini-sns-submit-button:disabled {
+    opacity: 0.5;
+
+    cursor: not-allowed;
+}
+
+
+.mini-sns-post-error {
+    margin: 6px 0 0;
+
+    color: #b3261e;
+
+    font-size: 12px;
+}
+
+
+/* ========================================
+   投稿
+======================================== */
+
+.sns-post {
+    padding: 12px 4px;
+
+    border-bottom:
+        1px solid
+        rgba(92, 70, 48, 0.3);
+}
+
+
+/* ========================================
+   投稿者
+======================================== */
+
+.mini-sns-user-area {
     display: flex;
+    align-items: center;
 
-    justify-content: space-between;
+    gap: 9px;
+}
 
-    font-size: 12px;
+
+.mini-sns-avatar {
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    border: 2px solid #5c4630;
+    border-radius: 5px;
+
+    background: #efe2bf;
+}
+
+
+.mini-sns-avatar img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    image-rendering: pixelated;
+}
+
+
+.mini-sns-user-info {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+
+.mini-sns-user-info strong {
+    color: #332719;
+}
+
+
+.mini-sns-user-info span {
+    color: #786c5f;
+
+    font-size: 11px;
+}
+
+
+/* ========================================
+   投稿本文
+======================================== */
+
+.mini-sns-post-text {
+    margin: 9px 0;
+
+    line-height: 1.5;
+
+    word-break: break-word;
+}
+
+
+/* ========================================
+   投稿画像
+======================================== */
+
+.mini-sns-post-image-wrapper {
+    margin: 8px 0;
+
+    overflow: hidden;
+
+    border-radius: 6px;
+}
+
+
+.mini-sns-post-image {
+    display: block;
+
+    width: 100%;
+    max-height: 180px;
+
+    object-fit: cover;
+}
+
+
+/* ========================================
+   投稿操作
+======================================== */
+
+.mini-sns-post-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 6px;
+
+    margin-top: 8px;
+}
+
+
+.mini-sns-post-actions button {
+    padding: 4px 7px;
+
+    border: 1px solid #b5a389;
+    border-radius: 4px;
+
+    background:
+        rgba(255, 255, 255, 0.55);
+
+    color: #51412d;
+
+    font-size: 11px;
+
+    cursor: pointer;
+}
+
+
+.mini-like-button:hover,
+.mini-favorite-button:hover {
+    background: #f2e4c6;
+}
+
+
+.mini-delete-button {
+    margin-left: auto;
+
+    color: #a12e28 !important;
+}
+
+
+.mini-delete-button:hover {
+    background: #f4d8d5 !important;
+}
+
+
+/* ========================================
+   投稿なし
+======================================== */
+
+.mini-sns-empty {
+    padding: 18px 5px;
+
+    text-align: center;
 
     color: #786c5f;
 }
 
 
-/* =====================
+/* ========================================
    SNSを開く
-===================== */
+======================================== */
 
 .sns-open-button {
+    display: block;
+
     width: 100%;
+
+    box-sizing: border-box;
 
     margin-top: 12px;
 
@@ -166,15 +424,23 @@
 
     color: #2d2116;
 
+    text-align: center;
+    text-decoration: none;
+
     font-weight: bold;
 
     cursor: pointer;
 }
 
 
-/* =====================
-   最小化後
-===================== */
+.sns-open-button:hover {
+    filter: brightness(1.05);
+}
+
+
+/* ========================================
+   最小化
+======================================== */
 
 .mini-sns.minimized .mini-sns-body {
     display: none;
@@ -186,18 +452,18 @@
 }
 
 
-/* =====================
-   完全に閉じた時
-===================== */
+/* ========================================
+   完全に閉じる
+======================================== */
 
 .mini-sns.hidden {
     display: none;
 }
 
 
-/* =====================
+/* ========================================
    SNS復元ボタン
-===================== */
+======================================== */
 
 .sns-restore {
     position: fixed;
@@ -212,7 +478,8 @@
     border: 3px solid #5c4630;
     border-radius: 8px;
 
-    background: rgba(20, 30, 20, 0.95);
+    background:
+        rgba(20, 30, 20, 0.95);
 
     color: white;
 
@@ -229,9 +496,9 @@
 }
 
 
-/* =====================
+/* ========================================
    スマホ
-===================== */
+======================================== */
 
 @media (max-width: 600px) {
 
@@ -242,12 +509,96 @@
         width: calc(100% - 20px);
     }
 
+
     .mini-sns.minimized {
         width: 180px;
     }
+
 
     .sns-restore {
         right: 10px;
         bottom: 10px;
     }
+
+
+    .mini-sns-post-actions {
+        gap: 4px;
+    }
+
+
+    .mini-sns-post-actions button {
+        font-size: 10px;
+    }
+}
+
+/* ========================================
+   ミニSNS ロゴ
+======================================== */
+
+.mini-sns-logo-button {
+    padding: 0;
+
+    border: none;
+
+    background: transparent;
+
+    color: #ffffff;
+
+    font: inherit;
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    cursor: pointer;
+}
+
+
+/* ボタンっぽい背景を出さない */
+.mini-sns-logo-button:hover {
+    background: transparent;
+
+    opacity: 0.75;
+}
+
+
+/* 押したときも背景を出さない */
+.mini-sns-logo-button:active {
+    background: transparent;
+}
+
+
+/* ========================================
+   更新ボタン
+======================================== */
+
+#mini-sns-refresh.is-refreshing {
+    animation:
+        mini-sns-spin
+        0.7s
+        linear
+        infinite;
+}
+
+
+/* 更新中の回転 */
+@keyframes mini-sns-spin {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+
+/* 動きを減らす設定の人向け */
+@media (prefers-reduced-motion: reduce) {
+
+    #mini-sns-refresh.is-refreshing {
+        animation: none;
+    }
+
 }

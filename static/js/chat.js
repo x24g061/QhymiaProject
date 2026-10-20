@@ -1,267 +1,592 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-    const chatMessages = document.getElementById("chat-messages");
-    const chatInput = document.getElementById("chat-input");
-    const chatSendButton = document.getElementById("chat-send-button");
-    const chatError = document.getElementById("chat-error");
+        const chatMessages =
+            document.getElementById(
+                "chat-messages"
+            );
 
-    if (!chatMessages || !chatInput || !chatSendButton) {
-        return;
-    }
+        const chatInput =
+            document.getElementById(
+                "chat-input"
+            );
 
+        const chatSendButton =
+            document.getElementById(
+                "chat-send-button"
+            );
 
-    // ========================================
-    // CSRFトークン取得
-    // ========================================
-
-    function getCookie(name) {
-        let cookieValue = null;
-
-        if (document.cookie && document.cookie !== "") {
-
-            const cookies = document.cookie.split(";");
-
-            for (let i = 0; i < cookies.length; i++) {
-
-                const cookie = cookies[i].trim();
-
-                if (cookie.startsWith(name + "=")) {
-                    cookieValue = decodeURIComponent(
-                        cookie.substring(name.length + 1)
-                    );
-
-                    break;
-                }
-            }
-        }
-
-        return cookieValue;
-    }
+        const chatError =
+            document.getElementById(
+                "chat-error"
+            );
 
 
-    // ========================================
-    // メッセージ表示
-    // ========================================
-
-    function renderMessages(messages) {
-
-        chatMessages.innerHTML = "";
-
-        if (messages.length === 0) {
-
-            chatMessages.innerHTML = `
-            <p class="chat-empty">
-                まだメッセージはありません。
-            </p>
-        `;
-
+        if (
+            !chatMessages ||
+            !chatInput ||
+            !chatSendButton
+        ) {
             return;
         }
 
-        messages.forEach(function (chat) {
 
-            const item = document.createElement("div");
-            item.classList.add("chat-message");
+        // ========================================
+        // 表示済みメッセージID
+        // ========================================
+
+        const displayedMessageIds =
+            new Set();
+
+
+        // ========================================
+        // WebSocket
+        // ========================================
+
+        let chatSocket = null;
+
+        let reconnectTimer = null;
+
+
+        // ========================================
+        // メッセージ1件を画面へ追加
+        // ========================================
+
+        function appendMessage(chat) {
+
+            // 同じメッセージを二重表示しない
+            if (
+                displayedMessageIds.has(
+                    chat.id
+                )
+            ) {
+                return;
+            }
+
+            displayedMessageIds.add(
+                chat.id
+            );
+
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+            item.classList.add(
+                "chat-message"
+            );
 
 
             // ========================================
             // アイコン + メッセージ本体
             // ========================================
 
-            const body = document.createElement("div");
-            body.classList.add("chat-message-body");
+            const body =
+                document.createElement(
+                    "div"
+                );
+
+            body.classList.add(
+                "chat-message-body"
+            );
 
 
             // キャラクターアイコン
-            const avatar = document.createElement("div");
-            avatar.classList.add("chat-message-avatar");
+            const avatar =
+                document.createElement(
+                    "div"
+                );
 
-            if (chat.character_image_url) {
+            avatar.classList.add(
+                "chat-message-avatar"
+            );
 
-                const image = document.createElement("img");
 
-                image.src = chat.character_image_url;
-                image.alt = chat.character_name;
+            if (
+                chat.character_image_url
+            ) {
 
-                avatar.appendChild(image);
+                const image =
+                    document.createElement(
+                        "img"
+                    );
+
+                image.src =
+                    chat.character_image_url;
+
+                image.alt =
+                    chat.character_name;
+
+                avatar.appendChild(
+                    image
+                );
 
             } else {
 
-                const fallback = document.createElement("span");
+                const fallback =
+                    document.createElement(
+                        "span"
+                    );
 
                 fallback.textContent =
                     chat.character_name
-                        ? chat.character_name.charAt(0)
+                        ? chat.character_name.charAt(
+                            0
+                        )
                         : "?";
 
-                avatar.appendChild(fallback);
+                avatar.appendChild(
+                    fallback
+                );
             }
 
 
-            // 右側の本文エリア
-            const content = document.createElement("div");
-            content.classList.add("chat-message-content");
+            // ========================================
+            // 右側本文
+            // ========================================
+
+            const content =
+                document.createElement(
+                    "div"
+                );
+
+            content.classList.add(
+                "chat-message-content"
+            );
 
 
-            // 名前 + 時刻
-            const header = document.createElement("div");
-            header.classList.add("chat-message-header");
+            const header =
+                document.createElement(
+                    "div"
+                );
 
-            const name = document.createElement("strong");
-            name.textContent = chat.character_name;
-
-            const time = document.createElement("span");
-            time.textContent = chat.created_at;
-
-
-            // メッセージ本文
-            const text = document.createElement("p");
-            text.textContent = chat.message;
+            header.classList.add(
+                "chat-message-header"
+            );
 
 
-            header.appendChild(name);
-            header.appendChild(time);
+            const name =
+                document.createElement(
+                    "strong"
+                );
 
-            content.appendChild(header);
-            content.appendChild(text);
-
-            body.appendChild(avatar);
-            body.appendChild(content);
-
-            item.appendChild(body);
-
-            chatMessages.appendChild(item);
-        });
+            name.textContent =
+                chat.character_name;
 
 
+            const time =
+                document.createElement(
+                    "span"
+                );
+
+            time.textContent =
+                chat.created_at;
+
+
+            const text =
+                document.createElement(
+                    "p"
+                );
+
+            text.textContent =
+                chat.message;
+
+
+            header.appendChild(
+                name
+            );
+
+            header.appendChild(
+                time
+            );
+
+            content.appendChild(
+                header
+            );
+
+            content.appendChild(
+                text
+            );
+
+            body.appendChild(
+                avatar
+            );
+
+            body.appendChild(
+                content
+            );
+
+            item.appendChild(
+                body
+            );
+
+            chatMessages.appendChild(
+                item
+            );
+        }
+
+
+        // ========================================
         // 一番下までスクロール
-        chatMessages.scrollTop =
-            chatMessages.scrollHeight;
-    }
+        // ========================================
 
+        function scrollToBottom() {
 
-    // ========================================
-    // メッセージ取得
-    // ========================================
-
-    async function loadMessages() {
-
-        try {
-
-            const response = await fetch("/chat/messages/");
-
-            if (!response.ok) {
-                throw new Error("メッセージ取得に失敗しました");
-            }
-
-            const data = await response.json();
-
-            renderMessages(data.messages);
-
-        } catch (error) {
-
-            console.error(error);
-
-        }
-    }
-
-
-    // ========================================
-    // メッセージ送信
-    // ========================================
-
-    async function sendMessage() {
-
-        const message = chatInput.value.trim();
-
-        if (!message) {
-            chatError.textContent = "メッセージを入力してください。";
-            return;
+            chatMessages.scrollTop =
+                chatMessages.scrollHeight;
         }
 
-        chatError.textContent = "";
-        chatSendButton.disabled = true;
 
-        try {
+        // ========================================
+        // 初回50件取得
+        // Fetch API
+        // ========================================
 
-            const response = await fetch("/chat/send/", {
+        async function loadInitialMessages() {
 
-                method: "POST",
+            try {
 
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRFToken": getCookie("csrftoken")
-                },
+                const response =
+                    await fetch(
+                        "/chat/messages/",
+                        {
+                            cache: "no-store"
+                        }
+                    );
 
-                body: JSON.stringify({
-                    message: message
-                })
 
-            });
+                if (!response.ok) {
 
-            const data = await response.json();
+                    throw new Error(
+                        "メッセージ取得に失敗しました"
+                    );
+                }
 
-            if (!response.ok) {
+
+                const data =
+                    await response.json();
+
+
+                chatMessages.innerHTML =
+                    "";
+
+                displayedMessageIds.clear();
+
+
+                if (
+                    data.messages.length === 0
+                ) {
+
+                    chatMessages.innerHTML =
+                        `
+                        <p class="chat-empty">
+                            まだメッセージはありません。
+                        </p>
+                        `;
+
+                    return;
+                }
+
+
+                data.messages.forEach(
+                    function (chat) {
+
+                        appendMessage(
+                            chat
+                        );
+
+                    }
+                );
+
+
+                scrollToBottom();
+
+
+            } catch (error) {
+
+                console.error(
+                    error
+                );
 
                 chatError.textContent =
-                    data.error || "送信に失敗しました。";
+                    "チャットの読み込みに失敗しました。";
+            }
+        }
+
+
+        // ========================================
+        // WebSocket接続
+        // ========================================
+
+        function connectWebSocket() {
+
+            // http → ws
+            // https → wss
+            const protocol =
+                window.location.protocol ===
+                "https:"
+                    ? "wss"
+                    : "ws";
+
+
+            const socketUrl =
+                protocol
+                + "://"
+                + window.location.host
+                + "/ws/chat/";
+
+
+            chatSocket =
+                new WebSocket(
+                    socketUrl
+                );
+
+
+            // ========================================
+            // 接続成功
+            // ========================================
+
+            chatSocket.addEventListener(
+                "open",
+                function () {
+
+                    console.log(
+                        "オープンチャット WebSocket接続成功"
+                    );
+
+                    chatError.textContent =
+                        "";
+
+                }
+            );
+
+
+            // ========================================
+            // サーバーから受信
+            // ========================================
+
+            chatSocket.addEventListener(
+                "message",
+                function (event) {
+
+                    const data =
+                        JSON.parse(
+                            event.data
+                        );
+
+
+                    // エラー
+                    if (
+                        data.type ===
+                        "error"
+                    ) {
+
+                        chatError.textContent =
+                            data.error;
+
+                        return;
+                    }
+
+
+                    // 新着チャット
+                    if (
+                        data.type ===
+                        "chat_message"
+                    ) {
+
+                        const emptyMessage =
+                            chatMessages.querySelector(
+                                ".chat-empty"
+                            );
+
+
+                        if (emptyMessage) {
+
+                            emptyMessage.remove();
+
+                        }
+
+
+                        appendMessage(
+                            data.message
+                        );
+
+
+                        scrollToBottom();
+
+                    }
+
+                }
+            );
+
+
+            // ========================================
+            // WebSocket切断
+            // ========================================
+
+            chatSocket.addEventListener(
+                "close",
+                function () {
+
+                    console.log(
+                        "WebSocket切断"
+                    );
+
+
+                    chatError.textContent =
+                        "チャットへ再接続しています...";
+
+
+                    // 2秒後に再接続
+                    clearTimeout(
+                        reconnectTimer
+                    );
+
+
+                    reconnectTimer =
+                        setTimeout(
+                            function () {
+
+                                connectWebSocket();
+
+                            },
+                            2000
+                        );
+
+                }
+            );
+
+
+            // ========================================
+            // WebSocketエラー
+            // ========================================
+
+            chatSocket.addEventListener(
+                "error",
+                function (error) {
+
+                    console.error(
+                        "WebSocketエラー",
+                        error
+                    );
+
+                }
+            );
+        }
+
+
+        // ========================================
+        // メッセージ送信
+        // ========================================
+
+        function sendMessage() {
+
+            const message =
+                chatInput.value.trim();
+
+
+            if (!message) {
+
+                chatError.textContent =
+                    "メッセージを入力してください。";
 
                 return;
             }
 
-            chatInput.value = "";
 
-            await loadMessages();
+            // WebSocket未接続
+            if (
+                !chatSocket ||
+                chatSocket.readyState !==
+                    WebSocket.OPEN
+            ) {
 
-        } catch (error) {
+                chatError.textContent =
+                    "チャットサーバーへ接続中です。";
 
-            console.error(error);
+                return;
+            }
+
 
             chatError.textContent =
-                "通信エラーが発生しました。";
+                "";
 
-        } finally {
 
-            chatSendButton.disabled = false;
+            // ========================================
+            // WebSocketでサーバーへ送信
+            // ========================================
+
+            chatSocket.send(
+                JSON.stringify(
+                    {
+                        message:
+                            message
+                    }
+                )
+            );
+
+
+            chatInput.value =
+                "";
 
         }
+
+
+        // ========================================
+        // 送信ボタン
+        // ========================================
+
+        chatSendButton.addEventListener(
+            "click",
+            function () {
+
+                sendMessage();
+
+            }
+        );
+
+
+        // ========================================
+        // Enterキー送信
+        // ========================================
+
+        chatInput.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key ===
+                    "Enter"
+                ) {
+
+                    event.preventDefault();
+
+                    sendMessage();
+
+                }
+
+            }
+        );
+
+
+        // ========================================
+        // 初回処理
+        // ========================================
+
+        async function initializeChat() {
+
+            // 過去50件
+            await loadInitialMessages();
+
+            // 以降の新着はWebSocket
+            connectWebSocket();
+
+        }
+
+
+        initializeChat();
+
     }
-
-
-    // ========================================
-    // 送信ボタン
-    // ========================================
-
-    chatSendButton.addEventListener("click", function () {
-        sendMessage();
-    });
-
-
-    // Enterキーでも送信
-    chatInput.addEventListener("keydown", function (event) {
-
-        if (event.key === "Enter") {
-
-            event.preventDefault();
-
-            sendMessage();
-        }
-    });
-
-
-    // ========================================
-    // 初回読み込み
-    // ========================================
-
-    loadMessages();
-
-
-    // ========================================
-    // 5秒ごとに自動更新
-    // ========================================
-
-    setInterval(function () {
-        loadMessages();
-    }, 5000);
-
-});
+);
