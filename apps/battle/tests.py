@@ -216,6 +216,150 @@ class ArenaBattleEngineTests(TestCase):
             )
 
 
+    # ========================================
+    # PvP通常攻撃：ミス
+    # ========================================
+
+    def test_challenger_normal_attack_miss(self):
+        engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        with patch(
+            "apps.battle.arena_engine.roll_percent",
+            return_value=False,
+        ):
+            result = engine.challenger_normal_attack()
+
+        self.assertFalse(result["hit"])
+        self.assertEqual(result["damage"], 0)
+
+        # 防衛者のHPは減らない
+        self.assertEqual(engine.defender_hp, 70)
+
+        # ミスしてもSTは5消費
+        self.assertEqual(
+            engine.challenger_combatant.stamina,
+            95,
+        )
+
+
+    # ========================================
+    # PvP通常攻撃：命中
+    # ========================================
+
+    def test_challenger_normal_attack_hit(self):
+        engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        # 命中成功・クリティカル失敗
+        with patch(
+            "apps.battle.arena_engine.roll_percent",
+            side_effect=[True, False],
+        ):
+            result = engine.challenger_normal_attack()
+
+        self.assertTrue(result["hit"])
+        self.assertFalse(result["critical"])
+        self.assertGreater(result["damage"], 0)
+
+        self.assertEqual(
+            engine.defender_hp,
+            max(0, 70 - result["damage"]),
+        )
+
+        self.assertEqual(
+            engine.challenger_combatant.stamina,
+            95,
+        )
+
+
+    # ========================================
+    # PvP通常攻撃：防衛者も攻撃できる
+    # ========================================
+
+    def test_defender_normal_attack(self):
+        engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        with patch(
+            "apps.battle.arena_engine.roll_percent",
+            side_effect=[True, False],
+        ):
+            result = engine.defender_normal_attack()
+
+        self.assertTrue(result["hit"])
+        self.assertGreater(result["damage"], 0)
+
+        # 挑戦者がダメージを受ける
+        self.assertEqual(
+            engine.challenger_hp,
+            max(0, 35 - result["damage"]),
+        )
+
+        # 防衛者のSTが減る
+        self.assertEqual(
+            engine.defender_combatant.stamina,
+            95,
+        )
+
+
+    # ========================================
+    # PvP通常攻撃：クリティカル
+    # ========================================
+
+    def test_critical_attack_increases_damage(self):
+        normal_engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        critical_engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        # 通常命中
+        with patch(
+            "apps.battle.arena_engine.roll_percent",
+            side_effect=[True, False],
+        ):
+            normal_result = (
+                normal_engine.challenger_normal_attack()
+            )
+
+        # クリティカル命中
+        with patch(
+            "apps.battle.arena_engine.roll_percent",
+            side_effect=[True, True],
+        ):
+            critical_result = (
+                critical_engine.challenger_normal_attack()
+            )
+
+        self.assertTrue(critical_result["critical"])
+
+        self.assertGreater(
+            critical_result["damage"],
+            normal_result["damage"],
+        )
+
+
 class BattleEngineTests(TestCase):
 
     def setUp(self):
