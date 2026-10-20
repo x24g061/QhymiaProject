@@ -360,6 +360,113 @@ class ArenaBattleEngineTests(TestCase):
         )
 
 
+    # ========================================
+    # 自動戦闘：挑戦者の勝利
+    # ========================================
+
+    def test_run_challenger_wins(self):
+
+        self.challenger.agility = 100
+        self.defender.agility = 100
+
+        engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        engine.defender_hp = 1
+
+        with patch(
+            "apps.battle.arena_engine.roll_percent",
+            return_value=True,
+        ):
+            result = engine.run(max_ticks=5)
+
+        self.assertEqual(
+            result["winner"],
+            "challenger",
+        )
+
+        self.assertEqual(
+            engine.defender_hp,
+            0,
+        )
+
+        # 倒された防衛者は行動しない
+        self.assertEqual(
+            engine.defender_combatant.stamina,
+            100,
+        )
+
+
+    # ========================================
+    # 自動戦闘：防衛者の勝利
+    # ========================================
+
+    def test_run_defender_wins(self):
+
+        self.challenger.agility = 0
+        self.defender.agility = 100
+
+        engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        engine.challenger_hp = 1
+
+        with patch(
+            "apps.battle.arena_engine.roll_percent",
+            return_value=True,
+        ):
+            result = engine.run(max_ticks=5)
+
+        self.assertEqual(
+            result["winner"],
+            "defender",
+        )
+
+        self.assertEqual(
+            engine.challenger_hp,
+            0,
+        )
+
+
+    # ========================================
+    # 自動戦闘：引き分け
+    # ========================================
+
+    def test_run_draw(self):
+
+        engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        result = engine.run(max_ticks=1)
+
+        self.assertEqual(
+            result["winner"],
+            "draw",
+        )
+
+        self.assertGreater(
+            engine.challenger_hp,
+            0,
+        )
+
+        self.assertGreater(
+            engine.defender_hp,
+            0,
+        )
+
+
 class BattleEngineTests(TestCase):
 
     def setUp(self):

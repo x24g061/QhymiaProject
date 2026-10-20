@@ -414,3 +414,150 @@ class ArenaBattleEngine:
                 self.defender_combatant.max_mp,
             ),
         )
+
+
+    # ========================================================
+    # PvP自動戦闘
+    # ========================================================
+
+    def run(self, max_ticks=1000):
+        """
+        闘技場の戦闘を最後まで自動実行する。
+
+        ・AGIによる行動ゲージ
+        ・通常攻撃
+        ・ST消費
+        ・HPによる勝敗判定
+        ・最大ループ到達時は引き分け
+
+        DB保存、EXP、階層移動はここでは行わない。
+        """
+
+        self.logs.append(
+            f"{self.challenger.name} VS "
+            f"{self.defender.name}"
+        )
+        self.logs.append("闘技場戦闘開始！")
+
+        tick_count = 0
+
+        # ========================================
+        # 戦闘ループ
+        # ========================================
+
+        while (
+            self.challenger_hp > 0
+            and self.defender_hp > 0
+            and tick_count < max_ticks
+        ):
+            tick_count += 1
+
+            # ====================================
+            # AGIを取得
+            # ====================================
+
+            challenger_agi = self.get_combat_stat(
+                self.challenger,
+                self.challenger_combatant,
+                "agility",
+            )
+
+            defender_agi = self.get_combat_stat(
+                self.defender,
+                self.defender_combatant,
+                "agility",
+            )
+
+            # ====================================
+            # 行動ゲージ加算
+            # ====================================
+
+            self.challenger_combatant.initiative += max(
+                0,
+                challenger_agi,
+            )
+
+            self.defender_combatant.initiative += max(
+                0,
+                defender_agi,
+            )
+
+            # ====================================
+            # 挑戦者の行動
+            # ====================================
+
+            if (
+                self.challenger_combatant.initiative
+                >= 100
+            ):
+                self.challenger_combatant.initiative -= 100
+
+                self.challenger_normal_attack()
+
+                # 防衛者が倒れたら終了
+                if self.defender_hp <= 0:
+                    break
+
+            # ====================================
+            # 防衛者の行動
+            # ====================================
+
+            if (
+                self.defender_combatant.initiative
+                >= 100
+            ):
+                self.defender_combatant.initiative -= 100
+
+                self.defender_normal_attack()
+
+                # 挑戦者が倒れたら終了
+                if self.challenger_hp <= 0:
+                    break
+
+        # ========================================
+        # 勝敗判定
+        # ========================================
+
+        if self.defender_hp <= 0:
+            winner = "challenger"
+
+            self.logs.append(
+                f"{self.challenger.name}の勝利！"
+            )
+
+        elif self.challenger_hp <= 0:
+            winner = "defender"
+
+            self.logs.append(
+                f"{self.defender.name}の勝利！"
+            )
+
+        else:
+            winner = "draw"
+
+            self.logs.append(
+                "決着がつかず引き分けとなった。"
+            )
+
+        # ========================================
+        # 戦闘結果
+        # ========================================
+
+        return {
+            "winner": winner,
+            "logs": list(self.logs),
+
+            "challenger_hp": self.challenger_hp,
+            "challenger_mp": self.challenger_mp,
+            "challenger_stamina": (
+                self.challenger_combatant.stamina
+            ),
+
+            "defender_hp": self.defender_hp,
+            "defender_mp": self.defender_mp,
+            "defender_stamina": (
+                self.defender_combatant.stamina
+            ),
+
+            "tick_count": tick_count,
+        }
