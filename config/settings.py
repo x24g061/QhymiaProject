@@ -92,6 +92,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'apps.sns.context_processors.mini_sns_posts',
             ],
         },
     },
