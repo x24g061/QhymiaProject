@@ -36,6 +36,9 @@ from apps.battle.models import (
     ArenaFloor,
     ArenaState,
 )
+from apps.battle.arena_services import (
+    claim_vacant_arena_floor,
+)
 
 
 
@@ -2260,4 +2263,169 @@ class ExplorationBossProgressionTests(TestCase):
 
         self.assertFalse(
             progress.boss_defeated
+        )
+
+
+class ArenaVacantClaimTests(TestCase):
+    """
+    闘技場の空席マスター獲得テスト。
+    """
+
+    def setUp(self):
+        self.user = User.objects.create_user(
+            user_id="arena_claim_user",
+            email="arena_claim@example.com",
+            password="testpass123",
+        )
+
+        self.other_user = User.objects.create_user(
+            user_id="arena_claim_other",
+            email="arena_claim_other@example.com",
+            password="testpass123",
+        )
+
+        self.character = Character.objects.create(
+            user=self.user,
+            name="空席挑戦者",
+            max_hp=100,
+            max_mp=50,
+        )
+
+        self.other = Character.objects.create(
+            user=self.other_user,
+            name="空席先客",
+        )
+
+        self.floor = ArenaFloor.objects.get(
+            floor=1,
+        )
+
+        self.state = ArenaState.objects.create(
+            character=self.character,
+            floor=self.floor,
+            current_hp=20,
+            current_mp=10,
+        )
+
+    # ========================================
+    # 空席獲得成功
+    # ========================================
+
+    def test_claim_vacant_floor(self):
+
+        result = claim_vacant_arena_floor(
+            self.character
+        )
+
+        self.assertEqual(result, "claimed")
+
+        self.floor.refresh_from_db()
+        self.state.refresh_from_db()
+
+        self.assertEqual(
+            self.floor.master,
+            self.character,
+        )
+
+        self.assertEqual(
+            self.state.current_hp,
+            100,
+        )
+
+        self.assertEqual(
+            self.state.current_mp,
+            50,
+        )
+
+    # ========================================
+    # 既に他プレイヤーがマスター
+    # ========================================
+
+    def test_cannot_claim_occupied_floor(self):
+
+        self.floor.master = self.other
+        self.floor.save()
+
+        result = claim_vacant_arena_floor(
+            self.character
+        )
+
+        self.assertEqual(result, "occupied")
+
+        self.floor.refresh_from_db()
+        self.state.refresh_from_db()
+
+        self.assertEqual(
+            self.floor.master,
+            self.other,
+        )
+
+        self.assertEqual(
+            self.state.current_hp,
+            20,
+        )
+
+    # ========================================
+    # 自分がマスターの場合の再取得禁止
+    # ========================================
+
+    def test_already_master_does_not_heal(self):
+
+        claim_vacant_arena_floor(
+            self.character
+        )
+
+        self.state.current_hp = 5
+        self.state.current_mp = 2
+        self.state.save()
+
+        result = claim_vacant_arena_floor(
+            self.character
+        )
+
+        self.state.refresh_from_db()
+
+        self.assertEqual(
+            result,
+            "already_master",
+        )
+
+        self.assertEqual(
+            self.state.current_hp,
+            5,
+        )
+
+        self.assertEqual(
+            self.state.current_mp,
+            2,
+        )
+
+    # ========================================
+    # 複数階のマスターになることを防止
+    # ========================================
+
+    def test_cannot_master_multiple_floors(self):
+
+        claim_vacant_arena_floor(
+            self.character
+        )
+
+        floor2 = ArenaFloor.objects.get(
+            floor=2,
+        )
+
+        self.state.floor = floor2
+        self.state.save(
+            update_fields=["floor"]
+        )
+
+        with self.assertRaises(ValueError):
+            claim_vacant_arena_floor(
+                self.character
+            )
+
+        floor2.refresh_from_db()
+
+        self.assertIsNone(
+            floor2.master
         )
