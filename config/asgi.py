@@ -1,16 +1,51 @@
-"""
-ASGI config for config project.
-
-It exposes the ASGI callable as a module-level variable named ``application``.
-
-For more information on this file, see
-https://docs.djangoproject.com/en/6.0/howto/deployment/asgi/
-"""
-
 import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 
-application = get_asgi_application()
+os.environ.setdefault(
+    "DJANGO_SETTINGS_MODULE",
+    "config.settings",
+)
+
+
+# ========================================
+# Django HTTP
+# ========================================
+
+django_asgi_application = (
+    get_asgi_application()
+)
+
+
+# Django初期化後にChannels関連を読み込む
+from channels.auth import AuthMiddlewareStack
+from channels.routing import (
+    ProtocolTypeRouter,
+    URLRouter,
+)
+
+from apps.chat.routing import (
+    websocket_urlpatterns,
+)
+
+
+# ========================================
+# ASGI
+# ========================================
+
+application = ProtocolTypeRouter(
+    {
+        # 通常のHTTP通信
+        "http":
+            django_asgi_application,
+
+        # WebSocket通信
+        "websocket":
+            AuthMiddlewareStack(
+                URLRouter(
+                    websocket_urlpatterns
+                )
+            ),
+    }
+)
