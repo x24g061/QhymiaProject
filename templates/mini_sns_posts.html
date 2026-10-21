@@ -4,6 +4,12 @@
 
 <div class="sns-post">
 
+    {% if post.is_recommended %}
+    <div class="mini-sns-recommended-label">
+        ★ おすすめ投稿
+    </div>
+    {% endif %}
+
     <!-- 投稿者 -->
     <div class="mini-sns-user-area">
 
@@ -11,10 +17,7 @@
 
             {% if post.user.character.character_image_path %}
 
-            <img
-                src="{% static post.user.character.character_image_path %}"
-                alt="{{ post.user.character.name }}"
-            >
+            <img src="{% static post.user.character.character_image_path %}" alt="{{ post.user.character.name }}">
 
             {% else %}
 
@@ -57,11 +60,7 @@
 
     <div class="mini-sns-post-image-wrapper">
 
-        <img
-            src="{{ post.image.url }}"
-            alt="投稿画像"
-            class="mini-sns-post-image"
-        >
+        <img src="{{ post.image.url }}" alt="投稿画像" class="mini-sns-post-image">
 
     </div>
 
@@ -72,18 +71,14 @@
     <div class="mini-sns-post-actions">
 
         <!-- いいね -->
-        <button
-            type="button"
-            class="mini-like-button"
-            data-url="{% url 'toggle_like' post.id %}"
-        >
+        <button type="button" class="mini-like-button" data-url="{% url 'toggle_like' post.id %}">
 
             <span class="mini-like-icon">
 
                 {% if post.id in mini_sns_liked_post_ids %}
-                    ♥
+                ♥
                 {% else %}
-                    ♡
+                ♡
                 {% endif %}
 
             </span>
@@ -96,18 +91,14 @@
 
 
         <!-- お気に入り -->
-        <button
-            type="button"
-            class="mini-favorite-button"
-            data-url="{% url 'toggle_favorite' post.id %}"
-        >
+        <button type="button" class="mini-favorite-button" data-url="{% url 'toggle_favorite' post.id %}">
 
             <span class="mini-favorite-icon">
 
                 {% if post.id in mini_sns_favorite_post_ids %}
-                    ★
+                ★
                 {% else %}
-                    ☆
+                ☆
                 {% endif %}
 
             </span>
@@ -122,11 +113,7 @@
         <!-- 自分の投稿だけ削除 -->
         {% if post.user == request.user %}
 
-        <button
-            type="button"
-            class="mini-delete-button"
-            data-url="{% url 'delete_post' post.id %}"
-        >
+        <button type="button" class="mini-delete-button" data-url="{% url 'delete_post' post.id %}">
             削除
         </button>
 

@@ -17,11 +17,6 @@ document.addEventListener("DOMContentLoaded", function () {
             "mini-sns-refresh"
         );
 
-    const refreshLogoButton =
-        document.getElementById(
-            "mini-sns-refresh-logo"
-        );
-
     const postList =
         document.getElementById(
             "mini-sns-post-list"
@@ -31,6 +26,18 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!miniSns) {
         return;
     }
+
+    // =====================
+// 現在表示中のSNSタブ
+// =====================
+
+let currentMiniSnsView =
+    miniSns
+        .querySelector(
+            ".mini-sns-tab.active"
+        )
+        ?.dataset.view
+    || "recommended";
 
 
     // =====================
@@ -65,105 +72,174 @@ document.addEventListener("DOMContentLoaded", function () {
         return null;
     }
 
-    // =====================
-    // ミニSNSだけ更新
-    // =====================
+// =====================
+// ミニSNSだけ更新
+// =====================
 
-    async function refreshMiniSns() {
+async function refreshMiniSns(
+    view = currentMiniSnsView
+) {
 
-        if (
-            !postList ||
-            !miniSns.dataset.refreshUrl
-        ) {
-            return;
+    if (
+        !postList ||
+        !miniSns.dataset.refreshUrl
+    ) {
+        return;
+    }
+
+
+    currentMiniSnsView =
+        view;
+
+
+    if (refreshButton) {
+
+        refreshButton.disabled =
+            true;
+
+        refreshButton.classList.add(
+            "is-refreshing"
+        );
+    }
+
+
+    try {
+
+        const url =
+            new URL(
+                miniSns.dataset.refreshUrl,
+                window.location.origin
+            );
+
+
+        url.searchParams.set(
+            "view",
+            currentMiniSnsView
+        );
+
+
+        const response =
+            await fetch(
+                url.toString(),
+                {
+                    method: "GET",
+
+                    headers: {
+                        "X-Requested-With":
+                            "XMLHttpRequest",
+                    },
+
+                    cache: "no-store",
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                "ミニSNSの更新に失敗しました。"
+            );
         }
+
+
+        const html =
+            await response.text();
+
+
+        postList.innerHTML =
+            html;
+
+
+        // =====================
+        // 選択中タブ更新
+        // =====================
+
+        miniSns
+            .querySelectorAll(
+                ".mini-sns-tab"
+            )
+            .forEach(
+                function (tab) {
+
+                    tab.classList.toggle(
+                        "active",
+                        tab.dataset.view ===
+                            currentMiniSnsView
+                    );
+
+                }
+            );
+
+
+    } catch (error) {
+
+        console.error(
+            error
+        );
+
+
+    } finally {
 
         if (refreshButton) {
 
             refreshButton.disabled =
-                true;
+                false;
 
-            refreshButton.classList.add(
+            refreshButton.classList.remove(
                 "is-refreshing"
             );
         }
+    }
+}
 
-        try {
 
-            const response =
-                await fetch(
-                    miniSns.dataset.refreshUrl,
-                    {
-                        method: "GET",
+ // =====================
+// 更新ボタン
+// =====================
 
-                        headers: {
-                            "X-Requested-With":
-                                "XMLHttpRequest",
-                        },
+if (refreshButton) {
 
-                        cache: "no-store",
-                    }
-                );
+    refreshButton.addEventListener(
+        "click",
+        function () {
 
-            if (!response.ok) {
-
-                throw new Error(
-                    "ミニSNSの更新に失敗しました。"
-                );
-            }
-
-            const html =
-                await response.text();
-
-            postList.innerHTML =
-                html;
-
-        } catch (error) {
-
-            console.error(
-                error
+            refreshMiniSns(
+                currentMiniSnsView
             );
 
-        } finally {
-
-            if (refreshButton) {
-
-                refreshButton.disabled =
-                    false;
-
-                refreshButton.classList.remove(
-                    "is-refreshing"
-                );
-            }
         }
-    }
+    );
+}
 
 
-    // =====================
-    // 更新ボタン
-    // =====================
+// =====================
+// おすすめ / 新着タブ
+// =====================
 
-    if (refreshButton) {
+miniSns
+    .querySelectorAll(
+        ".mini-sns-tab"
+    )
+    .forEach(
+        function (tab) {
 
-        refreshButton.addEventListener(
-            "click",
-            refreshMiniSns
-        );
-    }
+            tab.addEventListener(
+                "click",
+                function () {
+
+                    const view =
+                        tab.dataset.view;
 
 
-    // =====================
-    // Qhymia SNSロゴ
-    // =====================
+                    refreshMiniSns(
+                        view
+                    );
 
-    if (refreshLogoButton) {
+                }
+            );
 
-        refreshLogoButton.addEventListener(
-            "click",
-            refreshMiniSns
-        );
-    }
-
+        }
+    );
 
     // =====================
     // 保存状態
@@ -649,13 +725,13 @@ miniSns.addEventListener(
         "mousedown",
         function (event) {
 
-            if (
-                event.target.closest(
-                    "button"
-                )
-            ) {
-                return;
-            }
+if (
+    event.target.closest(
+        "button, a"
+    )
+) {
+    return;
+}
 
 
             isDragging =

@@ -8,6 +8,11 @@ from apps.accounts.models import AdminChangeLog
 from .forms import PostForm
 from .models import Favorite, Like, Post
 
+from .services import (
+    get_latest_posts,
+    get_recommended_posts,
+)
+
 
 # ========================================
 # 管理者：SNS投稿削除
@@ -119,26 +124,55 @@ def sns_page(request):
 
     view_mode = request.GET.get(
         "view",
-        "all",
+        "recommended",
     )
 
-    posts = (
-        Post.objects
-        .select_related(
-            "user",
-            "user__character",
-        )
-        .order_by(
-            "-created_at"
-        )
-    )
+
+    # ========================================
+    # 投稿一覧
+    # ========================================
 
     if view_mode == "favorites":
-        posts = posts.filter(
-            favorites__user=request.user
+
+        # お気に入り投稿
+        posts = list(
+            Post.objects
+            .select_related(
+                "user",
+                "user__character",
+            )
+            .prefetch_related(
+                "likes",
+            )
+            .filter(
+                favorites__user=request.user
+            )
+            .order_by(
+                "-created_at"
+            )[:50]
         )
-    # 通常SNSは最新50件まで表示
-    posts = posts[:50]
+
+        for post in posts:
+            post.is_recommended = False
+
+
+    elif view_mode == "latest":
+
+        # 新着投稿
+        posts = get_latest_posts()
+
+
+    else:
+
+        # おすすめ投稿
+        view_mode = "recommended"
+
+        posts = get_recommended_posts()
+
+
+    # ========================================
+    # お気に入り投稿ID
+    # ========================================
 
     favorite_post_ids = set(
         Favorite.objects.filter(
@@ -148,6 +182,11 @@ def sns_page(request):
             flat=True,
         )
     )
+
+
+    # ========================================
+    # 投稿処理
+    # ========================================
 
     if request.method == "POST":
 
@@ -174,23 +213,28 @@ def sns_page(request):
 
         form = PostForm()
 
+
+    # ========================================
+    # SNS画面表示
+    # ========================================
+
     return render(
         request,
         "sns_page.html",
         {
-            "posts": posts,
-            "form": form,
+            "posts":
+                posts,
+
+            "form":
+                form,
+
             "favorite_post_ids":
                 favorite_post_ids,
+
             "view_mode":
                 view_mode,
         },
     )
-
-
-# ========================================
-# ミニSNS：投稿
-# ========================================
 
 @login_required
 @require_POST
@@ -256,23 +300,67 @@ def mini_create_post(request):
 @require_GET
 def mini_sns_feed(request):
 
-
-    posts = list(
-        Post.objects
-        .select_related(
-            "user",
-            "user__character",
-        )
-        .prefetch_related(
-            "likes",
-        )
-        .order_by("-created_at")[:50]
+    view_mode = request.GET.get(
+        "view",
+        "recommended",
     )
+
+
+    # ========================================
+    # 表示する投稿
+    # ========================================
+
+    if view_mode == "latest":
+
+        # 新着
+        posts = get_latest_posts()
+
+
+    elif view_mode == "favorites":
+
+        # お気に入り
+        posts = list(
+            Post.objects
+            .select_related(
+                "user",
+                "user__character",
+            )
+            .prefetch_related(
+                "likes",
+            )
+            .filter(
+                favorites__user=request.user
+            )
+            .order_by(
+                "-created_at"
+            )[:50]
+        )
+
+        for post in posts:
+            post.is_recommended = False
+
+
+    else:
+
+        # おすすめ
+        view_mode = "recommended"
+
+        posts = get_recommended_posts()
+
+
+    # ========================================
+    # 表示中の投稿ID
+    # ========================================
 
     post_ids = [
         post.id
         for post in posts
     ]
+
+
+    # ========================================
+    # いいね済み投稿
+    # ========================================
 
     liked_post_ids = set(
         Like.objects.filter(
@@ -284,6 +372,11 @@ def mini_sns_feed(request):
         )
     )
 
+
+    # ========================================
+    # お気に入り済み投稿
+    # ========================================
+
     favorite_post_ids = set(
         Favorite.objects.filter(
             user=request.user,
@@ -293,6 +386,7 @@ def mini_sns_feed(request):
             flat=True,
         )
     )
+
 
     return render(
         request,
@@ -306,9 +400,11 @@ def mini_sns_feed(request):
 
             "mini_sns_favorite_post_ids":
                 favorite_post_ids,
+
+            "mini_sns_view_mode":
+                view_mode,
         },
     )
-
 # ========================================
 # いいね
 # ========================================
