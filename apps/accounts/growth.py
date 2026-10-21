@@ -474,82 +474,72 @@ def level_up_once(character):
 # 探索終了時のEXP処理
 # ============================================================
 
-def apply_exploration_exp(
+# ============================================================
+# 共通EXP・レベルアップ処理
+# ============================================================
+
+def apply_character_exp(
     character,
     gained_exp,
+    *,
+    recover_hp_mp=False,
 ):
     """
-    探索終了時にEXPをまとめて加算し、
-    必要ならレベルアップする。
+    EXPを加算し、必要ならレベルアップする。
 
-    必要EXPは常に100。
-
-    EXPが200以上あれば
-    一度に複数レベル上がる。
+    recover_hp_mp=True の場合だけ、
+    通常のHP/MPを全回復する。
     """
+
+    if gained_exp < 0:
+        raise ValueError("獲得EXPは0以上にしてください。")
 
     character.exp += gained_exp
 
     level_up_results = []
 
-    # ========================================================
-    # EXP100以上ある限り繰り返す
-    # ========================================================
-
     while character.exp >= EXP_PER_LEVEL:
 
-        # EXPを100消費
         character.exp -= EXP_PER_LEVEL
 
-        # 1レベル成長
-        growth_result = level_up_once(
-            character
-        )
+        growth_result = level_up_once(character)
 
         level_up_results.append({
             "level": character.level,
-
-            # 基礎能力3回
-            "growths": (
-                growth_result[
-                    "stat_growths"
-                ]
-            ),
-
-            # 属性3回
+            "growths": growth_result["stat_growths"],
             "attribute_growths": (
-                growth_result[
-                    "attribute_growths"
-                ]
+                growth_result["attribute_growths"]
             ),
         })
 
-    # ========================================================
-    # 探索から帰還したので
-    # HP / MPを全回復
-    # ========================================================
+    # 探索の場合のみ通常HP/MPを回復
+    if recover_hp_mp:
+        character.current_hp = character.max_hp
+        character.current_mp = character.max_mp
 
-    character.current_hp = (
-        character.max_hp
-    )
-
-    character.current_mp = (
-        character.max_mp
-    )
-
-    # DBへ保存
     character.save()
 
     return {
         "gained_exp": gained_exp,
-        "level_up_count": len(
-            level_up_results
-        ),
+        "level_up_count": len(level_up_results),
         "level_ups": level_up_results,
         "current_level": character.level,
         "remaining_exp": character.exp,
     }
 
+
+# ============================================================
+# 探索用EXP処理（従来の動作を維持）
+# ============================================================
+
+def apply_exploration_exp(character, gained_exp):
+    return apply_character_exp(
+        character,
+        gained_exp,
+        recover_hp_mp=True,
+    )
+
+    
 #将来の属性ウェイト増加用
 def increase_attribute_growth_weight(
     character,

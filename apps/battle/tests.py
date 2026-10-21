@@ -5,6 +5,7 @@ from django.urls import reverse
 
 from apps.accounts.models import Character, User
 from apps.accounts.growth import apply_exploration_exp
+from apps.accounts.growth import apply_character_exp
 from apps.battle.models import Enemy
 from apps.battle.services import BattleEngine
 from apps.battle.combatants import (
@@ -2755,3 +2756,40 @@ class ArenaMasterChallengeTests(TestCase):
                 master=self.defender
             ).exists()
         )
+
+
+class ArenaExpGrowthTests(TestCase):
+
+    def test_arena_exp_does_not_heal_normal_hp_mp(self):
+
+        user = User.objects.create_user(
+            user_id="arena_exp_user",
+            email="arena_exp@example.com",
+            password="testpass123",
+        )
+
+        character = Character.objects.create(
+            user=user,
+            name="闘技場EXPテスト",
+            exp=99,
+            current_hp=10,
+            current_mp=5,
+        )
+
+        result = apply_character_exp(
+            character,
+            8,
+        )
+
+        character.refresh_from_db()
+
+        # 99 + 8 = 107なのでレベルアップ
+        self.assertEqual(character.level, 2)
+        self.assertEqual(character.exp, 7)
+
+        # 闘技場では通常HP/MPが回復しない
+        self.assertEqual(character.current_hp, 10)
+        self.assertEqual(character.current_mp, 5)
+
+        self.assertEqual(result["gained_exp"], 8)
+        self.assertEqual(result["level_up_count"], 1)
