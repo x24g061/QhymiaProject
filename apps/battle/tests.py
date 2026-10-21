@@ -39,7 +39,8 @@ from apps.battle.models import (
 from apps.battle.arena_services import (
     claim_vacant_arena_floor,
 )
-
+from apps.battle.arena_services import challenge_arena_master
+from apps.battle.models import ArenaBattleHistory
 
 
 class PlayerCombatantArenaTests(TestCase):
@@ -2428,4 +2429,329 @@ class ArenaVacantClaimTests(TestCase):
 
         self.assertIsNone(
             floor2.master
+        )
+
+
+class ArenaMasterChallengeTests(TestCase):
+
+    def setUp(self):
+        self.user1 = User.objects.create_user(
+            user_id="arena_master_test1",
+            email="arena_master1@example.com",
+            password="testpass123",
+        )
+
+        self.user2 = User.objects.create_user(
+            user_id="arena_master_test2",
+            email="arena_master2@example.com",
+            password="testpass123",
+        )
+
+        self.challenger = Character.objects.create(
+            user=self.user1,
+            name="マスター挑戦者",
+            max_hp=100,
+            max_mp=50,
+        )
+
+        self.defender = Character.objects.create(
+            user=self.user2,
+            name="マスター防衛者",
+            max_hp=80,
+            max_mp=30,
+        )
+
+        self.floor = ArenaFloor.objects.get(floor=1)
+        self.floor.master = self.defender
+        self.floor.save(update_fields=["master"])
+
+        self.challenger_state = ArenaState.objects.create(
+            character=self.challenger,
+            floor=self.floor,
+            current_hp=40,
+            current_mp=20,
+        )
+
+        self.defender_state = ArenaState.objects.create(
+            character=self.defender,
+            floor=self.floor,
+            current_hp=70,
+            current_mp=25,
+        )
+
+    # ========================================
+    # 挑戦者勝利：マスター交代
+    # ========================================
+
+    def test_challenger_win_changes_master(self):
+
+        fake_result = {
+            "winner": "challenger",
+            "logs": ["挑戦者の勝利"],
+            "challenger_hp": 30,
+            "challenger_mp": 10,
+            "defender_hp": 0,
+            "defender_mp": 5,
+        }
+
+        with patch(
+            "apps.battle.arena_services.ArenaBattleEngine.run",
+            return_value=fake_result,
+        ):
+            result = challenge_arena_master(
+                self.challenger
+            )
+
+        self.floor.refresh_from_db()
+        self.challenger_state.refresh_from_db()
+        self.defender_state.refresh_from_db()
+
+        # 勝者がマスターになる
+        self.assertEqual(
+            self.floor.master,
+            self.challenger,
+        )
+
+        # 挑戦者は1階を維持
+        self.assertEqual(
+            self.challenger_state.floor_id,
+            1,
+        )
+
+        # 旧マスターは2階へ移動
+        self.assertEqual(
+            self.defender_state.floor_id,
+            2,
+        )
+
+        # 両者の闘技場HP/MPが全回復
+        self.assertEqual(
+            self.challenger_state.current_hp,
+            100,
+        )
+
+        self.assertEqual(
+            self.challenger_state.current_mp,
+            50,
+        )
+
+        self.assertEqual(
+            self.defender_state.current_hp,
+            80,
+        )
+
+        self.assertEqual(
+            self.defender_state.current_mp,
+            30,
+        )
+
+        # 勝敗結果と履歴を確認
+        self.assertEqual(
+            result["winner"],
+            "challenger",
+        )
+
+        history = ArenaBattleHistory.objects.get(
+            pk=result["history_id"],
+        )
+
+        self.assertEqual(history.result, "win")
+        self.assertEqual(history.floor, 1)
+        self.assertEqual(
+            history.defender_hp_after,
+            0,
+        )
+
+
+    # ========================================
+    # 挑戦者敗北：2階層下へ移動
+    # ========================================
+
+    def test_challenger_loss(self):
+
+        fake_result = {
+            "winner": "defender",
+            "logs": ["防衛者の勝利"],
+            "challenger_hp": 0,
+            "challenger_mp": 5,
+            "defender_hp": 35,
+            "defender_mp": 15,
+        }
+
+        with patch(
+            "apps.battle.arena_services.ArenaBattleEngine.run",
+            return_value=fake_result,
+        ):
+            result = challenge_arena_master(
+                self.challenger
+            )
+
+        self.floor.refresh_from_db()
+        self.challenger_state.refresh_from_db()
+        self.defender_state.refresh_from_db()
+
+        # マスターは変更されない
+        self.assertEqual(
+            self.floor.master,
+            self.defender,
+        )
+
+        # 挑戦者は1階から3階へ
+        self.assertEqual(
+            self.challenger_state.floor_id,
+            3,
+        )
+
+        # 挑戦者のHP/MPは全回復
+        self.assertEqual(
+            self.challenger_state.current_hp,
+            100,
+        )
+        self.assertEqual(
+            self.challenger_state.current_mp,
+            50,
+        )
+
+        # 防衛者は残りHP/MPを引き継ぐ
+        self.assertEqual(
+            self.defender_state.current_hp,
+            35,
+        )
+        self.assertEqual(
+            self.defender_state.current_mp,
+            15,
+        )
+
+        self.assertEqual(result["winner"], "defender")
+
+        history = ArenaBattleHistory.objects.get(
+            pk=result["history_id"]
+        )
+        self.assertEqual(history.result, "loss")
+
+
+    # ========================================
+    # 引き分け：挑戦者は2階層下へ
+    # ========================================
+
+    def test_challenger_draw(self):
+
+        fake_result = {
+            "winner": "draw",
+            "logs": ["引き分け"],
+            "challenger_hp": 20,
+            "challenger_mp": 10,
+            "defender_hp": 40,
+            "defender_mp": 20,
+        }
+
+        with patch(
+            "apps.battle.arena_services.ArenaBattleEngine.run",
+            return_value=fake_result,
+        ):
+            result = challenge_arena_master(
+                self.challenger
+            )
+
+        self.floor.refresh_from_db()
+        self.challenger_state.refresh_from_db()
+        self.defender_state.refresh_from_db()
+
+        # マスターを維持
+        self.assertEqual(
+            self.floor.master,
+            self.defender,
+        )
+
+        # 挑戦者は3階へ
+        self.assertEqual(
+            self.challenger_state.floor_id,
+            3,
+        )
+
+        # 防衛者のHP/MPは引き継ぎ
+        self.assertEqual(
+            self.defender_state.current_hp,
+            40,
+        )
+        self.assertEqual(
+            self.defender_state.current_mp,
+            20,
+        )
+
+        self.assertEqual(result["winner"], "draw")
+
+        history = ArenaBattleHistory.objects.get(
+            pk=result["history_id"]
+        )
+        self.assertEqual(history.result, "draw")
+
+    # ========================================
+    # 100階：マスター交代の境界確認
+    # ========================================
+
+    def test_win_at_floor_100(self):
+
+        floor100 = ArenaFloor.objects.get(floor=100)
+
+        # 既存の1階マスターを解除
+        self.floor.master = None
+        self.floor.save(update_fields=["master"])
+
+        # 100階にマスターを設定
+        floor100.master = self.defender
+        floor100.save(update_fields=["master"])
+
+        self.challenger_state.floor = floor100
+        self.challenger_state.save(
+            update_fields=["floor"]
+        )
+
+        self.defender_state.floor = floor100
+        self.defender_state.save(
+            update_fields=["floor"]
+        )
+
+        fake_result = {
+            "winner": "challenger",
+            "logs": ["100階で勝利"],
+            "challenger_hp": 20,
+            "challenger_mp": 10,
+            "defender_hp": 0,
+            "defender_mp": 5,
+        }
+
+        with patch(
+            "apps.battle.arena_services.ArenaBattleEngine.run",
+            return_value=fake_result,
+        ):
+            challenge_arena_master(
+                self.challenger
+            )
+
+        floor100.refresh_from_db()
+        self.challenger_state.refresh_from_db()
+        self.defender_state.refresh_from_db()
+
+        # 新マスターが誕生
+        self.assertEqual(
+            floor100.master,
+            self.challenger,
+        )
+
+        # 100階を超えない
+        self.assertEqual(
+            self.challenger_state.floor_id,
+            100,
+        )
+        self.assertEqual(
+            self.defender_state.floor_id,
+            100,
+        )
+
+        # 旧マスターは席を失う
+        self.assertFalse(
+            ArenaFloor.objects.filter(
+                master=self.defender
+            ).exists()
         )
