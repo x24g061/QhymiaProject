@@ -10,11 +10,19 @@ class Post(models.Model):
     )
 
     text = models.TextField(
-        max_length=500,
+        max_length=180,
         blank=True
     )
 
+    # 1枚目の画像
     image = models.ImageField(
+        upload_to="sns/",
+        blank=True,
+        null=True
+    )
+
+    # 2枚目の画像
+    image2 = models.ImageField(
         upload_to="sns/",
         blank=True,
         null=True

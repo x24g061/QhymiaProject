@@ -550,6 +550,8 @@
     letter-spacing: 1px;
 
     cursor: pointer;
+
+    text-decoration: none;
 }
 
 
@@ -601,4 +603,71 @@
         animation: none;
     }
 
+}
+
+/* ========================================
+   ミニSNS おすすめ投稿
+======================================== */
+
+.mini-sns-recommended-label {
+    display: inline-flex;
+    align-items: center;
+
+    margin-bottom: 8px;
+    padding: 4px 8px;
+
+    border: 1px solid #3b82f6;
+    border-radius: 999px;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 11px;
+    font-weight: bold;
+}
+
+/* ========================================
+   ミニSNS 表示タブ
+======================================== */
+
+.mini-sns-tabs {
+    display: flex;
+
+    gap: 6px;
+
+    margin: 10px 0;
+}
+
+
+.mini-sns-tab {
+    flex: 1;
+
+    padding: 7px 8px;
+
+    border: 1px solid #8c775d;
+    border-radius: 5px;
+
+    background: #f6ead3;
+
+    color: #51412d;
+
+    font-size: 11px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.mini-sns-tab:hover {
+    background: #ead8b8;
+}
+
+
+.mini-sns-tab.active {
+    background: #263f34;
+
+    color: #ffffff;
+
+    border-color: #263f34;
 }

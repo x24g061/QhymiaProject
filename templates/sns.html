@@ -8,9 +8,9 @@
 
     <div class="mini-sns-header">
 
-        <button type="button" id="mini-sns-refresh-logo" class="mini-sns-logo-button" title="最新の投稿を取得">
+        <a href="{% url 'sns' %}" class="mini-sns-logo-button" title="SNSを開く">
             Qhymia SNS
-        </button>
+        </a>
 
 
         <div class="mini-sns-controls">
@@ -71,15 +71,49 @@
 
         </form>
 
+<div class="mini-sns-tabs">
 
+    <button
+        type="button"
+        class="mini-sns-tab
+        {% if mini_sns_view_mode == 'recommended' %}
+            active
+        {% endif %}"
+        data-view="recommended"
+    >
+        ★ おすすめ
+    </button>
+
+
+    <button
+        type="button"
+        class="mini-sns-tab
+        {% if mini_sns_view_mode == 'latest' %}
+            active
+        {% endif %}"
+        data-view="latest"
+    >
+        ▤ 新着
+    </button>
+
+
+    <button
+        type="button"
+        class="mini-sns-tab
+        {% if mini_sns_view_mode == 'favorites' %}
+            active
+        {% endif %}"
+        data-view="favorites"
+    >
+        ☆ お気に入り
+    </button>
+
+</div>
         <!-- =====================
              投稿一覧
         ====================== -->
 
-        <div
-            id="mini-sns-post-list"
-            class="mini-sns-post-list"
-        >
+        <div id="mini-sns-post-list" class="mini-sns-post-list">
 
             {% include "mini_sns_posts.html" %}
 
