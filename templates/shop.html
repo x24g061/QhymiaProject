@@ -106,7 +106,7 @@
 
                 <p>
                     プレイヤー同士で
-                    アイテムを売買できます。
+                    アイテムや装備を売買できます。
                 </p>
 
             </div>
@@ -182,14 +182,13 @@
 
 
                 <!-- =============================================
-                 装備
-                 今後対応予定
+                 手持ち装備
             ============================================== -->
 
-                <button type="button" class="side-button" disabled>
+                <button type="button" class="side-button" id="equipment-tab-button">
 
                     <span class="side-button-title">
-                        装備中のアイテム
+                        手持ちの装備
                     </span>
 
                     <span class="side-arrow">
@@ -200,8 +199,8 @@
 
 
                 <p class="side-description">
-                    装備品の出品機能は
-                    今後対応予定です。
+                    所持している未装備の装備品を確認し、
+                    フリーマーケットへ出品できます。
                 </p>
 
             </aside>
@@ -217,7 +216,7 @@
 
                 <!-- =================================================
                  PANEL 1
-                 販売中アイテム一覧
+                 販売中の商品
             ================================================== -->
 
                 <div id="listing-panel">
@@ -276,7 +275,7 @@
                         </div>
 
 
-                        <!-- 検索・ソート -->
+                        <!-- 検索・並び替え -->
 
                         <div class="toolbar-controls">
 
@@ -354,26 +353,20 @@
 
                             <div id="items" class="table-body">
 
-                                {% comment %}
-                                現在はまだNPCショップ用の
-                                shop_stocksを使用している。
-
-                                後ほどここを
-                                market_listings
-                                に変更する。
-                                {% endcomment %}
-
                                 {% for listing in market_listings %}
 
                                 <article class="table-row" data-item data-name="{{ listing.item.name }}"
                                     data-category="{{ listing.item.category }}" data-price="{{ listing.unit_price }}">
+
 
                                     <!-- 種類 -->
 
                                     <div class="table-cell category-cell" data-label="種類">
 
                                         <span class="category-tag">
+
                                             {{ listing.item.get_category_display }}
+
                                         </span>
 
                                     </div>
@@ -384,7 +377,15 @@
                                     <div class="table-cell item-name-cell" data-label="アイテム名">
 
                                         <strong>
+
                                             {{ listing.item.name }}
+
+                                            {% if listing.owned_equipment %}
+
+                                            +{{ listing.owned_equipment.enhancement_level }}
+
+                                            {% endif %}
+
                                         </strong>
 
                                     </div>
@@ -394,7 +395,12 @@
 
                                     <div class="table-cell description-cell" data-label="説明">
 
-                                        {% if listing.item.description %}
+                                        {% if listing.owned_equipment %}
+
+                                        戦闘力
+                                        {{ listing.owned_equipment.battle_power }}
+
+                                        {% elif listing.item.description %}
 
                                         {{ listing.item.description }}
 
@@ -439,12 +445,17 @@
 
                                         {% if character and listing.seller_id == character.id %}
 
-                                        <button type="button" class="buy-button disabled" disabled>
-                                            自分の出品
-                                        </button>
+                                        <form method="post" action="{% url 'shop:cancel_market_listing' listing.id %}">
+
+                                            {% csrf_token %}
+
+                                            <button type="submit" class="buy-button">
+                                                出品をキャンセル
+                                            </button>
+
+                                        </form>
 
                                         {% else %}
-
                                         <form method="post" action="{% url 'shop:buy_market_listing' listing.id %}">
 
                                             {% csrf_token %}
@@ -494,14 +505,14 @@
 
                 <!-- =================================================
                  PANEL 2
-                 自分の手持ちアイテム
+                 手持ちの通常アイテム
             ================================================== -->
 
                 <div id="inventory-panel" style="display: none;">
 
 
                     <!-- =============================================
-                     手持ち一覧上部
+                     手持ちアイテム一覧上部
                 ============================================== -->
 
                     <section class="market-toolbar">
@@ -609,6 +620,8 @@
                                     </div>
 
 
+                                    <!-- 出品フォーム -->
+
                                     <form method="post"
                                         action="{% url 'shop:create_market_listing' inventory_item.id %}"
                                         class="market-sell-form">
@@ -637,7 +650,7 @@
                                         </div>
 
 
-                                        <!-- 出品ボタン -->
+                                        <!-- 出品 -->
 
                                         <div class="table-cell buy-cell" data-label="出品">
 
@@ -657,6 +670,195 @@
                                 <div class="empty-items">
 
                                     出品可能なアイテムを
+                                    所持していません。
+
+                                </div>
+
+                                {% endfor %}
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+
+
+                <!-- =================================================
+                 PANEL 3
+                 手持ちの装備
+            ================================================== -->
+
+                <div id="equipment-panel" style="display: none;">
+
+
+                    <!-- =============================================
+                     手持ち装備一覧上部
+                ============================================== -->
+
+                    <section class="market-toolbar">
+
+                        <div>
+
+                            <p class="market-small-title">
+                                YOUR EQUIPMENT
+                            </p>
+
+                            <h2>
+                                手持ちの装備
+                            </h2>
+
+                        </div>
+
+                    </section>
+
+
+
+                    <!-- =============================================
+                     手持ち装備テーブル
+                ============================================== -->
+
+                    <section class="table-wrapper">
+
+                        <div class="item-table equipment-table">
+
+
+                            <!-- テーブルヘッダー -->
+
+                            <div class="table-header equipment-table-header">
+
+                                <div>
+                                    ランク
+                                </div>
+
+                                <div>
+                                    装備名
+                                </div>
+
+                                <div>
+                                    部位
+                                </div>
+
+                                <div>
+                                    +値
+                                </div>
+
+                                <div>
+                                    戦闘力
+                                </div>
+
+                                <div>
+                                    価格
+                                </div>
+
+                                <div>
+                                    出品
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- 装備一覧 -->
+
+                            <div class="table-body">
+
+                                {% for owned_equipment in owned_equipments %}
+
+                                <article class="table-row equipment-table-row">
+
+
+                                    <!-- ランク -->
+
+                                    <div class="table-cell" data-label="ランク">
+
+                                        <strong>
+                                            {{ owned_equipment.equipment.rank }}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <!-- 装備名 -->
+
+                                    <div class="table-cell item-name-cell" data-label="装備名">
+
+                                        <strong>
+                                            {{ owned_equipment.equipment.item.name }}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <!-- 部位 -->
+
+                                    <div class="table-cell" data-label="部位">
+
+                                        {{ owned_equipment.equipment.get_slot_display }}
+
+                                    </div>
+
+
+                                    <!-- +値 -->
+
+                                    <div class="table-cell" data-label="+値">
+
+                                        +{{ owned_equipment.enhancement_level }}
+
+                                    </div>
+
+
+                                    <!-- 戦闘力 -->
+
+                                    <div class="table-cell" data-label="戦闘力">
+
+                                        {{ owned_equipment.battle_power }}
+
+                                    </div>
+
+
+                                    <!-- 出品フォーム -->
+
+                                    <form method="post"
+                                        action="{% url 'shop:create_equipment_listing' owned_equipment.id %}"
+                                        class="market-sell-form equipment-sell-form">
+
+                                        {% csrf_token %}
+
+
+                                        <!-- 価格 -->
+
+                                        <div class="table-cell" data-label="価格">
+
+                                            <input type="number" name="unit_price" value="1" min="1" required>
+
+                                            Q
+
+                                        </div>
+
+
+                                        <!-- 出品 -->
+
+                                        <div class="table-cell buy-cell" data-label="出品">
+
+                                            <button type="submit" class="buy-button">
+                                                出品する
+                                            </button>
+
+                                        </div>
+
+                                    </form>
+
+                                </article>
+
+
+                                {% empty %}
+
+                                <div class="empty-items">
+
+                                    出品可能な未装備品を
                                     所持していません。
 
                                 </div>

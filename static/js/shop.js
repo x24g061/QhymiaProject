@@ -53,6 +53,16 @@ document.addEventListener("DOMContentLoaded", () => {
             "#inventory-panel"
         );
 
+    const equipmentTabButton =
+        document.querySelector(
+            "#equipment-tab-button"
+        );
+
+    const equipmentPanel =
+        document.querySelector(
+            "#equipment-panel"
+        );
+
 
     let currentCategory =
         "all";
@@ -335,8 +345,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (
         listingTabButton &&
         inventoryTabButton &&
+        equipmentTabButton &&
         listingPanel &&
-        inventoryPanel
+        inventoryPanel &&
+        equipmentPanel
     ) {
 
         listingTabButton.addEventListener(
@@ -349,6 +361,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 inventoryPanel.style.display =
                     "none";
 
+                equipmentPanel.style.display =
+                    "none";
+
 
                 listingTabButton.classList.add(
                     "active"
@@ -358,9 +373,12 @@ document.addEventListener("DOMContentLoaded", () => {
                     "active"
                 );
 
+                equipmentTabButton.classList.remove(
+                    "active"
+                );
+
             }
         );
-
 
         // ====================================================
         // 手持ちのアイテムを表示
@@ -376,6 +394,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 inventoryPanel.style.display =
                     "";
 
+                equipmentPanel.style.display =
+                    "none";
+
 
                 inventoryTabButton.classList.add(
                     "active"
@@ -385,9 +406,42 @@ document.addEventListener("DOMContentLoaded", () => {
                     "active"
                 );
 
+                equipmentTabButton.classList.remove(
+                    "active"
+                );
+
             }
         );
 
+
+        equipmentTabButton.addEventListener(
+            "click",
+            () => {
+
+                listingPanel.style.display =
+                    "none";
+
+                inventoryPanel.style.display =
+                    "none";
+
+                equipmentPanel.style.display =
+                    "";
+
+
+                equipmentTabButton.classList.add(
+                    "active"
+                );
+
+                listingTabButton.classList.remove(
+                    "active"
+                );
+
+                inventoryTabButton.classList.remove(
+                    "active"
+                );
+
+            }
+        );
     }
 
 

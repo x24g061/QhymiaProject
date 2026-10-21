@@ -1,8 +1,10 @@
 from django.db import models
 
 from apps.accounts.models import Character
-from apps.inventory.models import Item
-
+from apps.inventory.models import (
+    Item,
+    OwnedEquipment,
+)
 
 class ShopStock(models.Model):
     """ショップで販売するアイテムと在庫情報。"""
@@ -77,6 +79,15 @@ class MarketListing(models.Model):
         Item,
         on_delete=models.PROTECT,
         related_name="market_listings",
+    )
+
+    owned_equipment = models.OneToOneField(
+        OwnedEquipment,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="market_listing",
+        help_text="装備品出品時の装備個体。通常アイテム出品では未設定。",
     )
 
     quantity = models.PositiveIntegerField(
