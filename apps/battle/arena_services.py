@@ -1,3 +1,7 @@
+import random
+from datetime import timedelta
+
+from django.utils import timezone
 from django.db import transaction
 
 from apps.battle.arena_engine import ArenaBattleEngine
@@ -6,6 +10,59 @@ from apps.battle.models import (
     ArenaFloor,
     ArenaState,
 )
+from apps.accounts.models import Character
+from apps.accounts.growth import apply_character_exp
+
+
+# ========================================================
+# 闘技場・探索共通クールタイム
+# ========================================================
+
+def _lock_and_check_arena_cooldown(character):
+    """
+    最新のキャラクター情報をロックして、
+    探索・闘技場共通CTを確認する。
+    """
+    locked_character = (
+        Character.objects
+        .select_for_update()
+        .get(pk=character.pk)
+    )
+
+    now = timezone.now()
+
+    cooldown_until = (
+        locked_character.exploration_cooldown_until
+    )
+
+    if cooldown_until and cooldown_until > now:
+        raise ValueError(
+            "クールタイム中です。"
+            "時間をおいて再挑戦してください。"
+        )
+
+    return locked_character
+
+
+def _start_arena_cooldown(character):
+    """
+    探索と共通のCTを開始する。
+    通常40秒、短縮中20秒。
+    """
+    seconds = (
+        character.get_exploration_cooldown_seconds()
+    )
+
+    character.exploration_cooldown_until = (
+        timezone.now() + timedelta(seconds=seconds)
+    )
+
+    character.save(
+        update_fields=[
+            "exploration_cooldown_until",
+            "updated_at",
+        ]
+    )
 
 
 @transaction.atomic
@@ -62,6 +119,11 @@ def claim_vacant_arena_floor(character):
             "既に別の階のマスターです。"
         )
 
+    # CTをチェックし、最新のキャラクターを取得
+    locked_character = (
+        _lock_and_check_arena_cooldown(character)
+    )
+
     # 空席を獲得
     floor.master = character
     floor.save(
@@ -69,8 +131,8 @@ def claim_vacant_arena_floor(character):
     )
 
     # Arena専用HP/MPを全回復
-    state.current_hp = character.max_hp
-    state.current_mp = character.max_mp
+    state.current_hp = locked_character.max_hp
+    state.current_mp = locked_character.max_mp
 
     state.save(
         update_fields=[
@@ -78,6 +140,9 @@ def claim_vacant_arena_floor(character):
             "current_mp",
         ]
     )
+
+    # 空席獲得でも共通CTを開始
+    _start_arena_cooldown(locked_character)
 
     return "claimed"
 
@@ -174,12 +239,18 @@ def challenge_arena_master(challenger):
             "既に別の階のマスターです。"
         )
 
+    # CTをチェックし、挑戦者の最新情報を取得
+    locked_challenger = (
+        _lock_and_check_arena_cooldown(challenger)
+    )
+
+
     # ========================================
     # PvP自動戦闘
     # ========================================
 
     engine = ArenaBattleEngine(
-        challenger,
+        locked_challenger,
         defender,
         challenger_state,
         defender_state,
@@ -196,6 +267,23 @@ def challenge_arena_master(challenger):
         raise ValueError(
             "不正な戦闘結果です。"
         )
+
+
+    # ========================================
+    # EXP報酬
+    # ========================================
+
+    if winner == "challenger":
+        gained_exp = random.randint(8, 13)
+    else:
+        gained_exp = 8
+
+    # レベルアップ時も通常HP/MPは回復しない
+    apply_character_exp(
+        locked_challenger,
+        gained_exp,
+    )
+
 
     # ========================================
     # 戦闘直後のHP/MPを保持
@@ -246,8 +334,8 @@ def challenge_arena_master(challenger):
             floor.floor + 2,
         )
 
-        challenger_state.current_hp = challenger.max_hp
-        challenger_state.current_mp = challenger.max_mp
+        challenger_state.current_hp = locked_challenger.max_hp
+        challenger_state.current_mp = locked_challenger.max_mp 
 
         # 防衛者は階層を維持し、HP/MPを引き継ぐ
         defender_state.current_hp = max(
@@ -305,9 +393,13 @@ def challenge_arena_master(challenger):
         defender_floor_after=defender_state.floor_id,
     )
 
+    # 探索・闘技場共通CT開始
+    _start_arena_cooldown(locked_challenger)
+
     return {
         "winner": winner,
         "history_id": history.pk,
+        "gained_exp": gained_exp,
         "challenger_floor": challenger_state.floor_id,
         "defender_floor": defender_state.floor_id,
     }

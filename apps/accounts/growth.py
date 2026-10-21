@@ -494,6 +494,11 @@ def apply_character_exp(
     if gained_exp < 0:
         raise ValueError("獲得EXPは0以上にしてください。")
 
+    # 闘技場では通常HP/MPを変更しないため、
+    # レベルアップ前の値を保存する
+    original_hp = character.current_hp
+    original_mp = character.current_mp
+
     character.exp += gained_exp
 
     level_up_results = []
@@ -514,8 +519,14 @@ def apply_character_exp(
 
     # 探索の場合のみ通常HP/MPを回復
     if recover_hp_mp:
+        # 探索では全回復
         character.current_hp = character.max_hp
         character.current_mp = character.max_mp
+
+    else:
+        # 闘技場では通常HP/MPを維持
+        character.current_hp = original_hp
+        character.current_mp = original_mp
 
     character.save()
 
@@ -539,7 +550,7 @@ def apply_exploration_exp(character, gained_exp):
         recover_hp_mp=True,
     )
 
-    
+
 #将来の属性ウェイト増加用
 def increase_attribute_growth_weight(
     character,

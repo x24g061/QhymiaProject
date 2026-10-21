@@ -1,7 +1,9 @@
 from unittest.mock import patch
+from datetime import timedelta
 
 from django.test import TestCase
 from django.urls import reverse
+from django.utils import timezone
 
 from apps.accounts.models import Character, User
 from apps.accounts.growth import apply_exploration_exp
@@ -2433,6 +2435,65 @@ class ArenaVacantClaimTests(TestCase):
         )
 
 
+    def test_claim_starts_cooldown(self):
+        result = claim_vacant_arena_floor(
+            self.character
+        )
+
+        self.assertEqual(result, "claimed")
+
+        self.character.refresh_from_db()
+
+        remaining = (
+            self.character.exploration_cooldown_until
+            - timezone.now()
+        ).total_seconds()
+
+        self.assertGreater(remaining, 35)
+        self.assertLessEqual(remaining, 40)
+
+
+    def test_cannot_claim_during_cooldown(self):
+        self.character.exploration_cooldown_until = (
+            timezone.now() + timedelta(seconds=60)
+        )
+        self.character.save(
+            update_fields=["exploration_cooldown_until"]
+        )
+
+        with self.assertRaisesRegex(
+            ValueError,
+            "クールタイム中",
+        ):
+            claim_vacant_arena_floor(
+                self.character
+            )
+
+        self.floor.refresh_from_db()
+        self.assertIsNone(self.floor.master)
+
+
+    def test_reduced_claim_cooldown_is_20_seconds(self):
+        self.character.exploration_cooldown_reduced_until = (
+            timezone.now() + timedelta(days=1)
+        )
+        self.character.save(
+            update_fields=["exploration_cooldown_reduced_until"]
+        )
+
+        claim_vacant_arena_floor(self.character)
+
+        self.character.refresh_from_db()
+
+        remaining = (
+            self.character.exploration_cooldown_until
+            - timezone.now()
+        ).total_seconds()
+
+        self.assertGreater(remaining, 15)
+        self.assertLessEqual(remaining, 20)
+
+
 class ArenaMasterChallengeTests(TestCase):
 
     def setUp(self):
@@ -2758,6 +2819,127 @@ class ArenaMasterChallengeTests(TestCase):
         )
 
 
+    def test_win_grants_exp_and_starts_cooldown(self):
+        fake_result = {
+            "winner": "challenger",
+            "logs": ["勝利"],
+            "challenger_hp": 20,
+            "challenger_mp": 10,
+            "defender_hp": 0,
+            "defender_mp": 5,
+        }
+
+        original_hp = self.challenger.current_hp
+        original_mp = self.challenger.current_mp
+
+        with patch(
+            "apps.battle.arena_services.ArenaBattleEngine.run",
+            return_value=fake_result,
+        ), patch(
+            "apps.battle.arena_services.random.randint",
+            return_value=13,
+        ):
+            result = challenge_arena_master(
+                self.challenger
+            )
+
+        self.challenger.refresh_from_db()
+
+        self.assertEqual(result["gained_exp"], 13)
+        self.assertEqual(self.challenger.exp, 13)
+
+        # 通常HP/MPは変化しない
+        self.assertEqual(
+            self.challenger.current_hp,
+            original_hp,
+        )
+        self.assertEqual(
+            self.challenger.current_mp,
+            original_mp,
+        )
+
+        self.assertGreater(
+            self.challenger.exploration_cooldown_until,
+            timezone.now(),
+        )
+
+
+    def test_loss_grants_eight_exp(self):
+        fake_result = {
+            "winner": "defender",
+            "logs": ["敗北"],
+            "challenger_hp": 0,
+            "challenger_mp": 5,
+            "defender_hp": 30,
+            "defender_mp": 10,
+        }
+
+        with patch(
+            "apps.battle.arena_services.ArenaBattleEngine.run",
+            return_value=fake_result,
+        ):
+            result = challenge_arena_master(
+                self.challenger
+            )
+
+        self.challenger.refresh_from_db()
+
+        self.assertEqual(result["gained_exp"], 8)
+        self.assertEqual(self.challenger.exp, 8)
+
+
+    def test_draw_grants_eight_exp(self):
+        fake_result = {
+            "winner": "draw",
+            "logs": ["引き分け"],
+            "challenger_hp": 20,
+            "challenger_mp": 10,
+            "defender_hp": 30,
+            "defender_mp": 10,
+        }
+
+        with patch(
+            "apps.battle.arena_services.ArenaBattleEngine.run",
+            return_value=fake_result,
+        ):
+            result = challenge_arena_master(
+                self.challenger
+            )
+
+        self.challenger.refresh_from_db()
+
+        self.assertEqual(result["gained_exp"], 8)
+        self.assertEqual(self.challenger.exp, 8)
+
+
+    def test_cannot_battle_during_cooldown(self):
+        self.challenger.exploration_cooldown_until = (
+            timezone.now() + timedelta(seconds=60)
+        )
+        self.challenger.save(
+            update_fields=["exploration_cooldown_until"]
+        )
+
+        with patch(
+            "apps.battle.arena_services.ArenaBattleEngine.run"
+        ) as mocked_run:
+
+            with self.assertRaisesRegex(
+                ValueError,
+                "クールタイム中",
+            ):
+                challenge_arena_master(
+                    self.challenger
+                )
+
+            mocked_run.assert_not_called()
+
+        self.assertEqual(
+            ArenaBattleHistory.objects.count(),
+            0,
+        )
+
+
 class ArenaExpGrowthTests(TestCase):
 
     def test_arena_exp_does_not_heal_normal_hp_mp(self):
@@ -2776,10 +2958,18 @@ class ArenaExpGrowthTests(TestCase):
             current_mp=5,
         )
 
-        result = apply_character_exp(
-            character,
-            8,
-        )
+        # HP成長を3回発生させる
+        with patch(
+            "apps.accounts.growth.random.choices",
+            side_effect=[
+                ["hp", "hp", "hp"],
+                ["fire", "water", "grass"],
+            ],
+        ):
+            result = apply_character_exp(
+                character,
+                8,
+            )
 
         character.refresh_from_db()
 
@@ -2790,6 +2980,8 @@ class ArenaExpGrowthTests(TestCase):
         # 闘技場では通常HP/MPが回復しない
         self.assertEqual(character.current_hp, 10)
         self.assertEqual(character.current_mp, 5)
+        # 最大HPは正常に成長している
+        self.assertEqual(character.max_hp, 45)
 
         self.assertEqual(result["gained_exp"], 8)
         self.assertEqual(result["level_up_count"], 1)
