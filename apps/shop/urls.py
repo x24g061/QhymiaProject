@@ -20,4 +20,16 @@ urlpatterns = [
         views.buy_item,
         name="buy_item",
     ),
+
+    path(
+    "market/list/<int:inventory_item_id>/",
+    views.create_market_listing,
+    name="create_market_listing",
+    ),
+
+    path(
+    "market/buy/<int:listing_id>/",
+    views.buy_market_listing,
+    name="buy_market_listing",
+    ),
 ]

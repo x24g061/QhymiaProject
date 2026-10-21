@@ -1,5 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    // ========================================================
+    // 販売中アイテム一覧
+    // ========================================================
+
     const itemList =
         document.querySelector("#items");
 
@@ -25,14 +29,39 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
+    // ========================================================
+    // 左メニュー / パネル切り替え
+    // ========================================================
+
+    const listingTabButton =
+        document.querySelector(
+            "#listing-tab-button"
+        );
+
+    const inventoryTabButton =
+        document.querySelector(
+            "#inventory-tab-button"
+        );
+
+    const listingPanel =
+        document.querySelector(
+            "#listing-panel"
+        );
+
+    const inventoryPanel =
+        document.querySelector(
+            "#inventory-panel"
+        );
+
+
     let currentCategory =
         "all";
 
 
+    // ========================================================
+    // 販売中アイテム取得
+    // ========================================================
 
-    /*
-     * 商品取得
-     */
     function getItems() {
 
         return Array.from(
@@ -44,11 +73,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    // ========================================================
+    // 絞り込み
+    // ========================================================
 
-    /*
-     * 絞り込み
-     */
     function filterItems() {
+
+        // 販売一覧が存在しない場合は何もしない
+        if (
+            !searchInput ||
+            !searchEmpty
+        ) {
+            return;
+        }
+
 
         const items =
             getItems();
@@ -126,10 +164,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    // ========================================================
+    // カテゴリー切り替え
+    // ========================================================
 
-    /*
-     * カテゴリー切り替え
-     */
     categoryButtons.forEach(button => {
 
         button.addEventListener(
@@ -156,19 +194,23 @@ document.addEventListener("DOMContentLoaded", () => {
                     button.dataset.category;
 
 
-                if (
-                    currentCategory === "all"
-                ) {
+                if (categoryTitle) {
 
-                    categoryTitle.textContent =
-                        "販売中のアイテム";
+                    if (
+                        currentCategory === "all"
+                    ) {
 
-                }
+                        categoryTitle.textContent =
+                            "販売中のアイテム";
 
-                else {
+                    }
 
-                    categoryTitle.textContent =
-                        `${button.textContent.trim()}の商品`;
+                    else {
+
+                        categoryTitle.textContent =
+                            `${button.textContent.trim()}の商品`;
+
+                    }
 
                 }
 
@@ -181,98 +223,177 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
+    // ========================================================
+    // 検索
+    // ========================================================
 
-    /*
-     * 検索
-     */
-    searchInput.addEventListener(
-        "input",
-        filterItems
-    );
+    if (searchInput) {
 
+        searchInput.addEventListener(
+            "input",
+            filterItems
+        );
 
-
-    /*
-     * 並び替え
-     */
-    sortSelect.addEventListener(
-        "change",
-        () => {
-
-            const items =
-                getItems();
-
-            const type =
-                sortSelect.value;
+    }
 
 
-            const sorted =
-                [...items];
+    // ========================================================
+    // 並び替え
+    // ========================================================
+
+    if (
+        sortSelect &&
+        itemList
+    ) {
+
+        sortSelect.addEventListener(
+            "change",
+            () => {
+
+                const items =
+                    getItems();
+
+                const type =
+                    sortSelect.value;
 
 
-            if (
-                type === "price-low"
-            ) {
+                const sorted =
+                    [...items];
 
-                sorted.sort(
-                    (a, b) =>
-                        Number(
-                            a.dataset.price
-                        ) -
-                        Number(
-                            b.dataset.price
-                        )
+
+                if (
+                    type === "price-low"
+                ) {
+
+                    sorted.sort(
+                        (a, b) =>
+                            Number(
+                                a.dataset.price
+                            ) -
+                            Number(
+                                b.dataset.price
+                            )
+                    );
+
+                }
+
+
+                else if (
+                    type === "price-high"
+                ) {
+
+                    sorted.sort(
+                        (a, b) =>
+                            Number(
+                                b.dataset.price
+                            ) -
+                            Number(
+                                a.dataset.price
+                            )
+                    );
+
+                }
+
+
+                else if (
+                    type === "name"
+                ) {
+
+                    sorted.sort(
+                        (a, b) =>
+                            a.dataset.name.localeCompare(
+                                b.dataset.name,
+                                "ja"
+                            )
+                    );
+
+                }
+
+
+                sorted.forEach(item => {
+
+                    itemList.appendChild(
+                        item
+                    );
+
+                });
+
+
+                filterItems();
+
+            }
+        );
+
+    }
+
+
+    // ========================================================
+    // 左メニュー
+    // 出品中のアイテムを表示
+    // ========================================================
+
+    if (
+        listingTabButton &&
+        inventoryTabButton &&
+        listingPanel &&
+        inventoryPanel
+    ) {
+
+        listingTabButton.addEventListener(
+            "click",
+            () => {
+
+                listingPanel.style.display =
+                    "";
+
+                inventoryPanel.style.display =
+                    "none";
+
+
+                listingTabButton.classList.add(
+                    "active"
+                );
+
+                inventoryTabButton.classList.remove(
+                    "active"
                 );
 
             }
+        );
 
 
-            else if (
-                type === "price-high"
-            ) {
+        // ====================================================
+        // 手持ちのアイテムを表示
+        // ====================================================
 
-                sorted.sort(
-                    (a, b) =>
-                        Number(
-                            b.dataset.price
-                        ) -
-                        Number(
-                            a.dataset.price
-                        )
+        inventoryTabButton.addEventListener(
+            "click",
+            () => {
+
+                listingPanel.style.display =
+                    "none";
+
+                inventoryPanel.style.display =
+                    "";
+
+
+                inventoryTabButton.classList.add(
+                    "active"
+                );
+
+                listingTabButton.classList.remove(
+                    "active"
                 );
 
             }
+        );
+
+    }
 
 
-            else if (
-                type === "name"
-            ) {
-
-                sorted.sort(
-                    (a, b) =>
-                        a.dataset.name.localeCompare(
-                            b.dataset.name,
-                            "ja"
-                        )
-                );
-
-            }
-
-
-            sorted.forEach(item => {
-
-                itemList.appendChild(
-                    item
-                );
-
-            });
-
-
-            filterItems();
-
-        }
-    );
-
+    // ========================================================
+    // 初期表示
+    // ========================================================
 
     filterItems();
 

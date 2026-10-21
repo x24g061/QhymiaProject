@@ -4,15 +4,19 @@
 <html lang="ja">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>フリーマーケット | Qhymia</title>
+    <title>
+        フリーマーケット | Qhymia
+    </title>
 
     <link rel="stylesheet" href="{% static 'css/shop.css' %}">
 
     <script src="{% static 'js/shop.js' %}" defer></script>
+
 </head>
 
 
@@ -21,9 +25,9 @@
     <div class="shop-page">
 
 
-        <!-- ========================================
+        <!-- =====================================================
          上部メニュー
-    ========================================= -->
+    ====================================================== -->
 
         <header class="top-menu">
 
@@ -31,9 +35,11 @@
                 ← 街へ戻る
             </a>
 
+
             <a href="{% url 'shop:npc_shop' %}" class="top-button">
                 NPCショップへ
             </a>
+
 
             <button type="button" class="top-button" disabled>
                 倉庫を開く
@@ -50,6 +56,8 @@
             </button>
 
 
+            <!-- 所持Q -->
+
             <div class="money-box">
 
                 <span>
@@ -57,11 +65,17 @@
                 </span>
 
                 <strong>
+
                     {% if character %}
+
                     {{ character.gold }}
+
                     {% else %}
+
                     ---
+
                     {% endif %}
+
                 </strong>
 
                 <span>
@@ -74,9 +88,9 @@
 
 
 
-        <!-- ========================================
+        <!-- =====================================================
          タイトル
-    ========================================= -->
+    ====================================================== -->
 
         <section class="shop-title">
 
@@ -91,7 +105,8 @@
                 </h1>
 
                 <p>
-                    冒険に必要な装備やアイテムを購入できます。
+                    プレイヤー同士で
+                    アイテムを売買できます。
                 </p>
 
             </div>
@@ -100,16 +115,16 @@
 
 
 
-        <!-- ========================================
-         メイン部分
-    ========================================= -->
+        <!-- =====================================================
+         メインレイアウト
+    ====================================================== -->
 
         <div class="shop-layout">
 
 
-            <!-- ====================================
+            <!-- =================================================
              左メニュー
-        ===================================== -->
+        ================================================== -->
 
             <aside class="side-menu">
 
@@ -118,7 +133,11 @@
                 </h2>
 
 
-                <button type="button" class="side-button active">
+                <!-- =============================================
+                 販売中アイテム
+            ============================================== -->
+
+                <button type="button" class="side-button active" id="listing-tab-button">
 
                     <span class="side-button-title">
                         出品中のアイテム
@@ -132,12 +151,17 @@
 
 
                 <p class="side-description">
-                    現在ショップで販売されている商品を確認できます。
+                    現在フリーマーケットで
+                    販売されている商品を確認できます。
                 </p>
 
 
 
-                <button type="button" class="side-button" disabled>
+                <!-- =============================================
+                 手持ちアイテム
+            ============================================== -->
+
+                <button type="button" class="side-button" id="inventory-tab-button">
 
                     <span class="side-button-title">
                         手持ちのアイテム
@@ -151,10 +175,16 @@
 
 
                 <p class="side-description">
-                    現在所持しているアイテムを確認する画面です。
+                    所持しているアイテムを確認し、
+                    フリーマーケットへ出品できます。
                 </p>
 
 
+
+                <!-- =============================================
+                 装備
+                 今後対応予定
+            ============================================== -->
 
                 <button type="button" class="side-button" disabled>
 
@@ -170,303 +200,480 @@
 
 
                 <p class="side-description">
-                    現在装備しているアイテムを確認する画面です。
+                    装備品の出品機能は
+                    今後対応予定です。
                 </p>
 
             </aside>
 
 
 
-            <!-- ====================================
-             商品一覧エリア
-        ===================================== -->
+            <!-- =================================================
+             右側メインエリア
+        ================================================== -->
 
             <main class="market-area">
 
 
-                <!-- =================================
-                 カテゴリー
-            ================================== -->
+                <!-- =================================================
+                 PANEL 1
+                 販売中アイテム一覧
+            ================================================== -->
 
-                <nav class="category-tabs" id="categories">
-
-                    <button type="button" class="category-button active" data-category="all">
-                        すべて
-                    </button>
+                <div id="listing-panel">
 
 
-                    <button type="button" class="category-button" data-category="equipment">
-                        装備品
-                    </button>
+                    <!-- =============================================
+                     カテゴリー
+                ============================================== -->
+
+                    <nav class="category-tabs" id="categories">
+
+                        <button type="button" class="category-button active" data-category="all">
+                            すべて
+                        </button>
 
 
-                    <button type="button" class="category-button" data-category="consumable">
-                        消耗品
-                    </button>
+                        <button type="button" class="category-button" data-category="equipment">
+                            装備品
+                        </button>
 
 
-                    <button type="button" class="category-button" data-category="material">
-                        素材
-                    </button>
+                        <button type="button" class="category-button" data-category="consumable">
+                            消耗品
+                        </button>
 
 
-                    <button type="button" class="category-button" data-category="key_item">
-                        重要アイテム
-                    </button>
-
-                </nav>
+                        <button type="button" class="category-button" data-category="material">
+                            素材
+                        </button>
 
 
+                        <button type="button" class="category-button" data-category="key_item">
+                            重要アイテム
+                        </button>
 
-                <!-- =================================
-                 商品一覧上部
-            ================================== -->
-
-                <section class="market-toolbar">
-
-                    <div>
-
-                        <p class="market-small-title">
-                            SHOP ITEM LIST
-                        </p>
-
-                        <h2 id="category-title">
-                            販売中のアイテム
-                        </h2>
-
-                    </div>
-
-
-                    <div class="toolbar-controls">
-
-                        <input type="search" id="search" placeholder="アイテム名で検索">
-
-
-                        <select id="sort">
-
-                            <option value="default">
-                                標準
-                            </option>
-
-                            <option value="price-low">
-                                価格が安い順
-                            </option>
-
-                            <option value="price-high">
-                                価格が高い順
-                            </option>
-
-                            <option value="name">
-                                名前順
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                </section>
+                    </nav>
 
 
 
-                <!-- =================================
-                 表
-            ================================== -->
+                    <!-- =============================================
+                     販売一覧上部
+                ============================================== -->
 
-                <section class="table-wrapper">
+                    <section class="market-toolbar">
 
+                        <div>
 
-                    <div class="item-table">
+                            <p class="market-small-title">
+                                MARKET ITEM LIST
+                            </p>
 
-
-                        <!-- ヘッダー -->
-
-                        <div class="table-header">
-
-                            <div>
-                                種類
-                            </div>
-
-                            <div>
-                                アイテム名
-                            </div>
-
-                            <div>
-                                説明
-                            </div>
-
-                            <div>
-                                在庫
-                            </div>
-
-                            <div>
-                                価格
-                            </div>
-
-                            <div>
-                                購入
-                            </div>
+                            <h2 id="category-title">
+                                販売中のアイテム
+                            </h2>
 
                         </div>
 
 
+                        <!-- 検索・ソート -->
 
-                        <!-- 商品 -->
+                        <div class="toolbar-controls">
 
-                        <div id="items" class="table-body">
-
-
-                            {% for stock in shop_stocks %}
+                            <input type="search" id="search" placeholder="アイテム名で検索">
 
 
-                            <article class="table-row" data-item data-name="{{ stock.item.name }}"
-                                data-category="{{ stock.item.category }}" data-price="{{ stock.price }}">
+                            <select id="sort">
+
+                                <option value="default">
+                                    標準
+                                </option>
+
+                                <option value="price-low">
+                                    価格が安い順
+                                </option>
+
+                                <option value="price-high">
+                                    価格が高い順
+                                </option>
+
+                                <option value="name">
+                                    名前順
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </section>
 
 
-                                <!-- 種類 -->
 
-                                <div class="table-cell category-cell" data-label="種類">
+                    <!-- =============================================
+                     販売中商品テーブル
+                ============================================== -->
 
-                                    <span class="category-tag">
+                    <section class="table-wrapper">
 
-                                        {{ stock.item.get_category_display }}
+                        <div class="item-table">
 
-                                    </span>
+
+                            <!-- テーブルヘッダー -->
+
+                            <div class="table-header">
+
+                                <div>
+                                    種類
+                                </div>
+
+                                <div>
+                                    アイテム名
+                                </div>
+
+                                <div>
+                                    説明
+                                </div>
+
+                                <div>
+                                    在庫
+                                </div>
+
+                                <div>
+                                    価格
+                                </div>
+
+                                <div>
+                                    購入
+                                </div>
+
+                            </div>
+
+
+
+                            <!-- 商品一覧 -->
+
+                            <div id="items" class="table-body">
+
+                                {% comment %}
+                                現在はまだNPCショップ用の
+                                shop_stocksを使用している。
+
+                                後ほどここを
+                                market_listings
+                                に変更する。
+                                {% endcomment %}
+
+                                {% for listing in market_listings %}
+
+                                <article class="table-row" data-item data-name="{{ listing.item.name }}"
+                                    data-category="{{ listing.item.category }}" data-price="{{ listing.unit_price }}">
+
+                                    <!-- 種類 -->
+
+                                    <div class="table-cell category-cell" data-label="種類">
+
+                                        <span class="category-tag">
+                                            {{ listing.item.get_category_display }}
+                                        </span>
+
+                                    </div>
+
+
+                                    <!-- アイテム名 -->
+
+                                    <div class="table-cell item-name-cell" data-label="アイテム名">
+
+                                        <strong>
+                                            {{ listing.item.name }}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <!-- 説明 -->
+
+                                    <div class="table-cell description-cell" data-label="説明">
+
+                                        {% if listing.item.description %}
+
+                                        {{ listing.item.description }}
+
+                                        {% else %}
+
+                                        -
+
+                                        {% endif %}
+
+                                    </div>
+
+
+                                    <!-- 在庫 -->
+
+                                    <div class="table-cell stock-cell" data-label="在庫">
+
+                                        <strong>
+                                            {{ listing.quantity }}
+                                        </strong>
+
+                                        個
+
+                                    </div>
+
+
+                                    <!-- 価格 -->
+
+                                    <div class="table-cell price-cell" data-label="価格">
+
+                                        <strong>
+                                            {{ listing.unit_price }}
+                                        </strong>
+
+                                        Q
+
+                                    </div>
+
+
+                                    <!-- 購入 -->
+
+                                    <div class="table-cell buy-cell" data-label="購入">
+
+                                        {% if character and listing.seller_id == character.id %}
+
+                                        <button type="button" class="buy-button disabled" disabled>
+                                            自分の出品
+                                        </button>
+
+                                        {% else %}
+
+                                        <form method="post" action="{% url 'shop:buy_market_listing' listing.id %}">
+
+                                            {% csrf_token %}
+
+                                            <button type="submit" class="buy-button">
+                                                購入する
+                                            </button>
+
+                                        </form>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                </article>
+
+
+                                {% empty %}
+
+                                <div class="empty-items">
+
+                                    現在販売中の商品はありません。
 
                                 </div>
 
+                                {% endfor %}
+
+                            </div>
 
 
-                                <!-- 名前 -->
 
-                                <div class="table-cell item-name-cell" data-label="アイテム名">
+                            <!-- 検索結果0件 -->
 
-                                    <strong>
-                                        {{ stock.item.name }}
-                                    </strong>
+                            <div id="search-empty" class="empty-items hidden">
 
+                                条件に一致する商品がありません。
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+
+
+                <!-- =================================================
+                 PANEL 2
+                 自分の手持ちアイテム
+            ================================================== -->
+
+                <div id="inventory-panel" style="display: none;">
+
+
+                    <!-- =============================================
+                     手持ち一覧上部
+                ============================================== -->
+
+                    <section class="market-toolbar">
+
+                        <div>
+
+                            <p class="market-small-title">
+                                YOUR ITEMS
+                            </p>
+
+                            <h2>
+                                手持ちのアイテム
+                            </h2>
+
+                        </div>
+
+                    </section>
+
+
+
+                    <!-- =============================================
+                     手持ちアイテムテーブル
+                ============================================== -->
+
+                    <section class="table-wrapper">
+
+                        <div class="item-table">
+
+
+                            <!-- テーブルヘッダー -->
+
+                            <div class="table-header">
+
+                                <div>
+                                    種類
                                 </div>
 
-
-
-                                <!-- 説明 -->
-
-                                <div class="table-cell description-cell" data-label="説明">
-
-                                    {% if stock.item.description %}
-
-                                    {{ stock.item.description }}
-
-                                    {% else %}
-
-                                    -
-
-                                    {% endif %}
-
+                                <div>
+                                    アイテム名
                                 </div>
 
-
-
-                                <!-- 在庫 -->
-
-                                <div class="table-cell stock-cell" data-label="在庫">
-
-                                    {% if stock.stock > 0 %}
-
-                                    <strong>
-                                        {{ stock.stock }}
-                                    </strong>
-
-                                    個
-
-                                    {% else %}
-
-                                    <span class="sold-out-text">
-                                        売切
-                                    </span>
-
-                                    {% endif %}
-
+                                <div>
+                                    所持数
                                 </div>
 
-
-
-                                <!-- 価格 -->
-
-                                <div class="table-cell price-cell" data-label="価格">
-
-                                    <strong>
-                                        {{ stock.price }}
-                                    </strong>
-
-                                    Q
-
+                                <div>
+                                    出品数
                                 </div>
 
+                                <div>
+                                    単価
+                                </div>
+
+                                <div>
+                                    出品
+                                </div>
+
+                            </div>
 
 
-                                <!-- 購入 -->
 
-                                <div class="table-cell buy-cell" data-label="購入">
+                            <!-- アイテム一覧 -->
 
-                                    {% if stock.stock > 0 %}
+                            <div class="table-body">
 
-                                    <form method="post" action="{% url 'shop:buy_item' stock.id %}">
+                                {% for inventory_item in inventory_items %}
+
+                                <article class="table-row">
+
+
+                                    <!-- 種類 -->
+
+                                    <div class="table-cell category-cell" data-label="種類">
+
+                                        <span class="category-tag">
+
+                                            {{ inventory_item.item.get_category_display }}
+
+                                        </span>
+
+                                    </div>
+
+
+                                    <!-- アイテム名 -->
+
+                                    <div class="table-cell item-name-cell" data-label="アイテム名">
+
+                                        <strong>
+                                            {{ inventory_item.item.name }}
+                                        </strong>
+
+                                    </div>
+
+
+                                    <!-- 所持数 -->
+
+                                    <div class="table-cell stock-cell" data-label="所持数">
+
+                                        <strong>
+                                            {{ inventory_item.quantity }}
+                                        </strong>
+
+                                        個
+
+                                    </div>
+
+
+                                    <form method="post"
+                                        action="{% url 'shop:create_market_listing' inventory_item.id %}"
+                                        class="market-sell-form">
+
                                         {% csrf_token %}
 
-                                        <button type="submit" class="buy-button">
-                                            購入する
-                                        </button>
+
+                                        <!-- 出品数 -->
+
+                                        <div class="table-cell" data-label="出品数">
+
+                                            <input type="number" name="quantity" value="1" min="1"
+                                                max="{{ inventory_item.quantity }}" required>
+
+                                        </div>
+
+
+                                        <!-- 単価 -->
+
+                                        <div class="table-cell" data-label="単価">
+
+                                            <input type="number" name="unit_price" value="1" min="1" required>
+
+                                            Q
+
+                                        </div>
+
+
+                                        <!-- 出品ボタン -->
+
+                                        <div class="table-cell buy-cell" data-label="出品">
+
+                                            <button type="submit" class="buy-button">
+                                                出品する
+                                            </button>
+
+                                        </div>
+
                                     </form>
 
-                                    {% else %}
+                                </article>
 
-                                    <button type="button" class="buy-button disabled" disabled>
-                                        売り切れ
-                                    </button>
 
-                                    {% endif %}
+                                {% empty %}
+
+                                <div class="empty-items">
+
+                                    出品可能なアイテムを
+                                    所持していません。
 
                                 </div>
 
-
-                            </article>
-
-
-                            {% empty %}
-
-
-                            <div class="empty-items">
-
-                                現在販売中の商品はありません。
+                                {% endfor %}
 
                             </div>
 
-
-                            {% endfor %}
-
-
                         </div>
 
+                    </section>
 
-                        <!-- 検索結果0件 -->
-
-                        <div id="search-empty" class="empty-items hidden">
-
-                            条件に一致する商品がありません。
-
-                        </div>
-
-
-                    </div>
-
-                </section>
-
+                </div>
 
             </main>
 
-
         </div>
-
 
     </div>
 
