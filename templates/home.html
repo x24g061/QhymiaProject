@@ -36,6 +36,7 @@
 {% block content %}
 
 <link rel="stylesheet" href="{% static 'css/home.css' %}">
+<link rel="stylesheet" href="{% static 'css/arena.css' %}">
 
 <div class="qh-home">
 
@@ -175,270 +176,9 @@
 
         <div class="collapsible-content">
 
-            <div class="arena-card-list">
-
-
-                <!-- =====================================
-                     左側：前の階
-                ====================================== -->
-
-                <div class="arena-card-slot">
-
-                    {% if character.arena_floor > 1 %}
-
-                    <div class="arena-card">
-
-                        <div class="arena-card-header">
-                            闘技場{{ character.arena_floor|add:"-1" }}階
-                        </div>
-
-
-                        <div class="arena-card-body">
-
-                            <div class="arena-card-avatar">
-                                ?
-                            </div>
-
-
-                            <h3 class="arena-card-name">
-                                前の階の相手
-                            </h3>
-
-
-                            <div class="arena-card-gauge hp-gauge">
-
-                                <div class="arena-card-gauge-fill" style="width: 100%;">
-                                </div>
-
-                            </div>
-
-
-                            <div class="arena-card-gauge mp-gauge">
-
-                                <div class="arena-card-gauge-fill" style="width: 100%;">
-                                </div>
-
-                            </div>
-
-
-                            <p class="arena-card-streak">
-                                前の階
-                            </p>
-
-
-                            <p class="arena-card-result">
-                                ひとつ下の階です
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-                    {% else %}
-
-
-                    <div class="arena-edge-message arena-edge-left">
-
-                        <span>
-                            ←
-                        </span>
-
-                        <p>
-                            これより下の階はありません
-                        </p>
-
-                    </div>
-
-
-                    {% endif %}
-
-                </div>
-
-
-
-                <!-- =====================================
-                     中央：現在いる階
-                ====================================== -->
-
-                <div class="arena-card-slot">
-
-                    <div class="arena-card arena-card-current">
-
-                        <div class="arena-card-header">
-                            闘技場{{ character.arena_floor }}階
-                        </div>
-
-
-                        <div class="arena-card-body">
-
-
-                            <!-- キャラクター画像 -->
-
-                            <div class="arena-card-avatar">
-
-                                {% if character.character_image_path %}
-
-                                <img src="{% static character.character_image_path %}" alt="{{ character.name }}"
-                                    class="arena-card-avatar-image">
-
-                                {% else %}
-
-                                {{ character.name|slice:":1" }}
-
-                                {% endif %}
-
-                            </div>
-
-
-                            <!-- キャラクター名 -->
-
-                            <h3 class="
-                                arena-card-name
-
-                                {% if main_attribute_name == '火' %}
-                                    attribute-fire
-
-                                {% elif main_attribute_name == '水' %}
-                                    attribute-water
-
-                                {% elif main_attribute_name == '草' %}
-                                    attribute-grass
-
-                                {% elif main_attribute_name == '岩' %}
-                                    attribute-rock
-
-                                {% elif main_attribute_name == '光' %}
-                                    attribute-light
-
-                                {% elif main_attribute_name == '闇' %}
-                                    attribute-dark
-
-                                {% endif %}
-                            ">
-
-                                {{ character.name }}
-
-                            </h3>
-
-
-                            <!-- HP -->
-
-                            <div class="arena-card-gauge hp-gauge">
-
-                                <div class="arena-card-gauge-fill js-arena-gauge-fill"
-                                    data-current="{{ character.current_hp }}" data-max="{{ character.max_hp }}">
-                                </div>
-
-                            </div>
-
-
-                            <!-- MP -->
-
-                            <div class="arena-card-gauge mp-gauge">
-
-                                <div class="arena-card-gauge-fill js-arena-gauge-fill"
-                                    data-current="{{ character.current_mp }}" data-max="{{ character.max_mp }}">
-                                </div>
-
-                            </div>
-
-
-                            <p class="arena-card-streak">
-                                0連勝中
-                            </p>
-
-
-                            <p class="arena-card-result">
-                                現在の階
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- =====================================
-                     右側：次の階
-                ====================================== -->
-
-                <div class="arena-card-slot">
-
-                    {% if character.arena_floor < arena_max_floor %} <div class="arena-card">
-
-                        <div class="arena-card-header">
-                            闘技場{{ character.arena_floor|add:"1" }}階
-                        </div>
-
-
-                        <div class="arena-card-body">
-
-                            <div class="arena-card-avatar">
-                                ?
-                            </div>
-
-
-                            <h3 class="arena-card-name">
-                                次の階の相手
-                            </h3>
-
-
-                            <div class="arena-card-gauge hp-gauge">
-
-                                <div class="arena-card-gauge-fill" style="width: 100%;">
-                                </div>
-
-                            </div>
-
-
-                            <div class="arena-card-gauge mp-gauge">
-
-                                <div class="arena-card-gauge-fill" style="width: 100%;">
-                                </div>
-
-                            </div>
-
-
-                            <p class="arena-card-streak">
-                                次の階
-                            </p>
-
-
-                            <p class="arena-card-result">
-                                ひとつ上の階です
-                            </p>
-
-                        </div>
-
-                </div>
-
-
-                {% else %}
-
-
-                <div class="arena-edge-message arena-edge-right">
-
-                    <p>
-                        これより上の階はありません
-                    </p>
-
-                    <span>
-                        →
-                    </span>
-
-                </div>
-
-
-                {% endif %}
-
-            </div>
+            {% include "components/arena_cards.html" %}
 
         </div>
-
-</div>
 
 </section>
 
@@ -1181,11 +921,11 @@
 
 
             <p class="card-description">
-                現在の階層にいる対戦相手へ挑戦します。
+                現在階のフロアマスターへ挑戦します。空席ならマスターになれます。
             </p>
 
 
-            <div class="battle-choice">
+            <div class="battle-choice arena-choice">
 
                 <div class="battle-choice-info">
 
@@ -1194,7 +934,7 @@
                         現在階層：
 
                         <strong>
-                            {{ character.arena_floor }}階
+                            {{ arena_state.floor_id }}階
                         </strong>
 
                     </p>
@@ -1202,10 +942,10 @@
 
                     <p>
 
-                        現在の連勝数：
+                        フロアマスター：
 
                         <strong>
-                            {{ character.arena_win_streak }}連勝
+                            {% if arena_master %}{{ arena_master.name }}{% else %}空席{% endif %}
                         </strong>
 
                     </p>
@@ -1213,28 +953,27 @@
                 </div>
 
 
-                {% if exploration_cooldown_remaining > 0 %}
+                <p class="arena-player-vitals">
+                    あなたの闘技場HP：{{ arena_state.current_hp }} / {{ character.max_hp }}
+                    ・MP：{{ arena_state.current_mp }} / {{ character.max_mp }}
+                </p>
 
-
+                {% if arena_is_master %}
                 <button type="button" class="explore-button explore-button-disabled" disabled>
-                    戦闘待機中
+                    あなたがフロアマスターです
                 </button>
-
-
+                {% elif exploration_cooldown_remaining > 0 %}
+                <button type="button" class="explore-button explore-button-disabled" disabled>
+                    戦闘待機中（あと約{{ exploration_cooldown_remaining }}秒）
+                </button>
                 {% else %}
-
-
-                <a href="{% url 'battle:arena_battle' %}" class="explore-button">
-
-                    闘技場へ挑戦
-
-                    <span>
-                        →
-                    </span>
-
-                </a>
-
-
+                <form method="post" action="{% url 'battle:arena_battle' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="explore-button">
+                        {% if arena_master %}闘技場へ挑戦{% else %}空席のマスターになる{% endif %}
+                        <span>→</span>
+                    </button>
+                </form>
                 {% endif %}
 
             </div>

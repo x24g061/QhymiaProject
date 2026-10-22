@@ -2667,10 +2667,10 @@ class ArenaMasterChallengeTests(TestCase):
             self.defender,
         )
 
-        # 挑戦者は1階から3階へ
+        # 挑戦者は1階からかわらない。
         self.assertEqual(
             self.challenger_state.floor_id,
-            3,
+            1,
         )
 
         # 挑戦者のHP/MPは全回復
@@ -2737,7 +2737,7 @@ class ArenaMasterChallengeTests(TestCase):
         # 挑戦者は3階へ
         self.assertEqual(
             self.challenger_state.floor_id,
-            3,
+            1,
         )
 
         # 防衛者のHP/MPは引き継ぎ

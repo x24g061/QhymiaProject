@@ -449,6 +449,12 @@ class ArenaBattleHistory(models.Model):
         blank=True,
     )
 
+    # 旧履歴は付与量を保存していないため、未記録をNULLで表す。
+    gained_exp = models.PositiveIntegerField(
+        null=True,
+        blank=True,
+    )
+
     # 戦闘終了時の闘技場HP / MP。
     #
     # 後から戦歴を見返した時にも

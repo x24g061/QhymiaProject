@@ -14,6 +14,53 @@ from apps.accounts.models import Character
 from apps.accounts.growth import apply_character_exp
 
 
+def get_arena_state(character):
+    """初期化漏れのキャラクターを補完し、既存のHP/MPは維持する。"""
+    state, _ = ArenaState.objects.get_or_create(
+        character=character,
+        defaults={
+            "floor_id": 1,
+            "current_hp": character.max_hp,
+            "current_mp": character.max_mp,
+        },
+    )
+    return state
+
+
+def get_arena_home_context(character):
+    """ホームの階層カードと挑戦ボタンに必要な闘技場情報。"""
+    state = get_arena_state(character)
+    floor_numbers = [state.floor_id - 1, state.floor_id, state.floor_id + 1]
+    floors = {
+        floor.pk: floor
+        for floor in ArenaFloor.objects.filter(
+            pk__in=floor_numbers,
+        ).select_related("master", "master__arena_state")
+    }
+    cards = []
+    for number in floor_numbers:
+        floor = floors.get(number)
+        master = floor.master if floor else None
+        master_state = getattr(master, "arena_state", None)
+        cards.append({
+            "floor": number,
+            "exists": 1 <= number <= 100,
+            "is_current": number == state.floor_id,
+            "master": master,
+            "is_self": master is not None and master.pk == character.pk,
+            "hp": master_state.current_hp if master_state else 0,
+            "mp": master_state.current_mp if master_state else 0,
+            "attribute": master.get_main_attribute() if master else "neutral",
+        })
+    current_floor = floors[state.floor_id]
+    return {
+        "arena_state": state,
+        "arena_cards": cards,
+        "arena_master": current_floor.master,
+        "arena_is_master": current_floor.master_id == character.pk,
+    }
+
+
 # ========================================================
 # 闘技場・探索共通クールタイム
 # ========================================================
@@ -166,7 +213,8 @@ def challenge_arena_master(challenger):
         挑戦者HP/MP全回復。
         防衛者は残HP/MPを引き継ぐ。
 
-    EXP、ドロップ、CTは後で実装する。
+    挑戦者にEXPを付与し、探索と共通のCTを開始する。
+    ドロップは後で実装する。
     """
 
     # 現在階を一旦取得
@@ -308,10 +356,10 @@ def challenge_arena_master(challenger):
         )
 
         # 挑戦者は現在階のマスター
-        challenger_state.current_hp = challenger.max_hp
-        challenger_state.current_mp = challenger.max_mp
+        challenger_state.current_hp = locked_challenger.max_hp
+        challenger_state.current_mp = locked_challenger.max_mp
 
-        # 旧マスターは1階層下へ
+        # 旧マスターは1階層上へ
         defender_state.floor_id = min(
             100,
             floor.floor + 1,
@@ -328,10 +376,10 @@ def challenge_arena_master(challenger):
 
     else:
 
-        # 挑戦者は2階層下へ
-        challenger_state.floor_id = min(
-            100,
-            floor.floor + 2,
+        # 挑戦者は2階層下へ。最低1階。
+        challenger_state.floor_id = max(
+            1,
+            floor.floor - 2,
         )
 
         challenger_state.current_hp = locked_challenger.max_hp
@@ -385,6 +433,7 @@ def challenge_arena_master(challenger):
         floor=floor.floor,
         result=history_result,
         battle_logs=result["logs"],
+        gained_exp=gained_exp,
         challenger_hp_after=battle_hp_mp["challenger_hp"],
         challenger_mp_after=battle_hp_mp["challenger_mp"],
         defender_hp_after=battle_hp_mp["defender_hp"],
