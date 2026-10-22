@@ -7,7 +7,11 @@ app_name = "shop"
 
 
 urlpatterns = [
-    path("", views.shop, name="shop"),
+    path(
+        "",
+        views.shop,
+        name="shop",
+    ),
 
     path(
         "npc/",
@@ -19,5 +23,29 @@ urlpatterns = [
         "npc/buy/<int:stock_id>/",
         views.buy_item,
         name="buy_item",
+    ),
+
+    path(
+        "market/list/<int:inventory_item_id>/",
+        views.create_market_listing,
+        name="create_market_listing",
+    ),
+
+    path(
+        "market/buy/<int:listing_id>/",
+        views.buy_market_listing,
+        name="buy_market_listing",
+    ),
+
+    path(
+        "market/equipment/list/<int:owned_equipment_id>/",
+        views.create_equipment_listing,
+        name="create_equipment_listing",
+    ),
+
+    path(
+        "market/cancel/<int:listing_id>/",
+        views.cancel_market_listing,
+        name="cancel_market_listing",
     ),
 ]

@@ -145,6 +145,7 @@ class Equipment(models.Model):
     # ===== 装備ランク =====
 
     class Rank(models.TextChoices):
+        F = "F", "F"
         E = "E", "E"
         D = "D", "D"
         C = "C", "C"

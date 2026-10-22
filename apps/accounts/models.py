@@ -518,3 +518,125 @@ class Character(models.Model):
                 "daily_synthesis_count",
             ]
         )
+
+    def record_synthesis_attempt(self):
+        """
+        装備合成を1回行ったことを記録する。
+        """
+        self.reset_daily_synthesis_count_if_needed()
+
+        self.daily_synthesis_count += 1
+
+        self.save(
+            update_fields=[
+                "daily_synthesis_count",
+            ]
+        )
+
+
+# ===== 管理者モードアクセス履歴 =====
+
+class AdminModeAccessLog(models.Model):
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="admin_mode_access_logs",
+    )
+
+    account_id = models.CharField(
+        max_length=20,
+        help_text="ADMIN MODEを有効にしたアカウントID",
+    )
+
+    character_name = models.CharField(
+        max_length=20,
+        blank=True,
+        help_text="ADMIN MODEを有効にしたキャラクター名",
+    )
+
+    activated_at = models.DateTimeField(
+        auto_now_add=True,
+        help_text="ADMIN MODEを有効にした日時",
+    )
+
+    class Meta:
+        ordering = [
+            "-activated_at",
+        ]
+
+    def __str__(self):
+        return (
+            f"{self.account_id} "
+            f"{self.activated_at}"
+        )
+
+# ===== 管理者変更履歴 =====
+
+class AdminChangeLog(models.Model):
+
+    ACTION_CHOICES = [
+        ("player_update", "プレイヤー情報変更"),
+        ("equipment_grant", "装備付与"),
+        ("sns_post_delete", "SNS投稿削除"),
+    ]
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="admin_change_logs",
+    )
+
+    account_id = models.CharField(
+        max_length=20,
+        help_text="変更を行ったアカウントID",
+    )
+
+    character_name = models.CharField(
+        max_length=20,
+        blank=True,
+        help_text="変更を行ったキャラクター名",
+    )
+
+    target_character = models.ForeignKey(
+        Character,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="admin_change_logs",
+    )
+
+    target_character_name = models.CharField(
+        max_length=20,
+        help_text="変更対象のキャラクター名",
+    )
+
+    action_type = models.CharField(
+        max_length=30,
+        choices=ACTION_CHOICES,
+    )
+
+    changes = models.JSONField(
+        default=dict,
+        blank=True,
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    class Meta:
+        ordering = [
+            "-created_at",
+        ]
+
+    def __str__(self):
+        return (
+            f"{self.account_id} → "
+            f"{self.target_character_name} "
+            f"{self.created_at}"
+        )

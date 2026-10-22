@@ -1005,3 +1005,44 @@
     }
 
 }
+
+
+/* ========================================
+   おすすめ投稿
+======================================== */
+
+.sns-recommended-label {
+    display: inline-flex;
+    align-items: center;
+
+    margin-bottom: 14px;
+    padding: 6px 12px;
+
+    border: 1px solid #3b82f6;
+    border-radius: 999px;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    letter-spacing: 0.04em;
+}
+
+/* ========================================
+   SNS タブ選択中
+======================================== */
+
+.sns-tab.active {
+    color: #ffffff;
+
+    background: var(--main);
+
+    border-color: var(--main);
+}
+
+.sns-tab.active .sns-tab-icon {
+    color: #ffffff;
+}

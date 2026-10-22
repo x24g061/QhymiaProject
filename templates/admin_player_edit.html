@@ -1,10 +1,24 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block title %}
 プレイヤー編集 | Qhymia
 {% endblock %}
 
 {% block content %}
+<link
+    rel="stylesheet"
+    href="{% static 'css/admin.css' %}"
+>
+<div class="admin-mode-banner">
+    <strong>
+        ADMIN MODE
+    </strong>
+
+    <span>
+        管理者権限で操作しています
+    </span>
+</div>
+
 
 <div class="admin-edit-page">
 
