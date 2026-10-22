@@ -62,14 +62,13 @@ def shop(request):
                 )
             )
 
-
             # =================================================
             # フリマへ出品可能な装備
             #
             # ・自分の装備
             # ・現在未装備
-            # ・market_sellable=True
-            # ・現在フリマ出品中ではない
+            # ・フリマ出品可能
+            # ・現在出品中ではない
             # =================================================
 
             owned_equipments = (
@@ -80,7 +79,7 @@ def shop(request):
                     equipment__item__market_sellable=True,
                 )
                 .exclude(
-                    market_listing__status=(
+                    market_listings__status=(
                         MarketListing.Status.LISTED
                     ),
                 )
@@ -95,7 +94,6 @@ def shop(request):
                     "enhancement_level",
                 )
             )
-
 
     # ========================================================
     # 現在販売中の商品
@@ -117,7 +115,6 @@ def shop(request):
             "-created_at",
         )
     )
-
 
     return render(
         request,
@@ -149,7 +146,6 @@ def create_market_listing(
             "shop:shop"
         )
 
-
     # ========================================================
     # キャラクター取得
     # ========================================================
@@ -171,9 +167,8 @@ def create_market_listing(
             "shop:shop"
         )
 
-
     # ========================================================
-    # 所持アイテム取得
+    # 所持アイテム取得・ロック
     # ========================================================
 
     try:
@@ -201,9 +196,7 @@ def create_market_listing(
             "shop:shop"
         )
 
-
     item = inventory_item.item
-
 
     # ========================================================
     # 出品可能チェック
@@ -220,8 +213,6 @@ def create_market_listing(
             "shop:shop"
         )
 
-
-    # 装備は専用処理を使う
     if item.category == "equipment":
 
         messages.error(
@@ -232,7 +223,6 @@ def create_market_listing(
         return redirect(
             "shop:shop"
         )
-
 
     # ========================================================
     # 出品数・単価取得
@@ -265,7 +255,6 @@ def create_market_listing(
             "shop:shop"
         )
 
-
     # ========================================================
     # 入力チェック
     # ========================================================
@@ -281,7 +270,6 @@ def create_market_listing(
             "shop:shop"
         )
 
-
     if unit_price < 1:
 
         messages.error(
@@ -292,7 +280,6 @@ def create_market_listing(
         return redirect(
             "shop:shop"
         )
-
 
     if quantity > inventory_item.quantity:
 
@@ -305,7 +292,6 @@ def create_market_listing(
             "shop:shop"
         )
 
-
     # ========================================================
     # 出品作成
     # ========================================================
@@ -317,7 +303,6 @@ def create_market_listing(
         unit_price=unit_price,
         status=MarketListing.Status.LISTED,
     )
-
 
     # ========================================================
     # 所持数を減らす
@@ -337,7 +322,6 @@ def create_market_listing(
             ]
         )
 
-
     messages.success(
         request,
         (
@@ -346,7 +330,6 @@ def create_market_listing(
             f"1個{unit_price}Qで出品しました。"
         ),
     )
-
 
     return redirect(
         "shop:shop"
@@ -371,7 +354,6 @@ def create_equipment_listing(
             "shop:shop"
         )
 
-
     # ========================================================
     # キャラクター取得
     # ========================================================
@@ -393,9 +375,8 @@ def create_equipment_listing(
             "shop:shop"
         )
 
-
     # ========================================================
-    # 所持装備取得
+    # 所持装備取得・ロック
     # ========================================================
 
     try:
@@ -424,9 +405,7 @@ def create_equipment_listing(
             "shop:shop"
         )
 
-
     item = owned_equipment.equipment.item
-
 
     # ========================================================
     # 出品可能チェック
@@ -443,7 +422,6 @@ def create_equipment_listing(
             "shop:shop"
         )
 
-
     if not item.market_sellable:
 
         messages.error(
@@ -454,7 +432,6 @@ def create_equipment_listing(
         return redirect(
             "shop:shop"
         )
-
 
     if MarketListing.objects.filter(
         owned_equipment=owned_equipment,
@@ -469,7 +446,6 @@ def create_equipment_listing(
         return redirect(
             "shop:shop"
         )
-
 
     # ========================================================
     # 価格取得
@@ -495,7 +471,6 @@ def create_equipment_listing(
             "shop:shop"
         )
 
-
     if unit_price < 1:
 
         messages.error(
@@ -506,7 +481,6 @@ def create_equipment_listing(
         return redirect(
             "shop:shop"
         )
-
 
     # ========================================================
     # 出品作成
@@ -521,7 +495,6 @@ def create_equipment_listing(
         status=MarketListing.Status.LISTED,
     )
 
-
     messages.success(
         request,
         (
@@ -530,7 +503,6 @@ def create_equipment_listing(
             f"{unit_price}Qで出品しました。"
         ),
     )
-
 
     return redirect(
         "shop:shop"
@@ -555,7 +527,6 @@ def cancel_market_listing(
             "shop:shop"
         )
 
-
     # ========================================================
     # キャラクター取得
     # ========================================================
@@ -577,24 +548,26 @@ def cancel_market_listing(
             "shop:shop"
         )
 
-
     # ========================================================
-    # 自分の出品を取得
+    # 自分の出品を取得・ロック
+    #
+    # owned_equipment は NULL の可能性があるため、
+    # select_for_update と一緒に select_related しない
     # ========================================================
 
     try:
 
         listing = (
-    MarketListing.objects
-    .select_for_update()
-    .select_related(
-        "item",
-    )
-    .get(
-        id=listing_id,
-        seller=character,
-    )
-)
+            MarketListing.objects
+            .select_for_update()
+            .select_related(
+                "item",
+            )
+            .get(
+                id=listing_id,
+                seller=character,
+            )
+        )
 
     except MarketListing.DoesNotExist:
 
@@ -606,7 +579,6 @@ def cancel_market_listing(
         return redirect(
             "shop:shop"
         )
-
 
     # ========================================================
     # 出品状態チェック
@@ -623,13 +595,11 @@ def cancel_market_listing(
             "shop:shop"
         )
 
-
     # ========================================================
     # 通常アイテムなら所持品へ返却
-    # ========================================================
     #
-    # 装備はOwnedEquipment自体を削除していないため、
-    # LISTEDではなくなれば自動的に手持ち一覧へ戻る。
+    # 装備の場合はOwnedEquipment自体を削除していないので、
+    # LISTEDではなくなることで再び手持ち一覧へ戻る
     # ========================================================
 
     if listing.owned_equipment is None:
@@ -656,7 +626,6 @@ def cancel_market_listing(
                 ]
             )
 
-
     # ========================================================
     # キャンセル状態へ変更
     # ========================================================
@@ -671,7 +640,6 @@ def cancel_market_listing(
         ]
     )
 
-
     messages.success(
         request,
         (
@@ -679,7 +647,6 @@ def cancel_market_listing(
             f"出品をキャンセルしました。"
         ),
     )
-
 
     return redirect(
         "shop:shop"
@@ -704,7 +671,6 @@ def buy_market_listing(
             "shop:shop"
         )
 
-
     # ========================================================
     # 購入者取得
     # ========================================================
@@ -726,8 +692,10 @@ def buy_market_listing(
             "shop:shop"
         )
 
+    # ========================================================
+    # 購入者をロック
+    # ========================================================
 
-    # 購入者もロック
     buyer = (
         Character.objects
         .select_for_update()
@@ -736,26 +704,27 @@ def buy_market_listing(
         )
     )
 
-
     # ========================================================
-    # 出品取得
+    # 出品取得・ロック
+    #
+    # owned_equipment は NULL の可能性があるため、
+    # select_for_update と一緒に select_related しない
     # ========================================================
 
     try:
 
         listing = (
-    MarketListing.objects
-    .select_for_update()
-    .select_related(
-        "item",
-        "seller",
-        "owned_equipment",
-        "owned_equipment__equipment",
-    )
-    .get(
-        id=listing_id,
-    )
-    )
+            MarketListing.objects
+            .select_for_update()
+            .select_related(
+                "item",
+                "seller",
+            )
+            .get(
+                id=listing_id,
+            )
+        )
+
     except MarketListing.DoesNotExist:
 
         messages.error(
@@ -766,7 +735,6 @@ def buy_market_listing(
         return redirect(
             "shop:shop"
         )
-
 
     # ========================================================
     # 出品状態チェック
@@ -783,8 +751,6 @@ def buy_market_listing(
             "shop:shop"
         )
 
-
-    # 自分の商品は購入不可
     if listing.seller_id == buyer.id:
 
         messages.error(
@@ -796,7 +762,6 @@ def buy_market_listing(
             "shop:shop"
         )
 
-
     # ========================================================
     # 合計価格
     # ========================================================
@@ -805,7 +770,6 @@ def buy_market_listing(
         listing.quantity
         * listing.unit_price
     )
-
 
     # ========================================================
     # 所持Qチェック
@@ -822,7 +786,6 @@ def buy_market_listing(
             "shop:shop"
         )
 
-
     # ========================================================
     # 出品者取得・ロック
     # ========================================================
@@ -834,7 +797,6 @@ def buy_market_listing(
             id=listing.seller_id
         )
     )
-
 
     # ========================================================
     # Q移動
@@ -848,7 +810,6 @@ def buy_market_listing(
         ]
     )
 
-
     seller.gold += total_price
 
     seller.save(
@@ -856,7 +817,6 @@ def buy_market_listing(
             "gold",
         ]
     )
-
 
     # ========================================================
     # 商品移動
@@ -886,7 +846,6 @@ def buy_market_listing(
             ]
         )
 
-
     # --------------------------------------------------------
     # 通常アイテムの場合
     # --------------------------------------------------------
@@ -915,9 +874,8 @@ def buy_market_listing(
                 ]
             )
 
-
     # ========================================================
-    # 売却済みに変更
+    # 出品を売却済みに変更
     # ========================================================
 
     listing.buyer = buyer
@@ -936,9 +894,8 @@ def buy_market_listing(
         ]
     )
 
-
     # ========================================================
-    # 完了メッセージ
+    # 購入完了メッセージ
     # ========================================================
 
     if listing.owned_equipment:
@@ -962,7 +919,6 @@ def buy_market_listing(
                 f"{total_price}Qで購入しました。"
             ),
         )
-
 
     return redirect(
         "shop:shop"
@@ -989,7 +945,6 @@ def npc_shop(request):
         )
     )
 
-
     character = None
 
     if request.user.is_authenticated:
@@ -999,7 +954,6 @@ def npc_shop(request):
             "character",
             None,
         )
-
 
     return render(
         request,
@@ -1028,13 +982,15 @@ def buy_item(
             "shop:npc_shop"
         )
 
+    # ========================================================
+    # キャラクター取得
+    # ========================================================
 
     character = getattr(
         request.user,
         "character",
         None,
     )
-
 
     if character is None:
 
@@ -1047,6 +1003,21 @@ def buy_item(
             "shop:npc_shop"
         )
 
+    # ========================================================
+    # 購入キャラクターをロック
+    # ========================================================
+
+    character = (
+        Character.objects
+        .select_for_update()
+        .get(
+            id=character.id
+        )
+    )
+
+    # ========================================================
+    # NPCショップ在庫をロック
+    # ========================================================
 
     stock = (
         ShopStock.objects
@@ -1059,10 +1030,8 @@ def buy_item(
         )
     )
 
-
     item = stock.item
     price = stock.price
-
 
     # ========================================================
     # 購入可能チェック
@@ -1079,7 +1048,6 @@ def buy_item(
             "shop:npc_shop"
         )
 
-
     if not item.npc_purchasable:
 
         messages.error(
@@ -1090,7 +1058,6 @@ def buy_item(
         return redirect(
             "shop:npc_shop"
         )
-
 
     if item.category == "equipment":
 
@@ -1103,7 +1070,6 @@ def buy_item(
             "shop:npc_shop"
         )
 
-
     if stock.stock <= 0:
 
         messages.error(
@@ -1114,7 +1080,6 @@ def buy_item(
         return redirect(
             "shop:npc_shop"
         )
-
 
     if character.gold < price:
 
@@ -1127,9 +1092,8 @@ def buy_item(
             "shop:npc_shop"
         )
 
-
     # ========================================================
-    # Q・在庫更新
+    # 所持Qを減らす
     # ========================================================
 
     character.gold -= price
@@ -1140,6 +1104,9 @@ def buy_item(
         ]
     )
 
+    # ========================================================
+    # NPCショップ在庫を減らす
+    # ========================================================
 
     stock.stock -= 1
 
@@ -1149,9 +1116,8 @@ def buy_item(
         ]
     )
 
-
     # ========================================================
-    # アイテム付与
+    # アイテムを所持品へ追加
     # ========================================================
 
     inventory_item, created = (
@@ -1164,7 +1130,6 @@ def buy_item(
         )
     )
 
-
     if not created:
 
         inventory_item.quantity += 1
@@ -1175,12 +1140,10 @@ def buy_item(
             ]
         )
 
-
     messages.success(
         request,
         f"{item.name}を1個購入しました。",
     )
-
 
     return redirect(
         "shop:npc_shop"
