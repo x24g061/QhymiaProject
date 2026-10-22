@@ -81,13 +81,13 @@ class MarketListing(models.Model):
         related_name="market_listings",
     )
 
-    owned_equipment = models.OneToOneField(
-        OwnedEquipment,
-        on_delete=models.PROTECT,
-        null=True,
-        blank=True,
-        related_name="market_listing",
-        help_text="装備品出品時の装備個体。通常アイテム出品では未設定。",
+    owned_equipment = models.ForeignKey(
+    OwnedEquipment,
+    on_delete=models.PROTECT,
+    null=True,
+    blank=True,
+    related_name="market_listings",
+    help_text="装備品出品時の装備個体。通常アイテム出品では未設定。",
     )
 
     quantity = models.PositiveIntegerField(
