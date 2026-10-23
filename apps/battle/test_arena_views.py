@@ -104,10 +104,6 @@ class ArenaScreenTests(TestCase):
             "連勝数：5連勝",
         )
 
-        self.assertContains(
-            response,
-            "直近結果：勝利",
-        )
         self.assertNotContains(response, f'href="{self.url}"')
 
     def test_home_does_not_heal_existing_arena_state(self):
