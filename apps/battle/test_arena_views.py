@@ -82,6 +82,12 @@ class ArenaScreenTests(TestCase):
         self.assertFalse(ArenaBattleHistory.objects.exists())
 
     def test_home_shows_arena_state_and_actual_master(self):
+        Character.objects.filter(
+            pk=self.defender.pk,
+        ).update(
+            arena_win_streak=5,
+            arena_last_result="win",
+        )
         response = self.client.get(reverse("home"))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context["arena_state"].floor_id, 10)
@@ -91,6 +97,15 @@ class ArenaScreenTests(TestCase):
         self.assertContains(response, 'data-current="77"')
         self.assertContains(response, "あなたの闘技場HP：62 / 100")
         self.assertContains(response, f'action="{self.url}"')
+        self.assertContains(
+            response,
+            "連勝数：5連勝",
+        )
+
+        self.assertContains(
+            response,
+            "直近結果：勝利",
+        )
         self.assertNotContains(response, f'href="{self.url}"')
 
     def test_home_does_not_heal_existing_arena_state(self):
