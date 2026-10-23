@@ -91,6 +91,8 @@ urlpatterns = [
 
     # Open Chat
     path('chat/', include('apps.chat.urls')),
+        # ミニゲーム
+    path('game/', include('apps.game.urls')),
 ]
 
 if settings.DEBUG:

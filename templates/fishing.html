@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}釣り | Qhymia{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/fishing.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="fishing-page">
+    <div class="fishing-heading">
+        <div>
+            <p class="fishing-subtitle">QHYMIA MINI GAME</p>
+            <h2>湖畔の釣り場</h2>
+        </div>
+        <a href="{% url 'home' %}" class="fishing-home">
+            ホームへ
+        </a>
+    </div>
+
+    <p class="fishing-description">
+        長押しで引き寄せ、離すと糸を緩めます。
+        魚が暴れたら、指を離して様子を見よう。
+    </p>
+
+    <section class="fishing-card" aria-label="釣りゲーム">
+        <div class="fishing-scene" id="fishing-scene">
+            <div class="fishing-sun"></div>
+            <div class="fishing-mountain"></div>
+            <div class="fishing-water"></div>
+            <div class="fishing-pier"></div>
+            <div class="fishing-float" id="fishing-float">🎣</div>
+            <div class="fishing-fish" id="fishing-fish">🐟</div>
+            <div class="fishing-scene-label" id="scene-label">
+                静かな湖が広がっている
+            </div>
+        </div>
+
+        <div class="fishing-body">
+            <p id="fishing-message" class="fishing-message" role="status" aria-live="polite">
+                「釣りを始める」で糸を投げよう！
+            </p>
+
+            <div class="fishing-meter-heading">
+                <label for="catch-progress">引き寄せ</label>
+                <span id="catch-value">0%</span>
+            </div>
+            <progress id="catch-progress" max="100" value="0"></progress>
+
+            <div class="fishing-meter-heading">
+                <label for="tension-progress">糸のテンション</label>
+                <span id="tension-value">0%</span>
+            </div>
+            <progress id="tension-progress" max="100" value="0"></progress>
+
+            <div class="fishing-details">
+                <span id="fish-state">魚：まだかかっていません</span>
+                <span>残り <strong id="time-value">—</strong></span>
+            </div>
+
+            <button type="button" id="fishing-start" class="fishing-start">
+                釣りを始める
+            </button>
+
+            <button type="button" id="fishing-hold" class="fishing-hold" disabled>
+                長押しで引く
+            </button>
+
+            <p class="fishing-help">
+                スマホ：ボタンを長押し ／ PC：マウス長押し・スペースキー
+            </p>
+
+            <div id="fishing-result" class="fishing-result" role="status" hidden></div>
+
+            <p class="fishing-prototype">
+                試作版：釣った魚の保存・報酬はまだありません。
+            </p>
+        </div>
+    </section>
+</div>
+
+<script src="{% static 'js/fishing.js' %}" defer></script>
+{% endblock %}
