@@ -7,7 +7,9 @@ from django.urls import reverse
 from django.utils import timezone
 
 from apps.accounts.models import Character
+from apps.battle.drops import grant_arena_drop
 from .models import ArenaBattleHistory, ArenaFloor, ArenaState
+from apps.inventory.models import Item, InventoryItem
 
 
 User = get_user_model()
@@ -441,3 +443,143 @@ class ArenaScreenTests(TestCase):
         self.assertIn(history.result, ["win", "loss", "draw"])
         self.assertTrue(history.battle_logs)
         self.assertIn(history.gained_exp, range(8, 14))
+
+
+    def test_win_can_grant_arena_material_drop(self):
+        item = Item.objects.create(
+            name="闘技場テスト素材",
+            category=Item.Category.MATERIAL,
+        )
+
+        with patch(
+            "apps.battle.drops.random.random",
+            return_value=0.0,
+        ):
+            self.challenge(
+                winner="challenger",
+            )
+
+        inventory_item = (
+            InventoryItem.objects.get(
+                character=self.character,
+                item=item,
+            )
+        )
+
+        self.assertEqual(
+            inventory_item.quantity,
+            1,
+        )
+
+
+    def test_loss_does_not_grant_arena_drop(self):
+        item = Item.objects.create(
+            name="敗北時テスト素材",
+            category=Item.Category.MATERIAL,
+        )
+
+        with patch(
+            "apps.battle.drops.random.random",
+            return_value=0.0,
+        ):
+            self.challenge(
+                winner="defender",
+            )
+
+        self.assertFalse(
+            InventoryItem.objects.filter(
+                character=self.character,
+                item=item,
+            ).exists()
+        )
+
+
+    def test_arena_drop_rate_increases_with_streak_and_caps_at_ten_percent(self):
+        Item.objects.create(
+            name="ドロップ率テスト素材",
+            category=Item.Category.MATERIAL,
+        )
+
+        cases = [
+            (0, 0.01),
+            (1, 0.02),
+            (5, 0.06),
+            (9, 0.10),
+            (20, 0.10),
+        ]
+
+        for win_streak, expected_rate in cases:
+            with self.subTest(
+                win_streak=win_streak,
+            ):
+                result = grant_arena_drop(
+                    character=self.character,
+                    win_streak=win_streak,
+                    guaranteed=True,
+                )
+
+                self.assertAlmostEqual(
+                    result["drop_rate"],
+                    expected_rate,
+                    places=6,
+                )
+
+
+    def test_result_page_keeps_saved_arena_drop_after_refresh(self):
+        item = Item.objects.create(
+            name="結果表示テスト素材",
+            category=Item.Category.MATERIAL,
+        )
+
+        with patch(
+            "apps.battle.drops.random.random",
+            return_value=0.0,
+        ):
+            response = self.challenge(
+                winner="challenger",
+                follow=False,
+            )
+
+        history = ArenaBattleHistory.objects.get()
+
+        self.assertIsNotNone(
+            history.drop_result,
+        )
+        self.assertEqual(
+            history.drop_result["name"],
+            "結果表示テスト素材",
+        )
+
+        result_response = self.client.get(
+            response.url,
+        )
+
+        self.assertContains(
+            result_response,
+            "アイテム獲得：",
+        )
+        self.assertContains(
+            result_response,
+            "結果表示テスト素材",
+        )
+
+        # 再読込しても同じ履歴を表示できる
+        second_response = self.client.get(
+            response.url,
+        )
+
+        self.assertContains(
+            second_response,
+            "結果表示テスト素材",
+        )
+
+        # 再読込でアイテムが増殖しない
+        inventory_item = InventoryItem.objects.get(
+            character=self.character,
+            item=item,
+        )
+
+        self.assertEqual(
+            inventory_item.quantity,
+            1,
+        )

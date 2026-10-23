@@ -455,6 +455,13 @@ class ArenaBattleHistory(models.Model):
         blank=True,
     )
 
+    # 闘技場で獲得したアイテム情報。
+    # 旧履歴やドロップなしの場合はNULL。
+    drop_result = models.JSONField(
+        null=True,
+        blank=True,
+    )
+
     # 戦闘終了時の闘技場HP / MP。
     #
     # 後から戦歴を見返した時にも

@@ -10,6 +10,8 @@ from apps.battle.models import (
     ArenaFloor,
     ArenaState,
 )
+from apps.battle.drops import grant_arena_drop
+
 from apps.accounts.models import Character
 from apps.accounts.growth import apply_character_exp
 
@@ -334,6 +336,19 @@ def challenge_arena_master(challenger):
 
 
     # ========================================
+    # 闘技場ドロップ
+    # ========================================
+
+    drop_result = None
+
+    if winner == "challenger":
+        drop_result = grant_arena_drop(
+            character=locked_challenger,
+            win_streak=locked_challenger.arena_win_streak,
+        )
+
+
+    # ========================================
     # 戦闘直後のHP/MPを保持
     # ========================================
 
@@ -460,6 +475,7 @@ def challenge_arena_master(challenger):
         result=history_result,
         battle_logs=result["logs"],
         gained_exp=gained_exp,
+        drop_result=drop_result,
         challenger_hp_after=battle_hp_mp["challenger_hp"],
         challenger_mp_after=battle_hp_mp["challenger_mp"],
         defender_hp_after=battle_hp_mp["defender_hp"],
@@ -477,4 +493,5 @@ def challenge_arena_master(challenger):
         "gained_exp": gained_exp,
         "challenger_floor": challenger_state.floor_id,
         "defender_floor": defender_state.floor_id,
+        "drop_result": drop_result,
     }

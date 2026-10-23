@@ -52,6 +52,13 @@
             {% if history.gained_exp != None %}
             <p class="arena-exp-reward">獲得経験値：{{ history.gained_exp }} EXP</p>
             {% endif %}
+            {% if history.drop_result %}
+            <p class="arena-item-reward">
+                アイテム獲得：
+                {{ history.drop_result.name }}
+                ×{{ history.drop_result.quantity }}
+            </p>
+            {% endif %}
         </div>
         <div>
             <h2>現在の闘技場状態</h2>
