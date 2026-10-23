@@ -401,6 +401,32 @@ def challenge_arena_master(challenger):
         else:
             history_result = ArenaBattleHistory.Result.DRAW
 
+
+    # ========================================
+    # 連勝数・直近対戦結果
+    # ========================================
+
+    if winner == "challenger":
+        locked_challenger.arena_win_streak += 1
+        locked_challenger.arena_last_result = "win"
+
+    elif winner == "defender":
+        locked_challenger.arena_win_streak = 0
+        locked_challenger.arena_last_result = "loss"
+
+    else:
+        locked_challenger.arena_win_streak = 0
+        locked_challenger.arena_last_result = "draw"
+
+    locked_challenger.save(
+        update_fields=[
+            "arena_win_streak",
+            "arena_last_result",
+            "updated_at",
+        ]
+    )
+
+
     # ========================================
     # ArenaStateを保存
     # ========================================

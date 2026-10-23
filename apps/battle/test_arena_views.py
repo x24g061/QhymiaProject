@@ -158,10 +158,59 @@ class ArenaScreenTests(TestCase):
         self.assertContains(response, "獲得経験値：13 EXP")
         self.character.refresh_from_db()
         self.assertEqual(self.character.exp, 13)
+        self.assertEqual(
+            self.character.arena_win_streak,
+            1,
+        )
+        self.assertEqual(
+            self.character.arena_last_result,
+            "win",
+        )
         self.assertEqual((self.character.current_hp, self.character.current_mp), (7, 3))
 
+    def test_win_streak_is_incremented(self):
+        Character.objects.filter(
+            pk=self.character.pk,
+        ).update(
+            arena_win_streak=5,
+            arena_last_result="win",
+        )
+
+        self.challenge(
+            winner="challenger",
+        )
+
+        self.character.refresh_from_db()
+
+        self.assertEqual(
+            self.character.arena_win_streak,
+            6,
+        )
+
+        self.assertEqual(
+            self.character.arena_last_result,
+            "win",
+        )
+
     def test_loss_shows_eight_exp_and_new_floor(self):
+        Character.objects.filter(
+            pk=self.character.pk,
+        ).update(
+            arena_win_streak=5,
+            arena_last_result="win",
+        )
         response = self.challenge("defender")
+
+        self.character.refresh_from_db()
+
+        self.assertEqual(
+            self.character.arena_win_streak,
+            0,
+        )
+        self.assertEqual(
+            self.character.arena_last_result,
+            "loss",
+        )
         history = ArenaBattleHistory.objects.get()
         self.assertEqual((history.result, history.gained_exp), ("loss", 8))
         self.assertContains(response, "闘技場の結果：敗北")
@@ -261,7 +310,24 @@ class ArenaScreenTests(TestCase):
         )
 
     def test_draw_is_distinct_from_loss(self):
+        Character.objects.filter(
+            pk=self.character.pk,
+        ).update(
+            arena_win_streak=5,
+            arena_last_result="win",
+        )
         response = self.challenge("draw")
+
+        self.character.refresh_from_db()
+
+        self.assertEqual(
+            self.character.arena_win_streak,
+            0,
+        )
+        self.assertEqual(
+            self.character.arena_last_result,
+            "draw",
+        )
         self.assertContains(response, "闘技場の結果：引き分け")
         self.assertContains(response, "獲得経験値：8 EXP")
         self.assertEqual(ArenaBattleHistory.objects.get().result, "draw")
