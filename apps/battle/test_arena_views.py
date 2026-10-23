@@ -170,6 +170,96 @@ class ArenaScreenTests(TestCase):
         self.defender_state.refresh_from_db()
         self.assertEqual(self.defender_state.current_hp, 30)
 
+    def _assert_loss_floor_move(
+        self,
+        start_floor,
+        expected_floor,
+    ):
+        """
+        指定階層でフロアマスターに敗北した場合、
+        正しい階層へ移動することを確認する。
+        """
+
+        # 既存のフロアマスター設定を解除
+        ArenaFloor.objects.filter(
+            master=self.defender,
+        ).update(
+            master=None,
+        )
+
+        # 対象階層を取得
+        floor = ArenaFloor.objects.get(
+            pk=start_floor,
+        )
+
+        # 対象階層のフロアマスターを設定
+        floor.master = self.defender
+        floor.save(
+            update_fields=["master"]
+        )
+
+        # 挑戦者と防衛者を同じ階層へ移動
+        ArenaState.objects.filter(
+            pk=self.state.pk,
+        ).update(
+            floor_id=start_floor,
+        )
+
+        ArenaState.objects.filter(
+            pk=self.defender_state.pk,
+        ).update(
+            floor_id=start_floor,
+        )
+
+        # 挑戦者敗北
+        self.challenge(
+            winner="defender",
+        )
+
+        # 最新状態を取得
+        self.state.refresh_from_db()
+
+        # 想定階層へ移動していること
+        self.assertEqual(
+            self.state.floor_id,
+            expected_floor,
+        )
+
+
+    def test_loss_on_floor_1_stays_on_floor_1(self):
+        self._assert_loss_floor_move(
+            start_floor=1,
+            expected_floor=1,
+        )
+
+
+    def test_loss_on_floor_2_moves_to_floor_1(self):
+        self._assert_loss_floor_move(
+            start_floor=2,
+            expected_floor=1,
+        )
+
+
+    def test_loss_on_floor_3_moves_to_floor_1(self):
+        self._assert_loss_floor_move(
+            start_floor=3,
+            expected_floor=1,
+        )
+
+
+    def test_loss_on_floor_4_moves_to_floor_2(self):
+        self._assert_loss_floor_move(
+            start_floor=4,
+            expected_floor=2,
+        )
+
+
+    def test_loss_on_floor_5_moves_to_floor_3(self):
+        self._assert_loss_floor_move(
+            start_floor=5,
+            expected_floor=3,
+        )
+
     def test_draw_is_distinct_from_loss(self):
         response = self.challenge("draw")
         self.assertContains(response, "闘技場の結果：引き分け")
