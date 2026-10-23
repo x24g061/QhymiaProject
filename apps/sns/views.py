@@ -249,8 +249,16 @@ def mini_create_post(request):
         "image"
     )
 
+    image2 = request.FILES.get(
+        "image2"
+    )
+
     # 本文も画像もない場合
-    if not text and not image:
+    if (
+        not text
+        and not image
+        and not image2
+    ):
 
         return JsonResponse(
             {
@@ -291,7 +299,6 @@ def mini_create_post(request):
             "post_id": post.id,
         }
     )
-
 # ========================================
 # ミニSNS：投稿一覧だけ取得
 # ========================================

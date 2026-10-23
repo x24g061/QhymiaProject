@@ -2,14 +2,14 @@
 
 <div id="mini-sns" class="mini-sns" data-refresh-url="{% url 'mini_sns_feed' %}">
 
-    <!-- =====================
+    <!-- ========================================
          ヘッダー
-    ====================== -->
+    ========================================= -->
 
     <div class="mini-sns-header">
 
-        <a href="{% url 'sns' %}" class="mini-sns-logo-button" title="SNSを開く">
-            Qhymia SNS
+        <a href="{% url 'sns' %}" class="mini-sns-logo-button" title="SNS画面を開く">
+            SNS
         </a>
 
 
@@ -18,12 +18,12 @@
             <button id="mini-sns-refresh" type="button" aria-label="更新" title="更新">
                 ↻
             </button>
-            <button id="sns-minimize" type="button" aria-label="最小化">
+
+            <button id="sns-minimize" type="button" aria-label="最小化" title="最小化">
                 −
             </button>
 
-
-            <button id="sns-close" type="button" aria-label="閉じる">
+            <button id="sns-close" type="button" aria-label="閉じる" title="閉じる">
                 ×
             </button>
 
@@ -32,86 +32,142 @@
     </div>
 
 
+    <!-- ========================================
+         SNS本体
+    ========================================= -->
+
     <div id="mini-sns-body" class="mini-sns-body">
 
+        <!-- ========================================
+             投稿エリア見出し
+        ========================================= -->
 
-        <!-- =====================
+        <div class="mini-sns-compose-header">
+
+            <strong>
+                投稿
+            </strong>
+
+            <button type="button" id="mini-sns-compose-toggle" class="mini-sns-compose-toggle" aria-expanded="true"
+                title="投稿欄を開閉">
+                ▼
+            </button>
+
+        </div>
+
+
+        <!-- ========================================
              投稿フォーム
-        ====================== -->
+        ========================================= -->
 
-        <form id="mini-sns-post-form" class="mini-sns-post-form" action="{% url 'mini_create_post' %}" method="post"
-            enctype="multipart/form-data">
+        <div id="mini-sns-compose-panel" class="mini-sns-compose-panel">
 
-            {% csrf_token %}
+            <form id="mini-sns-post-form" class="mini-sns-post-form" action="{% url 'mini_create_post' %}" method="post"
+                enctype="multipart/form-data">
 
-
-            <textarea name="text" class="mini-sns-textarea" maxlength="500" rows="3" placeholder="いま何してる？"></textarea>
-
-
-            <div class="mini-sns-form-bottom">
-
-                <label class="mini-sns-image-button">
-
-                    画像
-
-                    <input type="file" name="image" accept="image/*">
-
-                </label>
+                {% csrf_token %}
 
 
-                <button type="submit" class="mini-sns-submit-button">
-                    投稿する
-                </button>
-
-            </div>
+                <textarea name="text" class="mini-sns-textarea" maxlength="180" rows="4"
+                    placeholder="いま何してる？"></textarea>
 
 
-            <p id="mini-sns-post-error" class="mini-sns-post-error">
-            </p>
+                <div id="mini-sns-image-preview" class="mini-sns-image-preview" hidden>
 
-        </form>
+                    <img id="mini-sns-preview-image" class="mini-sns-preview-image" alt="投稿画像プレビュー">
 
-<div class="mini-sns-tabs">
-
-    <button
-        type="button"
-        class="mini-sns-tab
-        {% if mini_sns_view_mode == 'recommended' %}
-            active
-        {% endif %}"
-        data-view="recommended"
-    >
-        ★ おすすめ
-    </button>
+                    <button id="mini-sns-preview-remove" type="button" class="mini-sns-preview-remove"
+                        aria-label="画像を削除" title="画像を削除">
+                        ×
+                    </button>
 
 
-    <button
-        type="button"
-        class="mini-sns-tab
-        {% if mini_sns_view_mode == 'latest' %}
-            active
-        {% endif %}"
-        data-view="latest"
-    >
-        ▤ 新着
-    </button>
+                    <button id="mini-sns-preview-prev" type="button" class="mini-sns-preview-nav mini-sns-preview-prev"
+                        hidden>
+                        ‹
+                    </button>
 
 
-    <button
-        type="button"
-        class="mini-sns-tab
-        {% if mini_sns_view_mode == 'favorites' %}
-            active
-        {% endif %}"
-        data-view="favorites"
-    >
-        ☆ お気に入り
-    </button>
+                    <button id="mini-sns-preview-next" type="button" class="mini-sns-preview-nav mini-sns-preview-next"
+                        hidden>
+                        ›
+                    </button>
 
-</div>
-        <!-- =====================
+
+                    <div class="mini-sns-preview-counter">
+                        <span id="mini-sns-preview-current">
+                            1
+                        </span>
+                        /
+                        <span id="mini-sns-preview-total">
+                            1
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="mini-sns-form-bottom">
+
+                    <label class="mini-sns-image-button">
+
+                        画像をつける
+
+                        <input id="mini-sns-image-input" type="file" accept="image/*" multiple>
+
+                    </label>
+
+
+                    <button type="submit" class="mini-sns-submit-button">
+                        投稿する
+                    </button>
+
+                </div>
+
+
+                <p id="mini-sns-post-error" class="mini-sns-post-error"></p>
+
+            </form>
+
+
+        </div>
+
+
+        <!-- ========================================
+             タイムライン切り替え
+        ========================================= -->
+
+        <div class="mini-sns-tabs">
+
+            <button type="button" class="mini-sns-tab
+                {% if mini_sns_view_mode == 'latest' %}
+                    active
+                {% endif %}" data-view="latest">
+                最新
+            </button>
+
+
+            <button type="button" class="mini-sns-tab
+                {% if mini_sns_view_mode == 'recommended' %}
+                    active
+                {% endif %}" data-view="recommended">
+                オススメ
+            </button>
+
+
+            <button type="button" class="mini-sns-tab
+                {% if mini_sns_view_mode == 'favorites' %}
+                    active
+                {% endif %}" data-view="favorites">
+                お気に入り
+            </button>
+
+        </div>
+
+
+        <!-- ========================================
              投稿一覧
-        ====================== -->
+        ========================================= -->
 
         <div id="mini-sns-post-list" class="mini-sns-post-list">
 
@@ -119,15 +175,47 @@
 
         </div>
 
-
-        <!-- =====================
-             通常SNS
-        ====================== -->
-
-        <a href="{% url 'sns' %}" class="sns-open-button">
-            SNSを開く →
-        </a>
-
     </div>
 
-</div>
+    <!-- ========================================
+     画像全画面表示
+======================================== -->
+
+    <div id="mini-sns-image-modal" class="mini-sns-image-modal" hidden>
+
+        <!-- 閉じる -->
+        <button id="mini-sns-image-modal-close" type="button" class="mini-sns-image-modal-close" aria-label="画像を閉じる">
+            ×
+        </button>
+
+
+        <!-- 前の画像 -->
+        <button id="mini-sns-image-modal-prev" type="button" class="mini-sns-image-modal-nav mini-sns-image-modal-prev"
+            aria-label="前の画像" hidden>
+            ‹
+        </button>
+
+
+        <!-- 拡大画像 -->
+        <img id="mini-sns-image-modal-image" class="mini-sns-image-modal-image" alt="拡大画像">
+
+
+        <!-- 次の画像 -->
+        <button id="mini-sns-image-modal-next" type="button" class="mini-sns-image-modal-nav mini-sns-image-modal-next"
+            aria-label="次の画像" hidden>
+            ›
+        </button>
+
+
+        <!-- 画像番号 -->
+        <div id="mini-sns-image-modal-counter" class="mini-sns-image-modal-counter" hidden>
+            <span id="mini-sns-image-modal-current">
+                1
+            </span>
+            /
+            <span id="mini-sns-image-modal-total">
+                1
+            </span>
+        </div>
+
+    </div>
