@@ -1,5 +1,5 @@
 /* ========================================
-   ミニSNS
+   ミニSNS 全体
 ======================================== */
 
 .mini-sns {
@@ -8,20 +8,27 @@
     right: 24px;
     bottom: 24px;
 
-    width: 340px;
+    width: 390px;
+    max-width: calc(100vw - 20px);
 
-    background: rgba(255, 250, 230, 0.98);
+    overflow: hidden;
 
-    border: 3px solid #5c4630;
-    border-radius: 10px;
+    background: #ffffff;
+
+    border: 2px solid #111111;
+    border-radius: 14px;
 
     box-shadow:
-        0 8px 24px
-        rgba(0, 0, 0, 0.35);
+        0 8px 24px rgba(0, 0, 0, 0.3);
+
+    color: #111111;
 
     z-index: 9999;
 
-    overflow: hidden;
+    font-family:
+        "Yu Gothic",
+        "Meiryo",
+        sans-serif;
 }
 
 
@@ -31,14 +38,18 @@
 
 .mini-sns-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
 
-    padding: 10px 12px;
+    min-height: 58px;
 
-    background: rgba(20, 30, 20, 0.95);
+    padding-left: 20px;
 
-    color: white;
+    background: #176c8d;
+
+    color: #ffffff;
+
+    border-bottom: 2px solid #111111;
 
     cursor: grab;
 }
@@ -49,45 +60,64 @@
 }
 
 
-.mini-sns-title {
-    font-weight: bold;
+/* ========================================
+   SNSロゴ
+======================================== */
 
-    letter-spacing: 1px;
+.mini-sns-logo-button {
+    color: #ffffff;
+
+    font-size: 30px;
+    font-weight: 700;
+
+    line-height: 1;
+
+    text-decoration: none;
+
+    cursor: pointer;
+}
+
+
+.mini-sns-logo-button:hover {
+    opacity: 0.8;
 }
 
 
 /* ========================================
-   ヘッダー操作ボタン
+   ヘッダー操作
 ======================================== */
 
 .mini-sns-controls {
     display: flex;
 
-    gap: 6px;
+    height: 58px;
 }
 
 
 .mini-sns-controls button {
-    width: 30px;
-    height: 30px;
+    width: 56px;
+    height: 58px;
+
+    margin: 0;
+    padding: 0;
 
     border: none;
-    border-radius: 5px;
+    border-left: 2px solid #111111;
+    border-radius: 0;
 
-    background:
-        rgba(255, 255, 255, 0.15);
+    background: #176c8d;
 
-    color: white;
+    color: #ffffff;
 
-    font-size: 18px;
+    font-size: 31px;
+    font-weight: 300;
 
     cursor: pointer;
 }
 
 
 .mini-sns-controls button:hover {
-    background:
-        rgba(255, 255, 255, 0.3);
+    background: #115b78;
 }
 
 
@@ -96,11 +126,66 @@
 ======================================== */
 
 .mini-sns-body {
-    max-height: min(70vh, 560px);
+    max-height: min(78vh, 650px);
+
+    padding: 0;
 
     overflow-y: auto;
 
-    padding: 12px;
+    background: #ffffff;
+}
+
+
+/* ========================================
+   投稿欄ヘッダー
+======================================== */
+
+.mini-sns-compose-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    min-height: 48px;
+
+    padding: 0 14px 0 36px;
+
+    background: #ffffff;
+
+    border-bottom: 2px solid #111111;
+}
+
+
+.mini-sns-compose-header strong {
+    font-size: 24px;
+}
+
+
+.mini-sns-compose-toggle {
+    width: 40px;
+    height: 40px;
+
+    padding: 0;
+
+    border: none;
+
+    background: transparent;
+
+    color: #111111;
+
+    font-size: 25px;
+
+    cursor: pointer;
+}
+
+
+/* ========================================
+   投稿パネル
+======================================== */
+
+.mini-sns-compose-panel {
+    background: #ffffff;
+
+    border-bottom: 2px solid #111111;
 }
 
 
@@ -109,73 +194,88 @@
 ======================================== */
 
 .mini-sns-post-form {
-    margin-bottom: 10px;
-    padding-bottom: 12px;
-
-    border-bottom:
-        2px solid
-        rgba(92, 70, 48, 0.3);
+    margin: 0;
+    padding: 0;
 }
 
 
 .mini-sns-textarea {
+    display: block;
+
     width: 100%;
-    min-height: 68px;
+    min-height: 145px;
 
     box-sizing: border-box;
 
-    padding: 9px;
+    padding: 10px 12px;
 
     resize: vertical;
 
-    border: 1px solid #b7a68d;
-    border-radius: 5px;
+    border: none;
+    border-bottom: 2px solid #176c8d;
+    border-radius: 0;
 
-    background: #fffdf7;
+    background: #f5f5f5;
+
+    color: #176c8d;
 
     font: inherit;
+    font-size: 20px;
+
+    outline: none;
 }
 
 
 .mini-sns-textarea:focus {
-    outline: 2px solid
-        rgba(92, 70, 48, 0.25);
-
-    border-color: #7b674e;
-}
-
-
-.mini-sns-form-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    gap: 8px;
-
-    margin-top: 7px;
+    background: #ffffff;
 }
 
 
 /* ========================================
-   画像選択
+   投稿フォーム下部
+======================================== */
+
+.mini-sns-form-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding: 6px;
+}
+
+
+/* ========================================
+   画像ボタン
 ======================================== */
 
 .mini-sns-image-button {
-    padding: 6px 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    border: 1px solid #8c775d;
-    border-radius: 5px;
+    min-width: 128px;
+    min-height: 48px;
 
-    background: #eee2ca;
+    padding: 0 12px;
 
-    font-size: 12px;
+    border: 2px solid #111111;
+    border-radius: 0;
+
+    background: #176c8d;
+
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: bold;
 
     cursor: pointer;
 }
 
 
 .mini-sns-image-button:hover {
-    background: #e5d4b4;
+    background: #115b78;
 }
 
 
@@ -189,15 +289,23 @@
 ======================================== */
 
 .mini-sns-submit-button {
-    padding: 7px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    border: none;
-    border-radius: 5px;
+    min-width: 128px;
+    min-height: 48px;
 
-    background: #263f34;
+    padding: 0 14px;
+
+    border: 2px solid #111111;
+    border-radius: 0;
+
+    background: #176c8d;
 
     color: #ffffff;
 
+    font-size: 16px;
     font-weight: bold;
 
     cursor: pointer;
@@ -205,7 +313,7 @@
 
 
 .mini-sns-submit-button:hover {
-    background: #345648;
+    background: #115b78;
 }
 
 
@@ -217,24 +325,110 @@
 
 
 .mini-sns-post-error {
-    margin: 6px 0 0;
+    margin: 0;
+    padding: 0 8px 6px;
 
-    color: #b3261e;
+    color: #c62828;
 
     font-size: 12px;
 }
 
 
 /* ========================================
-   投稿
+   タイムラインタブ
+======================================== */
+
+.mini-sns-tabs {
+    display: flex;
+
+    gap: 6px;
+
+    margin: 0;
+    padding: 6px 4px;
+
+    background: #ffffff;
+
+    border-bottom: 2px solid #111111;
+}
+
+
+.mini-sns-tab {
+    flex: 1;
+
+    min-height: 40px;
+
+    padding: 5px 4px;
+
+    border: 1px solid #999999;
+    border-radius: 0;
+
+    background: #ffffff;
+
+    color: #333333;
+
+    font-size: 14px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.mini-sns-tab:hover {
+    background: #eeeeee;
+}
+
+
+.mini-sns-tab.active {
+    background: #dddddd;
+
+    color: #333333;
+
+    border: 3px solid #444444;
+}
+
+
+/* ========================================
+   投稿一覧
+======================================== */
+
+.mini-sns-post-list {
+    background: #ffffff;
+}
+
+
+/* ========================================
+   1投稿
 ======================================== */
 
 .sns-post {
-    padding: 12px 4px;
+    position: relative;
 
-    border-bottom:
-        1px solid
-        rgba(92, 70, 48, 0.3);
+    padding: 10px;
+
+    background: #ffffff;
+
+    border-bottom: 2px solid #111111;
+}
+
+
+/* ========================================
+   おすすめ表示
+======================================== */
+
+.mini-sns-recommended-label {
+    display: inline-flex;
+
+    margin-bottom: 7px;
+    padding: 3px 7px;
+
+    background: #e6f4fa;
+
+    border: 1px solid #176c8d;
+
+    color: #176c8d;
+
+    font-size: 11px;
+    font-weight: bold;
 }
 
 
@@ -246,13 +440,15 @@
     display: flex;
     align-items: center;
 
-    gap: 9px;
+    gap: 10px;
+
+    padding-right: 120px;
 }
 
 
 .mini-sns-avatar {
-    width: 40px;
-    height: 40px;
+    width: 52px;
+    height: 52px;
 
     flex-shrink: 0;
 
@@ -262,14 +458,18 @@
 
     overflow: hidden;
 
-    border: 2px solid #5c4630;
-    border-radius: 5px;
+    border: 2px solid #111111;
+    border-radius: 0;
 
-    background: #efe2bf;
+    background: #176c8d;
+
+    color: #ffffff;
 }
 
 
 .mini-sns-avatar img {
+    display: block;
+
     width: 100%;
     height: 100%;
 
@@ -280,6 +480,8 @@
 
 
 .mini-sns-user-info {
+    min-width: 0;
+
     display: flex;
     flex-direction: column;
 
@@ -288,14 +490,21 @@
 
 
 .mini-sns-user-info strong {
-    color: #332719;
+    overflow: hidden;
+
+    color: #111111;
+
+    font-size: 17px;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 
 .mini-sns-user-info span {
-    color: #786c5f;
+    color: #555555;
 
-    font-size: 11px;
+    font-size: 12px;
 }
 
 
@@ -304,34 +513,142 @@
 ======================================== */
 
 .mini-sns-post-text {
-    margin: 9px 0;
+    margin: 8px 125px 8px 0;
 
-    line-height: 1.5;
+    color: #111111;
 
-    word-break: break-word;
+    font-size: 15px;
+
+    line-height: 1.45;
+
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
 }
 
 
-/* ========================================
-   投稿画像
-======================================== */
-
 .mini-sns-post-image-wrapper {
-    margin: 8px 0;
+    position: absolute;
+
+    top: 10px;
+    right: 8px;
+
+    width: 115px;
+    height: 165px;
+
+    margin: 0;
 
     overflow: hidden;
 
-    border-radius: 6px;
+    border: 2px solid #111111;
+
+    background: #176c8d;
 }
 
 
 .mini-sns-post-image {
+    position: absolute;
+
+    inset: 0;
+
     display: block;
 
     width: 100%;
-    max-height: 180px;
+    height: 100%;
 
     object-fit: cover;
+
+    opacity: 0;
+
+    transform: translateX(20px);
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.mini-sns-post-image.active {
+    opacity: 1;
+
+    transform: translateX(0);
+
+    pointer-events: auto;
+
+    cursor: zoom-in;
+}
+
+/* ========================================
+   投稿画像 切り替え
+======================================== */
+
+.mini-sns-image-nav {
+    position: absolute;
+
+    top: 50%;
+
+    width: 30px;
+    height: 42px;
+
+    padding: 0;
+
+    transform: translateY(-50%);
+
+    border: none;
+
+    background:
+        rgba(0, 0, 0, 0.55);
+
+    color: #ffffff;
+
+    font-size: 28px;
+
+    cursor: pointer;
+
+    z-index: 5;
+}
+
+
+.mini-sns-image-next {
+    right: 0;
+}
+
+
+.mini-sns-image-prev {
+    left: 0;
+}
+
+
+.mini-sns-image-nav:hover {
+    background:
+        rgba(0, 0, 0, 0.8);
+}
+
+
+.mini-sns-image-nav[hidden] {
+    display: none;
+}
+
+
+.mini-sns-image-counter {
+    position: absolute;
+
+    right: 5px;
+    bottom: 5px;
+
+    padding: 2px 6px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(0, 0, 0, 0.65);
+
+    color: #ffffff;
+
+    font-size: 10px;
+
+    z-index: 5;
 }
 
 
@@ -342,46 +659,180 @@
 .mini-sns-post-actions {
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
 
-    gap: 6px;
+    gap: 12px;
+
+    min-height: 38px;
 
     margin-top: 8px;
+
+    padding-right: 120px;
 }
 
 
 .mini-sns-post-actions button {
-    padding: 4px 7px;
+    display: inline-flex;
+    align-items: center;
 
-    border: 1px solid #b5a389;
-    border-radius: 4px;
+    gap: 4px;
 
-    background:
-        rgba(255, 255, 255, 0.55);
+    padding: 0;
 
-    color: #51412d;
+    border: none;
 
-    font-size: 11px;
+    background: transparent;
+
+    color: #222222;
+
+    font-size: 15px;
 
     cursor: pointer;
 }
 
 
+.mini-like-icon {
+    width: 32px;
+    height: 32px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #ff1744;
+
+    font-size: 30px;
+    line-height: 1;
+
+    transform-origin: center;
+}
+
+
+.mini-like-icon.liked {
+    transform: scale(1.18);
+}
+
+
+.mini-favorite-icon {
+    color: #d6d600;
+
+    font-size: 29px;
+}
+
+
 .mini-like-button:hover,
 .mini-favorite-button:hover {
-    background: #f2e4c6;
+    background: transparent;
+
+    opacity: 0.7;
 }
 
 
 .mini-delete-button {
     margin-left: auto;
 
-    color: #a12e28 !important;
+    color: #b71c1c !important;
+
+    font-size: 12px !important;
 }
 
 
 .mini-delete-button:hover {
-    background: #f4d8d5 !important;
+    background: transparent !important;
+
+    text-decoration: underline;
+}
+
+/* ========================================
+   投稿前画像プレビュー
+======================================== */
+
+.mini-sns-image-preview {
+    position: relative;
+
+    width: calc(100% - 20px);
+    height: 190px;
+
+    margin: 10px;
+
+    overflow: hidden;
+
+    border: 2px solid #111111;
+
+    background: #eeeeee;
+}
+
+
+.mini-sns-image-preview[hidden] {
+    display: none;
+}
+
+
+.mini-sns-preview-image {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+
+    background: #111111;
+}
+
+
+.mini-sns-preview-nav {
+    position: absolute;
+
+    top: 50%;
+
+    width: 36px;
+    height: 50px;
+
+    transform: translateY(-50%);
+
+    border: none;
+
+    background:
+        rgba(0, 0, 0, 0.55);
+
+    color: #ffffff;
+
+    font-size: 30px;
+
+    cursor: pointer;
+}
+
+
+.mini-sns-preview-prev {
+    left: 0;
+}
+
+
+.mini-sns-preview-next {
+    right: 0;
+}
+
+
+.mini-sns-preview-nav[hidden] {
+    display: none;
+}
+
+
+.mini-sns-preview-counter {
+    position: absolute;
+
+    right: 8px;
+    bottom: 8px;
+
+    padding: 3px 8px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(0, 0, 0, 0.7);
+
+    color: #ffffff;
+
+    font-size: 12px;
 }
 
 
@@ -390,51 +841,11 @@
 ======================================== */
 
 .mini-sns-empty {
-    padding: 18px 5px;
+    padding: 30px 10px;
 
     text-align: center;
 
-    color: #786c5f;
-}
-
-
-/* ========================================
-   SNSを開く
-======================================== */
-
-.sns-open-button {
-    display: block;
-
-    width: 100%;
-
-    box-sizing: border-box;
-
-    margin-top: 12px;
-
-    padding: 10px;
-
-    border: 2px solid #664c2c;
-    border-radius: 6px;
-
-    background:
-        linear-gradient(
-            #f5e4b7,
-            #d6b87d
-        );
-
-    color: #2d2116;
-
-    text-align: center;
-    text-decoration: none;
-
-    font-weight: bold;
-
-    cursor: pointer;
-}
-
-
-.sns-open-button:hover {
-    filter: brightness(1.05);
+    color: #666666;
 }
 
 
@@ -448,12 +859,22 @@
 
 
 .mini-sns.minimized {
-    width: 220px;
+    width: 280px;
+}
+.mini-sns.minimized .mini-sns-header {
+    padding-left: 14px;
 }
 
+.mini-sns.minimized .mini-sns-controls {
+    flex-shrink: 0;
+}
+
+.mini-sns.minimized .mini-sns-controls button {
+    width: 46px;
+}
 
 /* ========================================
-   完全に閉じる
+   非表示
 ======================================== */
 
 .mini-sns.hidden {
@@ -462,7 +883,7 @@
 
 
 /* ========================================
-   SNS復元ボタン
+   復元
 ======================================== */
 
 .sns-restore {
@@ -475,13 +896,11 @@
 
     padding: 12px 18px;
 
-    border: 3px solid #5c4630;
-    border-radius: 8px;
+    border: 2px solid #111111;
 
-    background:
-        rgba(20, 30, 20, 0.95);
+    background: #176c8d;
 
-    color: white;
+    color: #ffffff;
 
     font-weight: bold;
 
@@ -497,92 +916,15 @@
 
 
 /* ========================================
-   スマホ
-======================================== */
-
-@media (max-width: 600px) {
-
-    .mini-sns {
-        right: 10px;
-        bottom: 10px;
-
-        width: calc(100% - 20px);
-    }
-
-
-    .mini-sns.minimized {
-        width: 180px;
-    }
-
-
-    .sns-restore {
-        right: 10px;
-        bottom: 10px;
-    }
-
-
-    .mini-sns-post-actions {
-        gap: 4px;
-    }
-
-
-    .mini-sns-post-actions button {
-        font-size: 10px;
-    }
-}
-
-/* ========================================
-   ミニSNS ロゴ
-======================================== */
-
-.mini-sns-logo-button {
-    padding: 0;
-
-    border: none;
-
-    background: transparent;
-
-    color: #ffffff;
-
-    font: inherit;
-    font-weight: bold;
-
-    letter-spacing: 1px;
-
-    cursor: pointer;
-
-    text-decoration: none;
-}
-
-
-/* ボタンっぽい背景を出さない */
-.mini-sns-logo-button:hover {
-    background: transparent;
-
-    opacity: 0.75;
-}
-
-
-/* 押したときも背景を出さない */
-.mini-sns-logo-button:active {
-    background: transparent;
-}
-
-
-/* ========================================
-   更新ボタン
+   更新中
 ======================================== */
 
 #mini-sns-refresh.is-refreshing {
     animation:
-        mini-sns-spin
-        0.7s
-        linear
-        infinite;
+        mini-sns-spin 0.7s linear infinite;
 }
 
 
-/* 更新中の回転 */
 @keyframes mini-sns-spin {
 
     from {
@@ -592,82 +934,284 @@
     to {
         transform: rotate(360deg);
     }
-
 }
 
 
-/* 動きを減らす設定の人向け */
+/* ========================================
+   スマホ
+======================================== */
+
+@media (max-width: 600px) {
+
+    .mini-sns {
+        right: 5px;
+        bottom: 5px;
+
+        width: calc(100% - 10px);
+    }
+
+
+    .mini-sns-controls button {
+        width: 48px;
+    }
+
+
+    .mini-sns-logo-button {
+        font-size: 25px;
+    }
+
+
+    .mini-sns-tab {
+        font-size: 11px;
+    }
+
+
+    .mini-sns-post-image-wrapper {
+        width: 100px;
+        height: 145px;
+    }
+
+
+    .mini-sns-user-area,
+    .mini-sns-post-actions {
+        padding-right: 105px;
+    }
+
+
+    .mini-sns-post-text {
+        margin-right: 105px;
+    }
+}
+
+
+/* ========================================
+   動きを減らす設定
+======================================== */
+
 @media (prefers-reduced-motion: reduce) {
 
     #mini-sns-refresh.is-refreshing {
         animation: none;
     }
-
 }
 
 /* ========================================
-   ミニSNS おすすめ投稿
+   プレビュー画像 削除ボタン
 ======================================== */
 
-.mini-sns-recommended-label {
-    display: inline-flex;
-    align-items: center;
+.mini-sns-preview-remove {
+    position: absolute;
 
-    margin-bottom: 8px;
-    padding: 4px 8px;
+    top: 7px;
+    right: 7px;
 
-    border: 1px solid #3b82f6;
-    border-radius: 999px;
+    width: 30px;
+    height: 30px;
 
-    background: #eff6ff;
-
-    color: #2563eb;
-
-    font-size: 11px;
-    font-weight: bold;
-}
-
-/* ========================================
-   ミニSNS 表示タブ
-======================================== */
-
-.mini-sns-tabs {
     display: flex;
+    align-items: center;
+    justify-content: center;
 
-    gap: 6px;
+    padding: 0;
 
-    margin: 10px 0;
-}
+    border: none;
+    border-radius: 50%;
 
+    background: rgba(0, 0, 0, 0.35);
 
-.mini-sns-tab {
-    flex: 1;
+    color: rgba(255, 255, 255, 0.85);
 
-    padding: 7px 8px;
-
-    border: 1px solid #8c775d;
-    border-radius: 5px;
-
-    background: #f6ead3;
-
-    color: #51412d;
-
-    font-size: 11px;
-    font-weight: bold;
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1;
 
     cursor: pointer;
+
+    z-index: 10;
 }
 
 
-.mini-sns-tab:hover {
-    background: #ead8b8;
-}
-
-
-.mini-sns-tab.active {
-    background: #263f34;
+.mini-sns-preview-remove:hover {
+    background: rgba(0, 0, 0, 0.6);
 
     color: #ffffff;
+}
 
-    border-color: #263f34;
+
+/* ========================================
+   投稿画像 クリック
+======================================== */
+
+.mini-sns-post-image {
+    cursor: zoom-in;
+}
+
+
+/* ========================================
+   画像全画面表示
+======================================== */
+
+.mini-sns-image-modal {
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px;
+
+    box-sizing: border-box;
+
+    background: rgba(0, 0, 0, 0.88);
+
+    z-index: 50000;
+}
+
+
+.mini-sns-image-modal[hidden] {
+    display: none;
+}
+
+
+.mini-sns-image-modal-image {
+    display: block;
+
+    max-width: 95vw;
+    max-height: 92vh;
+
+    width: auto;
+    height: auto;
+
+    object-fit: contain;
+}
+
+
+/* ========================================
+   全画面画像 閉じるボタン
+======================================== */
+
+.mini-sns-image-modal-close {
+    position: fixed;
+
+    top: 18px;
+    right: 24px;
+
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: none;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    color: rgba(255, 255, 255, 0.7);
+
+    font-size: 38px;
+    font-weight: 200;
+    line-height: 1;
+
+    cursor: pointer;
+
+    z-index: 50001;
+}
+
+
+.mini-sns-image-modal-close:hover {
+    background: rgba(255, 255, 255, 0.15);
+
+    color: #ffffff;
+}
+
+/* ========================================
+   全画面画像 左右ボタン
+======================================== */
+
+.mini-sns-image-modal-nav {
+    position: fixed;
+
+    top: 50%;
+
+    width: 56px;
+    height: 70px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    transform: translateY(-50%);
+
+    border: none;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    color: rgba(255, 255, 255, 0.75);
+
+    font-size: 48px;
+    font-weight: 200;
+
+    cursor: pointer;
+
+    z-index: 50001;
+}
+
+
+.mini-sns-image-modal-nav:hover {
+    background: rgba(255, 255, 255, 0.16);
+
+    color: #ffffff;
+}
+
+
+.mini-sns-image-modal-prev {
+    left: 20px;
+}
+
+
+.mini-sns-image-modal-next {
+    right: 20px;
+}
+
+
+.mini-sns-image-modal-nav[hidden] {
+    display: none;
+}
+
+
+/* ========================================
+   全画面画像 枚数表示
+======================================== */
+
+.mini-sns-image-modal-counter {
+    position: fixed;
+
+    left: 50%;
+    bottom: 20px;
+
+    transform: translateX(-50%);
+
+    padding: 5px 12px;
+
+    border-radius: 20px;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    color: rgba(255, 255, 255, 0.9);
+
+    font-size: 13px;
+
+    z-index: 50001;
+}
+
+
+.mini-sns-image-modal-counter[hidden] {
+    display: none;
 }

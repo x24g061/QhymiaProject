@@ -56,11 +56,49 @@
 
 
     <!-- 投稿画像 -->
-    {% if post.image %}
+    {% if post.image and post.image2 %}
+
+    <div class="mini-sns-post-image-wrapper mini-sns-carousel" data-current="0">
+
+        <img src="{{ post.image.url }}" alt="投稿画像1" class="mini-sns-post-image mini-sns-slide active" data-index="0">
+
+        <img src="{{ post.image2.url }}" alt="投稿画像2" class="mini-sns-post-image mini-sns-slide" data-index="1">
+
+
+        <button type="button" class="mini-sns-image-nav mini-sns-image-prev" aria-label="前の画像" hidden>
+            ‹
+        </button>
+
+
+        <button type="button" class="mini-sns-image-nav mini-sns-image-next" aria-label="次の画像">
+            ›
+        </button>
+
+
+        <div class="mini-sns-image-counter">
+            <span class="mini-sns-image-current">
+                1
+            </span>
+            / 2
+        </div>
+
+    </div>
+
+
+    {% elif post.image %}
 
     <div class="mini-sns-post-image-wrapper">
 
-        <img src="{{ post.image.url }}" alt="投稿画像" class="mini-sns-post-image">
+        <img src="{{ post.image.url }}" alt="投稿画像" class="mini-sns-post-image active">
+
+    </div>
+
+
+    {% elif post.image2 %}
+
+    <div class="mini-sns-post-image-wrapper">
+
+        <img src="{{ post.image2.url }}" alt="投稿画像" class="mini-sns-post-image active">
 
     </div>
 
@@ -73,14 +111,15 @@
         <!-- いいね -->
         <button type="button" class="mini-like-button" data-url="{% url 'toggle_like' post.id %}">
 
-            <span class="mini-like-icon">
-
+            <span class="mini-like-icon
+    {% if post.id in mini_sns_liked_post_ids %}
+        liked
+    {% endif %}">
                 {% if post.id in mini_sns_liked_post_ids %}
                 ♥
                 {% else %}
                 ♡
                 {% endif %}
-
             </span>
 
             <span class="mini-like-count">

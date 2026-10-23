@@ -1046,3 +1046,529 @@
 .sns-tab.active .sns-tab-icon {
     color: #ffffff;
 }
+
+/* ========================================
+   通常SNS 投稿前画像プレビュー
+======================================== */
+
+.sns-page-image-preview {
+    position: relative;
+
+    width: 100%;
+    max-width: 720px;
+    height: 360px;
+
+    margin-top: 14px;
+
+    overflow: hidden;
+
+    background: #111111;
+
+    border: 1px solid #aab5b7;
+    border-radius: 4px;
+}
+
+
+.sns-page-image-preview[hidden] {
+    display: none;
+}
+
+
+.sns-page-preview-image {
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+}
+
+
+/* ========================================
+   投稿前プレビュー 左右ボタン
+======================================== */
+
+.sns-page-preview-nav {
+    position: absolute;
+
+    top: 50%;
+
+    width: 44px;
+    height: 58px;
+
+    transform: translateY(-50%);
+
+    border: none;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    color: rgba(255, 255, 255, 0.9);
+
+    font-size: 34px;
+
+    cursor: pointer;
+
+    z-index: 5;
+}
+
+
+.sns-page-preview-prev {
+    left: 0;
+}
+
+
+.sns-page-preview-next {
+    right: 0;
+}
+
+
+.sns-page-preview-nav:hover {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+
+.sns-page-preview-nav[hidden] {
+    display: none;
+}
+
+
+/* ========================================
+   投稿前プレビュー 削除
+======================================== */
+
+.sns-page-preview-remove {
+    position: absolute;
+
+    top: 9px;
+    right: 9px;
+
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(0, 0, 0, 0.35);
+
+    color: rgba(255, 255, 255, 0.8);
+
+    font-size: 24px;
+
+    cursor: pointer;
+
+    z-index: 6;
+}
+
+
+.sns-page-preview-remove:hover {
+    background: rgba(0, 0, 0, 0.65);
+
+    color: #ffffff;
+}
+
+
+/* ========================================
+   投稿前プレビュー 枚数
+======================================== */
+
+.sns-page-preview-counter {
+    position: absolute;
+
+    right: 10px;
+    bottom: 10px;
+
+    padding: 4px 9px;
+
+    border-radius: 15px;
+
+    background: rgba(0, 0, 0, 0.65);
+
+    color: #ffffff;
+
+    font-size: 12px;
+
+    z-index: 5;
+}
+
+
+/* ========================================
+   画像選択ボタン
+======================================== */
+
+.sns-page-image-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 130px;
+    min-height: 38px;
+
+    padding: 8px 14px;
+
+    color: #ffffff;
+
+    background: var(--main);
+
+    border: 1px solid var(--main-dark);
+    border-radius: 3px;
+
+    font-size: 10px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.sns-page-image-button:hover {
+    background: var(--main-dark);
+}
+
+
+.sns-page-image-button input {
+    display: none;
+}
+
+
+/* ========================================
+   投稿済み画像 カルーセル
+======================================== */
+
+.sns-image-wrapper {
+    position: relative;
+}
+
+
+.sns-page-carousel {
+    height: 500px;
+
+    background: #111111;
+}
+
+
+.sns-page-carousel .sns-post-image {
+    position: absolute;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+    max-height: none;
+
+    margin: 0;
+
+    object-fit: contain;
+
+    opacity: 0;
+
+    transform: translateX(24px);
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.sns-page-carousel .sns-post-image.active {
+    opacity: 1;
+
+    transform: translateX(0);
+
+    pointer-events: auto;
+
+    cursor: zoom-in;
+}
+
+
+/* 1枚だけの投稿画像もクリック可能 */
+.sns-image-wrapper:not(.sns-page-carousel)
+.sns-post-image {
+    cursor: zoom-in;
+}
+
+
+/* ========================================
+   投稿済み画像 左右ボタン
+======================================== */
+
+.sns-page-image-nav {
+    position: absolute;
+
+    top: 50%;
+
+    width: 48px;
+    height: 64px;
+
+    transform: translateY(-50%);
+
+    border: none;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    color: rgba(255, 255, 255, 0.9);
+
+    font-size: 38px;
+
+    cursor: pointer;
+
+    z-index: 6;
+}
+
+
+.sns-page-image-prev {
+    left: 0;
+}
+
+
+.sns-page-image-next {
+    right: 0;
+}
+
+
+.sns-page-image-nav:hover {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+
+.sns-page-image-nav[hidden] {
+    display: none;
+}
+
+
+/* ========================================
+   投稿済み画像 枚数
+======================================== */
+
+.sns-page-image-counter {
+    position: absolute;
+
+    right: 12px;
+    bottom: 12px;
+
+    padding: 4px 10px;
+
+    border-radius: 15px;
+
+    background: rgba(0, 0, 0, 0.65);
+
+    color: #ffffff;
+
+    font-size: 12px;
+
+    z-index: 6;
+}
+
+
+/* ========================================
+   通常SNS 画像全画面表示
+======================================== */
+
+.sns-page-image-modal {
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 40px;
+
+    box-sizing: border-box;
+
+    background: rgba(0, 0, 0, 0.9);
+
+    z-index: 50000;
+}
+
+
+.sns-page-image-modal[hidden] {
+    display: none;
+}
+
+
+.sns-page-image-modal-image {
+    display: block;
+
+    max-width: 92vw;
+    max-height: 90vh;
+
+    width: auto;
+    height: auto;
+
+    object-fit: contain;
+}
+
+
+/* ========================================
+   全画面 閉じる
+======================================== */
+
+.sns-page-image-modal-close {
+    position: fixed;
+
+    top: 18px;
+    right: 24px;
+
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    border: none;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    color: rgba(255, 255, 255, 0.72);
+
+    font-size: 38px;
+
+    cursor: pointer;
+
+    z-index: 50002;
+}
+
+
+.sns-page-image-modal-close:hover {
+    background: rgba(255, 255, 255, 0.15);
+
+    color: #ffffff;
+}
+
+
+/* ========================================
+   全画面 左右ボタン
+======================================== */
+
+.sns-page-image-modal-nav {
+    position: fixed;
+
+    top: 50%;
+
+    width: 60px;
+    height: 80px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    transform: translateY(-50%);
+
+    border: none;
+
+    background: rgba(255, 255, 255, 0.08);
+
+    color: rgba(255, 255, 255, 0.78);
+
+    font-size: 50px;
+
+    cursor: pointer;
+
+    z-index: 50002;
+}
+
+
+.sns-page-image-modal-prev {
+    left: 20px;
+}
+
+
+.sns-page-image-modal-next {
+    right: 20px;
+}
+
+
+.sns-page-image-modal-nav:hover {
+    background: rgba(255, 255, 255, 0.16);
+
+    color: #ffffff;
+}
+
+
+.sns-page-image-modal-nav[hidden] {
+    display: none;
+}
+
+
+/* ========================================
+   全画面 枚数表示
+======================================== */
+
+.sns-page-image-modal-counter {
+    position: fixed;
+
+    left: 50%;
+    bottom: 20px;
+
+    transform: translateX(-50%);
+
+    padding: 5px 12px;
+
+    border-radius: 18px;
+
+    background: rgba(0, 0, 0, 0.55);
+
+    color: #ffffff;
+
+    font-size: 13px;
+
+    z-index: 50002;
+}
+
+
+.sns-page-image-modal-counter[hidden] {
+    display: none;
+}
+
+
+/* ========================================
+   通常SNS 画像機能 スマホ
+======================================== */
+
+@media (max-width: 600px) {
+
+    .sns-page-image-preview {
+        height: 260px;
+    }
+
+
+    .sns-page-carousel {
+        height: 320px;
+    }
+
+
+    .sns-page-image-modal {
+        padding: 20px;
+    }
+
+
+    .sns-page-image-modal-nav {
+        width: 45px;
+        height: 64px;
+
+        font-size: 38px;
+    }
+
+
+    .sns-page-image-modal-prev {
+        left: 5px;
+    }
+
+
+    .sns-page-image-modal-next {
+        right: 5px;
+    }
+}

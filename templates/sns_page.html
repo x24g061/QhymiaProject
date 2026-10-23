@@ -103,7 +103,7 @@
         </div>
 
 
-        <form method="post" enctype="multipart/form-data">
+        <form id="sns-page-post-form" method="post" enctype="multipart/form-data">
 
             {% csrf_token %}
 
@@ -118,6 +118,53 @@
             </div>
 
 
+            <!-- ========================================
+         投稿前画像プレビュー
+    ========================================= -->
+
+            <div id="sns-page-image-preview" class="sns-page-image-preview" hidden>
+
+                <img id="sns-page-preview-image" class="sns-page-preview-image" alt="投稿画像プレビュー">
+
+
+                <!-- 添付削除 -->
+                <button id="sns-page-preview-remove" type="button" class="sns-page-preview-remove" aria-label="画像を削除"
+                    title="画像を削除">
+                    ×
+                </button>
+
+
+                <!-- 前の画像 -->
+                <button id="sns-page-preview-prev" type="button" class="sns-page-preview-nav sns-page-preview-prev"
+                    hidden>
+                    ‹
+                </button>
+
+
+                <!-- 次の画像 -->
+                <button id="sns-page-preview-next" type="button" class="sns-page-preview-nav sns-page-preview-next"
+                    hidden>
+                    ›
+                </button>
+
+
+                <div class="sns-page-preview-counter">
+
+                    <span id="sns-page-preview-current">
+                        1
+                    </span>
+
+                    /
+
+                    <span id="sns-page-preview-total">
+                        1
+                    </span>
+
+                </div>
+
+            </div>
+
+
             <div class="sns-create-bottom">
 
                 <div class="sns-create-image">
@@ -126,7 +173,14 @@
                         IMAGE
                     </label>
 
-                    {{ form.image }}
+
+                    <label class="sns-page-image-button">
+
+                        画像をつける
+
+                        <input id="sns-page-image-input" type="file" accept="image/*" multiple>
+
+                    </label>
 
                 </div>
 
@@ -234,11 +288,53 @@
                 {% endif %}
 
 
-                {% if post.image %}
+                {% if post.image and post.image2 %}
+
+                <div class="sns-image-wrapper sns-page-carousel" data-current="0">
+
+                    <img src="{{ post.image.url }}" alt="投稿画像1" class="sns-post-image sns-page-slide active"
+                        data-index="0">
+
+                    <img src="{{ post.image2.url }}" alt="投稿画像2" class="sns-post-image sns-page-slide" data-index="1">
+
+
+                    <button type="button" class="sns-page-image-nav sns-page-image-prev" hidden aria-label="前の画像">
+                        ‹
+                    </button>
+
+
+                    <button type="button" class="sns-page-image-nav sns-page-image-next" aria-label="次の画像">
+                        ›
+                    </button>
+
+
+                    <div class="sns-page-image-counter">
+
+                        <span class="sns-page-image-current">
+                            1
+                        </span>
+
+                        / 2
+
+                    </div>
+
+                </div>
+
+
+                {% elif post.image %}
 
                 <div class="sns-image-wrapper">
 
-                    <img src="{{ post.image.url }}" alt="投稿画像" class="sns-post-image">
+                    <img src="{{ post.image.url }}" alt="投稿画像" class="sns-post-image active">
+
+                </div>
+
+
+                {% elif post.image2 %}
+
+                <div class="sns-image-wrapper">
+
+                    <img src="{{ post.image2.url }}" alt="投稿画像" class="sns-post-image active">
 
                 </div>
 
@@ -321,134 +417,986 @@
 </div>
 
 
+
+<!-- ========================================
+     SNS画像 全画面表示
+======================================== -->
+
+<div id="sns-page-image-modal" class="sns-page-image-modal" hidden>
+
+    <!-- 閉じる -->
+    <button id="sns-page-image-modal-close" type="button" class="sns-page-image-modal-close" aria-label="画像を閉じる">
+        ×
+    </button>
+
+
+    <!-- 前の画像 -->
+    <button id="sns-page-image-modal-prev" type="button" class="sns-page-image-modal-nav sns-page-image-modal-prev"
+        hidden aria-label="前の画像">
+        ‹
+    </button>
+
+
+    <!-- 拡大画像 -->
+    <img id="sns-page-image-modal-image" class="sns-page-image-modal-image" alt="拡大画像">
+
+
+    <!-- 次の画像 -->
+    <button id="sns-page-image-modal-next" type="button" class="sns-page-image-modal-nav sns-page-image-modal-next"
+        hidden aria-label="次の画像">
+        ›
+    </button>
+
+
+    <div id="sns-page-image-modal-counter" class="sns-page-image-modal-counter" hidden>
+
+        <span id="sns-page-image-modal-current">
+            1
+        </span>
+
+        /
+
+        <span id="sns-page-image-modal-total">
+            1
+        </span>
+
+    </div>
+
+</div>
+
+
 <script>
 
-    function getCookie(name) {
+    document.addEventListener(
+        "DOMContentLoaded",
+        function () {
 
-        const cookies =
-            document.cookie.split(";");
+            // ========================================
+            // CSRF
+            // ========================================
 
-        for (let cookie of cookies) {
+            function getCookie(name) {
 
-            cookie = cookie.trim();
+                const cookies =
+                    document.cookie.split(";");
 
-            if (
-                cookie.startsWith(
-                    name + "="
-                )
-            ) {
+                for (let cookie of cookies) {
 
-                return decodeURIComponent(
-                    cookie.substring(
-                        name.length + 1
-                    )
-                );
+                    cookie =
+                        cookie.trim();
 
+                    if (
+                        cookie.startsWith(
+                            name + "="
+                        )
+                    ) {
+
+                        return decodeURIComponent(
+                            cookie.substring(
+                                name.length + 1
+                            )
+                        );
+                    }
+                }
+
+                return null;
             }
 
-        }
 
-        return null;
-    }
+            // ========================================
+            // 投稿フォーム
+            // ========================================
+
+            const postForm =
+                document.getElementById(
+                    "sns-page-post-form"
+                );
+
+            const imageInput =
+                document.getElementById(
+                    "sns-page-image-input"
+                );
+
+            const imagePreview =
+                document.getElementById(
+                    "sns-page-image-preview"
+                );
+
+            const previewImage =
+                document.getElementById(
+                    "sns-page-preview-image"
+                );
+
+            const previewPrev =
+                document.getElementById(
+                    "sns-page-preview-prev"
+                );
+
+            const previewNext =
+                document.getElementById(
+                    "sns-page-preview-next"
+                );
+
+            const previewRemove =
+                document.getElementById(
+                    "sns-page-preview-remove"
+                );
+
+            const previewCurrent =
+                document.getElementById(
+                    "sns-page-preview-current"
+                );
+
+            const previewTotal =
+                document.getElementById(
+                    "sns-page-preview-total"
+                );
 
 
-    // =========================
-    // いいね
-    // =========================
+            let selectedImages = [];
 
-    document
-        .querySelectorAll(".like-button")
-        .forEach(button => {
+            let previewIndex = 0;
 
-            button.addEventListener(
-                "click",
-                async () => {
 
-                    const postId =
-                        button.dataset.postId;
+            // ========================================
+            // 投稿前プレビュー更新
+            // ========================================
 
-                    const response =
-                        await fetch(
-                            `/sns/like/${postId}/`,
-                            {
-                                method: "POST",
+            function updatePreview() {
 
-                                headers: {
-                                    "X-CSRFToken":
-                                        getCookie(
-                                            "csrftoken"
-                                        ),
-                                },
-                            }
-                        );
+                if (
+                    selectedImages.length === 0
+                ) {
 
-                    const data =
-                        await response.json();
+                    imagePreview.hidden =
+                        true;
 
-                    button
-                        .querySelector(
-                            ".like-count"
-                        )
-                        .textContent =
-                        data.like_count;
+                    previewImage.removeAttribute(
+                        "src"
+                    );
 
+                    return;
                 }
-            );
-
-        });
 
 
-    // =========================
-    // お気に入り
-    // =========================
+                const file =
+                    selectedImages[
+                    previewIndex
+                    ];
 
-    document
-        .querySelectorAll(
-            ".favorite-button"
-        )
-        .forEach(button => {
 
-            button.addEventListener(
-                "click",
-                async () => {
+                previewImage.src =
+                    URL.createObjectURL(
+                        file
+                    );
 
-                    const postId =
-                        button.dataset.postId;
 
-                    const response =
-                        await fetch(
-                            `/sns/favorite/${postId}/`,
-                            {
-                                method: "POST",
+                imagePreview.hidden =
+                    false;
 
-                                headers: {
-                                    "X-CSRFToken":
-                                        getCookie(
-                                            "csrftoken"
-                                        ),
-                                },
+
+                previewCurrent.textContent =
+                    previewIndex + 1;
+
+                previewTotal.textContent =
+                    selectedImages.length;
+
+
+                previewPrev.hidden =
+                    previewIndex === 0;
+
+                previewNext.hidden =
+                    previewIndex ===
+                    selectedImages.length - 1;
+            }
+
+
+            // ========================================
+            // 画像選択
+            // ========================================
+
+            if (imageInput) {
+
+                imageInput.addEventListener(
+                    "change",
+                    function () {
+
+                        const newImages =
+                            Array.from(
+                                imageInput.files
+                            );
+
+
+                        newImages.forEach(
+                            function (file) {
+
+                                if (
+                                    selectedImages.length
+                                    < 2
+                                ) {
+
+                                    selectedImages.push(
+                                        file
+                                    );
+                                }
+
                             }
                         );
 
-                    const data =
-                        await response.json();
 
-                    if (data.favorited) {
+                        previewIndex = 0;
 
-                        button.textContent =
-                            "★ お気に入り済み";
+                        updatePreview();
+
+
+                        // 同じ画像を再選択できるようにする
+                        imageInput.value = "";
+
+                    }
+                );
+            }
+
+
+            // ========================================
+            // プレビュー 前へ
+            // ========================================
+
+            if (previewPrev) {
+
+                previewPrev.addEventListener(
+                    "click",
+                    function () {
+
+                        if (
+                            previewIndex > 0
+                        ) {
+
+                            previewIndex--;
+
+                            updatePreview();
+                        }
+
+                    }
+                );
+            }
+
+
+            // ========================================
+            // プレビュー 次へ
+            // ========================================
+
+            if (previewNext) {
+
+                previewNext.addEventListener(
+                    "click",
+                    function () {
+
+                        if (
+                            previewIndex <
+                            selectedImages.length - 1
+                        ) {
+
+                            previewIndex++;
+
+                            updatePreview();
+                        }
+
+                    }
+                );
+            }
+
+
+            // ========================================
+            // 添付画像削除
+            // ========================================
+
+            if (previewRemove) {
+
+                previewRemove.addEventListener(
+                    "click",
+                    function () {
+
+                        if (
+                            selectedImages.length === 0
+                        ) {
+                            return;
+                        }
+
+
+                        selectedImages.splice(
+                            previewIndex,
+                            1
+                        );
+
+
+                        if (
+                            previewIndex >=
+                            selectedImages.length
+                        ) {
+
+                            previewIndex =
+                                Math.max(
+                                    0,
+                                    selectedImages.length - 1
+                                );
+                        }
+
+
+                        updatePreview();
+
+                    }
+                );
+            }
+
+
+            // ========================================
+            // 投稿
+            // ========================================
+
+            if (postForm) {
+
+                postForm.addEventListener(
+                    "submit",
+                    async function (event) {
+
+                        event.preventDefault();
+
+
+                        const submitButton =
+                            postForm.querySelector(
+                                ".sns-submit-button"
+                            );
+
+
+                        submitButton.disabled =
+                            true;
+
+
+                        try {
+
+                            const formData =
+                                new FormData(
+                                    postForm
+                                );
+
+
+                            formData.delete(
+                                "image"
+                            );
+
+                            formData.delete(
+                                "image2"
+                            );
+
+
+                            if (
+                                selectedImages[0]
+                            ) {
+
+                                formData.append(
+                                    "image",
+                                    selectedImages[0]
+                                );
+                            }
+
+
+                            if (
+                                selectedImages[1]
+                            ) {
+
+                                formData.append(
+                                    "image2",
+                                    selectedImages[1]
+                                );
+                            }
+
+
+                            const response =
+                                await fetch(
+                                    window.location.href,
+                                    {
+                                        method: "POST",
+
+                                        headers: {
+                                            "X-CSRFToken":
+                                                getCookie(
+                                                    "csrftoken"
+                                                ),
+                                        },
+
+                                        body:
+                                            formData,
+                                    }
+                                );
+
+
+                            if (!response.ok) {
+
+                                throw new Error(
+                                    "投稿に失敗しました。"
+                                );
+                            }
+
+
+                            // 投稿完了後にSNSを再表示
+                            window.location.href =
+                                response.url;
+
+                        } catch (error) {
+
+                            console.error(
+                                error
+                            );
+
+                            alert(
+                                error.message
+                            );
+
+                            submitButton.disabled =
+                                false;
+                        }
+
+                    }
+                );
+            }
+
+
+            // ========================================
+            // 投稿済み画像カルーセル
+            // ========================================
+
+            document.addEventListener(
+                "click",
+                function (event) {
+
+                    const nextButton =
+                        event.target.closest(
+                            ".sns-page-image-next"
+                        );
+
+                    const prevButton =
+                        event.target.closest(
+                            ".sns-page-image-prev"
+                        );
+
+
+                    if (
+                        !nextButton &&
+                        !prevButton
+                    ) {
+                        return;
+                    }
+
+
+                    const carousel =
+                        event.target.closest(
+                            ".sns-page-carousel"
+                        );
+
+
+                    if (!carousel) {
+                        return;
+                    }
+
+
+                    const slides =
+                        carousel.querySelectorAll(
+                            ".sns-page-slide"
+                        );
+
+
+                    let current =
+                        Number(
+                            carousel.dataset.current
+                            || 0
+                        );
+
+
+                    if (nextButton) {
+
+                        current =
+                            Math.min(
+                                current + 1,
+                                slides.length - 1
+                            );
 
                     } else {
 
-                        button.textContent =
-                            "☆ お気に入り";
+                        current =
+                            Math.max(
+                                current - 1,
+                                0
+                            );
+                    }
 
+
+                    carousel.dataset.current =
+                        current;
+
+
+                    slides.forEach(
+                        function (
+                            slide,
+                            index
+                        ) {
+
+                            slide.classList.toggle(
+                                "active",
+                                index === current
+                            );
+
+                        }
+                    );
+
+
+                    const prev =
+                        carousel.querySelector(
+                            ".sns-page-image-prev"
+                        );
+
+                    const next =
+                        carousel.querySelector(
+                            ".sns-page-image-next"
+                        );
+
+
+                    prev.hidden =
+                        current === 0;
+
+                    next.hidden =
+                        current ===
+                        slides.length - 1;
+
+
+                    const counter =
+                        carousel.querySelector(
+                            ".sns-page-image-current"
+                        );
+
+
+                    if (counter) {
+
+                        counter.textContent =
+                            current + 1;
                     }
 
                 }
             );
 
-        });
+
+            // ========================================
+            // 全画面画像
+            // ========================================
+
+            const imageModal =
+                document.getElementById(
+                    "sns-page-image-modal"
+                );
+
+            const modalImage =
+                document.getElementById(
+                    "sns-page-image-modal-image"
+                );
+
+            const modalClose =
+                document.getElementById(
+                    "sns-page-image-modal-close"
+                );
+
+            const modalPrev =
+                document.getElementById(
+                    "sns-page-image-modal-prev"
+                );
+
+            const modalNext =
+                document.getElementById(
+                    "sns-page-image-modal-next"
+                );
+
+            const modalCounter =
+                document.getElementById(
+                    "sns-page-image-modal-counter"
+                );
+
+            const modalCurrent =
+                document.getElementById(
+                    "sns-page-image-modal-current"
+                );
+
+            const modalTotal =
+                document.getElementById(
+                    "sns-page-image-modal-total"
+                );
+
+
+            let modalImages = [];
+
+            let modalIndex = 0;
+
+
+            // ========================================
+            // 全画面画像更新
+            // ========================================
+
+            function updateModal() {
+
+                if (
+                    modalImages.length === 0
+                ) {
+                    return;
+                }
+
+
+                modalImage.src =
+                    modalImages[
+                    modalIndex
+                    ];
+
+
+                modalPrev.hidden =
+                    modalImages.length <= 1 ||
+                    modalIndex === 0;
+
+
+                modalNext.hidden =
+                    modalImages.length <= 1 ||
+                    modalIndex ===
+                    modalImages.length - 1;
+
+
+                modalCounter.hidden =
+                    modalImages.length <= 1;
+
+
+                modalCurrent.textContent =
+                    modalIndex + 1;
+
+                modalTotal.textContent =
+                    modalImages.length;
+            }
+
+
+            // ========================================
+            // 投稿画像クリック
+            // ========================================
+
+            document.addEventListener(
+                "click",
+                function (event) {
+
+                    const clickedImage =
+                        event.target.closest(
+                            ".sns-post-image"
+                        );
+
+
+                    if (!clickedImage) {
+                        return;
+                    }
+
+
+                    const carousel =
+                        clickedImage.closest(
+                            ".sns-page-carousel"
+                        );
+
+
+                    if (carousel) {
+
+                        const slides =
+                            Array.from(
+                                carousel.querySelectorAll(
+                                    ".sns-page-slide"
+                                )
+                            );
+
+
+                        modalImages =
+                            slides.map(
+                                function (slide) {
+
+                                    return slide.src;
+
+                                }
+                            );
+
+
+                        modalIndex =
+                            slides.indexOf(
+                                clickedImage
+                            );
+
+
+                        if (
+                            modalIndex < 0
+                        ) {
+
+                            modalIndex = 0;
+                        }
+
+                    } else {
+
+                        modalImages = [
+                            clickedImage.src
+                        ];
+
+                        modalIndex = 0;
+                    }
+
+
+                    updateModal();
+
+
+                    imageModal.hidden =
+                        false;
+
+                    document.body.style.overflow =
+                        "hidden";
+
+                }
+            );
+
+
+            // ========================================
+            // 全画面 前へ
+            // ========================================
+
+            if (modalPrev) {
+
+                modalPrev.addEventListener(
+                    "click",
+                    function () {
+
+                        if (
+                            modalIndex > 0
+                        ) {
+
+                            modalIndex--;
+
+                            updateModal();
+                        }
+
+                    }
+                );
+            }
+
+
+            // ========================================
+            // 全画面 次へ
+            // ========================================
+
+            if (modalNext) {
+
+                modalNext.addEventListener(
+                    "click",
+                    function () {
+
+                        if (
+                            modalIndex <
+                            modalImages.length - 1
+                        ) {
+
+                            modalIndex++;
+
+                            updateModal();
+                        }
+
+                    }
+                );
+            }
+
+
+            // ========================================
+            // 全画面を閉じる
+            // ========================================
+
+            function closeModal() {
+
+                imageModal.hidden =
+                    true;
+
+                modalImage.removeAttribute(
+                    "src"
+                );
+
+                document.body.style.overflow =
+                    "";
+            }
+
+
+            if (modalClose) {
+
+                modalClose.addEventListener(
+                    "click",
+                    closeModal
+                );
+            }
+
+
+            // 黒背景クリック
+            if (imageModal) {
+
+                imageModal.addEventListener(
+                    "click",
+                    function (event) {
+
+                        if (
+                            event.target ===
+                            imageModal
+                        ) {
+
+                            closeModal();
+                        }
+
+                    }
+                );
+            }
+
+
+            // Esc
+            document.addEventListener(
+                "keydown",
+                function (event) {
+
+                    if (
+                        event.key ===
+                        "Escape" &&
+                        imageModal &&
+                        !imageModal.hidden
+                    ) {
+
+                        closeModal();
+                    }
+
+                }
+            );
+
+
+            // ========================================
+            // いいね
+            // ========================================
+
+            document
+                .querySelectorAll(
+                    ".like-button"
+                )
+                .forEach(
+                    function (button) {
+
+                        button.addEventListener(
+                            "click",
+                            async function () {
+
+                                const postId =
+                                    button.dataset.postId;
+
+
+                                const response =
+                                    await fetch(
+                                        `/sns/like/${postId}/`,
+                                        {
+                                            method:
+                                                "POST",
+
+                                            headers: {
+                                                "X-CSRFToken":
+                                                    getCookie(
+                                                        "csrftoken"
+                                                    ),
+                                            },
+                                        }
+                                    );
+
+
+                                if (!response.ok) {
+                                    return;
+                                }
+
+
+                                const data =
+                                    await response.json();
+
+
+                                button
+                                    .querySelector(
+                                        ".like-count"
+                                    )
+                                    .textContent =
+                                    data.like_count;
+
+                            }
+                        );
+
+                    }
+                );
+
+
+            // ========================================
+            // お気に入り
+            // ========================================
+
+            document
+                .querySelectorAll(
+                    ".favorite-button"
+                )
+                .forEach(
+                    function (button) {
+
+                        button.addEventListener(
+                            "click",
+                            async function () {
+
+                                const postId =
+                                    button.dataset.postId;
+
+
+                                const response =
+                                    await fetch(
+                                        `/sns/favorite/${postId}/`,
+                                        {
+                                            method:
+                                                "POST",
+
+                                            headers: {
+                                                "X-CSRFToken":
+                                                    getCookie(
+                                                        "csrftoken"
+                                                    ),
+                                            },
+                                        }
+                                    );
+
+
+                                if (!response.ok) {
+                                    return;
+                                }
+
+
+                                const data =
+                                    await response.json();
+
+
+                                if (
+                                    data.favorited
+                                ) {
+
+                                    button.textContent =
+                                        "★ お気に入り済み";
+
+                                } else {
+
+                                    button.textContent =
+                                        "☆ お気に入り";
+                                }
+
+                            }
+                        );
+
+                    }
+                );
+
+        }
+    );
 
 </script>
 {% endblock %}
