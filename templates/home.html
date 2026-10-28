@@ -6,10 +6,7 @@
 
 {% block header_left_extra %}
 
-<a
-    href="{% url 'accounts:logout' %}"
-    class="home-header-logout"
->
+<a href="{% url 'accounts:logout' %}" class="home-header-logout">
     ログアウト
 </a>
 
@@ -18,11 +15,7 @@
 
 {% block header_right_extra %}
 
-<button
-    type="button"
-    id="sns-open-home"
-    class="header-mini-sns-button"
->
+<button type="button" id="sns-open-home" class="header-mini-sns-button">
     ミニSNSを開く
 </button>
 
@@ -1077,27 +1070,27 @@
                             探索場所
                         </label>
 
-<select id="exploration-floor" name="floor">
+                        <select id="exploration-floor" name="floor">
 
-    {% for floor in exploration_floors %}
+                            {% for floor in exploration_floors %}
 
-    <option
-        value="{{ floor }}"
-        {% if floor > max_unlocked_floor %}
-            disabled
-        {% endif %}
-    >
-        {{ floor }}階層
+                            {% if floor > max_unlocked_floor %}
 
-        {% if floor > max_unlocked_floor %}
-            🔒 未解放
-        {% endif %}
-    </option>
+                            <option value="{{ floor }}" disabled>
+                                {{ floor }}階層 🔒 未解放
+                            </option>
 
-    {% endfor %}
+                            {% else %}
 
-</select>
+                            <option value="{{ floor }}">
+                                {{ floor }}階層
+                            </option>
 
+                            {% endif %}
+
+                            {% endfor %}
+
+                        </select>
                     </div>
 
 
@@ -1241,7 +1234,44 @@
 
         </section>
 
+        <!-- ============================
+     ミニゲーム
+============================ -->
+        <section class="mini-game-section">
 
+            <div class="mini-game-header">
+                <p class="mini-game-label">MINI GAME</p>
+                <h2>ミニゲーム</h2>
+            </div>
+
+            <p class="mini-game-description">
+                冒険の合間に、ちょっとひと休み。
+            </p>
+
+            <div class="mini-game-list">
+
+                <a href="{% url 'game:fishing' %}" class="mini-game-item">
+
+                    <span class="mini-game-icon">🎣</span>
+
+                    <span class="mini-game-info">
+                        <strong>釣り</strong>
+                        <small>
+                            魚を引き寄せて釣り上げよう！
+                        </small>
+                    </span>
+
+                    <span class="mini-game-arrow">→</span>
+
+                </a>
+
+            </div>
+
+            <p class="mini-game-footer">
+                今後もミニゲームを追加予定！
+            </p>
+
+        </section>
 
         <!-- =============================
                  オープンチャット
