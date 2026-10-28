@@ -1,233 +1,242 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block title %}
-戦術 | Qhymia
+{% block title %}戦術 | Qhymia{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/tactics.css' %}">
 {% endblock %}
 
 {% block content %}
 
 <div class="tactics-page">
 
-    <h1>戦術</h1>
+    <!-- ページヘッダー -->
+    <div class="tactics-heading">
+        <div>
+            <p class="tactics-eyebrow">TACTICS</p>
+            <h1>戦術設定</h1>
+            <p class="tactics-intro">
+                キャラクターの戦闘スキルと発動順を設定します。
+            </p>
+        </div>
 
-    <a href="{% url 'home' %}">
-        ホームへ戻る
-    </a>
+        <a href="{% url 'home' %}" class="tactics-home-link">
+            ← ホームへ戻る
+        </a>
+    </div>
 
+    <!-- キャラクター情報 -->
+    <section class="tactics-card">
 
-    <!-- =========================
-         キャラクター情報
-    ========================== -->
+        <div class="tactics-section-heading">
+            <p class="tactics-eyebrow">CHARACTER</p>
+            <h2>キャラクター情報</h2>
+        </div>
 
-    <section>
+        <div class="tactics-profile">
+            <div class="tactics-profile-item">
+                <span>キャラクター名</span>
+                <strong>{{ character.name }}</strong>
+            </div>
+            <div class="tactics-profile-item">
+                <span>種族</span>
+                <strong>{{ character.get_race_display }}</strong>
+            </div>
+            <div class="tactics-profile-item">
+                <span>職業</span>
+                <strong>{{ character.get_job_display }}</strong>
+            </div>
+        </div>
 
-        <h2>キャラクター</h2>
+        <h3 class="tactics-subheading">基本ステータス</h3>
 
-        <p>
-            名前：
-            {{ character.name }}
-        </p>
-
-        <p>
-            種族：
-            {{ character.get_race_display }}
-        </p>
-
-        <p>
-            職業：
-            {{ character.get_job_display }}
-        </p>
-
-        <p>
-            HP：
-            {{ character.max_hp }}
-        </p>
-
-        <p>
-            MP：
-            {{ character.max_mp }}
-        </p>
-
-        <p>
-            STR：
-            {{ character.strength }}
-        </p>
-
-        <p>
-            INT：
-            {{ character.intelligence }}
-        </p>
-
-        <p>
-            DEX：
-            {{ character.dexterity }}
-        </p>
-
-        <p>
-            AGI：
-            {{ character.agility }}
-        </p>
-
-        <p>
-            VIT：
-            {{ character.vitality }}
-        </p>
-
-        <p>
-            LUK：
-            {{ character.luck }}
-        </p>
+        <div class="tactics-stats">
+            <div class="tactics-stat">
+                <span>HP</span>
+                <strong>{{ character.max_hp }}</strong>
+            </div>
+            <div class="tactics-stat">
+                <span>MP</span>
+                <strong>{{ character.max_mp }}</strong>
+            </div>
+            <div class="tactics-stat">
+                <span>STR</span>
+                <strong>{{ character.strength }}</strong>
+            </div>
+            <div class="tactics-stat">
+                <span>INT</span>
+                <strong>{{ character.intelligence }}</strong>
+            </div>
+            <div class="tactics-stat">
+                <span>DEX</span>
+                <strong>{{ character.dexterity }}</strong>
+            </div>
+            <div class="tactics-stat">
+                <span>AGI</span>
+                <strong>{{ character.agility }}</strong>
+            </div>
+            <div class="tactics-stat">
+                <span>VIT</span>
+                <strong>{{ character.vitality }}</strong>
+            </div>
+            <div class="tactics-stat">
+                <span>LUK</span>
+                <strong>{{ character.luck }}</strong>
+            </div>
+        </div>
 
     </section>
 
+    <!-- スキルプリセット -->
+    <section class="tactics-card">
 
-    <!-- =========================
-         スキルプリセット
-    ========================== -->
+        <div class="tactics-section-heading">
+            <p class="tactics-eyebrow">SKILL PRESET</p>
+            <h2>スキルプリセット</h2>
+        </div>
 
-    <section>
-
-        <h2>スキルプリセット</h2>
-
-        <p>
+        <p class="tactics-description">
             戦闘で使用するスキルを上から順番に設定します。
+            各スロットのスキルと使用回数を選んで保存してください。
         </p>
 
         {% if error_message %}
-            <p>
-                {{ error_message }}
-            </p>
+        <div class="tactics-error" role="alert">
+            {{ error_message }}
+        </div>
         {% endif %}
 
-        <form method="post">
-
+        <form method="post" class="tactics-form">
             {% csrf_token %}
 
-            {% for slot_data in preset_slots %}
+            <div class="tactics-slot-grid">
 
-                <div class="preset-slot">
+                {% for slot_data in preset_slots %}
 
-                    <h3>
-                        SLOT {{ slot_data.slot }}
-                    </h3>
+                <div class="tactics-slot">
+                    <div class="tactics-slot-heading">
+                        <h3>SLOT {{ slot_data.slot }}</h3>
+                        <span>発動順 {{ slot_data.slot }}</span>
+                    </div>
 
-                    <div>
-
-                        <label>
-                            スキル
+                    <div class="tactics-field">
+                        <label for="skill-{{ slot_data.slot }}">
+                            使用スキル
                         </label>
 
-                        <select
-                            name="skill_{{ slot_data.slot }}"
-                        >
-
-                            <option value="">
-                                未設定
-                            </option>
+                        <select id="skill-{{ slot_data.slot }}" name="skill_{{ slot_data.slot }}">
+                            <option value="">未設定</option>
 
                             {% for skill in available_skills %}
 
-                                <option
-                                    value="{{ skill.id }}"
+                            {% if slot_data.preset and slot_data.preset.skill.id == skill.id %}
 
-                                    {% if slot_data.preset and slot_data.preset.skill.id == skill.id %}
-                                        selected
-                                    {% endif %}
-                                >
+                            <option value="{{ skill.id }}" selected>
+                                {{ skill.name }}
+                                {% if skill.is_passive %}
+                                【PASSIVE】
+                                {% else %}
+                                MP {{ skill.mp_cost }}
+                                {% endif %}
+                            </option>
 
-                                    {{ skill.name }}
+                            {% else %}
 
-                                    {% if skill.is_passive %}
-                                        【PASSIVE】
-                                    {% else %}
-                                        MP {{ skill.mp_cost }}
-                                    {% endif %}
+                            <option value="{{ skill.id }}">
+                                {{ skill.name }}
+                                {% if skill.is_passive %}
+                                【PASSIVE】
+                                {% else %}
+                                MP {{ skill.mp_cost }}
+                                {% endif %}
+                            </option>
 
-                                </option>
+                            {% endif %}
 
                             {% endfor %}
-
                         </select>
-
                     </div>
 
-
-                    <div>
-
-                        <label>
+                    <div class="tactics-field">
+                        <label for="use-count-{{ slot_data.slot }}">
                             使用回数
                         </label>
 
-                        <input
-                            type="number"
-                            name="use_count_{{ slot_data.slot }}"
-                            min="1"
-
-                            {% if slot_data.preset %}
-                                value="{{ slot_data.preset.use_count }}"
-                            {% else %}
-                                value="1"
-                            {% endif %}
-                        >
-
+                        <input id="use-count-{{ slot_data.slot }}" type="number" name="use_count_{{ slot_data.slot }}"
+                            min="1" value="{{ slot_data.preset.use_count|default:1 }}">
                     </div>
 
                 </div>
 
-            {% endfor %}
+                {% endfor %}
 
+            </div>
 
-            <button type="submit">
+            <button type="submit" class="tactics-save">
                 プリセットを保存
             </button>
-
         </form>
 
     </section>
 
-    <!-- =========================
-         使用可能スキル
-    ========================== -->
+    <!-- 使用可能スキル -->
+    <section class="tactics-card">
 
-    <section>
+        <div class="tactics-section-heading">
+            <p class="tactics-eyebrow">AVAILABLE SKILLS</p>
+            <h2>使用可能スキル</h2>
+        </div>
 
-        <h2>使用可能スキル</h2>
+        <p class="tactics-description">
+            現在のキャラクターが使用できるスキル一覧です。
+        </p>
 
-        {% for skill in available_skills %}
+        <div class="tactics-skills-grid">
 
-            <div>
+            {% for skill in available_skills %}
 
-                <h3>
-                    {{ skill.name }}
-                </h3>
+            <article class="tactics-skill">
 
-                <p>
-                    属性：
-                    {{ skill.get_attribute_display }}
-                </p>
+                <div class="tactics-skill-heading">
+                    <h3>{{ skill.name }}</h3>
 
-                <p>
-                    種別：
-                    {{ skill.get_skill_type_display }}
-                </p>
+                    {% if skill.is_passive %}
+                    <span class="tactics-skill-tag">PASSIVE</span>
+                    {% else %}
+                    <span class="tactics-skill-mp">
+                        MP {{ skill.mp_cost }}
+                    </span>
+                    {% endif %}
+                </div>
 
-                <p>
-                    MP：
-                    {{ skill.mp_cost }}
-                </p>
+                <div class="tactics-skill-meta">
+                    <span>
+                        属性：{{ skill.get_attribute_display }}
+                    </span>
+                    <span>
+                        種別：{{ skill.get_skill_type_display }}
+                    </span>
+                    <span>
+                        発動率：{{ skill.activation_rate }}%
+                    </span>
+                </div>
 
-                <p>
-                    発動率：
-                    {{ skill.activation_rate }}%
-                </p>
-
-                <p>
+                <p class="tactics-skill-description">
                     {{ skill.description }}
                 </p>
 
-            </div>
+            </article>
 
-        {% endfor %}
+            {% empty %}
+
+            <p class="tactics-empty">
+                現在使用できるスキルはありません。
+            </p>
+
+            {% endfor %}
+
+        </div>
 
     </section>
 
