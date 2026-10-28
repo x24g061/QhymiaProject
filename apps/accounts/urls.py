@@ -6,6 +6,7 @@ from .views import (
     character_create_view,
     character_list_view,
     character_image_change_view,
+    passive_detail_view,
     palm_view,
     login_view,
     logout_view,
@@ -67,6 +68,13 @@ urlpatterns = [
         "character/list/",
         character_list_view,
         name="character_list",
+    ),
+
+    # 種族パッシブ詳細
+    path(
+        "character/passive/",
+        passive_detail_view,
+        name="passive_detail",
     ),
 
         # キャラクター画像変更

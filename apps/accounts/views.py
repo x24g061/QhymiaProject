@@ -296,7 +296,14 @@ def character_list_view(request):
             "characters": characters,
         },
     )
+    # パッシブ詳細画面
+@login_required
+def passive_detail_view(request):
 
+    return render(
+        request,
+        "passive_detail.html",
+    )
 # キャラクター画像変更
 @login_required
 def character_image_change_view(request):
