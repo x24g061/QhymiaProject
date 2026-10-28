@@ -29,4 +29,9 @@ urlpatterns = [
         views.arena_next_floor,
         name="arena_next_floor",
     ),
+    path(
+        "arena/result/<int:history_id>/",
+        views.arena_result,
+        name="arena_result",
+    ),
 ]
