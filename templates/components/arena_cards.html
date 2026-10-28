@@ -1,0 +1,46 @@
+{% load static %}
+<div class="arena-card-list">
+    {% for card in arena_cards %}
+    <div class="arena-card-slot">
+        {% if card.exists %}
+        <div class="arena-card{% if card.is_current %} arena-card-current{% endif %}">
+            <div class="arena-card-header">
+                闘技場{{ card.floor }}階{% if card.is_current %}（現在階）{% endif %}
+            </div>
+            <div class="arena-card-body">
+                <div class="arena-card-avatar">
+                    {% if card.master.character_image_path %}
+                    <img src="{% static card.master.character_image_path %}" alt="{{ card.master.name }}" class="arena-card-avatar-image">
+                    {% elif card.master %}
+                    {{ card.master.name|slice:":1" }}
+                    {% else %}?{% endif %}
+                </div>
+                <h3 class="arena-card-name attribute-{{ card.attribute }}">
+                    {% if card.master %}{{ card.master.name }}{% else %}空席{% endif %}
+                </h3>
+                {% if card.master %}
+                <div class="arena-card-gauge hp-gauge">
+                    <div class="arena-card-gauge-fill js-arena-gauge-fill" data-current="{{ card.hp }}" data-max="{{ card.master.max_hp }}"></div>
+                </div>
+                <p class="arena-card-vitals">HP {{ card.hp }} / {{ card.master.max_hp }}</p>
+                <div class="arena-card-gauge mp-gauge">
+                    <div class="arena-card-gauge-fill js-arena-gauge-fill" data-current="{{ card.mp }}" data-max="{{ card.master.max_mp }}"></div>
+                </div>
+                <p class="arena-card-vitals">MP {{ card.mp }} / {{ card.master.max_mp }}</p>
+                {% endif %}
+                <p class="arena-card-streak">
+                    {% if card.master %}
+                        連勝数：{{ card.master.arena_win_streak }}連勝
+                    {% else %}
+                        マスター募集中
+                    {% endif %}
+                </p>
+
+            </div>
+        </div>
+        {% else %}
+        <div class="arena-edge-message"><p>これより先の階はありません</p></div>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>

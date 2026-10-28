@@ -1,10 +1,13 @@
 from unittest.mock import patch
+from datetime import timedelta
 
 from django.test import TestCase
 from django.urls import reverse
+from django.utils import timezone
 
 from apps.accounts.models import Character, User
 from apps.accounts.growth import apply_exploration_exp
+from apps.accounts.growth import apply_character_exp
 from apps.battle.models import Enemy
 from apps.battle.services import BattleEngine
 from apps.battle.combatants import (
@@ -17,21 +20,458 @@ from apps.inventory.models import (
     Item,
     OwnedEquipment,
 )
-
 from apps.battle.models import (
     Enemy,
     FloorDropItem,
     FloorProgress,
 )
-
 from apps.battle.progression import (
     get_max_unlocked_floor,
     should_encounter_boss,
 )
-
 from apps.battle.drops import (
     grant_exploration_drop,
 )
+from apps.battle.arena_engine import (
+    ArenaBattleEngine,
+)
+from apps.battle.models import (
+    ArenaFloor,
+    ArenaState,
+)
+from apps.battle.arena_services import (
+    claim_vacant_arena_floor,
+)
+from apps.battle.arena_services import challenge_arena_master
+from apps.battle.models import ArenaBattleHistory
+
+
+class PlayerCombatantArenaTests(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create_user(
+            user_id="arena_combatant_user",
+            email="arena_combatant@example.com",
+            password="testpass123",
+        )
+
+        self.character = Character.objects.create(
+            user=self.user,
+            name="闘技場戦士",
+            race="human",
+            job="wanderer",
+            max_hp=100,
+            current_hp=80,
+            max_mp=50,
+            current_mp=40,
+        )
+
+    def test_arena_starting_hp_and_mp_override_character_values(self):
+        """
+        闘技場用HP / MPを指定した場合、
+        Character.current_hp / current_mpではなく
+        指定値から戦闘を開始する。
+        """
+
+        combatant = PlayerCombatant(
+            self.character,
+            starting_stamina=100,
+            starting_hp=25,
+            starting_mp=12,
+        )
+
+        self.assertEqual(
+            combatant.hp,
+            25,
+        )
+
+        self.assertEqual(
+            combatant.mp,
+            12,
+        )
+
+        self.assertEqual(
+            combatant.stamina,
+            100,
+        )
+
+    def test_default_starting_hp_and_mp_still_use_character_values(self):
+        """
+        闘技場用HP / MPを指定しない場合は、
+        従来通りCharacterの値を使用する。
+        """
+
+        combatant = PlayerCombatant(
+            self.character,
+        )
+
+        self.assertEqual(
+            combatant.hp,
+            80,
+        )
+
+        self.assertEqual(
+            combatant.mp,
+            40,
+        )
+
+
+class ArenaBattleEngineTests(TestCase):
+
+    def setUp(self):
+        self.challenger_user = User.objects.create_user(
+            user_id="arena_challenger",
+            email="arena_challenger@example.com",
+            password="testpass123",
+        )
+
+        self.defender_user = User.objects.create_user(
+            user_id="arena_defender",
+            email="arena_defender@example.com",
+            password="testpass123",
+        )
+
+        self.challenger = Character.objects.create(
+            user=self.challenger_user,
+            name="挑戦者",
+            max_hp=100,
+            current_hp=100,
+            max_mp=50,
+            current_mp=50,
+        )
+
+        self.defender = Character.objects.create(
+            user=self.defender_user,
+            name="防衛者",
+            max_hp=120,
+            current_hp=120,
+            max_mp=60,
+            current_mp=60,
+        )
+
+        self.floor = ArenaFloor.objects.get(
+            floor=1,
+        )
+
+        self.challenger_state = ArenaState.objects.create(
+            character=self.challenger,
+            floor=self.floor,
+            current_hp=35,
+            current_mp=20,
+        )
+
+        self.defender_state = ArenaState.objects.create(
+            character=self.defender,
+            floor=self.floor,
+            current_hp=70,
+            current_mp=15,
+        )
+
+    def test_arena_engine_uses_arena_hp_and_mp(self):
+        engine = ArenaBattleEngine(
+            challenger=self.challenger,
+            defender=self.defender,
+            challenger_state=self.challenger_state,
+            defender_state=self.defender_state,
+        )
+
+        self.assertEqual(
+            engine.challenger_hp,
+            35,
+        )
+
+        self.assertEqual(
+            engine.challenger_mp,
+            20,
+        )
+
+        self.assertEqual(
+            engine.defender_hp,
+            70,
+        )
+
+        self.assertEqual(
+            engine.defender_mp,
+            15,
+        )
+
+    def test_arena_stamina_always_starts_at_100(self):
+        engine = ArenaBattleEngine(
+            challenger=self.challenger,
+            defender=self.defender,
+            challenger_state=self.challenger_state,
+            defender_state=self.defender_state,
+        )
+
+        self.assertEqual(
+            engine.challenger_combatant.stamina,
+            100,
+        )
+
+        self.assertEqual(
+            engine.defender_combatant.stamina,
+            100,
+        )
+
+    def test_cannot_battle_against_self(self):
+        with self.assertRaises(ValueError):
+            ArenaBattleEngine(
+                challenger=self.challenger,
+                defender=self.challenger,
+                challenger_state=self.challenger_state,
+                defender_state=self.challenger_state,
+            )
+
+
+    # ========================================
+    # PvP通常攻撃：ミス
+    # ========================================
+
+    def test_challenger_normal_attack_miss(self):
+        engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        with patch(
+            "apps.battle.arena_engine.roll_percent",
+            return_value=False,
+        ):
+            result = engine.challenger_normal_attack()
+
+        self.assertFalse(result["hit"])
+        self.assertEqual(result["damage"], 0)
+
+        # 防衛者のHPは減らない
+        self.assertEqual(engine.defender_hp, 70)
+
+        # ミスしてもSTは5消費
+        self.assertEqual(
+            engine.challenger_combatant.stamina,
+            95,
+        )
+
+
+    # ========================================
+    # PvP通常攻撃：命中
+    # ========================================
+
+    def test_challenger_normal_attack_hit(self):
+        engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        # 命中成功・クリティカル失敗
+        with patch(
+            "apps.battle.arena_engine.roll_percent",
+            side_effect=[True, False],
+        ):
+            result = engine.challenger_normal_attack()
+
+        self.assertTrue(result["hit"])
+        self.assertFalse(result["critical"])
+        self.assertGreater(result["damage"], 0)
+
+        self.assertEqual(
+            engine.defender_hp,
+            max(0, 70 - result["damage"]),
+        )
+
+        self.assertEqual(
+            engine.challenger_combatant.stamina,
+            95,
+        )
+
+
+    # ========================================
+    # PvP通常攻撃：防衛者も攻撃できる
+    # ========================================
+
+    def test_defender_normal_attack(self):
+        engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        with patch(
+            "apps.battle.arena_engine.roll_percent",
+            side_effect=[True, False],
+        ):
+            result = engine.defender_normal_attack()
+
+        self.assertTrue(result["hit"])
+        self.assertGreater(result["damage"], 0)
+
+        # 挑戦者がダメージを受ける
+        self.assertEqual(
+            engine.challenger_hp,
+            max(0, 35 - result["damage"]),
+        )
+
+        # 防衛者のSTが減る
+        self.assertEqual(
+            engine.defender_combatant.stamina,
+            95,
+        )
+
+
+    # ========================================
+    # PvP通常攻撃：クリティカル
+    # ========================================
+
+    def test_critical_attack_increases_damage(self):
+        normal_engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        critical_engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        # 通常命中
+        with patch(
+            "apps.battle.arena_engine.roll_percent",
+            side_effect=[True, False],
+        ):
+            normal_result = (
+                normal_engine.challenger_normal_attack()
+            )
+
+        # クリティカル命中
+        with patch(
+            "apps.battle.arena_engine.roll_percent",
+            side_effect=[True, True],
+        ):
+            critical_result = (
+                critical_engine.challenger_normal_attack()
+            )
+
+        self.assertTrue(critical_result["critical"])
+
+        self.assertGreater(
+            critical_result["damage"],
+            normal_result["damage"],
+        )
+
+
+    # ========================================
+    # 自動戦闘：挑戦者の勝利
+    # ========================================
+
+    def test_run_challenger_wins(self):
+
+        self.challenger.agility = 100
+        self.defender.agility = 100
+
+        engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        engine.defender_hp = 1
+
+        with patch(
+            "apps.battle.arena_engine.roll_percent",
+            return_value=True,
+        ):
+            result = engine.run(max_ticks=5)
+
+        self.assertEqual(
+            result["winner"],
+            "challenger",
+        )
+
+        self.assertEqual(
+            engine.defender_hp,
+            0,
+        )
+
+        # 倒された防衛者は行動しない
+        self.assertEqual(
+            engine.defender_combatant.stamina,
+            100,
+        )
+
+
+    # ========================================
+    # 自動戦闘：防衛者の勝利
+    # ========================================
+
+    def test_run_defender_wins(self):
+
+        self.challenger.agility = 0
+        self.defender.agility = 100
+
+        engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        engine.challenger_hp = 1
+
+        with patch(
+            "apps.battle.arena_engine.roll_percent",
+            return_value=True,
+        ):
+            result = engine.run(max_ticks=5)
+
+        self.assertEqual(
+            result["winner"],
+            "defender",
+        )
+
+        self.assertEqual(
+            engine.challenger_hp,
+            0,
+        )
+
+
+    # ========================================
+    # 自動戦闘：引き分け
+    # ========================================
+
+    def test_run_draw(self):
+
+        engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        result = engine.run(max_ticks=1)
+
+        self.assertEqual(
+            result["winner"],
+            "draw",
+        )
+
+        self.assertGreater(
+            engine.challenger_hp,
+            0,
+        )
+
+        self.assertGreater(
+            engine.defender_hp,
+            0,
+        )
 
 
 class BattleEngineTests(TestCase):
@@ -1837,3 +2277,720 @@ class ExplorationBossProgressionTests(TestCase):
         self.assertFalse(
             progress.boss_defeated
         )
+
+
+class ArenaVacantClaimTests(TestCase):
+    """
+    闘技場の空席マスター獲得テスト。
+    """
+
+    def setUp(self):
+        self.user = User.objects.create_user(
+            user_id="arena_claim_user",
+            email="arena_claim@example.com",
+            password="testpass123",
+        )
+
+        self.other_user = User.objects.create_user(
+            user_id="arena_claim_other",
+            email="arena_claim_other@example.com",
+            password="testpass123",
+        )
+
+        self.character = Character.objects.create(
+            user=self.user,
+            name="空席挑戦者",
+            max_hp=100,
+            max_mp=50,
+        )
+
+        self.other = Character.objects.create(
+            user=self.other_user,
+            name="空席先客",
+        )
+
+        self.floor = ArenaFloor.objects.get(
+            floor=1,
+        )
+
+        self.state = ArenaState.objects.create(
+            character=self.character,
+            floor=self.floor,
+            current_hp=20,
+            current_mp=10,
+        )
+
+    # ========================================
+    # 空席獲得成功
+    # ========================================
+
+    def test_claim_vacant_floor(self):
+
+        result = claim_vacant_arena_floor(
+            self.character
+        )
+
+        self.assertEqual(result, "claimed")
+
+        self.floor.refresh_from_db()
+        self.state.refresh_from_db()
+
+        self.assertEqual(
+            self.floor.master,
+            self.character,
+        )
+
+        self.assertEqual(
+            self.state.current_hp,
+            100,
+        )
+
+        self.assertEqual(
+            self.state.current_mp,
+            50,
+        )
+
+    # ========================================
+    # 既に他プレイヤーがマスター
+    # ========================================
+
+    def test_cannot_claim_occupied_floor(self):
+
+        self.floor.master = self.other
+        self.floor.save()
+
+        result = claim_vacant_arena_floor(
+            self.character
+        )
+
+        self.assertEqual(result, "occupied")
+
+        self.floor.refresh_from_db()
+        self.state.refresh_from_db()
+
+        self.assertEqual(
+            self.floor.master,
+            self.other,
+        )
+
+        self.assertEqual(
+            self.state.current_hp,
+            20,
+        )
+
+    # ========================================
+    # 自分がマスターの場合の再取得禁止
+    # ========================================
+
+    def test_already_master_does_not_heal(self):
+
+        claim_vacant_arena_floor(
+            self.character
+        )
+
+        self.state.current_hp = 5
+        self.state.current_mp = 2
+        self.state.save()
+
+        result = claim_vacant_arena_floor(
+            self.character
+        )
+
+        self.state.refresh_from_db()
+
+        self.assertEqual(
+            result,
+            "already_master",
+        )
+
+        self.assertEqual(
+            self.state.current_hp,
+            5,
+        )
+
+        self.assertEqual(
+            self.state.current_mp,
+            2,
+        )
+
+    # ========================================
+    # 複数階のマスターになることを防止
+    # ========================================
+
+    def test_cannot_master_multiple_floors(self):
+
+        claim_vacant_arena_floor(
+            self.character
+        )
+
+        floor2 = ArenaFloor.objects.get(
+            floor=2,
+        )
+
+        self.state.floor = floor2
+        self.state.save(
+            update_fields=["floor"]
+        )
+
+        with self.assertRaises(ValueError):
+            claim_vacant_arena_floor(
+                self.character
+            )
+
+        floor2.refresh_from_db()
+
+        self.assertIsNone(
+            floor2.master
+        )
+
+
+    def test_claim_starts_cooldown(self):
+        result = claim_vacant_arena_floor(
+            self.character
+        )
+
+        self.assertEqual(result, "claimed")
+
+        self.character.refresh_from_db()
+
+        remaining = (
+            self.character.exploration_cooldown_until
+            - timezone.now()
+        ).total_seconds()
+
+        self.assertGreater(remaining, 35)
+        self.assertLessEqual(remaining, 40)
+
+
+    def test_cannot_claim_during_cooldown(self):
+        self.character.exploration_cooldown_until = (
+            timezone.now() + timedelta(seconds=60)
+        )
+        self.character.save(
+            update_fields=["exploration_cooldown_until"]
+        )
+
+        with self.assertRaisesRegex(
+            ValueError,
+            "クールタイム中",
+        ):
+            claim_vacant_arena_floor(
+                self.character
+            )
+
+        self.floor.refresh_from_db()
+        self.assertIsNone(self.floor.master)
+
+
+    def test_reduced_claim_cooldown_is_20_seconds(self):
+        self.character.exploration_cooldown_reduced_until = (
+            timezone.now() + timedelta(days=1)
+        )
+        self.character.save(
+            update_fields=["exploration_cooldown_reduced_until"]
+        )
+
+        claim_vacant_arena_floor(self.character)
+
+        self.character.refresh_from_db()
+
+        remaining = (
+            self.character.exploration_cooldown_until
+            - timezone.now()
+        ).total_seconds()
+
+        self.assertGreater(remaining, 15)
+        self.assertLessEqual(remaining, 20)
+
+
+class ArenaMasterChallengeTests(TestCase):
+
+    def setUp(self):
+        self.user1 = User.objects.create_user(
+            user_id="arena_master_test1",
+            email="arena_master1@example.com",
+            password="testpass123",
+        )
+
+        self.user2 = User.objects.create_user(
+            user_id="arena_master_test2",
+            email="arena_master2@example.com",
+            password="testpass123",
+        )
+
+        self.challenger = Character.objects.create(
+            user=self.user1,
+            name="マスター挑戦者",
+            max_hp=100,
+            max_mp=50,
+        )
+
+        self.defender = Character.objects.create(
+            user=self.user2,
+            name="マスター防衛者",
+            max_hp=80,
+            max_mp=30,
+        )
+
+        self.floor = ArenaFloor.objects.get(floor=1)
+        self.floor.master = self.defender
+        self.floor.save(update_fields=["master"])
+
+        self.challenger_state = ArenaState.objects.create(
+            character=self.challenger,
+            floor=self.floor,
+            current_hp=40,
+            current_mp=20,
+        )
+
+        self.defender_state = ArenaState.objects.create(
+            character=self.defender,
+            floor=self.floor,
+            current_hp=70,
+            current_mp=25,
+        )
+
+    # ========================================
+    # 挑戦者勝利：マスター交代
+    # ========================================
+
+    def test_challenger_win_changes_master(self):
+
+        fake_result = {
+            "winner": "challenger",
+            "logs": ["挑戦者の勝利"],
+            "challenger_hp": 30,
+            "challenger_mp": 10,
+            "defender_hp": 0,
+            "defender_mp": 5,
+        }
+
+        with patch(
+            "apps.battle.arena_services.ArenaBattleEngine.run",
+            return_value=fake_result,
+        ):
+            result = challenge_arena_master(
+                self.challenger
+            )
+
+        self.floor.refresh_from_db()
+        self.challenger_state.refresh_from_db()
+        self.defender_state.refresh_from_db()
+
+        # 勝者がマスターになる
+        self.assertEqual(
+            self.floor.master,
+            self.challenger,
+        )
+
+        # 挑戦者は1階を維持
+        self.assertEqual(
+            self.challenger_state.floor_id,
+            1,
+        )
+
+        # 旧マスターは2階へ移動
+        self.assertEqual(
+            self.defender_state.floor_id,
+            2,
+        )
+
+        # 両者の闘技場HP/MPが全回復
+        self.assertEqual(
+            self.challenger_state.current_hp,
+            100,
+        )
+
+        self.assertEqual(
+            self.challenger_state.current_mp,
+            50,
+        )
+
+        self.assertEqual(
+            self.defender_state.current_hp,
+            80,
+        )
+
+        self.assertEqual(
+            self.defender_state.current_mp,
+            30,
+        )
+
+        # 勝敗結果と履歴を確認
+        self.assertEqual(
+            result["winner"],
+            "challenger",
+        )
+
+        history = ArenaBattleHistory.objects.get(
+            pk=result["history_id"],
+        )
+
+        self.assertEqual(history.result, "win")
+        self.assertEqual(history.floor, 1)
+        self.assertEqual(
+            history.defender_hp_after,
+            0,
+        )
+
+
+    # ========================================
+    # 挑戦者敗北：2階層下へ移動
+    # ========================================
+
+    def test_challenger_loss(self):
+
+        fake_result = {
+            "winner": "defender",
+            "logs": ["防衛者の勝利"],
+            "challenger_hp": 0,
+            "challenger_mp": 5,
+            "defender_hp": 35,
+            "defender_mp": 15,
+        }
+
+        with patch(
+            "apps.battle.arena_services.ArenaBattleEngine.run",
+            return_value=fake_result,
+        ):
+            result = challenge_arena_master(
+                self.challenger
+            )
+
+        self.floor.refresh_from_db()
+        self.challenger_state.refresh_from_db()
+        self.defender_state.refresh_from_db()
+
+        # マスターは変更されない
+        self.assertEqual(
+            self.floor.master,
+            self.defender,
+        )
+
+        # 挑戦者は1階からかわらない。
+        self.assertEqual(
+            self.challenger_state.floor_id,
+            1,
+        )
+
+        # 挑戦者のHP/MPは全回復
+        self.assertEqual(
+            self.challenger_state.current_hp,
+            100,
+        )
+        self.assertEqual(
+            self.challenger_state.current_mp,
+            50,
+        )
+
+        # 防衛者は残りHP/MPを引き継ぐ
+        self.assertEqual(
+            self.defender_state.current_hp,
+            35,
+        )
+        self.assertEqual(
+            self.defender_state.current_mp,
+            15,
+        )
+
+        self.assertEqual(result["winner"], "defender")
+
+        history = ArenaBattleHistory.objects.get(
+            pk=result["history_id"]
+        )
+        self.assertEqual(history.result, "loss")
+
+
+    # ========================================
+    # 引き分け：挑戦者は2階層下へ
+    # ========================================
+
+    def test_challenger_draw(self):
+
+        fake_result = {
+            "winner": "draw",
+            "logs": ["引き分け"],
+            "challenger_hp": 20,
+            "challenger_mp": 10,
+            "defender_hp": 40,
+            "defender_mp": 20,
+        }
+
+        with patch(
+            "apps.battle.arena_services.ArenaBattleEngine.run",
+            return_value=fake_result,
+        ):
+            result = challenge_arena_master(
+                self.challenger
+            )
+
+        self.floor.refresh_from_db()
+        self.challenger_state.refresh_from_db()
+        self.defender_state.refresh_from_db()
+
+        # マスターを維持
+        self.assertEqual(
+            self.floor.master,
+            self.defender,
+        )
+
+        # 挑戦者は3階へ
+        self.assertEqual(
+            self.challenger_state.floor_id,
+            1,
+        )
+
+        # 防衛者のHP/MPは引き継ぎ
+        self.assertEqual(
+            self.defender_state.current_hp,
+            40,
+        )
+        self.assertEqual(
+            self.defender_state.current_mp,
+            20,
+        )
+
+        self.assertEqual(result["winner"], "draw")
+
+        history = ArenaBattleHistory.objects.get(
+            pk=result["history_id"]
+        )
+        self.assertEqual(history.result, "draw")
+
+    # ========================================
+    # 100階：マスター交代の境界確認
+    # ========================================
+
+    def test_win_at_floor_100(self):
+
+        floor100 = ArenaFloor.objects.get(floor=100)
+
+        # 既存の1階マスターを解除
+        self.floor.master = None
+        self.floor.save(update_fields=["master"])
+
+        # 100階にマスターを設定
+        floor100.master = self.defender
+        floor100.save(update_fields=["master"])
+
+        self.challenger_state.floor = floor100
+        self.challenger_state.save(
+            update_fields=["floor"]
+        )
+
+        self.defender_state.floor = floor100
+        self.defender_state.save(
+            update_fields=["floor"]
+        )
+
+        fake_result = {
+            "winner": "challenger",
+            "logs": ["100階で勝利"],
+            "challenger_hp": 20,
+            "challenger_mp": 10,
+            "defender_hp": 0,
+            "defender_mp": 5,
+        }
+
+        with patch(
+            "apps.battle.arena_services.ArenaBattleEngine.run",
+            return_value=fake_result,
+        ):
+            challenge_arena_master(
+                self.challenger
+            )
+
+        floor100.refresh_from_db()
+        self.challenger_state.refresh_from_db()
+        self.defender_state.refresh_from_db()
+
+        # 新マスターが誕生
+        self.assertEqual(
+            floor100.master,
+            self.challenger,
+        )
+
+        # 100階を超えない
+        self.assertEqual(
+            self.challenger_state.floor_id,
+            100,
+        )
+        self.assertEqual(
+            self.defender_state.floor_id,
+            100,
+        )
+
+        # 旧マスターは席を失う
+        self.assertFalse(
+            ArenaFloor.objects.filter(
+                master=self.defender
+            ).exists()
+        )
+
+
+    def test_win_grants_exp_and_starts_cooldown(self):
+        fake_result = {
+            "winner": "challenger",
+            "logs": ["勝利"],
+            "challenger_hp": 20,
+            "challenger_mp": 10,
+            "defender_hp": 0,
+            "defender_mp": 5,
+        }
+
+        original_hp = self.challenger.current_hp
+        original_mp = self.challenger.current_mp
+
+        with patch(
+            "apps.battle.arena_services.ArenaBattleEngine.run",
+            return_value=fake_result,
+        ), patch(
+            "apps.battle.arena_services.random.randint",
+            return_value=13,
+        ):
+            result = challenge_arena_master(
+                self.challenger
+            )
+
+        self.challenger.refresh_from_db()
+
+        self.assertEqual(result["gained_exp"], 13)
+        self.assertEqual(self.challenger.exp, 13)
+
+        # 通常HP/MPは変化しない
+        self.assertEqual(
+            self.challenger.current_hp,
+            original_hp,
+        )
+        self.assertEqual(
+            self.challenger.current_mp,
+            original_mp,
+        )
+
+        self.assertGreater(
+            self.challenger.exploration_cooldown_until,
+            timezone.now(),
+        )
+
+
+    def test_loss_grants_eight_exp(self):
+        fake_result = {
+            "winner": "defender",
+            "logs": ["敗北"],
+            "challenger_hp": 0,
+            "challenger_mp": 5,
+            "defender_hp": 30,
+            "defender_mp": 10,
+        }
+
+        with patch(
+            "apps.battle.arena_services.ArenaBattleEngine.run",
+            return_value=fake_result,
+        ):
+            result = challenge_arena_master(
+                self.challenger
+            )
+
+        self.challenger.refresh_from_db()
+
+        self.assertEqual(result["gained_exp"], 8)
+        self.assertEqual(self.challenger.exp, 8)
+
+
+    def test_draw_grants_eight_exp(self):
+        fake_result = {
+            "winner": "draw",
+            "logs": ["引き分け"],
+            "challenger_hp": 20,
+            "challenger_mp": 10,
+            "defender_hp": 30,
+            "defender_mp": 10,
+        }
+
+        with patch(
+            "apps.battle.arena_services.ArenaBattleEngine.run",
+            return_value=fake_result,
+        ):
+            result = challenge_arena_master(
+                self.challenger
+            )
+
+        self.challenger.refresh_from_db()
+
+        self.assertEqual(result["gained_exp"], 8)
+        self.assertEqual(self.challenger.exp, 8)
+
+
+    def test_cannot_battle_during_cooldown(self):
+        self.challenger.exploration_cooldown_until = (
+            timezone.now() + timedelta(seconds=60)
+        )
+        self.challenger.save(
+            update_fields=["exploration_cooldown_until"]
+        )
+
+        with patch(
+            "apps.battle.arena_services.ArenaBattleEngine.run"
+        ) as mocked_run:
+
+            with self.assertRaisesRegex(
+                ValueError,
+                "クールタイム中",
+            ):
+                challenge_arena_master(
+                    self.challenger
+                )
+
+            mocked_run.assert_not_called()
+
+        self.assertEqual(
+            ArenaBattleHistory.objects.count(),
+            0,
+        )
+
+
+class ArenaExpGrowthTests(TestCase):
+
+    def test_arena_exp_does_not_heal_normal_hp_mp(self):
+
+        user = User.objects.create_user(
+            user_id="arena_exp_user",
+            email="arena_exp@example.com",
+            password="testpass123",
+        )
+
+        character = Character.objects.create(
+            user=user,
+            name="闘技場EXPテスト",
+            exp=99,
+            current_hp=10,
+            current_mp=5,
+        )
+
+        # HP成長を3回発生させる
+        with patch(
+            "apps.accounts.growth.random.choices",
+            side_effect=[
+                ["hp", "hp", "hp"],
+                ["fire", "water", "grass"],
+            ],
+        ):
+            result = apply_character_exp(
+                character,
+                8,
+            )
+
+        character.refresh_from_db()
+
+        # 99 + 8 = 107なのでレベルアップ
+        self.assertEqual(character.level, 2)
+        self.assertEqual(character.exp, 7)
+
+        # 闘技場では通常HP/MPが回復しない
+        self.assertEqual(character.current_hp, 10)
+        self.assertEqual(character.current_mp, 5)
+        # 最大HPは正常に成長している
+        self.assertEqual(character.max_hp, 45)
+
+        self.assertEqual(result["gained_exp"], 8)
+        self.assertEqual(result["level_up_count"], 1)

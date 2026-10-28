@@ -106,8 +106,13 @@
             </div>
 
             <div>
-                {{ character.arena_floor }}階
+                {% if character.arena_state %}
+                    {{ character.arena_state.floor_id }}階
+                {% else %}
+                    未登録
+                {% endif %}
             </div>
+
             <div>
                 <a href="{% url 'admin_player_edit' character.id %}" class="admin-edit-button">
                     編集

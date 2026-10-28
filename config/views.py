@@ -13,6 +13,7 @@ from apps.accounts.models import (
 )
 
 from apps.sns.models import Post
+from apps.battle.arena_services import get_arena_home_context
 
 from apps.battle.progression import (
     MAX_EXPLORATION_FLOOR,
@@ -249,13 +250,12 @@ def admin_panel(request):
 
 
     characters = (
-
         Character.objects
-
-        .select_related("user")
-
+        .select_related(
+            "user",
+            "arena_state",
+        )
         .order_by("name")
-
     )
 
 
@@ -731,11 +731,12 @@ def home(request):
 
     ).first()
 
+    if character is None:
+        return redirect("accounts:character_create")
+
+    arena_context = {}
+
     max_unlocked_floor = 1
-
-    previous_arena_character = None
-
-    next_arena_character = None
 
 
 
@@ -767,10 +768,6 @@ def home(request):
 
 
 
-    previous_arena_character = None
-
-    next_arena_character = None
-
     equipment_battle_power = 0
 
     if character:
@@ -788,85 +785,7 @@ def home(request):
         )
 
 
-        # ========================================
-
-        # 闘技場：前の階の相手を取得
-
-        # ========================================
-
-
-
-        if character.arena_floor > 1:
-
-
-
-            previous_arena_character = (
-
-                Character.objects
-
-                .filter(
-
-                    arena_floor=(
-
-                        character.arena_floor - 1
-
-                    )
-
-                )
-
-                .exclude(
-
-                    id=character.id
-
-                )
-
-                .first()
-
-            )
-
-
-
-
-
-        # ========================================
-
-        # 闘技場：次の階の相手を取得
-
-        # ========================================
-
-
-
-        if character.arena_floor < arena_max_floor:
-
-
-
-            next_arena_character = (
-
-                Character.objects
-
-                .filter(
-
-                    arena_floor=(
-
-                        character.arena_floor + 1
-
-                    )
-
-                )
-
-                .exclude(
-
-                    id=character.id
-
-                )
-
-                .first()
-
-            )
-
-
-
-
+        arena_context = get_arena_home_context(character)
 
         # ========================================
 
@@ -1024,14 +943,6 @@ def home(request):
 
             arena_max_floor,
 
-        "previous_arena_character":
-
-            previous_arena_character,
-
-        "next_arena_character":
-
-            next_arena_character,
-
         "max_unlocked_floor":
             max_unlocked_floor,
 
@@ -1047,6 +958,8 @@ def home(request):
     }
 
 
+
+    context.update(arena_context)
 
     return render(
 

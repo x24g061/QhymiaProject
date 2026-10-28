@@ -168,3 +168,82 @@ def grant_exploration_drop(
         "name": item.name,
         "quantity": 1,
     }
+
+# ============================================================
+# 闘技場ドロップ
+# ============================================================
+
+ARENA_BASE_DROP_RATE = 0.01
+ARENA_STREAK_BONUS_RATE = 0.01
+ARENA_MAX_DROP_RATE = 0.10
+
+
+def grant_arena_drop(
+    character,
+    win_streak,
+    guaranteed=False,
+):
+    """
+    闘技場勝利時の素材ドロップ。
+
+    基本1%。
+    戦闘開始前の連勝数1回につき+1%。
+    最大10%。
+
+    guaranteed=True の場合は抽選を省略する。
+    """
+
+    candidates = list(
+        Item.objects.filter(
+            category=Item.Category.MATERIAL,
+        )
+    )
+
+    # 素材アイテムが存在しない場合
+    if not candidates:
+        return None
+
+    drop_rate = min(
+        ARENA_BASE_DROP_RATE
+        + (
+            max(0, win_streak)
+            * ARENA_STREAK_BONUS_RATE
+        ),
+        ARENA_MAX_DROP_RATE,
+    )
+
+    # ドロップ判定
+    if not guaranteed:
+        if random.random() >= drop_rate:
+            return None
+
+    item = random.choice(candidates)
+
+    with transaction.atomic():
+
+        inventory_item, created = (
+            InventoryItem.objects.get_or_create(
+                character=character,
+                item=item,
+                defaults={
+                    "quantity": 1,
+                },
+            )
+        )
+
+        if not created:
+            inventory_item.quantity += 1
+
+            inventory_item.save(
+                update_fields=[
+                    "quantity",
+                    "updated_at",
+                ]
+            )
+
+    return {
+        "kind": "item",
+        "name": item.name,
+        "quantity": 1,
+        "drop_rate": drop_rate,
+    }

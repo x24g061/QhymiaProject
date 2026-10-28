@@ -6,6 +6,10 @@ from .models import Character
 
 from unittest.mock import patch
 
+from django.urls import reverse
+
+from apps.battle.models import ArenaState
+
 from .growth import increase_attribute_growth_weight
 
 User = get_user_model()
@@ -123,7 +127,90 @@ class UserManagerTests(TestCase):
                 user_id="",
                 password="test-password-123",
             )
-            
+
+
+class CharacterCreateArenaTests(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create_user(
+            user_id="arena_create_user",
+            email="arena_create@example.com",
+            password="test-password-123",
+        )
+
+        self.client.force_login(
+            self.user
+        )
+
+    @patch(
+        "apps.accounts.views.get_available_character_images"
+    )
+    def test_character_create_also_creates_arena_state(
+        self,
+        mock_get_images,
+    ):
+        """
+        新規キャラクター作成時に、
+
+        ・ArenaStateが作成される
+        ・1階スタート
+        ・闘技場HP / MPが満タン
+
+        になっていることを確認する。
+        """
+
+        mock_get_images.return_value = [
+            {
+                "number": 1,
+                "image": "images/characters/001.png",
+            }
+        ]
+
+        response = self.client.post(
+            reverse(
+                "accounts:character_create"
+            ),
+            {
+                "character_name": "闘技場テスト",
+                "race": "human",
+                "job": "wanderer",
+                "character_image_id": "1",
+            },
+        )
+
+        # キャラクター作成後はHOMEへリダイレクト
+        self.assertEqual(
+            response.status_code,
+            302,
+        )
+
+        character = Character.objects.get(
+            user=self.user
+        )
+
+        arena_state = ArenaState.objects.get(
+            character=character
+        )
+
+        # 新規キャラクターは1階から開始
+        self.assertEqual(
+            arena_state.floor_id,
+            1,
+        )
+
+        # 闘技場HPは満タン
+        self.assertEqual(
+            arena_state.current_hp,
+            character.max_hp,
+        )
+
+        # 闘技場MPも満タン
+        self.assertEqual(
+            arena_state.current_mp,
+            character.max_mp,
+        )
+
+
 class AttributeGrowthWeightTests(TestCase):
     def setUp(self):
         self.user = User.objects.create(
