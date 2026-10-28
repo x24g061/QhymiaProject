@@ -1,0 +1,252 @@
+/* ========================================
+   base.html の制限解除
+======================================== */
+
+body {
+    margin: 0;
+
+    background: #080d13;
+}
+
+
+body > header {
+    display: none;
+}
+
+
+main {
+    width: 100%;
+    max-width: none;
+
+    margin: 0;
+    padding: 0;
+}
+
+
+/* ========================================
+   パッシブ詳細画面
+======================================== */
+
+.passive-detail-screen {
+    width: 100%;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    overflow: auto;
+
+    background: #080d13;
+}
+
+
+/* ========================================
+   背景
+======================================== */
+
+.passive-detail-board {
+    position: relative;
+
+    width: 100%;
+    max-width: 1648px;
+
+    aspect-ratio: 1648 / 928;
+
+    flex-shrink: 0;
+
+    background-image:
+        url("../images/passive-detail-bg.png");
+
+    background-repeat: no-repeat;
+
+    background-position: center top;
+
+    background-size: 100% 100%;
+}
+
+
+/* ========================================
+   戻るボタン
+======================================== */
+
+.passive-back-button {
+    position: absolute;
+
+    top: 3.4%;
+    left: 4.4%;
+
+    width: 16.5%;
+    height: 6%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #ead7a1;
+
+    font-size:
+        clamp(
+            11px,
+            1.25vw,
+            21px
+        );
+
+    font-weight: bold;
+
+    text-decoration: none;
+
+    letter-spacing: 0.05em;
+
+    text-shadow:
+        0 2px 4px
+        rgba(0, 0, 0, 0.9);
+
+    transition:
+        color 0.2s,
+        transform 0.2s;
+}
+
+
+.passive-back-button:hover {
+    color: #ffffff;
+
+    transform: scale(1.03);
+}
+
+
+/* ========================================
+   タイトル
+======================================== */
+
+.passive-detail-title {
+    position: absolute;
+
+    top: 3.1%;
+    left: 25%;
+
+    width: 50%;
+    height: 7%;
+
+    margin: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #ead7a1;
+
+    font-size:
+        clamp(
+            13px,
+            1.6vw,
+            27px
+        );
+
+    font-weight: bold;
+
+    letter-spacing: 0.08em;
+
+    text-shadow:
+        0 2px 5px
+        rgba(0, 0, 0, 0.9);
+}
+
+
+/* ========================================
+   共通 パッシブ説明
+======================================== */
+
+.passive-description {
+    position: absolute;
+
+    left: 37%;
+
+    width: 54%;
+    height: 9.5%;
+
+    display: flex;
+    align-items: center;
+
+    padding:
+        0 2%;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+
+    color: #372c22;
+
+    font-size:
+        clamp(
+            9px,
+            1.05vw,
+            18px
+        );
+
+    font-weight: bold;
+
+    line-height: 1.5;
+}
+
+
+.passive-description p {
+    margin: 0;
+}
+
+
+/* ========================================
+   各種族位置
+======================================== */
+
+.passive-human {
+    top: 14.8%;
+}
+
+
+.passive-demonia {
+    top: 26.4%;
+}
+
+
+.passive-dragonia {
+    top: 38%;
+}
+
+
+.passive-witch {
+    top: 49.6%;
+}
+
+
+.passive-elf {
+    top: 61.2%;
+}
+
+
+.passive-dwarf {
+    top: 72.8%;
+}
+
+
+.passive-fairy {
+    top: 84.4%;
+}
+
+
+/* ========================================
+   スマホ
+======================================== */
+
+@media (max-width: 700px) {
+
+    .passive-detail-screen {
+        justify-content: flex-start;
+    }
+
+
+    .passive-detail-board {
+        min-width: 900px;
+    }
+
+}
