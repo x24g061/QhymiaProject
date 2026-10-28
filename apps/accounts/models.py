@@ -309,11 +309,7 @@ class Character(models.Model):
 
        # ===== 闘技場 =====
 
-    # 現在いる闘技場の階層
-    arena_floor = models.PositiveIntegerField(
-        default=1,
-        help_text="現在の闘技場階層"
-    )
+
     
     # 現在の連勝数
     arena_win_streak = models.PositiveIntegerField(
@@ -335,11 +331,6 @@ class Character(models.Model):
         default="none",
         help_text="直近の闘技場対戦結果"
     )
-
-    arena_next_floor_unlocked = models.BooleanField(
-        default=False,
-        help_text="次の闘技場階層への挑戦が解禁されているか"
- )
     
 
 

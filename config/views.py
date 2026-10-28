@@ -250,13 +250,12 @@ def admin_panel(request):
 
 
     characters = (
-
         Character.objects
-
-        .select_related("user")
-
+        .select_related(
+            "user",
+            "arena_state",
+        )
         .order_by("name")
-
     )
 
 

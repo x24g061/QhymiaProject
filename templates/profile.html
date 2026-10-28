@@ -121,7 +121,13 @@
 
                     <div class="information-item">
                         <span>闘技場</span>
-                        <strong>{{ character.arena_floor }} 階</strong>
+                        <strong>
+                            {% if character.arena_state %}
+                                {{ character.arena_state.floor_id }} 階
+                            {% else %}
+                                未登録
+                            {% endif %}
+                        </strong>
                     </div>
 
                 </div>

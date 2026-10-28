@@ -26,7 +26,7 @@ class ArenaScreenTests(TestCase):
         )
         cls.character = Character.objects.create(
             user=cls.user, name="画面の挑戦者", max_hp=100, max_mp=40,
-            current_hp=7, current_mp=3, arena_floor=99,
+            current_hp=7, current_mp=3,
         )
         cls.defender = Character.objects.create(
             user=cls.other_user, name="画面のマスター", max_hp=100, max_mp=40,
