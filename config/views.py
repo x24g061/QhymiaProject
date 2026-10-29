@@ -16,6 +16,8 @@ from apps.accounts.models import (
 
 from apps.sns.models import Post
 
+from apps.battle.models import ArenaFloor, ArenaState
+
 from apps.battle.arena_services import (
     get_arena_home_context,
     get_arena_state,
@@ -392,6 +394,156 @@ def admin_player_edit(request, character_id):
             "対象プレイヤーが見つかりません。",
         )
         return redirect("admin_panel")
+
+    # ==============================================
+    # 闘技場階層・回帰回数の専用編集
+    # ==============================================
+    if (
+        request.method == "POST"
+        and request.POST.get("edit_type") == "arena_reincarnation"
+    ):
+        try:
+            new_floor = int(request.POST["arena_floor"])
+            new_count = int(request.POST["reincarnation_count"])
+
+            if not 1 <= new_floor <= 100:
+                raise ValueError("闘技場階層は1～100階で指定してください。")
+
+            if not 0 <= new_count <= 1000:
+                raise ValueError("回帰回数は0～1000回で指定してください。")
+
+            with transaction.atomic():
+                # 変更前の階層を取得
+                initial_floor = (
+                    ArenaState.objects
+                    .filter(character_id=character.pk)
+                    .values_list("floor_id", flat=True)
+                    .first()
+                ) or 1
+
+                # 対象階層をロック
+                floors = {
+                    floor.floor: floor
+                    for floor in (
+                        ArenaFloor.objects
+                        .select_for_update()
+                        .filter(floor__in={initial_floor, new_floor})
+                        .order_by("floor")
+                    )
+                }
+
+                if initial_floor not in floors or new_floor not in floors:
+                    raise ValueError("指定された闘技場階層が存在しません。")
+
+                # ArenaStateを最新の状態で取得
+                state, _ = (
+                    ArenaState.objects
+                    .select_for_update()
+                    .get_or_create(
+                        character_id=character.pk,
+                        defaults={
+                            "floor_id": 1,
+                            "current_hp": character.max_hp,
+                            "current_mp": character.max_mp,
+                        },
+                    )
+                )
+
+                if state.floor_id != initial_floor:
+                    raise ValueError(
+                        "編集中に闘技場階層が変更されました。再試行してください。"
+                    )
+
+                locked_character = (
+                    Character.objects
+                    .select_for_update()
+                    .get(pk=character.pk)
+                )
+
+                old_floor = state.floor_id
+                old_count = locked_character.reincarnation_count
+
+                changes = {}
+
+                if old_floor != new_floor:
+                    current_floor = floors[old_floor]
+
+                    # 元の階のフロアマスターなら権限を解除
+                    if current_floor.master_id == character.pk:
+                        current_floor.master = None
+                        current_floor.save(update_fields=["master"])
+
+                        changes["arena_master"] = {
+                            "label": "フロアマスター",
+                            "before": "保持",
+                            "after": "解除",
+                        }
+
+                    # 他階にマスター情報が残っていないか検証
+                    if ArenaFloor.objects.filter(
+                        master_id=character.pk
+                    ).exists():
+                        raise ValueError(
+                            "別階層にフロアマスター情報が残っています。"
+                        )
+
+                    state.floor_id = new_floor
+                    state.save(
+                        update_fields=["floor", "updated_at"]
+                    )
+
+                    changes["arena_floor"] = {
+                        "label": "闘技場階層",
+                        "before": old_floor,
+                        "after": new_floor,
+                    }
+
+                if old_count != new_count:
+                    locked_character.reincarnation_count = new_count
+                    locked_character.save(
+                        update_fields=["reincarnation_count"]
+                    )
+
+                    changes["reincarnation_count"] = {
+                        "label": "回帰回数",
+                        "before": old_count,
+                        "after": new_count,
+                    }
+
+                # 操作履歴も同じトランザクションで保存
+                if changes:
+                    admin_character = getattr(
+                        request.user, "character", None
+                    )
+
+                    AdminChangeLog.objects.create(
+                        user=request.user,
+                        account_id=request.user.user_id,
+                        character_name=(
+                            admin_character.name
+                            if admin_character else ""
+                        ),
+                        target_character=locked_character,
+                        target_character_name=locked_character.name,
+                        action_type="player_update",
+                        changes=changes,
+                    )
+
+            messages.success(
+                request,
+                f"{character.name}の闘技場階層・回帰回数を更新しました。",
+            )
+
+        except (KeyError, TypeError, ValueError) as error:
+            messages.error(
+                request,
+                f"更新できませんでした：{error}",
+            )
+
+        return redirect(
+            "admin_player_edit",
+            character_id=character.pk,
+        )
 
     if request.method == "POST":
 
