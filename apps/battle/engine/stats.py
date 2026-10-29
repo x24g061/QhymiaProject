@@ -3,6 +3,8 @@ import math
 from apps.battle.engine.character_stats import (
     get_character_combat_stat,
     get_stamina_stat_multiplier as calculate_stamina_stat_multiplier,
+    apply_character_damage_race_bonus,
+    apply_character_received_damage_race_bonus,
 )
 
 
@@ -163,14 +165,14 @@ class BattleStatsMixin:
         damage,
     ):
         """
-        プレイヤーが与えるダメージへの
-        種族補正。
+        与ダメージ種族補正。
+        共通処理へ委譲する。
         """
 
-        if self.character.race == "demonia":
-            damage *= 1.10
-
-        return damage
+        return apply_character_damage_race_bonus(
+            self.character,
+            damage,
+        )
 
 
     # ========================================================
@@ -182,14 +184,14 @@ class BattleStatsMixin:
         damage,
     ):
         """
-        プレイヤーが受けるダメージへの
-        種族補正。
+        被ダメージ種族補正。
+        共通処理へ委譲する。
         """
 
-        if self.character.race == "demonia":
-            damage *= 1.10
-
-        return damage
+        return apply_character_received_damage_race_bonus(
+            self.character,
+            damage,
+        )
 
 
     # ========================================================
