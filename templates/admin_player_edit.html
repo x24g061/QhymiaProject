@@ -255,6 +255,65 @@
 
     </form>
 
+
+    <!-- ========================================
+         闘技場階層・回帰回数の管理
+    ======================================== -->
+    <form method="post" class="admin-edit-form">
+        {% csrf_token %}
+
+        <input
+            type="hidden"
+            name="edit_type"
+            value="arena_reincarnation"
+        >
+
+        <section class="admin-edit-section">
+            <h2>闘技場・回帰管理</h2>
+
+            <div class="admin-edit-grid">
+
+                <label>
+                    闘技場階層
+                    <input
+                        type="number"
+                        name="arena_floor"
+                        value="{% if character.arena_state %}{{ character.arena_state.floor_id }}{% else %}1{% endif %}"
+                        min="1"
+                        max="100"
+                        required
+                    >
+                </label>
+
+                <label>
+                    回帰回数
+                    <input
+                        type="number"
+                        name="reincarnation_count"
+                        value="{{ character.reincarnation_count }}"
+                        min="0"
+                        max="1000"
+                        required
+                    >
+                </label>
+
+            </div>
+
+            <p>
+                フロアマスターを別階層へ移動すると、
+                元の階のマスター権限は解除されます。
+                移動先のフロアマスターには自動就任しません。
+            </p>
+        </section>
+
+        <div class="admin-edit-actions">
+            <button type="submit">
+                闘技場・回帰情報を保存
+            </button>
+        </div>
+    </form>
+
+
 </div>
 
 {% endblock %}
