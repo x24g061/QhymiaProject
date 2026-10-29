@@ -1,0 +1,1206 @@
+/* =========================================================
+   Qhymia PROFILE
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family:
+        "Yu Gothic",
+        "Hiragino Kaku Gothic ProN",
+        "Meiryo",
+        sans-serif;
+
+    color: #17202a;
+
+    background-image:
+        linear-gradient(rgba(18, 32, 39, 0.24),
+            rgba(18, 32, 39, 0.34)),
+        url("../images/character-list-bg.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.profile-page {
+    width: 100%;
+    min-height: 100vh;
+
+    padding-bottom: 100px;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.profile-header {
+    position: sticky;
+    top: 0;
+
+    z-index: 100;
+
+    width: 100%;
+    height: 74px;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr auto 1fr;
+
+    align-items: center;
+
+    padding: 0 48px;
+
+    background:
+        rgba(247, 250, 249, 0.86);
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.65);
+
+    box-shadow:
+        0 8px 35px rgba(17, 40, 50, 0.08);
+
+    backdrop-filter: blur(18px);
+}
+
+
+.profile-header h1 {
+    margin: 0;
+
+    color: #183943;
+
+    font-size: 25px;
+    font-weight: 700;
+
+    letter-spacing: 0.12em;
+}
+
+
+.profile-header-spacer {
+    min-width: 170px;
+}
+
+
+/* =========================================================
+   HOME BUTTON
+========================================================= */
+
+.profile-back-button {
+    justify-self: start;
+
+    position: relative;
+
+    color: #28505c;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    letter-spacing: 0.04em;
+
+    transition:
+        transform 0.2s ease,
+        opacity 0.2s ease;
+}
+
+
+.profile-back-button:hover {
+    transform: translateX(-4px);
+
+    opacity: 0.65;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.profile-content {
+    width:
+        min(1180px,
+            calc(100% - 48px));
+
+    margin: 32px auto 0;
+}
+
+
+/* =========================================================
+   PROFILE MAIN CARD
+========================================================= */
+
+.profile-summary-section {
+    position: relative;
+
+    min-height:
+        calc(100vh - 120px);
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+
+    gap: 26px;
+
+    padding:
+        52px 64px 58px;
+
+    overflow: hidden;
+
+    background:
+        linear-gradient(135deg,
+            rgba(255, 255, 255, 0.93),
+            rgba(240, 247, 247, 0.88));
+
+    border:
+        1px solid rgba(255, 255, 255, 0.9);
+
+    border-radius: 30px;
+
+    box-shadow:
+        0 28px 80px rgba(16, 39, 48, 0.22);
+
+    backdrop-filter:
+        blur(18px);
+}
+
+
+/* 上部アクセント */
+.profile-summary-section::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 5px;
+
+    background:
+        linear-gradient(90deg,
+            transparent,
+            #4d9bad,
+            #78b6c1,
+            #4d9bad,
+            transparent);
+}
+
+
+/* 背景の淡い装飾 */
+.profile-summary-section::after {
+    content: "";
+
+    position: absolute;
+
+    width: 520px;
+    height: 520px;
+
+    top: -280px;
+    right: -240px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(circle,
+            rgba(95, 166, 179, 0.18),
+            transparent 67%);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   PLAYER NAME
+========================================================= */
+
+.profile-player-name {
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 5px;
+
+    margin-bottom: 8px;
+}
+
+
+.profile-main-label {
+    color: #69868e;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 0.18em;
+}
+
+
+.profile-player-name strong {
+    color: #193943;
+
+    font-size:
+        clamp(28px,
+            3vw,
+            43px);
+
+    font-weight: 800;
+
+    letter-spacing: 0.06em;
+}
+
+
+/* =========================================================
+   MAIN GRID
+========================================================= */
+
+.profile-summary-grid {
+    position: relative;
+
+    z-index: 2;
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(175px, 1fr) minmax(300px, 1.45fr) minmax(175px, 1fr);
+
+    align-items: center;
+
+    gap: 34px;
+}
+
+
+.profile-summary-left,
+.profile-summary-right {
+    display: flex;
+    flex-direction: column;
+
+    gap: 25px;
+}
+
+
+/* =========================================================
+   CHARACTER AREA
+========================================================= */
+
+.profile-character-area {
+    position: relative;
+
+    min-height: 330px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* キャラクター背後の光 */
+.profile-character-area::before {
+    content: "";
+
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(circle,
+            rgba(109, 190, 203, 0.28),
+            rgba(145, 203, 211, 0.10) 45%,
+            transparent 70%);
+
+    filter: blur(2px);
+}
+
+
+/* キャラ足元 */
+.profile-character-area::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: 12px;
+
+    width: 230px;
+    height: 34px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(30, 58, 65, 0.20);
+
+    filter: blur(13px);
+}
+
+
+.profile-character-image {
+    position: relative;
+
+    z-index: 2;
+
+    width: 300px;
+    height: 320px;
+
+    object-fit: contain;
+
+    image-rendering: pixelated;
+
+    filter:
+        drop-shadow(0 16px 10px rgba(21, 42, 49, 0.30));
+}
+
+
+.profile-character-placeholder {
+    position: relative;
+
+    z-index: 2;
+
+    width: 250px;
+    height: 290px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border:
+        1px dashed rgba(37, 84, 95, 0.4);
+
+    border-radius: 20px;
+
+    color: #607d84;
+
+    background:
+        rgba(255, 255, 255, 0.50);
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   INFO BOX
+========================================================= */
+
+.profile-info-box {
+    position: relative;
+
+    min-width: 0;
+    min-height: 88px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 6px;
+
+    padding:
+        15px 18px;
+
+    overflow: hidden;
+
+    background:
+        rgba(255, 255, 255, 0.77);
+
+    border:
+        1px solid rgba(64, 111, 122, 0.15);
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 9px 24px rgba(28, 65, 74, 0.07);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+.profile-info-box:hover {
+    transform:
+        translateY(-3px);
+
+    border-color:
+        rgba(71, 144, 160, 0.32);
+
+    box-shadow:
+        0 15px 30px rgba(28, 65, 74, 0.11);
+}
+
+
+/* カード左側アクセント */
+.profile-info-box::before {
+    content: "";
+
+    position: absolute;
+
+    top: 17%;
+    left: 0;
+
+    width: 3px;
+    height: 66%;
+
+    border-radius:
+        0 3px 3px 0;
+
+    background:
+        #6ca9b5;
+
+    opacity: 0.65;
+}
+
+
+.profile-info-label {
+    color: #6b858d;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    letter-spacing: 0.11em;
+}
+
+
+.profile-info-box strong {
+    max-width: 100%;
+
+    overflow-wrap: anywhere;
+
+    color: #19343c;
+
+    font-size:
+        clamp(18px,
+            1.8vw,
+            27px);
+
+    font-weight: 800;
+
+    text-align: center;
+}
+
+
+.profile-race-value {
+    color:
+        #267f91 !important;
+}
+
+
+/* =========================================================
+   LOWER INFORMATION
+========================================================= */
+
+.profile-information-row {
+    position: relative;
+
+    z-index: 2;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+
+/* =========================================================
+   DETAIL SECTION
+   基礎ステータス + 属性を1画面にまとめる
+========================================================= */
+
+.profile-detail-section {
+    position: relative;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 24px;
+
+    margin-top: 28px;
+
+    padding:
+        72px 28px 28px;
+
+    background:
+        linear-gradient(135deg,
+            rgba(249, 252, 251, 0.94),
+            rgba(236, 245, 245, 0.90));
+
+    border:
+        1px solid rgba(255, 255, 255, 0.88);
+
+    border-radius: 30px;
+
+    box-shadow:
+        0 25px 70px rgba(16, 39, 48, 0.20);
+
+    backdrop-filter:
+        blur(18px);
+}
+
+
+/* 全体タイトル */
+.profile-detail-section::before {
+    content: "STATUS DETAIL  /  ステータス詳細";
+
+    position: absolute;
+
+    top: 27px;
+    left: 38px;
+
+    color: #315e69;
+
+    font-size: 14px;
+    font-weight: 800;
+
+    letter-spacing: 0.12em;
+}
+
+
+/* =========================================================
+   DETAIL BLOCK
+========================================================= */
+
+.profile-detail-block {
+    position: relative;
+
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 18px;
+
+    padding:
+        58px 22px 24px;
+
+    background:
+        rgba(255,
+            255,
+            255,
+            0.50);
+
+    border:
+        1px solid rgba(67,
+            121,
+            132,
+            0.11);
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 8px 25px rgba(28,
+            65,
+            74,
+            0.06);
+}
+
+
+/* =========================================================
+   各タイトル
+========================================================= */
+
+.profile-detail-block:first-child::before {
+    content:
+        "BASIC STATUS";
+
+    position: absolute;
+
+    top: 20px;
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    width: max-content;
+
+    color: #315e69;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    letter-spacing: 0.13em;
+}
+
+
+.profile-detail-block:nth-child(2)::before {
+    content:
+        "ATTRIBUTE";
+
+    position: absolute;
+
+    top: 20px;
+    left: 50%;
+
+    transform:
+        translateX(-50%);
+
+    width: max-content;
+
+    color: #315e69;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    letter-spacing: 0.13em;
+}
+
+
+/* =========================================================
+   RADAR
+========================================================= */
+
+.profile-radar-chart {
+    position: relative;
+
+    width: 100%;
+
+    max-width: 340px;
+
+    margin: 0 auto;
+
+    padding: 20px;
+
+    background:
+        radial-gradient(circle at center,
+            rgba(101,
+                171,
+                183,
+                0.10),
+            rgba(255,
+                255,
+                255,
+                0.25));
+
+    border:
+        1px solid rgba(67,
+            121,
+            132,
+            0.11);
+
+    border-radius: 22px;
+}
+
+
+.profile-radar-chart::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 9px;
+
+    border:
+        1px solid rgba(76,
+            130,
+            141,
+            0.06);
+
+    border-radius: 17px;
+
+    pointer-events: none;
+}
+
+
+.profile-radar-svg {
+    position: relative;
+
+    z-index: 2;
+
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    overflow: visible;
+}
+
+
+/* =========================================================
+   RADAR STYLE
+========================================================= */
+
+.radar-outline {
+    fill:
+        rgba(255,
+            255,
+            255,
+            0.25);
+
+    stroke:
+        rgba(42,
+            82,
+            91,
+            0.58);
+
+    stroke-width: 2;
+}
+
+
+.radar-line {
+    stroke:
+        rgba(52,
+            88,
+            96,
+            0.23);
+
+    stroke-width: 1.2;
+}
+
+
+.radar-value {
+    fill:
+        rgba(58,
+            152,
+            171,
+            0.30);
+
+    stroke: #348fa3;
+
+    stroke-width: 3;
+}
+
+
+.profile-radar-svg text {
+    fill: #294d56;
+
+    font-size: 20px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.04em;
+}
+
+
+/* =========================================================
+   STATUS VALUES
+========================================================= */
+
+.profile-stat-grid {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 9px;
+}
+
+
+.profile-stat-grid .profile-info-box {
+    min-height: 68px;
+
+    padding:
+        8px 6px;
+
+    border-radius: 11px;
+
+    box-shadow: none;
+}
+
+
+.profile-stat-grid .profile-info-label {
+    font-size: 10px;
+}
+
+
+.profile-stat-grid .profile-info-box strong {
+    font-size: 19px;
+}
+
+
+/* =========================================================
+   ATTRIBUTE ACCENT
+========================================================= */
+
+.profile-detail-block:nth-child(2) .profile-info-box::before {
+    background:
+        #76a87e;
+}
+
+
+/* =========================================================
+   ATTRIBUTE BLOCK DIFFERENCE
+========================================================= */
+
+
+
+
+.profile-detail-block:nth-child(2) .profile-info-box::before {
+    background:
+        #76a87e;
+}
+
+
+/* =========================================================
+   NO CHARACTER
+========================================================= */
+
+.no-character {
+    width:
+        min(850px,
+            calc(100% - 40px));
+
+    margin:
+        80px auto;
+
+    padding: 50px;
+
+    background:
+        rgba(255, 255, 255, 0.90);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.8);
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.15);
+
+    color: #29464e;
+
+    font-size: 17px;
+
+    text-align: center;
+
+    backdrop-filter:
+        blur(15px);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 950px) {
+
+    .profile-header {
+        padding:
+            0 24px;
+    }
+
+
+    .profile-content {
+        width:
+            calc(100% - 28px);
+    }
+
+
+    .profile-summary-section {
+        padding:
+            45px 35px;
+    }
+
+
+    .profile-summary-grid {
+        grid-template-columns:
+            1fr 1.3fr 1fr;
+
+        gap: 20px;
+    }
+
+
+    .profile-character-image {
+        width: 240px;
+        height: 280px;
+    }
+
+
+    .profile-detail-block {
+        gap: 40px;
+
+        padding:
+            80px 40px 50px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 720px) {
+
+    body {
+        background-attachment:
+            scroll;
+    }
+
+
+    .profile-header {
+        height: 65px;
+
+        grid-template-columns:
+            1fr auto;
+
+        padding:
+            0 15px;
+    }
+
+
+    .profile-header h1 {
+        font-size: 18px;
+    }
+
+
+    .profile-header-spacer {
+        display: none;
+    }
+
+
+    .profile-back-button {
+        font-size: 12px;
+    }
+
+
+    .profile-content {
+        width:
+            calc(100% - 20px);
+
+        margin-top: 12px;
+    }
+
+
+    .profile-summary-section {
+        min-height: auto;
+
+        padding:
+            34px 16px;
+
+        border-radius: 22px;
+    }
+
+
+    .profile-summary-grid {
+        grid-template-columns:
+            1fr 1fr;
+
+        gap: 12px;
+    }
+
+
+    .profile-character-area {
+        grid-column:
+            1 / -1;
+
+        grid-row: 1;
+
+        min-height: 245px;
+    }
+
+
+    .profile-character-image {
+        width: 220px;
+        height: 240px;
+    }
+
+
+    .profile-summary-left {
+        grid-column: 1;
+        grid-row: 2;
+
+        gap: 12px;
+    }
+
+
+    .profile-summary-right {
+        grid-column: 2;
+        grid-row: 2;
+
+        gap: 12px;
+    }
+
+
+    .profile-information-row {
+        gap: 9px;
+    }
+
+
+    .profile-info-box {
+        min-height: 76px;
+
+        padding:
+            10px 7px;
+
+        border-radius: 12px;
+    }
+
+
+    .profile-info-label {
+        font-size: 10px;
+    }
+
+
+    .profile-info-box strong {
+        font-size: 15px;
+    }
+
+
+    .profile-detail-section {
+        gap: 14px;
+
+        margin-top: 14px;
+    }
+
+
+    .profile-detail-block {
+        min-height: auto;
+
+        grid-template-columns:
+            1fr;
+
+        gap: 32px;
+
+        padding:
+            75px 18px 35px;
+
+        border-radius: 22px;
+    }
+
+
+    .profile-detail-block:first-child::before,
+    .profile-detail-block:nth-child(2)::before {
+        left: 24px;
+
+        font-size: 11px;
+    }
+
+
+    .profile-radar-chart {
+        max-width: 380px;
+
+        padding: 20px;
+    }
+
+
+    .profile-stat-grid {
+        gap: 10px;
+    }
+
+
+    .profile-stat-grid .profile-info-box {
+        min-height: 80px;
+    }
+
+
+    .profile-stat-grid .profile-info-box strong {
+        font-size: 21px;
+    }
+
+    .profile-detail-section {
+        grid-template-columns:
+            1fr;
+
+        gap: 14px;
+
+        padding:
+            68px 12px 14px;
+
+        border-radius: 22px;
+    }
+
+
+    .profile-detail-section::before {
+        top: 24px;
+        left: 22px;
+
+        font-size: 11px;
+    }
+
+
+    .profile-detail-block {
+        padding:
+            55px 14px 18px;
+
+        border-radius: 17px;
+    }
+
+
+    .profile-radar-chart {
+        max-width: 320px;
+    }
+
+
+    .profile-stat-grid {
+        grid-template-columns:
+            repeat(3, 1fr);
+
+        gap: 7px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 430px) {
+
+    .profile-information-row {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .profile-summary-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .profile-character-area,
+    .profile-summary-left,
+    .profile-summary-right {
+        grid-column: 1;
+    }
+
+
+    .profile-character-area {
+        grid-row: 1;
+    }
+
+
+    .profile-summary-left {
+        grid-row: 2;
+    }
+
+
+    .profile-summary-right {
+        grid-row: 3;
+    }
+
+
+    .profile-stat-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}

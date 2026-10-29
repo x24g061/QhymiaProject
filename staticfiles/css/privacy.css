@@ -1,0 +1,45 @@
+/* ========================================
+   プライバシーポリシー
+======================================== */
+
+.privacy-content {
+    padding:
+        10px
+        45px
+        35px;
+}
+
+
+/* お問い合わせ未設定部分 */
+
+.privacy-placeholder {
+    margin-top: 15px !important;
+
+    padding:
+        12px
+        15px;
+
+    background:
+        rgba(45, 184, 223, 0.08);
+
+    border-left:
+        4px solid #2db8df;
+
+    color: #075376 !important;
+}
+
+
+/* ========================================
+   スマートフォン
+======================================== */
+
+@media (max-width: 700px) {
+
+    .privacy-content {
+        padding:
+            5px
+            22px
+            30px;
+    }
+
+}

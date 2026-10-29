@@ -1,0 +1,326 @@
+* {
+    box-sizing: border-box;
+}
+
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+
+    min-height: 100%;
+
+    font-family:
+        "Yu Gothic",
+        "Hiragino Kaku Gothic ProN",
+        Meiryo,
+        sans-serif;
+}
+
+
+body {
+    color: #164e69;
+
+    background-image:
+        linear-gradient(
+            rgba(255, 255, 255, 0.35),
+            rgba(255, 255, 255, 0.35)
+        ),
+        url("../images/signup-bg.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+
+/* ページ */
+
+.tokushoho-page {
+    width: 100%;
+    min-height: 100vh;
+
+    padding-bottom: 40px;
+}
+
+
+/* ロゴ */
+
+.tokushoho-header {
+    width: 100%;
+
+    padding: 15px 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.tokushoho-logo {
+    width: 230px;
+    height: auto;
+
+    display: block;
+}
+
+
+/* メイン */
+
+.tokushoho-container {
+    width: 86%;
+    max-width: 820px;
+
+    margin: 0 auto;
+
+    background:
+        rgba(255, 255, 255, 0.90);
+
+    border:
+        1px solid
+        rgba(30, 80, 100, 0.25);
+
+    box-shadow:
+        0 8px 25px
+        rgba(20, 60, 75, 0.15);
+}
+
+
+/* タイトル */
+
+.tokushoho-title {
+    padding:
+        35px
+        45px
+        28px;
+
+    border-bottom:
+        1px solid
+        rgba(30, 80, 100, 0.25);
+}
+
+
+.tokushoho-title h1 {
+    margin:
+        0
+        0
+        12px;
+
+    color: #075376;
+
+    font-size: 27px;
+
+    letter-spacing: 2px;
+}
+
+
+.tokushoho-title p {
+    margin: 0;
+
+    color: #376b80;
+
+    font-size: 14px;
+
+    line-height: 1.8;
+}
+
+
+/* 中身 */
+
+.tokushoho-content {
+    padding:
+        35px
+        45px;
+}
+
+
+/* 表 */
+
+.tokushoho-table {
+    width: 100%;
+
+    border-top:
+        1px solid
+        rgba(35, 95, 120, 0.30);
+
+    border-left:
+        1px solid
+        rgba(35, 95, 120, 0.30);
+}
+
+
+.tokushoho-row {
+    display: grid;
+
+    grid-template-columns:
+        210px 1fr;
+
+    border-bottom:
+        1px solid
+        rgba(35, 95, 120, 0.30);
+}
+
+
+.tokushoho-label {
+    padding:
+        17px
+        18px;
+
+    background:
+        rgba(45, 184, 223, 0.10);
+
+    color: #075376;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    line-height: 1.7;
+
+    border-right:
+        1px solid
+        rgba(35, 95, 120, 0.30);
+}
+
+
+.tokushoho-value {
+    padding:
+        17px
+        20px;
+
+    background:
+        rgba(255, 255, 255, 0.50);
+
+    color: #315f72;
+
+    font-size: 14px;
+
+    line-height: 1.8;
+
+    border-right:
+        1px solid
+        rgba(35, 95, 120, 0.30);
+}
+
+
+/* 制定日 */
+
+.tokushoho-date {
+    margin-top: 30px;
+
+    text-align: right;
+
+    color: #617f8d;
+
+    font-size: 13px;
+}
+
+
+/* 戻る */
+
+.tokushoho-actions {
+    padding:
+        25px
+        30px
+        35px;
+
+    text-align: center;
+
+    border-top:
+        1px solid
+        rgba(30, 80, 100, 0.25);
+}
+
+
+.back-button {
+    display: inline-block;
+
+    min-width: 280px;
+
+    padding:
+        14px
+        30px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            90deg,
+            #2db8df,
+            #27a9d2
+        );
+
+    text-decoration: none;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    letter-spacing: 1px;
+
+    transition:
+        transform 0.15s,
+        filter 0.15s;
+}
+
+
+.back-button:hover {
+    filter: brightness(1.08);
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* スマホ */
+
+@media (max-width: 700px) {
+
+    .tokushoho-logo {
+        width: 190px;
+    }
+
+
+    .tokushoho-container {
+        width: 94%;
+    }
+
+
+    .tokushoho-title {
+        padding:
+            25px
+            22px;
+    }
+
+
+    .tokushoho-title h1 {
+        font-size: 22px;
+    }
+
+
+    .tokushoho-content {
+        padding:
+            25px
+            20px;
+    }
+
+
+    .tokushoho-row {
+        display: block;
+    }
+
+
+    .tokushoho-label {
+        border-bottom:
+            1px solid
+            rgba(35, 95, 120, 0.20);
+    }
+
+
+    .back-button {
+        width: 100%;
+
+        min-width: 0;
+    }
+
+}
