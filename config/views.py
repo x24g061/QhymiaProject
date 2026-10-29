@@ -6,6 +6,8 @@ from django.shortcuts import render, redirect
 
 from django.conf import settings
 
+from django.db import transaction
+
 from apps.accounts.models import (
     Character,
     AdminModeAccessLog,
@@ -13,7 +15,11 @@ from apps.accounts.models import (
 )
 
 from apps.sns.models import Post
-from apps.battle.arena_services import get_arena_home_context
+
+from apps.battle.arena_services import (
+    get_arena_home_context,
+    get_arena_state,
+)
 
 from apps.battle.progression import (
     MAX_EXPLORATION_FLOOR,
@@ -1074,7 +1080,7 @@ def calculate_reincarnation_stats(bonus_points):
 
 
 @login_required
-
+@transaction.atomic
 def again(request):
 
     character = Character.objects.filter(user=request.user).first()
@@ -1167,10 +1173,22 @@ def again(request):
 
                 character.reincarnation_count += 1
 
-
-
+                # 通常キャラクターの回帰後ステータスを保存
                 character.save()
 
+                # 闘技場専用HP・MPも回帰後の最大値まで回復
+                arena_state = get_arena_state(character)
+
+                arena_state.current_hp = character.max_hp
+                arena_state.current_mp = character.max_mp
+
+                arena_state.save(
+                    update_fields=[
+                        "current_hp",
+                        "current_mp",
+                        "updated_at",
+                    ]
+                )
 
 
                 # 使用済み抽選結果を削除
