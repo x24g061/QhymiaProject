@@ -41,6 +41,7 @@ from .drops import grant_exploration_drop
 
 @login_required
 @require_POST
+@transaction.atomic
 def battle(request):
     """
     探索を1回実行する。
@@ -60,7 +61,14 @@ def battle(request):
     HP / MP全回復
     """
 
-    character = request.user.character
+    # 同じキャラクターの探索処理を直列化する
+    character = (
+        Character.objects
+        .select_for_update()
+        .get(user=request.user)
+    )
+
+    # DBロック取得後の時刻でクールタイムを判定する
     now = timezone.now()
 
     # ========================================================
