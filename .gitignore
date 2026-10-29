@@ -18,3 +18,5 @@ media/
 # OS
 .DS_Store
 Thumbs.db
+# Django collectstatic output
+/staticfiles/
