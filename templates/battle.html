@@ -64,9 +64,17 @@
                 </h2>
 
 
-                <!-- キャラクター画像は後で実装 -->
+                <!-- キャラクター画像 -->
                 <div class="fighter-icon">
-                    プレイヤーアイコン
+                    {% if character.character_image_path %}
+                        <img
+                            src="{% static character.character_image_path %}"
+                            alt="{{ character.name }}"
+                            class="character-battle-icon"
+                        >
+                    {% else %}
+                        <span>{{ character.name|slice:":1" }}</span>
+                    {% endif %}
                 </div>
 
 
