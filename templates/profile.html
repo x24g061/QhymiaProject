@@ -5,223 +5,669 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>プロフィール | Qhymia</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <title>
+        プロフィール | Qhymia
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{% static 'css/profile.css' %}"
+    >
 </head>
+
 
 <body>
 
-    <div class="profile-page">
+<div class="profile-page">
 
-        <header class="profile-header">
-            <div>
-                <p class="profile-label">CHARACTER PROFILE</p>
-                <h1>プロフィール</h1>
+
+    <!-- ========================================
+         上部ヘッダー
+    ========================================= -->
+
+    <header class="profile-header">
+
+        <a
+            href="{% url 'home' %}"
+            class="profile-back-button"
+        >
+            ＜ ホームへ戻る
+        </a>
+
+
+        <h1>
+            プロフィール
+        </h1>
+
+
+        <div class="profile-header-spacer"></div>
+
+    </header>
+
+
+    {% if character %}
+
+
+    <!-- ========================================
+         プロフィール基本情報
+         PDF 1ページ目相当
+    ========================================= -->
+
+    <main class="profile-content">
+
+
+        <section class="profile-summary-section">
+
+            <div class="profile-player-name">
+
+                <span class="profile-main-label">
+                    プレイヤー名
+                </span>
+
+                <strong>
+                    {{ character.name }}
+                </strong>
+
             </div>
 
-            <a href="{% url 'home' %}" class="home-button">
-                ホームへ戻る
-            </a>
-        </header>
 
-        {% if character %}
+            <div class="profile-summary-grid">
 
-        <main class="profile-container">
 
-            <section class="profile-main-card">
+                <!-- ==============================
+                     左側
+                =============================== -->
 
-                <div class="character-icon">
+                <div class="profile-summary-left">
 
-                    <div class="icon-placeholder">
+                    <div class="profile-info-box">
 
-                        {% if character.character_image_path %}
+                        <span class="profile-info-label">
+                            種族
+                        </span>
 
-                        <img src="{% static character.character_image_path %}" alt="{{ character.name }}"
-                            class="profile-character-image">
+                        <strong class="profile-race-value">
+                            {{ character.get_race_display }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="profile-info-box">
+
+                        <span class="profile-info-label">
+                            職業
+                        </span>
+
+                        <strong>
+                            {{ character.get_job_display }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ==============================
+                     キャラクター画像
+                =============================== -->
+
+                <div class="profile-character-area">
+
+                    {% if character.character_image_path %}
+
+                    <img
+                        src="{% static character.character_image_path %}"
+                        alt="{{ character.name }}"
+                        class="profile-character-image"
+                    >
+
+                    {% else %}
+
+                    <div class="profile-character-placeholder">
+                        キャラ<br>
+                        イラスト
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- ==============================
+                     右側
+                =============================== -->
+
+                <div class="profile-summary-right">
+
+                    <div class="profile-info-box">
+
+                        <span class="profile-info-label">
+                            レベル
+                        </span>
+
+                        <strong>
+                            Lv.{{ character.level }}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="profile-info-box">
+
+                        <span class="profile-info-label">
+                            転生回数
+                        </span>
+
+                        <strong>
+                            {{ character.reincarnation_count }}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================================
+                 中段
+            ========================================= -->
+
+            <div class="profile-information-row">
+
+                <div class="profile-info-box">
+
+                    <span class="profile-info-label">
+                        闘技場
+                    </span>
+
+                    <strong>
+
+                        {% if character.arena_state %}
+
+                            {{ character.arena_state.floor_id }}階層
 
                         {% else %}
 
-                        {{ character.name|slice:":1" }}
+                            未登録
 
                         {% endif %}
 
-                    </div>
+                    </strong>
 
                 </div>
 
-                <div class="character-summary">
-                    <p class="character-level">
-                        Lv. {{ character.level }}
-                    </p>
 
-                    <h2>{{ character.name }}</h2>
+                <div class="profile-info-box">
 
-                    <div class="character-tags">
-                        <span class="tag">
-                            {{ character.get_race_display }}
+                    <span class="profile-info-label">
+                        所持Q
+                    </span>
+
+                    <strong>
+                        {{ character.gold }}Q
+                    </strong>
+
+                </div>
+
+
+                <div class="profile-info-box">
+
+                    <span class="profile-info-label">
+                        EXP
+                    </span>
+
+                    <strong>
+                        {{ character.exp }} / 100
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================================
+                 HP / MP / STA
+            ========================================= -->
+
+            <div class="profile-information-row">
+
+                <div class="profile-info-box">
+
+                    <span class="profile-info-label">
+                        HP
+                    </span>
+
+                    <strong>
+                        {{ character.current_hp }}
+                    </strong>
+
+                </div>
+
+
+                <div class="profile-info-box">
+
+                    <span class="profile-info-label">
+                        MP
+                    </span>
+
+                    <strong>
+                        {{ character.current_mp }}
+                    </strong>
+
+                </div>
+
+
+                <div class="profile-info-box">
+
+                    <span class="profile-info-label">
+                        STA
+                    </span>
+
+                    <strong>
+                        {{ character.current_stamina }}
+                        /
+                        {{ character.max_stamina }}
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ========================================
+             基礎ステータス
+             下へスクロールした先
+        ========================================= -->
+
+        <section class="profile-detail-section">
+
+
+            <div class="profile-detail-block">
+
+
+                <!-- ==============================
+                     六角形グラフ
+                =============================== -->
+
+                <div
+                    class="profile-radar-chart"
+                    id="status-radar"
+                    data-str="{{ character.strength }}"
+                    data-int="{{ character.intelligence }}"
+                    data-dex="{{ character.dexterity }}"
+                    data-agi="{{ character.agility }}"
+                    data-vit="{{ character.vitality }}"
+                    data-luk="{{ character.luck }}"
+                >
+
+                    <svg
+                        viewBox="0 0 400 400"
+                        class="profile-radar-svg"
+                    >
+
+                        <!-- 外枠 -->
+                        <polygon
+                            points="
+                                200,45
+                                330,120
+                                330,275
+                                200,350
+                                70,275
+                                70,120
+                            "
+                            class="radar-outline"
+                        />
+
+
+                        <!-- 中央線 -->
+                        <line
+                            x1="200"
+                            y1="45"
+                            x2="200"
+                            y2="350"
+                            class="radar-line"
+                        />
+
+                        <line
+                            x1="70"
+                            y1="120"
+                            x2="330"
+                            y2="275"
+                            class="radar-line"
+                        />
+
+                        <line
+                            x1="330"
+                            y1="120"
+                            x2="70"
+                            y2="275"
+                            class="radar-line"
+                        />
+
+
+                        <!-- 実際のステータス -->
+                        <polygon
+                            id="status-radar-value"
+                            class="radar-value"
+                        />
+
+
+                        <!-- ラベル -->
+                        <text x="185" y="30">
+                            STR
+                        </text>
+
+                        <text x="325" y="105">
+                            INT
+                        </text>
+
+                        <text x="335" y="290">
+                            AGI
+                        </text>
+
+                        <text x="185" y="380">
+                            LUK
+                        </text>
+
+                        <text x="25" y="290">
+                            VIT
+                        </text>
+
+                        <text x="20" y="105">
+                            DEX
+                        </text>
+
+                    </svg>
+
+                </div>
+
+
+                <!-- ==============================
+                     ステータス数値
+                =============================== -->
+
+                <div class="profile-stat-grid">
+
+                    <div class="profile-info-box">
+                        <span class="profile-info-label">
+                            STR
                         </span>
 
-                        <span class="tag">
-                            {{ character.get_job_display }}
+                        <strong>
+                            {{ character.strength }}
+                        </strong>
+                    </div>
+
+
+                    <div class="profile-info-box">
+                        <span class="profile-info-label">
+                            INT
                         </span>
 
-                        <span class="tag">
-                            転生 {{ character.reincarnation_count }}回
+                        <strong>
+                            {{ character.intelligence }}
+                        </strong>
+                    </div>
+
+
+                    <div class="profile-info-box">
+                        <span class="profile-info-label">
+                            DEX
                         </span>
-                    </div>
-                </div>
 
-            </section>
-
-
-            <section class="profile-card">
-                <h3>基本情報</h3>
-
-                <div class="information-grid">
-
-                    <div class="information-item">
-                        <span>EXP</span>
-                        <strong>{{ character.exp }} / 100</strong>
-                    </div>
-
-                    <div class="information-item">
-                        <span>HP</span>
                         <strong>
-                            {{ character.current_hp }}
-                            /
-                            {{ character.max_hp }}
+                            {{ character.dexterity }}
                         </strong>
                     </div>
 
-                    <div class="information-item">
-                        <span>MP</span>
+
+                    <div class="profile-info-box">
+                        <span class="profile-info-label">
+                            AGI
+                        </span>
+
                         <strong>
-                            {{ character.current_mp }}
-                            /
-                            {{ character.max_mp }}
+                            {{ character.agility }}
                         </strong>
                     </div>
 
-                    <div class="information-item">
-                        <span>STAMINA</span>
+
+                    <div class="profile-info-box">
+                        <span class="profile-info-label">
+                            VIT
+                        </span>
+
                         <strong>
-                            {{ character.current_stamina }}
-                            /
-                            {{ character.max_stamina }}
+                            {{ character.vitality }}
                         </strong>
                     </div>
 
-                    <div class="information-item">
-                        <span>所持Q</span>
-                        <strong>{{ character.gold }} Q</strong>
-                    </div>
 
-                    <div class="information-item">
-                        <span>闘技場</span>
+                    <div class="profile-info-box">
+                        <span class="profile-info-label">
+                            LUK
+                        </span>
+
                         <strong>
-                            {% if character.arena_state %}
-                                {{ character.arena_state.floor_id }} 階
-                            {% else %}
-                                未登録
-                            {% endif %}
+                            {{ character.luck }}
                         </strong>
                     </div>
 
                 </div>
-            </section>
+
+            </div>
 
 
-            <section class="profile-card">
-                <h3>ステータス</h3>
 
-                <div class="status-grid">
+            <!-- ========================================
+                 属性
+            ========================================= -->
 
-                    <div class="status-item">
-                        <span>STR</span>
-                        <strong>{{ character.strength }}</strong>
+            <div class="profile-detail-block">
+
+
+                <!-- ==============================
+                     属性六角形
+                =============================== -->
+
+                <div
+                    class="profile-radar-chart"
+                    id="attribute-radar"
+                    data-fire="{{ character.fire }}"
+                    data-water="{{ character.water }}"
+                    data-grass="{{ character.grass }}"
+                    data-rock="{{ character.rock }}"
+                    data-light="{{ character.light }}"
+                    data-dark="{{ character.dark }}"
+                >
+
+                    <svg
+                        viewBox="0 0 400 400"
+                        class="profile-radar-svg"
+                    >
+
+                        <polygon
+                            points="
+                                200,45
+                                330,120
+                                330,275
+                                200,350
+                                70,275
+                                70,120
+                            "
+                            class="radar-outline"
+                        />
+
+
+                        <line
+                            x1="200"
+                            y1="45"
+                            x2="200"
+                            y2="350"
+                            class="radar-line"
+                        />
+
+                        <line
+                            x1="70"
+                            y1="120"
+                            x2="330"
+                            y2="275"
+                            class="radar-line"
+                        />
+
+                        <line
+                            x1="330"
+                            y1="120"
+                            x2="70"
+                            y2="275"
+                            class="radar-line"
+                        />
+
+
+                        <polygon
+                            id="attribute-radar-value"
+                            class="radar-value"
+                        />
+
+
+                        <text x="185" y="30">
+                            火
+                        </text>
+
+                        <text x="325" y="105">
+                            水
+                        </text>
+
+                        <text x="335" y="290">
+                            岩
+                        </text>
+
+                        <text x="185" y="380">
+                            闇
+                        </text>
+
+                        <text x="25" y="290">
+                            光
+                        </text>
+
+                        <text x="20" y="105">
+                            草
+                        </text>
+
+                    </svg>
+
+                </div>
+
+
+                <!-- ==============================
+                     属性数値
+                =============================== -->
+
+                <div class="profile-stat-grid">
+
+                    <div class="profile-info-box">
+                        <span class="profile-info-label">
+                            火
+                        </span>
+
+                        <strong>
+                            {{ character.fire }}
+                        </strong>
                     </div>
 
-                    <div class="status-item">
-                        <span>INT</span>
-                        <strong>{{ character.intelligence }}</strong>
+
+                    <div class="profile-info-box">
+                        <span class="profile-info-label">
+                            水
+                        </span>
+
+                        <strong>
+                            {{ character.water }}
+                        </strong>
                     </div>
 
-                    <div class="status-item">
-                        <span>DEX</span>
-                        <strong>{{ character.dexterity }}</strong>
+
+                    <div class="profile-info-box">
+                        <span class="profile-info-label">
+                            草
+                        </span>
+
+                        <strong>
+                            {{ character.grass }}
+                        </strong>
                     </div>
 
-                    <div class="status-item">
-                        <span>AGI</span>
-                        <strong>{{ character.agility }}</strong>
+
+                    <div class="profile-info-box">
+                        <span class="profile-info-label">
+                            岩
+                        </span>
+
+                        <strong>
+                            {{ character.rock }}
+                        </strong>
                     </div>
 
-                    <div class="status-item">
-                        <span>VIT</span>
-                        <strong>{{ character.vitality }}</strong>
+
+                    <div class="profile-info-box">
+                        <span class="profile-info-label">
+                            光
+                        </span>
+
+                        <strong>
+                            {{ character.light }}
+                        </strong>
                     </div>
 
-                    <div class="status-item">
-                        <span>LUK</span>
-                        <strong>{{ character.luck }}</strong>
+
+                    <div class="profile-info-box">
+                        <span class="profile-info-label">
+                            闇
+                        </span>
+
+                        <strong>
+                            {{ character.dark }}
+                        </strong>
                     </div>
 
                 </div>
-            </section>
+
+            </div>
+
+        </section>
+
+    </main>
 
 
-            <section class="profile-card">
-                <h3>属性</h3>
+    {% else %}
 
-                <div class="attribute-grid">
 
-                    <div class="attribute-item">
-                        <span>🔥 火</span>
-                        <strong>{{ character.fire }}</strong>
-                    </div>
+    <div class="no-character">
 
-                    <div class="attribute-item">
-                        <span>💧 水</span>
-                        <strong>{{ character.water }}</strong>
-                    </div>
-
-                    <div class="attribute-item">
-                        <span>🌱 草</span>
-                        <strong>{{ character.grass }}</strong>
-                    </div>
-
-                    <div class="attribute-item">
-                        <span>🪨 岩</span>
-                        <strong>{{ character.rock }}</strong>
-                    </div>
-
-                    <div class="attribute-item">
-                        <span>✨ 光</span>
-                        <strong>{{ character.light }}</strong>
-                    </div>
-
-                    <div class="attribute-item">
-                        <span>🌑 闇</span>
-                        <strong>{{ character.dark }}</strong>
-                    </div>
-
-                </div>
-            </section>
-
-        </main>
-
-        {% else %}
-
-        <div class="no-character">
-            キャラクターが作成されていません。
-        </div>
-
-        {% endif %}
+        キャラクターが作成されていません。
 
     </div>
+
+
+    {% endif %}
+
+</div>
+
+
+<script
+    src="{% static 'js/profile.js' %}"
+></script>
 
 </body>
 

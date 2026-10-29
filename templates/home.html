@@ -55,82 +55,6 @@
 
 
 
-    <!-- =====================================
-         HOME ヘッダー
-    ====================================== -->
-
-    <section class="home-hero">
-
-        <div class="hero-main">
-
-            <p class="hero-label">
-                QHYMIA ADVENTURER HOME
-            </p>
-
-            <h1>
-                {{ character.name }}
-            </h1>
-
-            <p class="hero-description">
-                冒険者情報の確認や、探索・ショップ・SNSなどの
-                各コンテンツへ移動できます。
-            </p>
-
-            <p>
-                種族：{{ character.get_race_display }}
-            </p>
-
-            <p>
-                職業：{{ character.get_job_display }}
-            </p>
-
-        </div>
-
-
-        <div class="hero-summary">
-
-            <div class="summary-item">
-
-                <span>
-                    LEVEL
-                </span>
-
-                <strong>
-                    {{ character.level }}
-                </strong>
-
-            </div>
-
-
-            <div class="summary-item">
-
-                <span>
-                    BATTLE POWER
-                </span>
-
-                <strong>
-                    {{ battle_power }}
-                </strong>
-
-            </div>
-
-
-            <div class="summary-item">
-
-                <span>
-                    所持Q
-                </span>
-
-                <strong>
-                    {{ character.gold }} Q
-                </strong>
-
-            </div>
-
-        </div>
-
-    </section>
-
 
     <!-- =====================================
          闘技場エリア
@@ -173,51 +97,384 @@
 
         </div>
 
-</section>
+    </section>
 
 
 
-<!-- =====================================
+    <!-- =====================================
          メインレイアウト
     ====================================== -->
 
-<div class="home-layout">
+    <div class="home-layout">
 
 
-    <!-- =================================
+        <!-- =================================
              左側
         ================================== -->
 
-    <div class="home-left">
+        <div class="home-left">
 
 
 
-        <!-- =============================
+            <!-- =============================
                  ステータス
             ============================== -->
 
-        <section class="home-card status-card collapsible-section" data-collapse-id="status">
+            <section class="home-card status-card collapsible-section" data-collapse-id="status">
 
-            <div class="card-heading">
+                <div class="card-heading">
 
-                <div>
+                    <div>
 
-                    <p class="section-label">
-                        CHARACTER STATUS
-                    </p>
+                        <p class="section-label">
+                            CHARACTER STATUS
+                        </p>
 
-                    <h2>
-                        ステータス
-                    </h2>
+                        <h2>
+                            ステータス
+                        </h2>
+
+                    </div>
+
+
+                    <div class="card-heading-actions">
+
+                        <span class="level-badge">
+                            Lv.{{ character.level }}
+                        </span>
+
+
+                        <button type="button" class="collapse-toggle" aria-expanded="true">
+
+                            <span class="collapse-toggle-icon">
+                                ▼
+                            </span>
+
+                        </button>
+
+                    </div>
 
                 </div>
 
 
-                <div class="card-heading-actions">
+                <div class="collapsible-content">
 
-                    <span class="level-badge">
-                        Lv.{{ character.level }}
-                    </span>
+
+                    <!-- キャラクター -->
+
+                    <div class="character-header">
+
+                        <div class="character-avatar">
+
+                            {% if character.character_image_path %}
+
+                            <img src="{% static character.character_image_path %}" alt="{{ character.name }}"
+                                class="character-avatar-image">
+
+                            {% else %}
+
+                            {{ character.name|slice:":1" }}
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div>
+
+                            <h3>
+                                {{ character.name }}
+                            </h3>
+
+                            <p>
+                                {{ main_attribute_name }} 属性
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- EXP -->
+
+                    <div class="exp-area">
+
+                        <div class="status-line">
+
+                            <span>
+                                EXP
+                            </span>
+
+                            <strong>
+                                {{ character.exp }} / 100
+                            </strong>
+
+                        </div>
+
+
+                        <div class="progress-bar">
+
+                            <div class="progress-fill exp-fill" style="--exp-width: {{ character.exp }}%;">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- HP -->
+
+                    <div class="resource-area">
+
+                        <div class="status-line">
+
+                            <span>
+                                HP
+                            </span>
+
+                            <strong>
+                                {{ character.current_hp }}
+                                /
+                                {{ character.max_hp }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- MP -->
+
+                    <div class="resource-area">
+
+                        <div class="status-line">
+
+                            <span>
+                                MP
+                            </span>
+
+                            <strong>
+                                {{ character.current_mp }}
+                                /
+                                {{ character.max_mp }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- 能力値 -->
+
+                    <div class="status-table">
+
+
+                        <div class="status-box">
+
+                            <span>
+                                STR
+                            </span>
+
+                            <strong>
+                                {{ character.strength }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="status-box">
+
+                            <span>
+                                INT
+                            </span>
+
+                            <strong>
+                                {{ character.intelligence }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="status-box">
+
+                            <span>
+                                DEX
+                            </span>
+
+                            <strong>
+                                {{ character.dexterity }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="status-box">
+
+                            <span>
+                                AGI
+                            </span>
+
+                            <strong>
+                                {{ character.agility }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="status-box">
+
+                            <span>
+                                VIT
+                            </span>
+
+                            <strong>
+                                {{ character.vitality }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="status-box">
+
+                            <span>
+                                LUK
+                            </span>
+
+                            <strong>
+                                {{ character.luck }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- その他 -->
+
+                    <div class="character-meta">
+
+
+                        <div>
+
+                            <span>
+                                所持キュー
+                            </span>
+
+                            <strong>
+                                {{ character.gold }} Q
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                回帰回数
+                            </span>
+
+                            <strong>
+                                {{ character.reincarnation_count }} 回
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>
+                                最大到達階数
+                            </span>
+
+                            <strong>
+                                {{ max_unlocked_floor }} 階
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <a href="{% url 'accounts:profile' %}" class="secondary-button">
+                        プロフィールを見る
+                    </a>
+
+                </div>
+
+            </section>
+            <!-- ============================
+     ミニゲーム
+============================ -->
+            <section class="mini-game-section">
+
+                <div class="mini-game-header">
+                    <p class="mini-game-label">MINI GAME</p>
+                    <h2>ミニゲーム</h2>
+                </div>
+
+                <p class="mini-game-description">
+                    冒険の合間に、ちょっとひと休み。
+                </p>
+
+                <div class="mini-game-list">
+
+                    <a href="{% url 'game:fishing' %}" class="mini-game-item">
+
+                        <span class="mini-game-icon">🎣</span>
+
+                        <span class="mini-game-info">
+                            <strong>釣り</strong>
+                            <small>
+                                魚を引き寄せて釣り上げよう！
+                            </small>
+                        </span>
+
+                        <span class="mini-game-arrow">→</span>
+
+                    </a>
+
+                </div>
+
+                <p class="mini-game-footer">
+                    今後もミニゲームを追加予定！
+                </p>
+
+            </section>
+
+        </div>
+
+
+        <!-- =================================
+             右側
+        ================================== -->
+
+        <div class="home-right">
+
+
+            <!-- =============================
+                 行動メニュー
+            ============================== -->
+
+            <section class="home-card action-card collapsible-section" data-collapse-id="action">
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <p class="section-label">
+                            ACTION MENU
+                        </p>
+
+                        <h2>
+                            行動メニュー
+                        </h2>
+
+                    </div>
 
 
                     <button type="button" class="collapse-toggle" aria-expanded="true">
@@ -230,40 +487,580 @@
 
                 </div>
 
-            </div>
+
+                <div class="collapsible-content">
+
+                    <div class="action-grid">
 
 
-            <div class="collapsible-content">
+                        <!-- SNS -->
+
+                        <a href="{% url 'sns' %}" class="home-action-button">
+
+                            <span class="action-icon">
+                                ◇
+                            </span>
 
 
-                <!-- キャラクター -->
+                            <span class="action-text">
 
-                <div class="character-header">
+                                <strong>
+                                    SNS
+                                </strong>
 
-                    <div class="character-avatar">
+                                <small>
+                                    他の冒険者の投稿を見る
+                                </small>
 
-                        {% if character.character_image_path %}
+                            </span>
 
-                        <img src="{% static character.character_image_path %}" alt="{{ character.name }}"
-                            class="character-avatar-image">
+
+                            <span class="action-arrow">
+                                →
+                            </span>
+
+                        </a>
+
+
+
+                        <!-- 倉庫 -->
+
+                        <a href="{% url 'inventory:inventory' %}" class="home-action-button">
+
+                            <span class="action-icon">
+                                ▣
+                            </span>
+
+
+                            <span class="action-text">
+
+                                <strong>
+                                    倉庫
+                                </strong>
+
+                                <small>
+                                    所持品を整理する
+                                </small>
+
+                            </span>
+
+
+                            <span class="action-arrow">
+                                →
+                            </span>
+
+                        </a>
+
+                        <!-- キャラクター変更 -->
+
+                        <a href="{% url 'accounts:character_image_change' %}" class="home-action-button">
+
+                            <span class="action-icon">
+                                ♙
+                            </span>
+
+                            <span class="action-text">
+
+                                <strong>
+                                    キャラクター変更
+                                </strong>
+
+                                <small>
+                                    使用するキャラクター画像を変更する
+                                </small>
+
+                            </span>
+
+                            <span class="action-arrow">
+                                →
+                            </span>
+
+                        </a>
+
+
+
+                        <!-- 戦術 -->
+
+                        <a href="{% url 'battle:tactics' %}" class="home-action-button">
+
+                            <span class="action-icon">
+                                ⚔️
+                            </span>
+
+
+                            <span class="action-text">
+
+                                <strong>
+                                    戦術
+                                </strong>
+
+                                <small>
+                                    スキルを設定する
+                                </small>
+
+                            </span>
+
+
+                            <span class="action-arrow">
+                                →
+                            </span>
+
+                        </a>
+
+
+
+                        <!-- 回帰 -->
+
+                        <a href="{% url 'again' %}" class="home-action-button">
+
+                            <span class="action-icon">
+                                ↻
+                            </span>
+
+
+                            <span class="action-text">
+
+                                <strong>
+                                    回帰
+                                </strong>
+
+                                <small>
+                                    キャラクターを回帰させる
+                                </small>
+
+                            </span>
+
+
+                            <span class="action-arrow">
+                                →
+                            </span>
+
+                        </a>
+
+
+
+                        <!-- ショップ -->
+
+                        <a href="{% url 'shop:shop' %}" class="home-action-button">
+
+                            <span class="action-icon">
+                                ◈
+                            </span>
+
+
+                            <span class="action-text">
+
+                                <strong>
+                                    ショップ
+                                </strong>
+
+                                <small>
+                                    装備やアイテムを購入する
+                                </small>
+
+                            </span>
+
+
+                            <span class="action-arrow">
+                                →
+                            </span>
+
+                        </a>
+
+                        <!-- 合成 -->
+
+                        <a href="{% url 'inventory:synthesis' %}" class="home-action-button">
+                            <span class="action-icon">
+                                ⚒
+                            </span>
+
+                            <span class="action-text">
+
+                                <strong>
+                                    合成
+                                </strong>
+
+                                <small>
+                                    装備を合成する
+                                </small>
+
+                            </span>
+
+                            <span class="action-arrow">
+                                →
+                            </span>
+
+                        </a>
+
+
+                        <!-- 手相 -->
+
+                        <a href="{% url 'accounts:palm' %}" class="home-action-button">
+
+                            <span class="action-icon">
+                                ✋
+                            </span>
+
+                            <span class="action-text">
+
+                                <strong>
+                                    手相
+                                </strong>
+
+                                <small>
+                                    属性の成長傾向を確認する
+                                </small>
+
+                            </span>
+
+                            <span class="action-arrow">
+                                →
+                            </span>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+
+
+            <!-- =============================
+                 探索
+            ============================== -->
+
+            <section class="home-card exploration-card">
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <p class="section-label">
+                            EXPLORATION
+                        </p>
+
+                        <h2>
+                            探索
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <p class="card-description">
+                    探索する階層を選択してください。
+                    選択した場所で戦闘を開始します。
+                </p>
+
+
+                <div class="exploration-form">
+
+                    <form method="post" action="{% url 'battle:battle' %}">
+
+                        {% csrf_token %}
+
+
+                        <div class="select-area">
+
+                            <label for="exploration-floor">
+                                探索場所
+                            </label>
+
+                            <select id="exploration-floor" name="floor">
+
+                                {% for floor in exploration_floors %}
+
+                                {% if floor > max_unlocked_floor %}
+
+                                <option value="{{ floor }}" disabled>
+                                    {{ floor }}階層 🔒 未解放
+                                </option>
+
+                                {% else %}
+
+                                <option value="{{ floor }}">
+                                    {{ floor }}階層
+                                </option>
+
+                                {% endif %}
+
+                                {% endfor %}
+
+                            </select>
+                        </div>
+
+
+                        {% if exploration_cooldown_remaining > 0 %}
+
+
+                        <button type="button" class="explore-button explore-button-disabled"
+                            id="exploration-cooldown-button" data-remaining="{{ exploration_cooldown_remaining }}"
+                            disabled>
+
+                            あと
+
+                            <span id="exploration-cooldown-seconds">
+                                {{ exploration_cooldown_remaining }}
+                            </span>
+
+                            秒
+
+                        </button>
+
+
+                        {% if exploration_cooldown_reduced %}
+
+                        <p class="cooldown-status">
+                            探索CT短縮中：20秒
+                        </p>
 
                         {% else %}
 
-                        {{ character.name|slice:":1" }}
+                        <p class="cooldown-status">
+                            通常探索CT：40秒
+                        </p>
 
                         {% endif %}
+
+
+                        {% else %}
+
+
+                        <button type="submit" class="explore-button">
+
+                            探索を開始する
+
+                            <span>
+                                →
+                            </span>
+
+                        </button>
+
+
+                        {% endif %}
+
+                    </form>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =============================
+                 闘技場
+            ============================== -->
+
+            <section class="home-card exploration-card">
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <p class="section-label">
+                            ARENA
+                        </p>
+
+                        <h2>
+                            闘技場
+                        </h2>
+
+                    </div>
+
+                </div>
+
+
+                <p class="card-description">
+                    現在階のフロアマスターへ挑戦します。空席ならマスターになれます。
+                </p>
+
+
+                <div class="battle-choice arena-choice">
+
+                    <div class="battle-choice-info">
+
+                        <p>
+
+                            現在階層：
+
+                            <strong>
+                                {{ arena_state.floor_id }}階
+                            </strong>
+
+                        </p>
+
+
+                        <p>
+
+                            フロアマスター：
+
+                            <strong>
+                                {% if arena_master %}{{ arena_master.name }}{% else %}空席{% endif %}
+                            </strong>
+
+                        </p>
 
                     </div>
 
 
+                    <p class="arena-player-vitals">
+                        あなたの闘技場HP：{{ arena_state.current_hp }} / {{ character.max_hp }}
+                        ・MP：{{ arena_state.current_mp }} / {{ character.max_mp }}
+                    </p>
+
+                    {% if arena_is_master %}
+                    <button type="button" class="explore-button explore-button-disabled" disabled>
+                        あなたがフロアマスターです
+                    </button>
+                    {% elif exploration_cooldown_remaining > 0 %}
+                    <button type="button" class="explore-button explore-button-disabled" disabled>
+                        戦闘待機中（あと約{{ exploration_cooldown_remaining }}秒）
+                    </button>
+                    {% else %}
+                    <form method="post" action="{% url 'battle:arena_battle' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="explore-button">
+                            {% if arena_master %}闘技場へ挑戦{% else %}空席のマスターになる{% endif %}
+                            <span>→</span>
+                        </button>
+                    </form>
+                    {% endif %}
+
+                </div>
+
+            </section>
+
+
+
+            <!-- =============================
+                 オープンチャット
+            ============================== -->
+
+            <section class="home-card chat-card collapsible-section" data-collapse-id="chat">
+
+                <div class="card-heading">
+
                     <div>
 
-                        <h3>
-                            {{ character.name }}
-                        </h3>
+                        <p class="section-label">
+                            OPEN CHAT
+                        </p>
+
+                        <h2>
+                            オープンチャット
+                        </h2>
+
+                    </div>
+
+
+                    <button type="button" class="collapse-toggle" aria-expanded="true">
+
+                        <span class="collapse-toggle-icon">
+                            ▼
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+                <div class="collapsible-content">
+
+
+                    <div id="chat-messages" class="chat-messages">
+
+                        <p class="chat-loading">
+                            メッセージを読み込み中...
+                        </p>
+
+                    </div>
+
+
+                    <div class="chat-form">
+
+                        {% csrf_token %}
+
+
+                        <input id="chat-input" type="text" maxlength="200" placeholder="メッセージを入力..." autocomplete="off">
+
+
+                        <button id="chat-send-button" type="button">
+                            送信
+                        </button>
+
+                    </div>
+
+
+                    <p id="chat-error" class="chat-error">
+                    </p>
+
+                </div>
+
+            </section>
+
+
+
+
+
+        </div>
+
+    </div>
+    <!-- =============================
+                 お知らせ
+            ============================== -->
+
+    <section class="home-card notice-card home-wide-notice collapsible-section" data-collapse-id="notice">
+
+        <div class="card-heading">
+
+            <div>
+
+                <p class="section-label">
+                    INFORMATION
+                </p>
+
+                <h2>
+                    お知らせ
+                </h2>
+
+            </div>
+
+
+            <button type="button" class="collapse-toggle" aria-expanded="true">
+
+                <span class="collapse-toggle-icon">
+                    ▼
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <div class="collapsible-content">
+
+            <div class="notice-list">
+
+
+                <div class="notice-item">
+
+                    <span class="notice-tag">
+                        INFO
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Qhymiaへようこそ！
+                        </strong>
 
                         <p>
-                            {{ main_attribute_name }} 属性
+                            冒険の準備をして探索へ向かいましょう。
                         </p>
 
                     </div>
@@ -272,902 +1069,31 @@
 
 
 
-                <!-- EXP -->
-
-                <div class="exp-area">
-
-                    <div class="status-line">
-
-                        <span>
-                            EXP
-                        </span>
-
-                        <strong>
-                            {{ character.exp }} / 100
-                        </strong>
-
-                    </div>
-
-
-                    <div class="progress-bar">
-
-                        <div class="progress-fill exp-fill" style="--exp-width: {{ character.exp }}%;">
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- HP -->
-
-                <div class="resource-area">
-
-                    <div class="status-line">
-
-                        <span>
-                            HP
-                        </span>
-
-                        <strong>
-                            {{ character.current_hp }}
-                            /
-                            {{ character.max_hp }}
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- MP -->
-
-                <div class="resource-area">
-
-                    <div class="status-line">
-
-                        <span>
-                            MP
-                        </span>
-
-                        <strong>
-                            {{ character.current_mp }}
-                            /
-                            {{ character.max_mp }}
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- 能力値 -->
-
-                <div class="status-table">
-
-
-                    <div class="status-box">
-
-                        <span>
-                            STR
-                        </span>
-
-                        <strong>
-                            {{ character.strength }}
-                        </strong>
-
-                    </div>
-
-
-                    <div class="status-box">
-
-                        <span>
-                            INT
-                        </span>
-
-                        <strong>
-                            {{ character.intelligence }}
-                        </strong>
-
-                    </div>
-
-
-                    <div class="status-box">
-
-                        <span>
-                            DEX
-                        </span>
-
-                        <strong>
-                            {{ character.dexterity }}
-                        </strong>
-
-                    </div>
-
-
-                    <div class="status-box">
-
-                        <span>
-                            AGI
-                        </span>
-
-                        <strong>
-                            {{ character.agility }}
-                        </strong>
-
-                    </div>
-
-
-                    <div class="status-box">
-
-                        <span>
-                            VIT
-                        </span>
-
-                        <strong>
-                            {{ character.vitality }}
-                        </strong>
-
-                    </div>
-
-
-                    <div class="status-box">
-
-                        <span>
-                            LUK
-                        </span>
-
-                        <strong>
-                            {{ character.luck }}
-                        </strong>
-
-                    </div>
-
-                </div>
-
-
-
-                <!-- その他 -->
-
-                <div class="character-meta">
-
+                <div class="notice-item">
+
+                    <span class="notice-tag update">
+                        UPDATE
+                    </span>
 
                     <div>
 
-                        <span>
-                            所持キュー
-                        </span>
-
                         <strong>
-                            {{ character.gold }} Q
+                            更新情報
                         </strong>
 
-                    </div>
-
-
-                    <div>
-
-                        <span>
-                            回帰回数
-                        </span>
-
-                        <strong>
-                            {{ character.reincarnation_count }} 回
-                        </strong>
-
-                    </div>
-
-
-                    <div>
-
-                        <span>
-                            最大到達階数
-                        </span>
-
-                        <strong>
-                            {{ max_unlocked_floor }} 階
-                        </strong>
+                        <p>
+                            最新のゲーム情報をここに表示します。
+                        </p>
 
                     </div>
 
                 </div>
 
-
-                <a href="{% url 'accounts:profile' %}" class="secondary-button">
-                    プロフィールを見る
-                </a>
-
             </div>
 
-        </section>
+        </div>
 
-    </div>
-
-
-
-    <!-- =================================
-             右側
-        ================================== -->
-
-    <div class="home-right">
-
-
-        <!-- =============================
-                 行動メニュー
-            ============================== -->
-
-        <section class="home-card action-card collapsible-section" data-collapse-id="action">
-
-            <div class="card-heading">
-
-                <div>
-
-                    <p class="section-label">
-                        ACTION MENU
-                    </p>
-
-                    <h2>
-                        行動メニュー
-                    </h2>
-
-                </div>
-
-
-                <button type="button" class="collapse-toggle" aria-expanded="true">
-
-                    <span class="collapse-toggle-icon">
-                        ▼
-                    </span>
-
-                </button>
-
-            </div>
-
-
-            <div class="collapsible-content">
-
-                <div class="action-grid">
-
-
-                    <!-- SNS -->
-
-                    <a href="{% url 'sns' %}" class="home-action-button">
-
-                        <span class="action-icon">
-                            ◇
-                        </span>
-
-
-                        <span class="action-text">
-
-                            <strong>
-                                SNS
-                            </strong>
-
-                            <small>
-                                他の冒険者の投稿を見る
-                            </small>
-
-                        </span>
-
-
-                        <span class="action-arrow">
-                            →
-                        </span>
-
-                    </a>
-
-
-
-                    <!-- 倉庫 -->
-
-                    <a href="{% url 'inventory:inventory' %}" class="home-action-button">
-
-                        <span class="action-icon">
-                            ▣
-                        </span>
-
-
-                        <span class="action-text">
-
-                            <strong>
-                                倉庫
-                            </strong>
-
-                            <small>
-                                所持品を整理する
-                            </small>
-
-                        </span>
-
-
-                        <span class="action-arrow">
-                            →
-                        </span>
-
-                    </a>
-
-                    <!-- キャラクター変更 -->
-
-                    <a href="{% url 'accounts:character_image_change' %}" class="home-action-button">
-
-                        <span class="action-icon">
-                            ♙
-                        </span>
-
-                        <span class="action-text">
-
-                            <strong>
-                                キャラクター変更
-                            </strong>
-
-                            <small>
-                                使用するキャラクター画像を変更する
-                            </small>
-
-                        </span>
-
-                        <span class="action-arrow">
-                            →
-                        </span>
-
-                    </a>
-
-
-
-                    <!-- 戦術 -->
-
-                    <a href="{% url 'battle:tactics' %}" class="home-action-button">
-
-                        <span class="action-icon">
-                            ⚔️
-                        </span>
-
-
-                        <span class="action-text">
-
-                            <strong>
-                                戦術
-                            </strong>
-
-                            <small>
-                                スキルを設定する
-                            </small>
-
-                        </span>
-
-
-                        <span class="action-arrow">
-                            →
-                        </span>
-
-                    </a>
-
-
-
-                    <!-- 回帰 -->
-
-                    <a href="{% url 'again' %}" class="home-action-button">
-
-                        <span class="action-icon">
-                            ↻
-                        </span>
-
-
-                        <span class="action-text">
-
-                            <strong>
-                                回帰
-                            </strong>
-
-                            <small>
-                                キャラクターを回帰させる
-                            </small>
-
-                        </span>
-
-
-                        <span class="action-arrow">
-                            →
-                        </span>
-
-                    </a>
-
-
-
-                    <!-- ショップ -->
-
-                    <a href="{% url 'shop:shop' %}" class="home-action-button">
-
-                        <span class="action-icon">
-                            ◈
-                        </span>
-
-
-                        <span class="action-text">
-
-                            <strong>
-                                ショップ
-                            </strong>
-
-                            <small>
-                                装備やアイテムを購入する
-                            </small>
-
-                        </span>
-
-
-                        <span class="action-arrow">
-                            →
-                        </span>
-
-                    </a>
-
-                    <!-- 合成 -->
-
-                    <a href="{% url 'inventory:synthesis' %}" class="home-action-button">
-                        <span class="action-icon">
-                            ⚒
-                        </span>
-
-                        <span class="action-text">
-
-                            <strong>
-                                合成
-                            </strong>
-
-                            <small>
-                                装備を合成する
-                            </small>
-
-                        </span>
-
-                        <span class="action-arrow">
-                            →
-                        </span>
-
-                    </a>
-
-
-                    <!-- 手相 -->
-
-                    <a href="{% url 'accounts:palm' %}" class="home-action-button">
-
-                        <span class="action-icon">
-                            ✋
-                        </span>
-
-                        <span class="action-text">
-
-                            <strong>
-                                手相
-                            </strong>
-
-                            <small>
-                                属性の成長傾向を確認する
-                            </small>
-
-                        </span>
-
-                        <span class="action-arrow">
-                            →
-                        </span>
-
-                    </a>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-
-
-
-        <!-- =============================
-                 探索
-            ============================== -->
-
-        <section class="home-card exploration-card">
-
-            <div class="card-heading">
-
-                <div>
-
-                    <p class="section-label">
-                        EXPLORATION
-                    </p>
-
-                    <h2>
-                        探索
-                    </h2>
-
-                </div>
-
-            </div>
-
-
-            <p class="card-description">
-                探索する階層を選択してください。
-                選択した場所で戦闘を開始します。
-            </p>
-
-
-            <div class="exploration-form">
-
-                <form method="post" action="{% url 'battle:battle' %}">
-
-                    {% csrf_token %}
-
-
-                    <div class="select-area">
-
-                        <label for="exploration-floor">
-                            探索場所
-                        </label>
-
-                        <select id="exploration-floor" name="floor">
-
-                            {% for floor in exploration_floors %}
-
-                            {% if floor > max_unlocked_floor %}
-
-                            <option value="{{ floor }}" disabled>
-                                {{ floor }}階層 🔒 未解放
-                            </option>
-
-                            {% else %}
-
-                            <option value="{{ floor }}">
-                                {{ floor }}階層
-                            </option>
-
-                            {% endif %}
-
-                            {% endfor %}
-
-                        </select>
-                    </div>
-
-
-                    {% if exploration_cooldown_remaining > 0 %}
-
-
-                    <button type="button" class="explore-button explore-button-disabled"
-                        id="exploration-cooldown-button" data-remaining="{{ exploration_cooldown_remaining }}" disabled>
-
-                        あと
-
-                        <span id="exploration-cooldown-seconds">
-                            {{ exploration_cooldown_remaining }}
-                        </span>
-
-                        秒
-
-                    </button>
-
-
-                    {% if exploration_cooldown_reduced %}
-
-                    <p class="cooldown-status">
-                        探索CT短縮中：20秒
-                    </p>
-
-                    {% else %}
-
-                    <p class="cooldown-status">
-                        通常探索CT：40秒
-                    </p>
-
-                    {% endif %}
-
-
-                    {% else %}
-
-
-                    <button type="submit" class="explore-button">
-
-                        探索を開始する
-
-                        <span>
-                            →
-                        </span>
-
-                    </button>
-
-
-                    {% endif %}
-
-                </form>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =============================
-                 闘技場
-            ============================== -->
-
-        <section class="home-card exploration-card">
-
-            <div class="card-heading">
-
-                <div>
-
-                    <p class="section-label">
-                        ARENA
-                    </p>
-
-                    <h2>
-                        闘技場
-                    </h2>
-
-                </div>
-
-            </div>
-
-
-            <p class="card-description">
-                現在階のフロアマスターへ挑戦します。空席ならマスターになれます。
-            </p>
-
-
-            <div class="battle-choice arena-choice">
-
-                <div class="battle-choice-info">
-
-                    <p>
-
-                        現在階層：
-
-                        <strong>
-                            {{ arena_state.floor_id }}階
-                        </strong>
-
-                    </p>
-
-
-                    <p>
-
-                        フロアマスター：
-
-                        <strong>
-                            {% if arena_master %}{{ arena_master.name }}{% else %}空席{% endif %}
-                        </strong>
-
-                    </p>
-
-                </div>
-
-
-                <p class="arena-player-vitals">
-                    あなたの闘技場HP：{{ arena_state.current_hp }} / {{ character.max_hp }}
-                    ・MP：{{ arena_state.current_mp }} / {{ character.max_mp }}
-                </p>
-
-                {% if arena_is_master %}
-                <button type="button" class="explore-button explore-button-disabled" disabled>
-                    あなたがフロアマスターです
-                </button>
-                {% elif exploration_cooldown_remaining > 0 %}
-                <button type="button" class="explore-button explore-button-disabled" disabled>
-                    戦闘待機中（あと約{{ exploration_cooldown_remaining }}秒）
-                </button>
-                {% else %}
-                <form method="post" action="{% url 'battle:arena_battle' %}">
-                    {% csrf_token %}
-                    <button type="submit" class="explore-button">
-                        {% if arena_master %}闘技場へ挑戦{% else %}空席のマスターになる{% endif %}
-                        <span>→</span>
-                    </button>
-                </form>
-                {% endif %}
-
-            </div>
-
-        </section>
-
-        <!-- ============================
-     ミニゲーム
-============================ -->
-        <section class="mini-game-section">
-
-            <div class="mini-game-header">
-                <p class="mini-game-label">MINI GAME</p>
-                <h2>ミニゲーム</h2>
-            </div>
-
-            <p class="mini-game-description">
-                冒険の合間に、ちょっとひと休み。
-            </p>
-
-            <div class="mini-game-list">
-
-                <a href="{% url 'game:fishing' %}" class="mini-game-item">
-
-                    <span class="mini-game-icon">🎣</span>
-
-                    <span class="mini-game-info">
-                        <strong>釣り</strong>
-                        <small>
-                            魚を引き寄せて釣り上げよう！
-                        </small>
-                    </span>
-
-                    <span class="mini-game-arrow">→</span>
-
-                </a>
-
-            </div>
-
-            <p class="mini-game-footer">
-                今後もミニゲームを追加予定！
-            </p>
-
-        </section>
-
-        <!-- =============================
-                 オープンチャット
-            ============================== -->
-
-        <section class="home-card chat-card collapsible-section" data-collapse-id="chat">
-
-            <div class="card-heading">
-
-                <div>
-
-                    <p class="section-label">
-                        OPEN CHAT
-                    </p>
-
-                    <h2>
-                        オープンチャット
-                    </h2>
-
-                </div>
-
-
-                <button type="button" class="collapse-toggle" aria-expanded="true">
-
-                    <span class="collapse-toggle-icon">
-                        ▼
-                    </span>
-
-                </button>
-
-            </div>
-
-
-            <div class="collapsible-content">
-
-
-                <div id="chat-messages" class="chat-messages">
-
-                    <p class="chat-loading">
-                        メッセージを読み込み中...
-                    </p>
-
-                </div>
-
-
-                <div class="chat-form">
-
-                    {% csrf_token %}
-
-
-                    <input id="chat-input" type="text" maxlength="200" placeholder="メッセージを入力..." autocomplete="off">
-
-
-                    <button id="chat-send-button" type="button">
-                        送信
-                    </button>
-
-                </div>
-
-
-                <p id="chat-error" class="chat-error">
-                </p>
-
-            </div>
-
-        </section>
-
-
-
-        <!-- =============================
-                 お知らせ
-            ============================== -->
-
-        <section class="home-card notice-card collapsible-section" data-collapse-id="notice">
-
-            <div class="card-heading">
-
-                <div>
-
-                    <p class="section-label">
-                        INFORMATION
-                    </p>
-
-                    <h2>
-                        お知らせ
-                    </h2>
-
-                </div>
-
-
-                <button type="button" class="collapse-toggle" aria-expanded="true">
-
-                    <span class="collapse-toggle-icon">
-                        ▼
-                    </span>
-
-                </button>
-
-            </div>
-
-
-            <div class="collapsible-content">
-
-                <div class="notice-list">
-
-
-                    <div class="notice-item">
-
-                        <span class="notice-tag">
-                            INFO
-                        </span>
-
-                        <div>
-
-                            <strong>
-                                Qhymiaへようこそ！
-                            </strong>
-
-                            <p>
-                                冒険の準備をして探索へ向かいましょう。
-                            </p>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="notice-item">
-
-                        <span class="notice-tag update">
-                            UPDATE
-                        </span>
-
-                        <div>
-
-                            <strong>
-                                更新情報
-                            </strong>
-
-                            <p>
-                                最新のゲーム情報をここに表示します。
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-    </div>
-
-</div>
+    </section>
 
 </div>
 
