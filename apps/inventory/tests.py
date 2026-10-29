@@ -20,8 +20,8 @@ from .services import (
     unequip_item,
     validate_synthesis_equipments,
     synthesize_equipments,
+    calculate_equipment_battle_power,
 )
-
 
 User = get_user_model()
 
@@ -883,3 +883,37 @@ class EquipmentModelTests(TestCase):
             ).count(),
             3,
         )
+
+class EquipmentBalanceTests(TestCase):
+
+    def test_base_power_unchanged(self):
+        self.assertEqual(
+            calculate_equipment_battle_power(10, "F", 0),
+            10,
+        )
+
+    def test_f_rank_plus_three(self):
+        self.assertEqual(
+            calculate_equipment_battle_power(11, "F", 3),
+            76,
+        )
+
+    def test_s_rank_plus_three(self):
+        self.assertEqual(
+            calculate_equipment_battle_power(78, "S", 3),
+            262,
+        )
+
+    def test_f_rank_plus_ten(self):
+        self.assertEqual(
+            calculate_equipment_battle_power(10, "F", 10),
+            4763,
+        )
+
+    def test_unsupported_enhancement_level(self):
+        with self.assertRaises(ValueError):
+            calculate_equipment_battle_power(10, "F", 12)
+
+    def test_invalid_rank(self):
+        with self.assertRaises(ValueError):
+            calculate_equipment_battle_power(10, "X", 3)
