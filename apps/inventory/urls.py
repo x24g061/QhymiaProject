@@ -39,5 +39,11 @@ urlpatterns = [
         views.use_item,
         name="use_item",
     ),
+    
+    path(
+    "palm-growth/use/",
+    views.use_palm_growth_item,
+    name="use_palm_growth_item",
+),
 
 ]

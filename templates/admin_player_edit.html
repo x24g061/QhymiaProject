@@ -5,10 +5,7 @@
 {% endblock %}
 
 {% block content %}
-<link
-    rel="stylesheet"
-    href="{% static 'css/admin.css' %}"
->
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
 <div class="admin-mode-banner">
     <strong>
         ADMIN MODE
@@ -236,7 +233,55 @@
 
         </section>
 
+        <!-- =========================
+     アイテム付与
+========================== -->
 
+        <section class="admin-edit-section">
+
+            <h2>
+                アイテム付与
+            </h2>
+
+            <div class="admin-edit-grid">
+
+                <label>
+                    アイテム
+
+                    <select name="grant_item_id">
+
+                        <option value="">
+                            選択してください
+                        </option>
+
+                        {% for item in items %}
+
+                        <option value="{{ item.id }}">
+                            {{ item.name }}
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </label>
+
+
+                <label>
+                    個数
+
+                    <input type="number" name="grant_item_quantity" value="1" min="1" max="999">
+                </label>
+
+            </div>
+
+
+            <p>
+                アイテムを選択しなければ、
+                アイテム付与は行われません。
+            </p>
+
+        </section>
         <!-- =========================
              保存
         ========================== -->
@@ -262,11 +307,7 @@
     <form method="post" class="admin-edit-form">
         {% csrf_token %}
 
-        <input
-            type="hidden"
-            name="edit_type"
-            value="arena_reincarnation"
-        >
+        <input type="hidden" name="edit_type" value="arena_reincarnation">
 
         <section class="admin-edit-section">
             <h2>闘技場・回帰管理</h2>
@@ -275,26 +316,15 @@
 
                 <label>
                     闘技場階層
-                    <input
-                        type="number"
-                        name="arena_floor"
+                    <input type="number" name="arena_floor"
                         value="{% if character.arena_state %}{{ character.arena_state.floor_id }}{% else %}1{% endif %}"
-                        min="1"
-                        max="100"
-                        required
-                    >
+                        min="1" max="100" required>
                 </label>
 
                 <label>
                     回帰回数
-                    <input
-                        type="number"
-                        name="reincarnation_count"
-                        value="{{ character.reincarnation_count }}"
-                        min="0"
-                        max="1000"
-                        required
-                    >
+                    <input type="number" name="reincarnation_count" value="{{ character.reincarnation_count }}" min="0"
+                        max="1000" required>
                 </label>
 
             </div>

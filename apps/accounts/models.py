@@ -243,6 +243,14 @@ class Character(models.Model):
     light_growth_weight = models.PositiveIntegerField(default=1)
     dark_growth_weight = models.PositiveIntegerField(default=1)
 
+    # ===== 手相占い =====
+
+    palm_unlocked_until = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="手相占いを無料で閲覧できる期限",
+    )
+
     # ===== 所持情報 =====
 
     gold = models.PositiveIntegerField(
@@ -569,9 +577,10 @@ class AdminModeAccessLog(models.Model):
 class AdminChangeLog(models.Model):
 
     ACTION_CHOICES = [
-        ("player_update", "プレイヤー情報変更"),
-        ("equipment_grant", "装備付与"),
-        ("sns_post_delete", "SNS投稿削除"),
+    ("player_update", "プレイヤー情報変更"),
+    ("equipment_grant", "装備付与"),
+    ("item_grant", "アイテム付与"),
+    ("sns_post_delete", "SNS投稿削除"),
     ]
 
     user = models.ForeignKey(
