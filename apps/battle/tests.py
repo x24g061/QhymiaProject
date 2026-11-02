@@ -515,6 +515,32 @@ class BattleEngineTests(TestCase):
             self.enemy,
         )
 
+    def test_equipment_dex_debuff_expires_after_enemy_turn(self):
+        """装備特殊能力「衰弱」が敵の1行動後に解除される"""
+
+        engine = BattleEngine(
+            self.character,
+            self.enemy,
+        )
+
+        # 衰弱が発動した状態を再現
+        engine.enemy_combatant.equipment_dex_debuff_rate = 0.01
+
+        self.assertEqual(
+            engine.enemy_combatant.equipment_dex_debuff_rate,
+            0.01,
+        )
+
+        # 敵の攻撃処理を固定してテスト
+        with patch.object(engine, "enemy_attack"):
+            engine.enemy_turn()
+
+        # 1行動後に解除される
+        self.assertEqual(
+            engine.enemy_combatant.equipment_dex_debuff_rate,
+            0.0,
+        )
+
 
     def test_hit_rate(self):
         """

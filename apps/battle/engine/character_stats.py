@@ -107,6 +107,31 @@ def get_character_base_combat_stat(
     )
 
     # ========================================
+    # 装備特殊能力によるステータス補正
+    # ========================================
+
+    special_effect_codes = {
+        "agility": "agility_up",
+        "luck": "luck_up",
+    }
+
+    effect_code = special_effect_codes.get(
+        stat_name
+    )
+
+    if effect_code:
+        from apps.inventory.models import OwnedEquipment
+
+        effect_count = OwnedEquipment.objects.filter(
+            character=character,
+            is_equipped=True,
+            special_effect=effect_code,
+        ).count()
+
+        # 1個につき+1%、複数なら重複適用
+        value *= 1.01 ** effect_count
+
+    # ========================================
     # 常時発動型の種族補正
     # ========================================
 
@@ -346,3 +371,45 @@ def apply_character_received_damage_race_bonus(
         damage *= 1.10
 
     return damage
+
+def get_character_battle_max_resource(
+    character,
+    resource_name,
+):
+    """
+    戦闘中の最大HP・MPを計算する。
+
+    プリースト：+5%
+    生命・精神：装備1個につき+1%
+
+    結果は切り上げ。
+    """
+
+    import math
+    from apps.inventory.models import OwnedEquipment
+
+    effect_codes = {
+        "hp": "max_hp_up",
+        "mp": "max_mp_up",
+    }
+
+    if resource_name not in effect_codes:
+        raise ValueError("未対応のリソースです。")
+
+    value = getattr(
+        character,
+        f"max_{resource_name}",
+    )
+
+    # プリーストの既存補正
+    if character.job == "priest":
+        value = math.ceil(value * 1.05)
+
+    # 特殊能力の装備数
+    count = OwnedEquipment.objects.filter(
+        character=character,
+        is_equipped=True,
+        special_effect=effect_codes[resource_name],
+    ).count()
+
+    return math.ceil(value * (1.01 ** count))

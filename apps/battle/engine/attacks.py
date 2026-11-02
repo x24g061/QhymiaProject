@@ -1,13 +1,91 @@
 from apps.battle.engine.calculations import (
     ATTRIBUTE_MULTIPLIERS,
 )
-
+from apps.inventory.services import (
+    get_equipment_special_multiplier,
+)
 
 # ============================================================
 # BattleEngine 攻撃処理
 # ============================================================
 
 class BattleAttacksMixin:
+
+    # ========================================
+    # 装備特殊能力：状態異常
+    # ========================================
+
+    def apply_equipment_status_effects(self):
+        """
+        攻撃命中時に装備の状態異常を抽選する。
+
+        毒牙：2%で毒1ターン
+        痺れ刃：0.5%で麻痺1ターン
+
+        既存スキルの長い状態異常は
+        短い効果で上書きしない。
+        """
+
+        if self.enemy_hp <= 0:
+            return
+
+        from apps.inventory.models import OwnedEquipment
+
+        equipped_effects = set(
+            OwnedEquipment.objects.filter(
+                character=self.character,
+                is_equipped=True,
+                special_effect__in=[
+                    "poison",
+                    "paralysis",
+                    "dex_down",
+                ],
+            ).values_list(
+                "special_effect",
+                flat=True,
+            )
+        )
+
+        # ===== 毒牙 =====
+        if (
+            "poison" in equipped_effects
+            and self.roll_percent(2)
+        ):
+            self.enemy_poison_turns = max(
+                self.enemy_poison_turns,
+                1,
+            )
+
+            self.logs.append(
+                f"{self.enemy.name}は"
+                "装備の特殊能力で毒状態になった！"
+            )
+
+        # ===== 痺れ刃 =====
+        if (
+            "paralysis" in equipped_effects
+            and self.roll_percent(0.5)
+        ):
+            self.enemy_paralysis_turns = max(
+                self.enemy_paralysis_turns,
+                1,
+            )
+
+            self.logs.append(
+                f"{self.enemy.name}は"
+                "装備の特殊能力で麻痺状態になった！"
+            )
+                # ===== 衰弱 =====
+        if (
+            "dex_down" in equipped_effects
+            and self.roll_percent(2)
+        ):
+            self.enemy_combatant.equipment_dex_debuff_rate = 0.01
+
+            self.logs.append(
+                f"{self.enemy.name}は"
+                "衰弱によりDEXが1%低下！"
+            )    
 
     def player_normal_attack(self):
         """プレイヤー通常攻撃。"""
@@ -147,7 +225,11 @@ class BattleAttacksMixin:
                 damage
             )
         )
-
+        # ===== 特殊能力：猛攻 =====
+        damage *= get_equipment_special_multiplier(
+            self.character,
+            "physical_damage",
+        )
         # 最終的に整数化
         damage = max(
             1,
@@ -155,6 +237,9 @@ class BattleAttacksMixin:
         )
 
         self.enemy_hp -= damage
+
+        # ===== 装備特殊能力：毒牙・痺れ刃 =====
+        self.apply_equipment_status_effects()
 
         # ===== 睡眠解除 =====
 
@@ -321,6 +406,12 @@ class BattleAttacksMixin:
                 damage
             )
         )
+        # ===== 特殊能力：猛攻 =====
+
+        damage *= get_equipment_special_multiplier(
+            self.character,
+            "physical_damage",
+        )
 
         # ===== 最終ダメージ =====
 
@@ -330,6 +421,9 @@ class BattleAttacksMixin:
         )
 
         self.enemy_hp -= damage
+
+        # ===== 装備特殊能力：毒牙・痺れ刃 =====
+        self.apply_equipment_status_effects()
 
         # ===== 戦闘ログ =====
 
@@ -489,6 +583,13 @@ class BattleAttacksMixin:
             )
         )
 
+        # ===== 特殊能力：魔導 =====
+
+        damage *= get_equipment_special_multiplier(
+            self.character,
+            "magic_damage",
+        )
+
         # ============================
         # 最終ダメージ
         # ============================
@@ -499,6 +600,9 @@ class BattleAttacksMixin:
         )
 
         self.enemy_hp -= damage
+
+        # ===== 装備特殊能力：毒牙・痺れ刃 =====
+        self.apply_equipment_status_effects()
 
         self.logs.append(
             f"{attack_name}！ "
@@ -519,7 +623,9 @@ class BattleAttacksMixin:
         return True
 
 
-    #=== 敵行動実装 ===
+    # ========================================================
+    # 敵行動
+    # ========================================================
 
     def enemy_attack(self):
         """敵の通常攻撃。"""
@@ -530,12 +636,18 @@ class BattleAttacksMixin:
             self.enemy.dexterity
         )
 
-        # ポイズンダガーによるDEX -3%
-        if self.enemy_dex_debuff_rate > 0:
+        # ===== DEX低下 =====
+        # 既存スキルと装備特殊能力のうち、
+        # 効果が強い方を優先する。
 
+        dex_debuff_rate = max(
+            self.enemy_dex_debuff_rate,
+            self.enemy_combatant.equipment_dex_debuff_rate,
+        )
+
+        if dex_debuff_rate > 0:
             enemy_dexterity *= (
-                1.0
-                - self.enemy_dex_debuff_rate
+                1.0 - dex_debuff_rate
             )
 
         # ===== 命中率 =====
@@ -571,7 +683,7 @@ class BattleAttacksMixin:
                 hit_rate,
             )
 
-        #===== 命中判定 =====
+        # ===== 命中判定 =====
         if not self.roll_percent(hit_rate):
 
             self.logs.append(
@@ -638,6 +750,13 @@ class BattleAttacksMixin:
             self.apply_player_received_damage_race_bonus(
                 damage
             )
+        )
+
+        # ===== 特殊能力：堅守 =====
+
+        damage *= get_equipment_special_multiplier(
+            self.character,
+            "damage_reduction",
         )
 
         damage = max(

@@ -1,3 +1,6 @@
+from apps.battle.engine.character_stats import (
+    get_character_battle_max_resource,
+)
 import math
 
 
@@ -130,21 +133,15 @@ class PlayerCombatant(Combatant):
         # 戦闘中の最大HP・MP
         # ========================================
 
-        max_hp = character.max_hp
-        max_mp = character.max_mp
+        max_hp = get_character_battle_max_resource(
+            character,
+            "hp",
+        )
 
-        # プリースト
-        # 最大HP・最大MP +5%
-        if character.job == "priest":
-
-            max_hp = math.ceil(
-                max_hp * 1.05
-            )
-
-            max_mp = math.ceil(
-                max_mp * 1.05
-            )
-
+        max_mp = get_character_battle_max_resource(
+            character,
+            "mp",
+        )
         # ========================================
         # 戦闘開始時HP
         # ========================================
@@ -284,3 +281,6 @@ class EnemyCombatant(Combatant):
 
         # DEX低下
         self.dex_debuff_rate = 0.0
+        # 装備特殊能力「衰弱」
+        # 敵の次の1行動のみ有効
+        self.equipment_dex_debuff_rate = 0.0

@@ -304,6 +304,21 @@ class OwnedEquipment(models.Model):
     +値や現在戦闘力が違うため
     1個ずつ別レコードとして管理する。
     """
+    # ========================================
+    # 装備の特殊能力
+    # ========================================
+
+    class SpecialEffect(models.TextChoices):
+        PHYSICAL_DAMAGE = "physical_damage", "猛攻"
+        MAGIC_DAMAGE = "magic_damage", "魔導"
+        DAMAGE_REDUCTION = "damage_reduction", "堅守"
+        AGILITY_UP = "agility_up", "俊敏"
+        MAX_HP_UP = "max_hp_up", "生命"
+        MAX_MP_UP = "max_mp_up", "精神"
+        LUCK_UP = "luck_up", "幸運"
+        POISON = "poison", "毒牙"
+        PARALYSIS = "paralysis", "痺れ刃"
+        DEX_DOWN = "dex_down", "衰弱"
 
     character = models.ForeignKey(
         Character,
@@ -336,6 +351,16 @@ class OwnedEquipment(models.Model):
     # 現在装備しているか
     is_equipped = models.BooleanField(
         default=False,
+    )
+
+    # 特殊能力（最大1種類）
+    # 未付与の場合は空文字
+    special_effect = models.CharField(
+        max_length=30,
+        choices=SpecialEffect.choices,
+        blank=True,
+        default="",
+        verbose_name="特殊能力",
     )
 
     created_at = models.DateTimeField(

@@ -5,6 +5,7 @@ from apps.battle.engine.character_stats import (
     get_stamina_stat_multiplier as calculate_stamina_stat_multiplier,
     apply_character_damage_race_bonus,
     apply_character_received_damage_race_bonus,
+    get_character_battle_max_resource,
 )
 
 
@@ -199,44 +200,24 @@ class BattleStatsMixin:
     # ========================================================
 
     def get_player_max_hp(self):
-        """
-        戦闘中の最大HPを返す。
+        """戦闘中の最大HPを取得する。"""
 
-        プリースト:
-        最大HP +5%
-        """
-
-        max_hp = self.character.max_hp
-
-        if self.character.job == "priest":
-            max_hp = math.ceil(
-                max_hp * 1.05
-            )
-
-        return max_hp
-
+        return get_character_battle_max_resource(
+            self.character,
+            "hp",
+        )
 
     # ========================================================
     # 戦闘中の最大MP
     # ========================================================
 
     def get_player_max_mp(self):
-        """
-        戦闘中の最大MPを返す。
+        """戦闘中の最大MPを取得する。"""
 
-        プリースト:
-        最大MP +5%
-        """
-
-        max_mp = self.character.max_mp
-
-        if self.character.job == "priest":
-            max_mp = math.ceil(
-                max_mp * 1.05
-            )
-
-        return max_mp
-
+        return get_character_battle_max_resource(
+            self.character,
+            "mp",
+        )
 
     # ========================================================
     # スタミナによる能力補正

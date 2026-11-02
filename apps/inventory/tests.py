@@ -883,6 +883,110 @@ class EquipmentModelTests(TestCase):
             ).count(),
             3,
         )
+        @patch(
+        "apps.inventory.services.determine_synthesis_result",
+        return_value="success",
+    )
+        def test_synthesis_inherits_special_effect(self, mock_result):
+            """合成成功時に特殊能力を引き継ぎ、DBに保存する"""
+
+            equipments = [
+                OwnedEquipment.objects.create(
+                    character=self.character,
+                    equipment=self.equipment,
+                    enhancement_level=5,
+                    battle_power=120,
+                    special_effect="poison" if i == 0 else "",
+                )
+                for i in range(3)
+            ]
+
+            result = synthesize_equipments(
+                self.character,
+                equipments,
+            )
+
+            new_equipment = result["equipment"]
+            new_equipment.refresh_from_db()
+
+            self.assertEqual(result["result"], "success")
+            self.assertEqual(new_equipment.enhancement_level, 6)
+            self.assertEqual(new_equipment.special_effect, "poison")
+
+            # 素材3個が完成品1個に置き換わる
+            self.assertEqual(
+                OwnedEquipment.objects.filter(
+                    character=self.character
+                ).count(),
+                1,
+            )
+
+    @patch(
+        "apps.inventory.services.determine_special_effect",
+        return_value="paralysis",
+    )
+    @patch(
+        "apps.inventory.services.determine_synthesis_result",
+        return_value="success",
+    )
+    def test_synthesis_saves_new_special_effect(
+        self, mock_result, mock_effect
+    ):
+        """抽選で付いた特殊能力をDBに保存する"""
+
+        equipments = [
+            OwnedEquipment.objects.create(
+                character=self.character,
+                equipment=self.equipment,
+                enhancement_level=5,
+                battle_power=120,
+            )
+            for _ in range(3)
+        ]
+
+        result = synthesize_equipments(
+            self.character,
+            equipments,
+        )
+
+        new_equipment = result["equipment"]
+        new_equipment.refresh_from_db()
+
+        self.assertEqual(new_equipment.special_effect, "paralysis")
+        mock_effect.assert_called_once()
+
+    @patch(
+        "apps.inventory.services.determine_synthesis_result",
+        return_value="failure",
+    )
+    def test_synthesis_failure_loses_special_effect(self, mock_result):
+        """合成失敗時は特殊能力付き素材も消失する"""
+
+        equipments = [
+            OwnedEquipment.objects.create(
+                character=self.character,
+                equipment=self.equipment,
+                enhancement_level=5,
+                battle_power=120,
+                special_effect="poison" if i == 0 else "",
+            )
+            for i in range(3)
+        ]
+
+        result = synthesize_equipments(
+            self.character,
+            equipments,
+        )
+
+        self.assertEqual(result["result"], "failure")
+        self.assertIsNone(result["equipment"])
+
+        self.assertEqual(
+            OwnedEquipment.objects.filter(
+                character=self.character
+            ).count(),
+            0,
+        )
 
 class EquipmentBalanceTests(TestCase):
 
@@ -910,10 +1014,166 @@ class EquipmentBalanceTests(TestCase):
             4763,
         )
 
-    def test_unsupported_enhancement_level(self):
-        with self.assertRaises(ValueError):
-            calculate_equipment_battle_power(10, "F", 12)
+    def test_enhancement_above_eleven(self):
+        self.assertEqual(
+            calculate_equipment_battle_power(11, "F", 12),
+            11505,
+        )
+
+        self.assertEqual(
+            calculate_equipment_battle_power(11, "F", 13),
+            13806,
+        )
+
+        self.assertEqual(
+            calculate_equipment_battle_power(78, "S", 12),
+            32679,
+        )
 
     def test_invalid_rank(self):
         with self.assertRaises(ValueError):
             calculate_equipment_battle_power(10, "X", 3)
+from unittest.mock import patch
+from apps.inventory.services import determine_special_effect
+
+
+class SpecialEffectTests(TestCase):
+
+    def test_no_effect_below_plus_six(self):
+        """+5以下では特殊能力が付かない"""
+        self.assertEqual(
+            determine_special_effect([], 5),
+            "",
+        )
+
+    @patch("apps.inventory.services.random.random", return_value=0.0)
+    @patch("apps.inventory.services.random.choice", return_value="poison")
+    def test_special_effect_is_added(self, mock_choice, mock_random):
+        """+6以上で抽選に当選すると特殊能力が付く"""
+        self.assertEqual(
+            determine_special_effect([], 6),
+            "poison",
+        )
+
+    @patch("apps.inventory.services.random.random", return_value=0.5)
+    def test_special_effect_is_not_added(self, mock_random):
+        """抽選に外れると特殊能力が付かない"""
+        self.assertEqual(
+            determine_special_effect([], 6),
+            "",
+        )
+from types import SimpleNamespace
+
+
+class SpecialEffectInheritanceTests(TestCase):
+
+    def test_special_effect_is_inherited(self):
+        """特殊能力付きの素材から能力を引き継ぐ"""
+
+        equipments = [
+            SimpleNamespace(special_effect="poison"),
+            SimpleNamespace(special_effect=""),
+            SimpleNamespace(special_effect=""),
+        ]
+
+        result = determine_special_effect(
+            equipments,
+            7,
+        )
+
+        self.assertEqual(result, "poison")
+
+    def test_effect_is_inherited_below_plus_six(self):
+        """既存の能力は強化値に関係なく引き継ぐ"""
+
+        equipments = [
+            SimpleNamespace(special_effect="agility_up"),
+            SimpleNamespace(special_effect=""),
+            SimpleNamespace(special_effect=""),
+        ]
+
+        result = determine_special_effect(
+            equipments,
+            5,
+        )
+
+        self.assertEqual(result, "agility_up")
+from apps.inventory.services import get_equipment_special_multiplier
+
+
+class EquipmentSpecialMultiplierTests(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create(
+            user_id="special_test",
+        )
+        self.character = Character.objects.create(
+            user=self.user,
+            name="特殊能力倍率テスト",
+        )
+        self.item = Item.objects.create(
+            name="特殊能力テスト剣",
+            category=Item.Category.EQUIPMENT,
+        )
+        self.equipment = Equipment.objects.create(
+            item=self.item,
+            rank=Equipment.Rank.F,
+            slot=Equipment.Slot.WEAPON,
+            style=Equipment.Style.PHYSICAL,
+            base_battle_power=10,
+        )
+
+    def test_effect_without_equipment(self):
+        """装備なしなら倍率1.0"""
+        self.assertEqual(
+            get_equipment_special_multiplier(
+                self.character, "physical_damage"
+            ),
+            1.0,
+        )
+
+    def test_effect_only_when_equipped(self):
+        """所持しているだけでは発動しない"""
+
+        owned = OwnedEquipment.objects.create(
+            character=self.character,
+            equipment=self.equipment,
+            battle_power=10,
+            special_effect="physical_damage",
+            is_equipped=False,
+        )
+
+        self.assertEqual(
+            get_equipment_special_multiplier(
+                self.character, "physical_damage"
+            ),
+            1.0,
+        )
+
+        owned.is_equipped = True
+        owned.save(update_fields=["is_equipped"])
+
+        self.assertAlmostEqual(
+            get_equipment_special_multiplier(
+                self.character, "physical_damage"
+            ),
+            1.01,
+        )
+
+    def test_different_effect_does_not_apply(self):
+        """魔導は物理ダメージを強化しない"""
+
+        OwnedEquipment.objects.create(
+            character=self.character,
+            equipment=self.equipment,
+            battle_power=10,
+            special_effect="magic_damage",
+            is_equipped=True,
+        )
+
+        self.assertEqual(
+            get_equipment_special_multiplier(
+                self.character, "physical_damage"
+            ),
+            1.0,
+        )

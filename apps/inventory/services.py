@@ -28,27 +28,24 @@ RANK_ENHANCEMENT_RATE = {
 }
 
 
+
 def calculate_equipment_battle_power(
     base_battle_power,
     rank,
     enhancement_level,
 ):
     """
-    装備の基礎戦闘力・ランク・強化値から
-    強化後の装備戦闘力を計算する。
+    装備戦闘力を計算する。
 
-    現在の対応範囲:
-        +0 ～ +11
+    +0～+11：既存の強化テーブル
+    +12以降：1段階ごとに1.20倍
 
-    ステータスへの反映は
-    OwnedEquipment.get_stat_bonus() で行う。
+    ランク別の強化係数も適用する。
     """
 
-    if not 0 <= enhancement_level < len(
-        ENHANCEMENT_POWER_TABLE
-    ):
+    if enhancement_level < 0:
         raise ValueError(
-            "未対応の装備強化値です。"
+            "強化値は0以上にしてください。"
         )
 
     if rank not in RANK_ENHANCEMENT_RATE:
@@ -56,27 +53,75 @@ def calculate_equipment_battle_power(
             "未対応の装備ランクです。"
         )
 
-    reference_power = (
-        ENHANCEMENT_POWER_TABLE[enhancement_level]
-    )
+    # +0～+11は既存テーブルを使用
+    if enhancement_level < len(
+        ENHANCEMENT_POWER_TABLE
+    ):
+        reference_power = (
+            ENHANCEMENT_POWER_TABLE[enhancement_level]
+        )
+
+    else:
+        # +11の基準戦闘力から開始
+        reference_power = (
+            ENHANCEMENT_POWER_TABLE[-1]
+        )
+
+        # +12以降は1段階につき1.20倍
+        for _ in range(
+            11,
+            enhancement_level,
+        ):
+            reference_power = (
+                reference_power * 6 // 5
+            )
 
     rate = RANK_ENHANCEMENT_RATE[rank]
 
-    # ========================================
-    # ランク別の強化計算
-    #
-    # 基準値11からの成長量に
-    # ランク別係数を適用する。
-    #
-    # 整数計算で小数点以下を切り捨てる。
-    # ========================================
-
+    # ランク別補正を適用
     return (
         base_battle_power
         * (110 + (reference_power - 11) * rate)
         // 110
     )
 
+# ========================================
+# 特殊能力の抽選
+# ========================================
+
+SPECIAL_EFFECT_CHANCE = 0.001  # 0.1%
+
+
+def determine_special_effect(
+    equipments,
+    new_level,
+):
+    """
+    合成後の特殊能力を決定する。
+
+    ・既存の特殊能力は引き継ぐ
+    ・複数種類ある場合は1種類だけ選ぶ
+    ・未付与なら+6以上で0.1%抽選
+    """
+
+    existing_effects = sorted({
+        equipment.special_effect
+        for equipment in equipments
+        if equipment.special_effect
+    })
+
+    if existing_effects:
+        return random.choice(existing_effects)
+
+    if new_level < 6:
+        return ""
+
+    if random.random() >= SPECIAL_EFFECT_CHANCE:
+        return ""
+
+    return random.choice(
+        list(OwnedEquipment.SpecialEffect.values)
+    )
 
 # ========================================
 # 装備する
@@ -424,21 +469,6 @@ def synthesize_equipments(
     rank = equipment_master.rank
 
     # ========================================
-    # 強化値の対応範囲を確認
-    # ========================================
-
-    max_level = (
-        len(ENHANCEMENT_POWER_TABLE) - 1
-    )
-
-    if current_level >= max_level:
-        raise ValueError(
-            "現在の強化仕様では"
-            f"+{max_level}以上の装備を"
-            "合成できません。"
-        )
-
-    # ========================================
     # 合成結果を抽選
     # ========================================
 
@@ -455,6 +485,7 @@ def synthesize_equipments(
 
     new_level = None
     new_battle_power = None
+    special_effect = ""
 
     # ========================================
     # 合成成功時の強化値を計算
@@ -467,7 +498,6 @@ def synthesize_equipments(
             + enhancement_increase[result]
         )
 
-        # +12以降はまだ未対応
         # Qや素材を消費する前に検証する
         new_battle_power = (
             calculate_equipment_battle_power(
@@ -475,6 +505,11 @@ def synthesize_equipments(
                 rank,
                 new_level,
             )
+        )
+            # 特殊能力の引き継ぎ・抽選
+        special_effect = determine_special_effect(
+            equipments,
+            new_level,
         )
 
     # ========================================
@@ -530,6 +565,7 @@ def synthesize_equipments(
             equipment=equipment_master,
             enhancement_level=new_level,
             battle_power=new_battle_power,
+            special_effect=special_effect,
             is_equipped=False,
         )
     )
@@ -538,3 +574,36 @@ def synthesize_equipments(
         "result": result,
         "equipment": new_equipment,
     }
+# ========================================
+# 戦闘用：装備特殊能力の倍率
+# ========================================
+
+SPECIAL_EFFECT_MULTIPLIERS = {
+    "physical_damage": 1.01,
+    "magic_damage": 1.01,
+    "damage_reduction": 0.99,
+}
+
+
+def get_equipment_special_multiplier(
+    character,
+    effect_code,
+):
+    """
+    装備中アイテムの特殊能力による
+    ダメージ倍率を取得する。
+
+    所持しているだけの装備は対象外。
+    同じ能力が複数ある場合は効果を重ねる。
+    """
+
+    if effect_code not in SPECIAL_EFFECT_MULTIPLIERS:
+        return 1.0
+
+    effect_count = OwnedEquipment.objects.filter(
+        character=character,
+        is_equipped=True,
+        special_effect=effect_code,
+    ).count()
+
+    return SPECIAL_EFFECT_MULTIPLIERS[effect_code] ** effect_count
