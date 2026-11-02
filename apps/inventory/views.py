@@ -761,3 +761,237 @@ def use_item(
     return redirect(
         "inventory:inventory"
     )
+
+    # ============================================================
+# 手相画面から属性成長アイテムを使用
+# ============================================================
+
+@login_required
+@require_POST
+@transaction.atomic
+def use_palm_growth_item(request):
+    """
+    手相画面から属性成長の種を1個使用する。
+    """
+
+    character = (
+        Character.objects
+        .select_for_update()
+        .get(
+            user=request.user
+        )
+    )
+
+
+    # ========================================
+    # 手相が解放中か確認
+    # ========================================
+
+    now = timezone.now()
+
+    palm_is_unlocked = (
+        character.palm_unlocked_until
+        and
+        character.palm_unlocked_until > now
+    )
+
+
+    if not palm_is_unlocked:
+
+        messages.error(
+            request,
+            "手相を確認できる期間が終了しています。",
+        )
+
+        return redirect(
+            "accounts:palm"
+        )
+
+
+    # ========================================
+    # 使用アイテム取得
+    # ========================================
+
+    inventory_item_id = request.POST.get(
+        "inventory_item_id"
+    )
+
+
+    try:
+
+        inventory_item = (
+            InventoryItem.objects
+            .select_for_update()
+            .select_related(
+                "item"
+            )
+            .get(
+                pk=inventory_item_id,
+                character=character,
+            )
+        )
+
+    except (
+        InventoryItem.DoesNotExist,
+        ValueError,
+        TypeError,
+    ):
+
+        messages.error(
+            request,
+            "使用するアイテムを確認できませんでした。",
+        )
+
+        return redirect(
+            "accounts:palm"
+        )
+
+
+    item = inventory_item.item
+
+
+    # ========================================
+    # 使用可能な属性の種
+    # ========================================
+
+    seed_attributes = {
+        "火の種": "fire",
+        "水の種": "water",
+        "草の種": "grass",
+        "岩の種": "rock",
+        "光の種": "light",
+        "闇の種": "dark",
+    }
+
+
+    attribute_display_names = {
+        "fire": "火",
+        "water": "水",
+        "grass": "草",
+        "rock": "岩",
+        "light": "光",
+        "dark": "闇",
+    }
+
+
+    if item.name not in seed_attributes:
+
+        messages.error(
+            request,
+            "このアイテムは手相では使用できません。",
+        )
+
+        return redirect(
+            "accounts:palm"
+        )
+
+
+    if not item.is_usable:
+
+        messages.error(
+            request,
+            "このアイテムは使用できません。",
+        )
+
+        return redirect(
+            "accounts:palm"
+        )
+
+
+    attribute_name = (
+        seed_attributes[
+            item.name
+        ]
+    )
+
+
+    # ========================================
+    # 属性成長ウェイト変更
+    # ========================================
+
+    try:
+
+        result = (
+            increase_attribute_growth_weight(
+                character,
+                attribute_name,
+            )
+        )
+
+    except ValueError as error:
+
+        messages.error(
+            request,
+            str(error),
+        )
+
+        return redirect(
+            "accounts:palm"
+        )
+
+
+    # ========================================
+    # アイテムを1個消費
+    # ========================================
+
+    if inventory_item.quantity <= 1:
+
+        inventory_item.delete()
+
+    else:
+
+        inventory_item.quantity -= 1
+
+        inventory_item.save(
+            update_fields=[
+                "quantity",
+            ]
+        )
+
+
+    # ========================================
+    # 結果メッセージ
+    # ========================================
+
+    increased_name = (
+        attribute_display_names[
+            result["increased"]
+        ]
+    )
+
+    decreased_attribute = (
+        result["decreased"]
+    )
+
+
+    if decreased_attribute:
+
+        decreased_name = (
+            attribute_display_names[
+                decreased_attribute
+            ]
+        )
+
+        messages.success(
+            request,
+            (
+                f"{item.name}を使用しました。"
+                f"{increased_name}属性の成長値が+1、"
+                f"{decreased_name}属性の成長値が-1されました。"
+            ),
+        )
+
+    else:
+
+        messages.success(
+            request,
+            (
+                f"{item.name}を使用しました。"
+                f"{increased_name}属性の成長値が+1されました。"
+            ),
+        )
+
+
+    return redirect(
+        "accounts:palm"
+    )

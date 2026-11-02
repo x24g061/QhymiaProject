@@ -31,11 +31,10 @@ from apps.battle.progression import (
 import random
 
 from apps.inventory.models import (
-
     Equipment,
-
     OwnedEquipment,
-
+    Item,
+    InventoryItem,
 )
 
 
@@ -812,6 +811,121 @@ def admin_player_edit(request, character_id):
                         },
                     },
                 )
+
+                            # =================================================
+            # アイテム付与
+            # =================================================
+
+            grant_item_id = request.POST.get(
+                "grant_item_id",
+                "",
+            )
+
+            if grant_item_id:
+
+                grant_item_quantity = int(
+                    request.POST.get(
+                        "grant_item_quantity",
+                        1,
+                    )
+                )
+
+                if grant_item_quantity < 1:
+                    raise ValueError
+
+                item = (
+                    Item.objects
+                    .exclude(
+                        category=Item.Category.EQUIPMENT,
+                    )
+                    .filter(
+                        id=grant_item_id,
+                    )
+                    .first()
+                )
+
+                if item is None:
+
+                    messages.error(
+                        request,
+                        "付与するアイテムが見つかりません。",
+                    )
+
+                    return redirect(
+                        "admin_player_edit",
+                        character_id=character.id,
+                    )
+
+
+                # =============================================
+                # すでに持っていれば個数を加算
+                # 持っていなければ新規作成
+                # =============================================
+
+                inventory_item, created = (
+                    InventoryItem.objects
+                    .get_or_create(
+                        character=character,
+                        item=item,
+                        defaults={
+                            "quantity":
+                                grant_item_quantity,
+                        },
+                    )
+                )
+
+
+                if not created:
+
+                    inventory_item.quantity += (
+                        grant_item_quantity
+                    )
+
+                    inventory_item.save(
+                        update_fields=[
+                            "quantity",
+                        ]
+                    )
+
+
+                # =============================================
+                # 管理者変更履歴：アイテム付与
+                # =============================================
+
+                admin_character = getattr(
+                    request.user,
+                    "character",
+                    None,
+                )
+
+
+                AdminChangeLog.objects.create(
+                    user=request.user,
+                    account_id=request.user.user_id,
+                    character_name=(
+                        admin_character.name
+                        if admin_character
+                        else ""
+                    ),
+                    target_character=character,
+                    target_character_name=
+                        character.name,
+                    action_type="item_grant",
+                    changes={
+                        "item": {
+                            "label": "アイテム",
+                            "before": "-",
+                            "after": item.name,
+                        },
+
+                        "quantity": {
+                            "label": "個数",
+                            "before": "-",
+                            "after":
+                                grant_item_quantity,
+                        },
+                    },
+                )
             messages.success(
                 request,
                 f"{character.name}の情報を更新しました。",
@@ -839,12 +953,30 @@ def admin_player_edit(request, character_id):
         )
     )
 
+
+    # ========================================
+    # アイテム一覧
+    # ========================================
+
+    items = (
+        Item.objects
+        .exclude(
+            category=Item.Category.EQUIPMENT,
+        )
+        .order_by(
+            "category",
+            "name",
+        )
+    )
+
+
     return render(
         request,
         "admin_player_edit.html",
         {
             "character": character,
             "equipments": equipments,
+            "items": items,
         },
     )
 

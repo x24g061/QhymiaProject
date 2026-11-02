@@ -1,11 +1,13 @@
 import random
 
+from datetime import timedelta
 from django.contrib.auth import authenticate, login, logout
 from django.db import transaction
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.staticfiles import finders
+from django.utils import timezone
 
 from apps.battle.models import (
     ArenaFloor,
@@ -59,9 +61,12 @@ def login_view(request):
 
         error_message = "固有ID・メールアドレスまたはパスワードが正しくありません。"
 
+
+
+
     return render(
         request,
-        "login.html",
+        "palm.html",
         {
             "error_message": error_message,
         },
@@ -399,59 +404,249 @@ def palm_view(request):
             "accounts:character_create"
         )
 
-    palm_labels = [
-        "火",
-        "水",
-        "草",
-        "岩",
-        "光",
-        "闇",
+
+    # ========================================
+    # 手相占い設定
+    # ========================================
+
+    PALM_READING_COST = 10
+    PALM_UNLOCK_HOURS = 24
+
+    now = timezone.now()
+
+    palm_error = None
+
+
+    # ========================================
+    # 現在閲覧可能か
+    # ========================================
+
+    palm_is_unlocked = (
+        character.palm_unlocked_until
+        and
+        character.palm_unlocked_until > now
+    )
+
+
+    # ========================================
+    # 10Qを消費して24時間解放
+    # ========================================
+
+    if request.method == "POST":
+
+        action = request.POST.get(
+            "action"
+        )
+
+
+        if action == "unlock":
+
+            with transaction.atomic():
+
+                # 二重クリックなどで
+                # Qが二重に減ることを防ぐ
+                character = (
+                    Character.objects
+                    .select_for_update()
+                    .get(pk=character.pk)
+                )
+
+                now = timezone.now()
+
+                palm_is_unlocked = (
+                    character.palm_unlocked_until
+                    and
+                    character.palm_unlocked_until
+                    > now
+                )
+
+
+                # すでに閲覧可能なら
+                # 再課金しない
+                if palm_is_unlocked:
+
+                    return redirect(
+                        "accounts:palm"
+                    )
+
+
+                # Q不足
+                if (
+                    character.gold
+                    < PALM_READING_COST
+                ):
+
+                    palm_error = (
+                        "手相を見るには"
+                        "10Q必要です。"
+                    )
+
+
+                else:
+
+                    character.gold -= (
+                        PALM_READING_COST
+                    )
+
+                    character.palm_unlocked_until = (
+                        now
+                        + timedelta(
+                            hours=PALM_UNLOCK_HOURS
+                        )
+                    )
+
+                    character.save(
+                        update_fields=[
+                            "gold",
+                            "palm_unlocked_until",
+                        ]
+                    )
+
+                    return redirect(
+                        "accounts:palm"
+                    )
+
+
+    # ========================================
+    # 最新状態で再判定
+    # ========================================
+
+    now = timezone.now()
+
+    palm_is_unlocked = (
+        character.palm_unlocked_until
+        and
+        character.palm_unlocked_until > now
+    )
+
+
+    # ========================================
+    # 手相データ
+    #
+    # 未解放時には成長ウェイト自体を
+    # テンプレートへ送らない
+    # ========================================
+
+    palm_labels = []
+    palm_values = []
+    palm_items = []
+
+
+    if palm_is_unlocked:
+
+        palm_labels = [
+            "火",
+            "水",
+            "草",
+            "岩",
+            "光",
+            "闇",
+        ]
+
+        palm_values = [
+            character.fire_growth_weight,
+            character.water_growth_weight,
+            character.grass_growth_weight,
+            character.rock_growth_weight,
+            character.light_growth_weight,
+            character.dark_growth_weight,
+        ]
+
+        palm_items = [
+            {
+                "name": "火",
+                "key": "fire",
+                "value":
+                    character.fire_growth_weight,
+            },
+            {
+                "name": "水",
+                "key": "water",
+                "value":
+                    character.water_growth_weight,
+            },
+            {
+                "name": "草",
+                "key": "grass",
+                "value":
+                    character.grass_growth_weight,
+            },
+            {
+                "name": "岩",
+                "key": "rock",
+                "value":
+                    character.rock_growth_weight,
+            },
+            {
+                "name": "光",
+                "key": "light",
+                "value":
+                    character.light_growth_weight,
+            },
+            {
+                "name": "闇",
+                "key": "dark",
+                "value":
+                    character.dark_growth_weight,
+            },
+        ]
+
+    # ========================================
+    # 手相で使用できる属性成長アイテム
+    # ========================================
+
+    growth_seed_names = [
+        "火の種",
+        "水の種",
+        "草の種",
+        "岩の種",
+        "光の種",
+        "闇の種",
     ]
 
-    palm_values = [
-        character.fire_growth_weight,
-        character.water_growth_weight,
-        character.grass_growth_weight,
-        character.rock_growth_weight,
-        character.light_growth_weight,
-        character.dark_growth_weight,
-    ]
+    palm_growth_items = (
+        character.inventory_items
+        .filter(
+            item__name__in=growth_seed_names,
+        )
+        .select_related(
+            "item",
+        )
+        .order_by(
+            "item__name",
+        )
+    )
 
-    palm_items = [
-        {
-            "name": "火",
-            "value": character.fire_growth_weight,
-        },
-        {
-            "name": "水",
-            "value": character.water_growth_weight,
-        },
-        {
-            "name": "草",
-            "value": character.grass_growth_weight,
-        },
-        {
-            "name": "岩",
-            "value": character.rock_growth_weight,
-        },
-        {
-            "name": "光",
-            "value": character.light_growth_weight,
-        },
-        {
-            "name": "闇",
-            "value": character.dark_growth_weight,
-        },
-    ]
 
     return render(
         request,
         "palm.html",
         {
             "character": character,
-            "palm_labels": palm_labels,
-            "palm_values": palm_values,
-            "palm_items": palm_items,
+
+            "palm_labels":
+                palm_labels,
+
+            "palm_values":
+                palm_values,
+
+            "palm_items":
+                palm_items,
+
+            "palm_is_unlocked":
+                palm_is_unlocked,
+
+            "palm_unlocked_until":
+                character.palm_unlocked_until,
+
+            "palm_reading_cost":
+                PALM_READING_COST,
+
+            "palm_error":
+                palm_error,
+
+            "palm_growth_items":
+                palm_growth_items,
         },
     )
 
