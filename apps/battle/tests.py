@@ -519,6 +519,83 @@ class ArenaBattleEngineTests(TestCase):
         )
 
 
+    # ========================================================
+    # 闘技場：毒による勝敗判定の統合テスト
+    # ========================================================
+
+    def test_arena_challenger_poison_death_ends_battle(self):
+        """挑戦者が毒で倒れたら防衛者の勝利となる"""
+
+        engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        engine.challenger_hp = 5
+        engine.status_effects[self.challenger.pk]["poison"] = 1
+
+        # 挑戦者だけが次のtickで行動する
+        engine.challenger_combatant.initiative = 100
+        engine.defender_combatant.initiative = 0
+
+        with (
+            patch.object(
+                engine,
+                "get_combat_stat",
+                return_value=0,
+            ),
+            patch.object(
+                engine,
+                "defender_normal_attack",
+            ) as mock_defender_attack,
+        ):
+            result = engine.run(max_ticks=1)
+
+        self.assertEqual(result["winner"], "defender")
+        self.assertEqual(result["challenger_hp"], 0)
+
+        # 挑戦者が毒で倒れた後に防衛者は行動しない
+        mock_defender_attack.assert_not_called()
+
+    def test_arena_defender_poison_death_ends_battle(self):
+        """防衛者が毒で倒れたら挑戦者の勝利となる"""
+
+        engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        engine.defender_hp = 5
+        engine.status_effects[self.defender.pk]["poison"] = 1
+
+        # 防衛者だけが次のtickで行動する
+        engine.challenger_combatant.initiative = 0
+        engine.defender_combatant.initiative = 100
+
+        with (
+            patch.object(
+                engine,
+                "get_combat_stat",
+                return_value=0,
+            ),
+            patch.object(
+                engine,
+                "challenger_normal_attack",
+            ) as mock_challenger_attack,
+        ):
+            result = engine.run(max_ticks=1)
+
+        self.assertEqual(result["winner"], "challenger")
+        self.assertEqual(result["defender_hp"], 0)
+
+        # 防衛者が毒で倒れる前に挑戦者は行動していない
+        mock_challenger_attack.assert_not_called()
+
+
     # ========================================
     # 自動戦闘：挑戦者の勝利
     # ========================================

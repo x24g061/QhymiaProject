@@ -694,8 +694,11 @@ class ArenaBattleEngine:
 
                 self.challenger_normal_attack()
 
-                # 防衛者が倒れたら終了
-                if self.defender_hp <= 0:
+                                # 毒による自滅も含めて戦闘終了を判定
+                if (
+                    self.challenger_hp <= 0
+                    or self.defender_hp <= 0
+                ):
                     break
 
             # ====================================
@@ -710,8 +713,11 @@ class ArenaBattleEngine:
 
                 self.defender_normal_attack()
 
-                # 挑戦者が倒れたら終了
-                if self.challenger_hp <= 0:
+                # 毒による自滅も含めて戦闘終了を判定
+                if (
+                    self.challenger_hp <= 0
+                    or self.defender_hp <= 0
+                ):
                     break
 
         # ========================================
