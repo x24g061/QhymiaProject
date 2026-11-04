@@ -90,6 +90,23 @@ class ArenaBattleEngine:
         # 戦闘ログ
         self.logs = []
 
+        # ========================================
+        # 闘技場：状態異常
+        # ========================================
+
+        self.status_effects = {
+            challenger.pk: {
+                "poison": 0,
+                "paralysis": 0,
+                "dex_down": 0,
+            },
+            defender.pk: {
+                "poison": 0,
+                "paralysis": 0,
+                "dex_down": 0,
+            },
+        }
+
     # ========================================================
     # 戦闘中ステータス
     # ========================================================
@@ -118,6 +135,138 @@ class ArenaBattleEngine:
 
 
     # ========================================================
+    # 闘技場：装備特殊能力の状態異常付与
+    # ========================================================
+
+    def apply_equipment_status_effects(
+        self,
+        attacker,
+        defender,
+    ):
+        """
+        攻撃命中時に装備特殊能力を抽選する。
+
+        毒牙：2%
+        痺れ刃：0.5%
+        衰弱：2%
+
+        状態異常は防御者にのみ付与する。
+        """
+
+        from apps.inventory.models import OwnedEquipment
+
+        effects = set(
+            OwnedEquipment.objects.filter(
+                character=attacker,
+                is_equipped=True,
+                special_effect__in=[
+                    "poison",
+                    "paralysis",
+                    "dex_down",
+                ],
+            ).values_list(
+                "special_effect",
+                flat=True,
+            )
+        )
+
+        status = self.status_effects[defender.pk]
+
+        if (
+            "poison" in effects
+            and roll_percent(2)
+        ):
+            status["poison"] = max(
+                status["poison"],
+                1,
+            )
+
+            self.logs.append(
+                f"{defender.name}は毒状態になった！"
+            )
+
+        if (
+            "paralysis" in effects
+            and roll_percent(0.5)
+        ):
+            status["paralysis"] = max(
+                status["paralysis"],
+                1,
+            )
+
+            self.logs.append(
+                f"{defender.name}は麻痺状態になった！"
+            )
+
+        if (
+            "dex_down" in effects
+            and roll_percent(2)
+        ):
+            status["dex_down"] = max(
+                status["dex_down"],
+                1,
+            )
+
+            self.logs.append(
+                f"{defender.name}は衰弱状態になった！"
+            )
+
+    # ========================================================
+    # 闘技場：行動開始時の状態異常
+    # ========================================================
+
+    def process_status_before_action(
+        self,
+        character,
+        combatant,
+    ):
+        """
+        毒・麻痺を処理する。
+
+        戻り値：
+        True  = 行動可能
+        False = 行動不能
+        """
+
+        status = self.status_effects[character.pk]
+
+        # ===== 毒 =====
+
+        if status["poison"] > 0:
+
+            poison_damage = max(
+                1,
+                int(combatant.max_hp * 0.10),
+            )
+
+            combatant.take_damage(poison_damage)
+            status["poison"] -= 1
+
+            self.logs.append(
+                f"{character.name}は毒で"
+                f"{poison_damage}ダメージ！"
+            )
+
+            if not combatant.is_alive():
+                return False
+
+        # ===== 麻痺 =====
+
+        if status["paralysis"] > 0:
+
+            status["paralysis"] -= 1
+
+            self.logs.append(
+                f"{character.name}は麻痺して行動できない！"
+            )
+
+            return False
+
+        return True
+
+
+
+    # ========================================================
     # PvP通常攻撃
     # ========================================================
 
@@ -143,14 +292,36 @@ class ArenaBattleEngine:
         """
 
         # ========================================
+        # 状態異常：行動開始時
+        # ========================================
+
+        if not self.process_status_before_action(
+            attacker,
+            attacker_combatant,
+        ):
+            return {
+                "hit": False,
+                "critical": False,
+                "damage": 0,
+            }
+
+        # ========================================
         # 命中率
         # ========================================
 
         attacker_dex = self.get_combat_stat(
-            attacker,
-            attacker_combatant,
-            "dexterity",
+        attacker,
+        attacker_combatant,
+        "dexterity",
         )
+
+        # ===== 衰弱 =====
+
+        attacker_status = self.status_effects[attacker.pk]
+
+        if attacker_status["dex_down"] > 0:
+            attacker_dex *= 0.99
+            attacker_status["dex_down"] -= 1
 
         defender_agi = self.get_combat_stat(
             defender,
@@ -293,6 +464,16 @@ class ArenaBattleEngine:
         defender_combatant.take_damage(
             damage
         )
+
+        # ========================================
+        # 攻撃命中時：装備特殊能力
+        # ========================================
+
+        if defender_combatant.is_alive():
+            self.apply_equipment_status_effects(
+                attacker,
+                defender,
+            )
 
         # ========================================
         # ログ

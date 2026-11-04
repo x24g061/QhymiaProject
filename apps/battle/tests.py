@@ -321,6 +321,159 @@ class ArenaBattleEngineTests(TestCase):
         )
 
 
+    # ========================================================
+    # 闘技場：装備特殊能力の状態異常テスト
+    # ========================================================
+
+    def test_arena_equipment_poison_can_defeat_player(self):
+        """毒ダメージでプレイヤーのHPが0になる"""
+
+        engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        engine.challenger_hp = 5
+
+        engine.status_effects[self.challenger.pk]["poison"] = 1
+
+        can_act = engine.process_status_before_action(
+            self.challenger,
+            engine.challenger_combatant,
+        )
+
+        self.assertFalse(can_act)
+        self.assertEqual(engine.challenger_hp, 0)
+        self.assertEqual(
+            engine.status_effects[self.challenger.pk]["poison"],
+            0,
+        )
+
+    def test_arena_equipment_paralysis_skips_action(self):
+        """麻痺すると攻撃せず1行動を消費する"""
+
+        engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        engine.status_effects[self.challenger.pk]["paralysis"] = 1
+
+        before_hp = engine.defender_hp
+        before_stamina = engine.challenger_combatant.stamina
+
+        with patch(
+            "apps.battle.arena_engine.roll_percent"
+        ) as mock_roll:
+            result = engine.challenger_normal_attack()
+
+        self.assertFalse(result["hit"])
+        self.assertEqual(result["damage"], 0)
+        self.assertEqual(engine.defender_hp, before_hp)
+
+        # 麻痺によるスキップではSTを消費しない仕様
+        self.assertEqual(
+            engine.challenger_combatant.stamina,
+            before_stamina,
+        )
+
+        self.assertEqual(
+            engine.status_effects[self.challenger.pk]["paralysis"],
+            0,
+        )
+
+        mock_roll.assert_not_called()
+
+    def test_arena_equipment_dex_down_expires_after_action(self):
+        """衰弱のDEX低下が命中判定に反映されて解除される"""
+
+        engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        engine.status_effects[self.challenger.pk]["dex_down"] = 1
+
+        with (
+            patch.object(
+                engine,
+                "get_combat_stat",
+                side_effect=lambda character, combatant, stat_name:
+                    100 if stat_name == "dexterity" else 10,
+            ),
+            patch(
+                "apps.battle.arena_engine.calculate_hit_rate",
+                return_value=80,
+            ) as mock_hit_rate,
+            patch(
+                "apps.battle.arena_engine.roll_percent",
+                return_value=False,
+            ),
+        ):
+            engine.challenger_normal_attack()
+
+        # DEX100の1%低下 = 99
+        self.assertEqual(
+            mock_hit_rate.call_args.kwargs["attacker_dex"],
+            99,
+        )
+
+        # 行動後に衰弱を解除
+        self.assertEqual(
+            engine.status_effects[self.challenger.pk]["dex_down"],
+            0,
+        )
+
+    def test_arena_multiple_equipment_status_effects(self):
+        """毒・麻痺・衰弱が同時に発生しても正常に動作する"""
+
+        engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        status = engine.status_effects[self.challenger.pk]
+
+        status["poison"] = 1
+        status["paralysis"] = 1
+        status["dex_down"] = 1
+
+        before_hp = engine.challenger_hp
+
+        # 1行動目：毒ダメージと麻痺を処理
+        result = engine.challenger_normal_attack()
+
+        self.assertFalse(result["hit"])
+        self.assertEqual(
+            engine.challenger_hp,
+            before_hp - 10,
+        )
+
+        self.assertEqual(status["poison"], 0)
+        self.assertEqual(status["paralysis"], 0)
+
+        # 麻痺で攻撃していないため衰弱は残る
+        self.assertEqual(status["dex_down"], 1)
+
+        # 2行動目：攻撃を試み、衰弱が解除される
+        with patch(
+            "apps.battle.arena_engine.roll_percent",
+            return_value=False,
+        ):
+            engine.challenger_normal_attack()
+
+        self.assertEqual(status["dex_down"], 0)
+
+
+
     # ========================================
     # PvP通常攻撃：クリティカル
     # ========================================
