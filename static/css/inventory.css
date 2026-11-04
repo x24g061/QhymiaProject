@@ -1,309 +1,491 @@
+/* =========================================================
+   Qhymia INVENTORY
+   HOME UI BASE
+========================================================= */
+
 :root {
-    --main: #156b86;
-    --main-dark: #0d4c62;
-    --main-light: #dceff5;
+    --main: #347f91;
+    --main-dark: #214e59;
+    --main-deep: #173b44;
 
-    --accent: #d79a38;
+    --main-soft: #dceff1;
+    --main-pale: #edf7f7;
 
-    --background: #eef2f1;
-    --panel: rgba(255, 255, 255, 0.95);
+    --accent: #c99a46;
 
-    --border: #8a999d;
+    --text: #19343c;
+    --muted: #70858b;
 
-    --text: #15252a;
-    --muted: #68777b;
+    --panel:
+        rgba(249, 252, 251, 0.90);
 
-    --button: #f4f5f4;
-    --button-hover: #dcecf1;
+    --panel-light:
+        rgba(255, 255, 255, 0.72);
+
+    --border:
+        rgba(66, 111, 121, 0.14);
 }
 
+
+/* =========================================================
+   PAGE
+========================================================= */
 
 .inventory-page {
     width: 100%;
     min-height: 100vh;
 
-    color: var(--text);
+    padding:
+        24px
+        24px
+        80px;
 
-    background:
-        linear-gradient(
-            rgba(237, 244, 243, 0.91),
-            rgba(222, 231, 229, 0.94)
-        );
+    color: var(--text);
 
     font-family:
         "Yu Gothic",
+        "Hiragino Kaku Gothic ProN",
         "Meiryo",
         sans-serif;
-
-    padding-bottom: 40px;
 }
 
 
-.inventory-page * {
+.inventory-page *,
+.inventory-page *::before,
+.inventory-page *::after {
     box-sizing: border-box;
 }
 
 
-/* ==============================
-   上部
-============================== */
+/* =========================================================
+   BODY
+========================================================= */
 
-.inventory-top-menu {
-    display: flex;
-    align-items: center;
+body {
+    background-image:
+        linear-gradient(
+            rgba(255, 255, 255, 0.58),
+            rgba(255, 255, 255, 0.58)
+        ),
+        url("../images/inventory.jpg");
 
-    gap: 12px;
-
-    min-height: 72px;
-
-    padding: 12px 24px;
-
-    background: rgba(255, 255, 255, 0.94);
-
-    border-bottom: 2px solid var(--main-dark);
-
-    box-shadow:
-        0 2px 7px rgba(0, 0, 0, 0.12);
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
 }
 
 
+main {
+    width: 100%;
+    max-width: none;
+
+    margin: 0;
+    padding: 0;
+}
+
+
+/* =========================================================
+   TOP MENU
+========================================================= */
+
+.inventory-top-menu {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    width: 100%;
+    max-width: 1400px;
+
+    min-height: 62px;
+
+    margin:
+        0
+        auto
+        20px;
+
+    padding:
+        10px
+        14px;
+
+    background:
+        rgba(249, 252, 251, 0.88);
+
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.82);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 12px 30px
+        rgba(16, 39, 48, 0.12);
+
+    backdrop-filter:
+        blur(14px);
+}
+
+
+/* =========================================================
+   TOP BUTTON
+========================================================= */
+
 .top-button {
-    min-width: 110px;
+    min-width: 120px;
 
-    padding: 10px 15px;
+    padding:
+        10px
+        15px;
 
-    color: var(--text);
+    color:
+        var(--main-dark);
 
     text-align: center;
     text-decoration: none;
 
-    background: var(--button);
+    background:
+        rgba(255, 255, 255, 0.66);
 
-    border: 1px solid #43575d;
+    border:
+        1px solid
+        rgba(55, 101, 111, 0.18);
 
-    border-radius: 3px;
+    border-radius: 11px;
 
-    font-size: 13px;
-    font-weight: bold;
+    font-size: 11px;
+    font-weight: 800;
 
-    transition: 0.15s;
+    transition:
+        background 0.2s,
+        color 0.2s,
+        transform 0.2s;
 }
 
 
 .top-button:hover {
-    color: white;
+    color: #ffffff;
 
-    background: var(--main);
+    background:
+        var(--main);
 
-    border-color: var(--main);
+    transform:
+        translateY(-1px);
 }
 
 
+/* =========================================================
+   INVENTORY COUNT
+========================================================= */
+
 .inventory-count {
     display: flex;
+
     align-items: center;
 
-    gap: 8px;
+    gap: 7px;
 
     margin-left: auto;
 
-    padding: 9px 15px;
+    padding:
+        9px
+        14px;
 
-    background: white;
+    color:
+        var(--muted);
 
-    border: 1px solid var(--border);
+    background:
+        rgba(255, 255, 255, 0.70);
 
-    border-radius: 4px;
+    border:
+        1px solid
+        rgba(58, 105, 115, 0.14);
 
-    font-size: 12px;
+    border-radius: 11px;
+
+    font-size: 10px;
+    font-weight: 700;
 }
 
 
 .inventory-count strong {
-    color: var(--main-dark);
+    color:
+        var(--main-deep);
 
     font-size: 18px;
 }
 
 
-/* ==============================
-   タイトル
-============================== */
+/* =========================================================
+   TITLE
+========================================================= */
 
 .inventory-title {
     display: flex;
+
     align-items: center;
 
-    min-height: 130px;
+    width: 100%;
+    max-width: 1400px;
 
-    padding: 24px 5%;
+    min-height: 175px;
 
-    color: white;
+    margin:
+        0
+        auto
+        24px;
+
+    padding:
+        30px
+        38px;
+
+    overflow: hidden;
+
+    color: #ffffff;
 
     background:
         linear-gradient(
-            110deg,
-            #164e61,
-            #1d7b95
+            135deg,
+            rgba(27, 68, 78, 0.96),
+            rgba(48, 124, 142, 0.92)
         );
 
-    border-bottom: 3px solid var(--accent);
+    border:
+        1px solid
+        rgba(255, 255, 255, 0.20);
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 20px 50px
+        rgba(16, 39, 48, 0.20);
 }
 
 
 .inventory-label {
-    margin: 0 0 5px;
+    margin:
+        0
+        0
+        6px;
 
-    color: #e6bd76;
+    color:
+        #e3bb70;
 
-    font-size: 10px;
-    font-weight: bold;
+    font-size: 9px;
+    font-weight: 800;
 
-    letter-spacing: 0.2em;
+    letter-spacing: 0.18em;
 }
 
 
 .inventory-title h1 {
     margin: 0;
 
-    font-family:
-        "Yu Mincho",
-        serif;
+    color: #ffffff;
 
-    font-size: 34px;
+    font-size:
+        clamp(
+            30px,
+            4vw,
+            44px
+        );
+
+    font-weight: 800;
 
     letter-spacing: 0.08em;
 }
 
 
 .inventory-title p:last-child {
-    margin: 8px 0 0;
+    margin:
+        10px
+        0
+        0;
 
-    color: #d8e8ed;
+    color:
+        rgba(255, 255, 255, 0.75);
 
-    font-size: 12px;
+    font-size: 11px;
+
+    line-height: 1.7;
 }
 
 
-/* ==============================
-   レイアウト
-============================== */
+/* =========================================================
+   LAYOUT
+========================================================= */
 
 .inventory-layout {
     display: grid;
 
     grid-template-columns:
-        230px minmax(0, 1fr);
+        230px
+        minmax(0, 1fr);
 
-    gap: 18px;
+    gap: 20px;
 
-    width: min(1400px, 96%);
+    width: 100%;
+    max-width: 1400px;
 
-    margin: 20px auto 0;
+    margin: 0 auto;
 }
 
 
-/* ==============================
-   左メニュー
-============================== */
+/* =========================================================
+   SIDE MENU
+========================================================= */
 
 .inventory-side-menu {
     align-self: start;
 
-    padding: 15px;
+    padding:
+        18px;
 
-    background: var(--panel);
+    background:
+        var(--panel);
 
-    border: 1px solid var(--border);
+    border:
+        1px solid
+        var(--border);
 
-    border-radius: 5px;
+    border-radius: 20px;
 
     box-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.1);
+        0 13px 35px
+        rgba(16, 39, 48, 0.12);
+
+    backdrop-filter:
+        blur(14px);
 }
 
 
 .inventory-side-menu h2 {
-    margin: 0 0 15px;
+    margin:
+        0
+        0
+        16px;
 
-    padding-bottom: 9px;
+    padding-bottom:
+        12px;
 
-    border-bottom: 2px solid var(--main);
+    color:
+        var(--main-deep);
+
+    border-bottom:
+        1px solid
+        rgba(57, 102, 112, 0.13);
 
     font-size: 15px;
 }
 
 
+/* =========================================================
+   SIDE BUTTON
+========================================================= */
+
 .side-button {
     display: flex;
 
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
 
     width: 100%;
 
-    padding: 10px 12px;
+    min-height: 43px;
 
-    color: var(--text);
+    padding:
+        10px
+        12px;
 
-    background: var(--button);
+    color:
+        var(--main-dark);
 
-    border: 1px solid #60747a;
+    background:
+        rgba(255, 255, 255, 0.66);
 
-    border-radius: 5px;
+    border:
+        1px solid
+        rgba(58, 106, 117, 0.16);
 
-    font-size: 12px;
-    font-weight: bold;
+    border-radius: 11px;
+
+    font-size: 10px;
+    font-weight: 800;
 
     cursor: pointer;
+
+    transition:
+        0.2s;
 }
 
 
 .side-button:hover {
-    background: var(--button-hover);
+    transform:
+        translateY(-1px);
+
+    background:
+        var(--main-pale);
 }
 
 
 .side-button.active {
-    color: white;
+    color: #ffffff;
 
-    background: var(--main);
+    background:
+        linear-gradient(
+            135deg,
+            #285f6c,
+            #438e9e
+        );
 
-    border-color: var(--main-dark);
-}
+    border-color:
+        transparent;
 
-
-.side-button.active:hover {
-    background: var(--main-dark);
+    box-shadow:
+        0 7px 18px
+        rgba(41, 97, 110, 0.18);
 }
 
 
 .side-description {
-    margin: 7px 5px 16px;
+    margin:
+        7px
+        4px
+        17px;
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
-    font-size: 10px;
+    font-size: 9px;
 
-    line-height: 1.55;
+    line-height: 1.6;
 }
 
 
-/* ==============================
-   メイン
-============================== */
+/* =========================================================
+   MAIN PANEL
+========================================================= */
 
 .inventory-main {
     min-width: 0;
 
-    background: var(--panel);
+    overflow: hidden;
 
-    border: 1px solid var(--border);
+    background:
+        var(--panel);
 
-    border-radius: 5px;
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 20px;
 
     box-shadow:
-        0 2px 8px rgba(0, 0, 0, 0.1);
+        0 13px 35px
+        rgba(16, 39, 48, 0.12);
+
+    backdrop-filter:
+        blur(14px);
 }
 
 
@@ -317,93 +499,130 @@
 }
 
 
-/* ==============================
-   カテゴリ
-============================== */
+/* =========================================================
+   CATEGORY TABS
+========================================================= */
 
 .category-tabs {
     display: flex;
 
-    gap: 3px;
+    gap: 8px;
 
     overflow-x: auto;
 
-    padding: 12px 12px 0;
+    padding:
+        15px
+        18px;
 
-    background: rgba(244, 247, 246, 0.95);
+    background:
+        rgba(245, 250, 250, 0.72);
 
-    border-bottom: 1px solid #aab5b7;
+    border-bottom:
+        1px solid
+        rgba(57, 102, 112, 0.10);
 }
 
 
 .category-button {
     min-width: 100px;
 
-    padding: 10px 15px;
+    min-height: 38px;
 
-    color: #17678b;
+    padding:
+        8px
+        14px;
 
-    background: transparent;
+    color:
+        var(--main-dark);
 
-    border: none;
+    background:
+        rgba(255, 255, 255, 0.68);
 
-    border-bottom: 3px solid transparent;
+    border:
+        1px solid
+        rgba(61, 109, 120, 0.14);
 
-    font-size: 12px;
-    font-weight: bold;
+    border-radius: 10px;
+
+    font-size: 10px;
+    font-weight: 800;
 
     cursor: pointer;
+
+    transition:
+        0.2s;
 }
 
 
 .category-button:hover {
-    background: #e6f1f4;
+    background:
+        var(--main-pale);
 }
 
 
 .category-button.active {
-    color: white;
+    color: #ffffff;
 
-    background: var(--main);
+    background:
+        var(--main);
 
-    border-bottom-color: var(--accent);
+    border-color:
+        transparent;
+
+    box-shadow:
+        0 6px 15px
+        rgba(41, 97, 110, 0.17);
 }
 
 
-/* ==============================
-   ツールバー
-============================== */
+/* =========================================================
+   TOOLBAR
+========================================================= */
 
 .inventory-toolbar {
     display: flex;
 
-    align-items: end;
+    align-items: flex-end;
     justify-content: space-between;
 
     gap: 20px;
 
-    padding: 18px;
+    padding:
+        20px
+        20px
+        16px;
 }
 
 
 .small-title {
-    margin: 0 0 3px;
+    margin:
+        0
+        0
+        4px;
 
-    color: var(--main);
+    color:
+        var(--accent);
 
     font-size: 9px;
-    font-weight: bold;
+    font-weight: 800;
 
-    letter-spacing: 0.17em;
+    letter-spacing: 0.15em;
 }
 
 
 .inventory-toolbar h2 {
     margin: 0;
 
+    color:
+        var(--main-deep);
+
     font-size: 19px;
 }
 
+
+/* =========================================================
+   SEARCH / SORT
+========================================================= */
 
 .toolbar-controls {
     display: flex;
@@ -414,19 +633,39 @@
 
 .toolbar-controls input,
 .toolbar-controls select {
-    height: 36px;
+    height: 39px;
 
-    padding: 0 10px;
+    padding:
+        0
+        11px;
 
-    color: var(--text);
+    color:
+        var(--text);
 
-    background: white;
+    background:
+        rgba(255, 255, 255, 0.82);
 
-    border: 1px solid var(--border);
+    border:
+        1px solid
+        rgba(59, 105, 115, 0.18);
 
-    border-radius: 3px;
+    border-radius: 10px;
 
-    font-size: 11px;
+    outline: none;
+
+    font: inherit;
+    font-size: 10px;
+}
+
+
+.toolbar-controls input:focus,
+.toolbar-controls select:focus {
+    border-color:
+        var(--main);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(52, 127, 145, 0.10);
 }
 
 
@@ -435,14 +674,21 @@
 }
 
 
-/* ==============================
-   テーブル
-============================== */
+/* =========================================================
+   TABLE WRAPPER
+========================================================= */
 
 .table-wrapper {
-    padding: 0 14px 18px;
+    padding:
+        0
+        18px
+        20px;
 }
 
+
+/* =========================================================
+   TABLE
+========================================================= */
 
 .item-table,
 .equipment-table {
@@ -450,8 +696,16 @@
 
     overflow: hidden;
 
-    border: 1px solid #566a70;
+    background:
+        rgba(255, 255, 255, 0.72);
+
+    border:
+        1px solid
+        rgba(58, 106, 117, 0.13);
+
+    border-radius: 15px;
 }
+
 
 .item-header,
 .item-row,
@@ -467,15 +721,22 @@
 }
 
 
+/* =========================================================
+   HEADER ROW
+========================================================= */
+
 .item-header,
 .equipment-header {
-    color: white;
+    color: #ffffff;
 
-    background: var(--main);
+    background:
+        linear-gradient(
+            135deg,
+            #285f6c,
+            #438e9e
+        );
 
-    border-bottom: 1px solid var(--main-dark);
-
-    font-weight: bold;
+    font-weight: 800;
 }
 
 
@@ -488,38 +749,60 @@
 
     min-height: 42px;
 
-    padding: 7px;
+    padding:
+        7px;
 
     border-right:
-        1px solid rgba(255, 255, 255, 0.25);
+        1px solid
+        rgba(255, 255, 255, 0.16);
 
-    font-size: 11px;
+    font-size: 10px;
 }
 
 
+/* =========================================================
+   ITEM ROW
+========================================================= */
+
 .item-row,
 .equipment-row {
-    min-height: 58px;
+    min-height: 64px;
 
-    background: rgba(255, 255, 255, 0.97);
+    background:
+        rgba(255, 255, 255, 0.82);
 
-    border-bottom: 1px solid #ccd3d4;
+    border-bottom:
+        1px solid
+        rgba(57, 102, 112, 0.09);
 
-    transition: 0.12s;
+    transition:
+        background 0.2s;
+}
+
+
+.item-row:last-child,
+.equipment-row:last-child {
+    border-bottom: none;
 }
 
 
 .item-row:nth-child(even),
 .equipment-row:nth-child(even) {
-    background: #f6f8f7;
+    background:
+        rgba(244, 249, 249, 0.74);
 }
 
 
 .item-row:hover,
 .equipment-row:hover {
-    background: #eaf4f6;
+    background:
+        rgba(228, 242, 244, 0.82);
 }
 
+
+/* =========================================================
+   CELL
+========================================================= */
 
 .table-cell {
     display: flex;
@@ -529,70 +812,219 @@
 
     min-width: 0;
 
-    padding: 8px 10px;
+    padding:
+        10px;
 
-    border-right: 1px solid #d8dfe0;
+    border-right:
+        1px solid
+        rgba(57, 102, 112, 0.08);
 
-    font-size: 11px;
+    font-size: 10px;
 }
 
 
 .item-name-cell {
     justify-content: flex-start;
 
-    font-size: 12px;
+    color:
+        var(--text);
+
+    font-size: 11px;
 }
 
+
+.item-name-cell strong {
+    color:
+        var(--main-deep);
+}
+
+
+.item-name-cell small {
+    color:
+        var(--muted);
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   CATEGORY TAG
+========================================================= */
 
 .category-tag {
-    display: inline-block;
+    display: inline-flex;
 
-    min-width: 62px;
+    align-items: center;
+    justify-content: center;
 
-    padding: 4px 6px;
+    min-width: 65px;
 
-    color: #0c586f;
+    padding:
+        5px
+        8px;
 
-    text-align: center;
+    color:
+        var(--main-dark);
 
-    background: #deeff4;
+    background:
+        var(--main-soft);
 
-    border: 1px solid #86b4c1;
+    border:
+        1px solid
+        rgba(69, 135, 150, 0.20);
 
-    border-radius: 3px;
+    border-radius: 999px;
 
-    font-size: 10px;
-    font-weight: bold;
+    font-size: 9px;
+    font-weight: 800;
 }
 
+
+/* =========================================================
+   VALUE
+========================================================= */
 
 .power-cell,
 .quantity-cell {
-    color: var(--main-dark);
+    color:
+        var(--main-dark);
+
+    font-weight: 700;
 }
 
 
 .quantity-cell strong {
     margin-right: 3px;
 
-    font-size: 14px;
+    color:
+        var(--main-deep);
+
+    font-size: 15px;
 }
 
 
-/* ==============================
-   空
-============================== */
+/* =========================================================
+   SPECIAL EFFECT
+========================================================= */
+
+.equipment-special-effect {
+    margin-top: 4px;
+
+    color:
+        #a67a25;
+
+    font-size: 9px;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   ACTION BUTTON
+========================================================= */
+
+.equipment-action-button {
+    min-width: 82px;
+
+    min-height: 34px;
+
+    padding:
+        7px
+        10px;
+
+    color: #ffffff;
+
+    background:
+        linear-gradient(
+            135deg,
+            #285f6c,
+            #438e9e
+        );
+
+    border: none;
+
+    border-radius: 9px;
+
+    box-shadow:
+        0 5px 12px
+        rgba(41, 97, 110, 0.16);
+
+    font: inherit;
+    font-size: 9px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+
+
+.equipment-action-button:hover {
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 8px 17px
+        rgba(41, 97, 110, 0.22);
+}
+
+
+/* =========================================================
+   REMOVE BUTTON
+========================================================= */
+
+.equipment-action-button.remove {
+    color:
+        var(--main-dark);
+
+    background:
+        rgba(255, 255, 255, 0.72);
+
+    border:
+        1px solid
+        rgba(58, 106, 117, 0.16);
+
+    box-shadow: none;
+}
+
+
+.equipment-action-button.remove:hover {
+    background:
+        var(--main-pale);
+}
+
+
+/* =========================================================
+   NOT USABLE
+========================================================= */
+
+.item-not-usable {
+    color:
+        var(--muted);
+
+    font-size: 9px;
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
 
 .empty-items {
-    padding: 45px 20px;
+    padding:
+        45px
+        20px;
 
-    color: var(--muted);
+    color:
+        var(--muted);
 
     text-align: center;
 
-    background: white;
+    background:
+        rgba(255, 255, 255, 0.72);
 
-    font-size: 12px;
+    font-size: 10px;
 }
 
 
@@ -601,15 +1033,17 @@
 }
 
 
-/* ==============================
-   タブレット
-============================== */
+/* =========================================================
+   TABLET
+========================================================= */
 
 @media (max-width: 1000px) {
 
     .inventory-layout {
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr;
     }
+
 
     .inventory-side-menu {
         display: grid;
@@ -620,9 +1054,12 @@
         gap: 8px;
     }
 
+
     .inventory-side-menu h2 {
-        grid-column: 1 / -1;
+        grid-column:
+            1 / -1;
     }
+
 
     .side-description {
         display: none;
@@ -631,41 +1068,77 @@
 }
 
 
-/* ==============================
-   スマホ
-============================== */
+/* =========================================================
+   MOBILE
+========================================================= */
 
-@media (max-width: 650px) {
+@media (max-width: 700px) {
+
+    body {
+        background-attachment:
+            scroll;
+    }
+
+
+    .inventory-page {
+        padding:
+            12px
+            10px
+            45px;
+    }
+
 
     .inventory-top-menu {
         flex-wrap: wrap;
 
-        padding: 10px;
+        border-radius: 16px;
     }
+
+
+    .top-button {
+        flex: 1;
+
+        min-width: 0;
+    }
+
 
     .inventory-count {
         width: 100%;
 
         justify-content: flex-end;
+
+        margin-left: 0;
     }
+
 
     .inventory-title {
-        min-height: 100px;
+        min-height: 140px;
 
-        padding: 18px;
+        padding:
+            24px
+            20px;
+
+        border-radius: 20px;
     }
+
 
     .inventory-title h1 {
-        font-size: 25px;
+        font-size: 29px;
     }
 
-    .inventory-layout {
-        width: 96%;
-    }
 
     .inventory-side-menu {
-        grid-template-columns: 1fr;
+        grid-template-columns:
+            1fr;
+
+        border-radius: 17px;
     }
+
+
+    .inventory-main {
+        border-radius: 17px;
+    }
+
 
     .inventory-toolbar {
         align-items: stretch;
@@ -673,56 +1146,43 @@
         flex-direction: column;
     }
 
+
     .toolbar-controls {
         flex-direction: column;
     }
+
 
     .toolbar-controls input {
         width: 100%;
     }
 
-}
 
-/* ========================================
-装備操作ボタン
-======================================== */
-
-.equipment-action-button {
-    min-width: 82px;
-
-    padding: 7px 10px;
-
-    color: white;
-
-    background: var(--main);
-
-    border: 1px solid var(--main-dark);
-
-    border-radius: 4px;
-
-    font-size: 11px;
-    font-weight: bold;
-
-    cursor: pointer;
-
-    transition: 0.15s;
-}
+    .item-table,
+    .equipment-table {
+        min-width: 680px;
+    }
 
 
-.equipment-action-button:hover {
-    background: var(--main-dark);
-}
+    .table-wrapper {
+        overflow-x: auto;
+
+        padding:
+            0
+            12px
+            15px;
+    }
 
 
-.equipment-action-button.remove {
-    color: var(--text);
+    .category-tabs {
+        padding:
+            12px;
 
-    background: #f4f5f4;
-
-    border-color: #87969a;
-}
+        gap: 6px;
+    }
 
 
-.equipment-action-button.remove:hover {
-    background: #e0e6e7;
+    .category-button {
+        min-width: 90px;
+    }
+
 }
