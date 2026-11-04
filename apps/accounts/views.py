@@ -66,11 +66,11 @@ def login_view(request):
 
     return render(
         request,
-        "palm.html",
-        {
-            "error_message": error_message,
-        },
-    )
+        "login.html",
+    {
+        "error_message": error_message,
+    },
+        )
 
 
 def signup_view(request):
