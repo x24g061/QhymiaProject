@@ -1,4 +1,5 @@
 from apps.battle.combatants import PlayerCombatant
+from apps.inventory.services import get_equipment_special_multiplier
 
 from apps.battle.engine.calculations import (
     calculate_hit_rate,
@@ -260,6 +261,24 @@ class ArenaBattleEngine:
                 defender,
                 damage,
             )
+        )
+
+        # ========================================
+        # 装備特殊能力：猛攻（攻撃者の物理ダメージ+1%）
+        # ========================================
+
+        damage *= get_equipment_special_multiplier(
+            attacker,
+            "physical_damage",
+        )
+
+        # ========================================
+        # 装備特殊能力：堅守（防御者の被ダメージ-1%）
+        # ========================================
+
+        damage *= get_equipment_special_multiplier(
+            defender,
+            "damage_reduction",
         )
 
         # ========================================
