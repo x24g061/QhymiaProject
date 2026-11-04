@@ -287,7 +287,6 @@ class ArenaBattleEngineTests(TestCase):
             95,
         )
 
-
     # ========================================
     # PvP通常攻撃：防衛者も攻撃できる
     # ========================================
@@ -320,6 +319,159 @@ class ArenaBattleEngineTests(TestCase):
             engine.defender_combatant.stamina,
             95,
         )
+
+
+    # ========================================================
+    # 闘技場：装備特殊能力の状態異常テスト
+    # ========================================================
+
+    def test_arena_equipment_poison_can_defeat_player(self):
+        """毒ダメージでプレイヤーのHPが0になる"""
+
+        engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        engine.challenger_hp = 5
+
+        engine.status_effects[self.challenger.pk]["poison"] = 1
+
+        can_act = engine.process_status_before_action(
+            self.challenger,
+            engine.challenger_combatant,
+        )
+
+        self.assertFalse(can_act)
+        self.assertEqual(engine.challenger_hp, 0)
+        self.assertEqual(
+            engine.status_effects[self.challenger.pk]["poison"],
+            0,
+        )
+
+    def test_arena_equipment_paralysis_skips_action(self):
+        """麻痺すると攻撃せず1行動を消費する"""
+
+        engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        engine.status_effects[self.challenger.pk]["paralysis"] = 1
+
+        before_hp = engine.defender_hp
+        before_stamina = engine.challenger_combatant.stamina
+
+        with patch(
+            "apps.battle.arena_engine.roll_percent"
+        ) as mock_roll:
+            result = engine.challenger_normal_attack()
+
+        self.assertFalse(result["hit"])
+        self.assertEqual(result["damage"], 0)
+        self.assertEqual(engine.defender_hp, before_hp)
+
+        # 麻痺によるスキップではSTを消費しない仕様
+        self.assertEqual(
+            engine.challenger_combatant.stamina,
+            before_stamina,
+        )
+
+        self.assertEqual(
+            engine.status_effects[self.challenger.pk]["paralysis"],
+            0,
+        )
+
+        mock_roll.assert_not_called()
+
+    def test_arena_equipment_dex_down_expires_after_action(self):
+        """衰弱のDEX低下が命中判定に反映されて解除される"""
+
+        engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        engine.status_effects[self.challenger.pk]["dex_down"] = 1
+
+        with (
+            patch.object(
+                engine,
+                "get_combat_stat",
+                side_effect=lambda character, combatant, stat_name:
+                    100 if stat_name == "dexterity" else 10,
+            ),
+            patch(
+                "apps.battle.arena_engine.calculate_hit_rate",
+                return_value=80,
+            ) as mock_hit_rate,
+            patch(
+                "apps.battle.arena_engine.roll_percent",
+                return_value=False,
+            ),
+        ):
+            engine.challenger_normal_attack()
+
+        # DEX100の1%低下 = 99
+        self.assertEqual(
+            mock_hit_rate.call_args.kwargs["attacker_dex"],
+            99,
+        )
+
+        # 行動後に衰弱を解除
+        self.assertEqual(
+            engine.status_effects[self.challenger.pk]["dex_down"],
+            0,
+        )
+
+    def test_arena_multiple_equipment_status_effects(self):
+        """毒・麻痺・衰弱が同時に発生しても正常に動作する"""
+
+        engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        status = engine.status_effects[self.challenger.pk]
+
+        status["poison"] = 1
+        status["paralysis"] = 1
+        status["dex_down"] = 1
+
+        before_hp = engine.challenger_hp
+
+        # 1行動目：毒ダメージと麻痺を処理
+        result = engine.challenger_normal_attack()
+
+        self.assertFalse(result["hit"])
+        self.assertEqual(
+            engine.challenger_hp,
+            before_hp - 10,
+        )
+
+        self.assertEqual(status["poison"], 0)
+        self.assertEqual(status["paralysis"], 0)
+
+        # 麻痺で攻撃していないため衰弱は残る
+        self.assertEqual(status["dex_down"], 1)
+
+        # 2行動目：攻撃を試み、衰弱が解除される
+        with patch(
+            "apps.battle.arena_engine.roll_percent",
+            return_value=False,
+        ):
+            engine.challenger_normal_attack()
+
+        self.assertEqual(status["dex_down"], 0)
+
 
 
     # ========================================
@@ -365,6 +517,83 @@ class ArenaBattleEngineTests(TestCase):
             critical_result["damage"],
             normal_result["damage"],
         )
+
+
+    # ========================================================
+    # 闘技場：毒による勝敗判定の統合テスト
+    # ========================================================
+
+    def test_arena_challenger_poison_death_ends_battle(self):
+        """挑戦者が毒で倒れたら防衛者の勝利となる"""
+
+        engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        engine.challenger_hp = 5
+        engine.status_effects[self.challenger.pk]["poison"] = 1
+
+        # 挑戦者だけが次のtickで行動する
+        engine.challenger_combatant.initiative = 100
+        engine.defender_combatant.initiative = 0
+
+        with (
+            patch.object(
+                engine,
+                "get_combat_stat",
+                return_value=0,
+            ),
+            patch.object(
+                engine,
+                "defender_normal_attack",
+            ) as mock_defender_attack,
+        ):
+            result = engine.run(max_ticks=1)
+
+        self.assertEqual(result["winner"], "defender")
+        self.assertEqual(result["challenger_hp"], 0)
+
+        # 挑戦者が毒で倒れた後に防衛者は行動しない
+        mock_defender_attack.assert_not_called()
+
+    def test_arena_defender_poison_death_ends_battle(self):
+        """防衛者が毒で倒れたら挑戦者の勝利となる"""
+
+        engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        engine.defender_hp = 5
+        engine.status_effects[self.defender.pk]["poison"] = 1
+
+        # 防衛者だけが次のtickで行動する
+        engine.challenger_combatant.initiative = 0
+        engine.defender_combatant.initiative = 100
+
+        with (
+            patch.object(
+                engine,
+                "get_combat_stat",
+                return_value=0,
+            ),
+            patch.object(
+                engine,
+                "challenger_normal_attack",
+            ) as mock_challenger_attack,
+        ):
+            result = engine.run(max_ticks=1)
+
+        self.assertEqual(result["winner"], "challenger")
+        self.assertEqual(result["defender_hp"], 0)
+
+        # 防衛者が毒で倒れる前に挑戦者は行動していない
+        mock_challenger_attack.assert_not_called()
 
 
     # ========================================
@@ -474,6 +703,159 @@ class ArenaBattleEngineTests(TestCase):
         )
 
 
+    # ========================================================
+    # 闘技場：猛攻・堅守の特殊能力テスト
+    # ========================================================
+
+    def _get_arena_special_effect_damage(
+        self,
+        attacker_multiplier=1.0,
+        defender_multiplier=1.0,
+        defender_attacks=False,
+    ):
+        """闘技場のダメージを固定条件で計算する"""
+
+        engine = ArenaBattleEngine(
+            self.challenger,
+            self.defender,
+            self.challenger_state,
+            self.defender_state,
+        )
+
+        def special_multiplier(character, effect_code):
+            if effect_code == "physical_damage":
+                return attacker_multiplier
+
+            if effect_code == "damage_reduction":
+                return defender_multiplier
+
+            return 1.0
+
+        with (
+            patch(
+                "apps.battle.arena_engine.roll_percent",
+                side_effect=[True, False],
+            ),
+            patch(
+                "apps.battle.arena_engine.calculate_physical_damage",
+                return_value=100,
+            ),
+            patch(
+                "apps.battle.arena_engine.apply_character_damage_race_bonus",
+                side_effect=lambda character, damage: damage,
+            ),
+            patch(
+                "apps.battle.arena_engine.apply_character_received_damage_race_bonus",
+                side_effect=lambda character, damage: damage,
+            ),
+            patch(
+                "apps.battle.arena_engine.get_equipment_special_multiplier",
+                side_effect=special_multiplier,
+            ) as mock_multiplier,
+        ):
+            if defender_attacks:
+                result = engine.defender_normal_attack()
+
+                expected_attacker = self.defender
+                expected_defender = self.challenger
+            else:
+                result = engine.challenger_normal_attack()
+
+                expected_attacker = self.challenger
+                expected_defender = self.defender
+
+        self.assertTrue(result["hit"])
+        self.assertFalse(result["critical"])
+
+        self.assertEqual(
+            mock_multiplier.call_count,
+            2,
+        )
+
+        self.assertEqual(
+            mock_multiplier.call_args_list[0].args,
+            (expected_attacker, "physical_damage"),
+        )
+
+        self.assertEqual(
+            mock_multiplier.call_args_list[1].args,
+            (expected_defender, "damage_reduction"),
+        )
+
+        return result["damage"]
+
+    # ========================================
+    # テスト1：挑戦者の猛攻
+    # ========================================
+
+    def test_arena_challenger_physical_special_effect(self):
+        """挑戦者の猛攻で与ダメージが1%増加する"""
+
+        normal_damage = self._get_arena_special_effect_damage()
+
+        special_damage = self._get_arena_special_effect_damage(
+            attacker_multiplier=1.01,
+        )
+
+        self.assertEqual(normal_damage, 100)
+        self.assertEqual(special_damage, 101)
+
+    # ========================================
+    # テスト2：防衛者の堅守
+    # ========================================
+
+    def test_arena_defender_damage_reduction_effect(self):
+        """防衛者の堅守で被ダメージが1%減少する"""
+
+        normal_damage = self._get_arena_special_effect_damage()
+
+        special_damage = self._get_arena_special_effect_damage(
+            defender_multiplier=0.99,
+        )
+
+        self.assertEqual(normal_damage, 100)
+        self.assertEqual(special_damage, 99)
+
+    # ========================================
+    # テスト3：防衛者の猛攻
+    # ========================================
+
+    def test_arena_defender_physical_special_effect(self):
+        """防衛者の猛攻でも与ダメージが1%増加する"""
+
+        normal_damage = self._get_arena_special_effect_damage(
+            defender_attacks=True,
+        )
+
+        special_damage = self._get_arena_special_effect_damage(
+            attacker_multiplier=1.01,
+            defender_attacks=True,
+        )
+
+        self.assertEqual(normal_damage, 100)
+        self.assertEqual(special_damage, 101)
+
+    # ========================================
+    # テスト4：挑戦者の堅守
+    # ========================================
+
+    def test_arena_challenger_damage_reduction_effect(self):
+        """挑戦者の堅守でも被ダメージが1%減少する"""
+
+        normal_damage = self._get_arena_special_effect_damage(
+            defender_attacks=True,
+        )
+
+        special_damage = self._get_arena_special_effect_damage(
+            defender_multiplier=0.99,
+            defender_attacks=True,
+        )
+
+        self.assertEqual(normal_damage, 100)
+        self.assertEqual(special_damage, 99)
+
+
+
 class BattleEngineTests(TestCase):
 
     def setUp(self):
@@ -515,6 +897,136 @@ class BattleEngineTests(TestCase):
             self.enemy,
         )
 
+
+    # ========================================================
+    # 装備特殊能力：状態異常テスト
+    # ========================================================
+
+    def test_equipment_poison_effect(self):
+        """毒牙：2%抽選で毒1ターンを付与する"""
+
+        engine = BattleEngine(
+            self.character,
+            self.enemy,
+        )
+
+        with patch(
+            "apps.inventory.models.OwnedEquipment.objects.filter"
+        ) as mock_filter, patch.object(
+            engine,
+            "roll_percent",
+            return_value=True,
+        ) as mock_roll:
+
+            mock_filter.return_value.values_list.return_value = [
+                "poison",
+            ]
+
+            engine.apply_equipment_status_effects()
+
+            self.assertEqual(
+                engine.enemy_poison_turns,
+                1,
+            )
+
+            mock_roll.assert_called_once_with(2)
+
+    def test_equipment_paralysis_effect(self):
+        """痺れ刃：0.5%抽選で麻痺1ターンを付与する"""
+
+        engine = BattleEngine(
+            self.character,
+            self.enemy,
+        )
+
+        with patch(
+            "apps.inventory.models.OwnedEquipment.objects.filter"
+        ) as mock_filter, patch.object(
+            engine,
+            "roll_percent",
+            return_value=True,
+        ) as mock_roll:
+
+            mock_filter.return_value.values_list.return_value = [
+                "paralysis",
+            ]
+
+            engine.apply_equipment_status_effects()
+
+            self.assertEqual(
+                engine.enemy_paralysis_turns,
+                1,
+            )
+
+            mock_roll.assert_called_once_with(0.5)
+
+    def test_equipment_dex_down_effect(self):
+        """衰弱：2%抽選でDEXを1%低下させる"""
+
+        engine = BattleEngine(
+            self.character,
+            self.enemy,
+        )
+
+        with patch(
+            "apps.inventory.models.OwnedEquipment.objects.filter"
+        ) as mock_filter, patch.object(
+            engine,
+            "roll_percent",
+            return_value=True,
+        ) as mock_roll:
+
+            mock_filter.return_value.values_list.return_value = [
+                "dex_down",
+            ]
+
+            engine.apply_equipment_status_effects()
+
+            self.assertEqual(
+                engine.enemy_combatant.equipment_dex_debuff_rate,
+                0.01,
+            )
+
+            mock_roll.assert_called_once_with(2)
+
+    def test_equipment_status_does_not_overwrite_longer_effect(self):
+        """毒牙・痺れ刃は長い状態異常を上書きしない"""
+
+        engine = BattleEngine(
+            self.character,
+            self.enemy,
+        )
+
+        # 既存スキルによる状態異常を再現
+        engine.enemy_poison_turns = 5
+        engine.enemy_paralysis_turns = 3
+
+        with patch(
+            "apps.inventory.models.OwnedEquipment.objects.filter"
+        ) as mock_filter, patch.object(
+            engine,
+            "roll_percent",
+            return_value=True,
+        ):
+
+            mock_filter.return_value.values_list.return_value = [
+                "poison",
+                "paralysis",
+            ]
+
+            engine.apply_equipment_status_effects()
+
+        # 短い効果で上書きされていない
+        self.assertEqual(
+            engine.enemy_poison_turns,
+            5,
+        )
+
+        self.assertEqual(
+            engine.enemy_paralysis_turns,
+            3,
+        )
+
     def test_equipment_dex_debuff_expires_after_enemy_turn(self):
         """装備特殊能力「衰弱」が敵の1行動後に解除される"""
 
@@ -539,6 +1051,742 @@ class BattleEngineTests(TestCase):
         self.assertEqual(
             engine.enemy_combatant.equipment_dex_debuff_rate,
             0.0,
+        )
+
+
+    def test_physical_special_effect_increases_normal_attack_damage(self):
+        """猛攻によって通常攻撃の最終ダメージが1%増加する"""
+
+        engine = self.engine
+        engine.enemy_hp = 500
+
+        with (
+            patch.object(
+                engine,
+                "roll_percent",
+                side_effect=[True, False],
+            ),
+            patch.object(
+                engine,
+                "apply_player_damage_race_bonus",
+                return_value=100,
+            ),
+            patch.object(
+                engine,
+                "apply_equipment_status_effects",
+            ),
+            patch(
+                "apps.battle.engine.attacks.get_equipment_special_multiplier",
+                return_value=1.01,
+            ) as mock_multiplier,
+        ):
+            engine.player_normal_attack()
+
+        self.assertEqual(
+            engine.enemy_hp,
+            399,
+        )
+
+        mock_multiplier.assert_called_once_with(
+            self.character,
+            "physical_damage",
+        )
+
+    def test_magic_special_effect_increases_damage(self):
+        """魔導によって魔法ダメージが1%増加する"""
+
+        engine = self.engine
+        engine.enemy_hp = 500
+
+        with (
+            patch.object(
+                engine,
+                "roll_percent",
+                return_value=True,
+            ),
+            patch.object(
+                engine,
+                "get_player_main_attribute",
+                return_value="neutral",
+            ),
+            patch.object(
+                engine,
+                "apply_player_damage_race_bonus",
+                return_value=100,
+            ),
+            patch.object(
+                engine,
+                "apply_equipment_status_effects",
+            ),
+            patch(
+                "apps.battle.engine.attacks.get_equipment_special_multiplier",
+                return_value=1.01,
+            ) as mock_multiplier,
+        ):
+            result = engine.player_magic_skill_hit(
+                skill_name="テスト魔法",
+                base_damage=100,
+                attribute="fire",
+            )
+
+        self.assertTrue(result)
+
+        # 100 × 1.01 = 101
+        self.assertEqual(engine.enemy_hp, 399)
+
+        mock_multiplier.assert_called_once_with(
+            self.character,
+            "magic_damage",
+        )
+
+    def test_damage_reduction_special_effect(self):
+        """堅守によって敵の攻撃ダメージが1%減少する"""
+
+        engine = self.engine
+
+        # テスト用にHPを十分確保
+        engine.player_hp = 500
+
+        with (
+            patch.object(
+                engine,
+                "roll_percent",
+                side_effect=[True, False],
+            ),
+            patch.object(
+                engine,
+                "calculate_physical_damage",
+                return_value=100,
+            ),
+            patch.object(
+                engine,
+                "apply_player_received_damage_race_bonus",
+                side_effect=lambda damage: damage,
+            ),
+            patch(
+                "apps.battle.engine.attacks.get_equipment_special_multiplier",
+                return_value=0.99,
+            ) as mock_multiplier,
+        ):
+            engine.enemy_attack()
+
+        # 100 × 0.99 = 99
+        self.assertEqual(engine.player_hp, 401)
+
+        mock_multiplier.assert_called_once_with(
+            self.character,
+            "damage_reduction",
+        )
+
+
+    def test_physical_special_effect_increases_skill_damage(self):
+        """猛攻によって物理スキルのダメージが1%増加する"""
+
+        engine = self.engine
+        engine.enemy_hp = 500
+
+        with (
+            patch.object(
+                engine,
+                "roll_percent",
+                return_value=False,
+            ),
+            patch.object(
+                engine,
+                "get_player_main_attribute",
+                return_value="neutral",
+            ),
+            patch.object(
+                engine,
+                "apply_player_damage_race_bonus",
+                return_value=100,
+            ),
+            patch.object(
+                engine,
+                "apply_equipment_status_effects",
+            ),
+            patch(
+                "apps.battle.engine.attacks.get_equipment_special_multiplier",
+                return_value=1.01,
+            ) as mock_multiplier,
+        ):
+            result = engine.player_physical_skill_hit(
+                skill_name="テスト物理スキル",
+                base_damage=100,
+                attribute="fire",
+                guaranteed_hit=True,
+            )
+
+        self.assertTrue(result)
+
+        # 100 × 1.01 = 101ダメージ
+        self.assertEqual(
+            engine.enemy_hp,
+            399,
+        )
+
+        mock_multiplier.assert_called_once_with(
+            self.character,
+            "physical_damage",
+        )
+
+
+    def test_equipped_physical_effect_changes_actual_damage(self):
+        """猛攻の装備・未装備が実際の通常攻撃に反映される"""
+
+        from apps.inventory.models import (
+            Item,
+            Equipment,
+            OwnedEquipment,
+        )
+
+        item = Item.objects.create(
+            name="猛攻テスト剣",
+            category=Item.Category.EQUIPMENT,
+        )
+
+        equipment = Equipment.objects.create(
+            item=item,
+            rank=Equipment.Rank.F,
+            slot=Equipment.Slot.WEAPON,
+            style=Equipment.Style.PHYSICAL,
+            base_battle_power=10,
+        )
+
+        owned = OwnedEquipment.objects.create(
+            character=self.character,
+            equipment=equipment,
+            battle_power=10,
+            special_effect="physical_damage",
+            is_equipped=False,
+        )
+
+        def attack_damage():
+            engine = BattleEngine(
+                self.character,
+                self.enemy,
+            )
+            engine.enemy_hp = 500
+
+            with (
+                patch.object(
+                    engine,
+                    "roll_percent",
+                    side_effect=[True, False],
+                ),
+                patch.object(
+                    engine,
+                    "apply_player_damage_race_bonus",
+                    return_value=100,
+                ),
+                patch.object(
+                    engine,
+                    "apply_equipment_status_effects",
+                ),
+            ):
+                engine.player_normal_attack()
+
+            return 500 - engine.enemy_hp
+
+        # 所持しているだけでは補正なし
+        self.assertEqual(attack_damage(), 100)
+
+        # 装備すると1%増加
+        owned.is_equipped = True
+        owned.save(update_fields=["is_equipped"])
+
+        self.assertEqual(attack_damage(), 101)
+
+        # 外すと元に戻る
+        owned.is_equipped = False
+        owned.save(update_fields=["is_equipped"])
+
+        self.assertEqual(attack_damage(), 100)
+
+
+    def test_equipped_magic_effect_changes_actual_damage(self):
+        """魔導の装備状態が魔法ダメージに反映される"""
+
+        from apps.inventory.models import Item, Equipment, OwnedEquipment
+
+        item = Item.objects.create(
+            name="魔導テスト杖",
+            category=Item.Category.EQUIPMENT,
+        )
+        equipment = Equipment.objects.create(
+            item=item,
+            rank=Equipment.Rank.F,
+            slot=Equipment.Slot.WEAPON,
+            style=Equipment.Style.MAGIC,
+            base_battle_power=10,
+        )
+        owned = OwnedEquipment.objects.create(
+            character=self.character,
+            equipment=equipment,
+            battle_power=10,
+            special_effect="magic_damage",
+            is_equipped=False,
+        )
+
+        def attack_damage():
+            engine = BattleEngine(self.character, self.enemy)
+            engine.enemy_hp = 500
+
+            with (
+                patch.object(engine, "roll_percent", return_value=True),
+                patch.object(
+                    engine,
+                    "get_player_main_attribute",
+                    return_value="neutral",
+                ),
+                patch.object(
+                    engine,
+                    "apply_player_damage_race_bonus",
+                    return_value=100,
+                ),
+                patch.object(engine, "apply_equipment_status_effects"),
+            ):
+                result = engine.player_magic_skill_hit(
+                    skill_name="テスト魔法",
+                    base_damage=100,
+                    attribute="fire",
+                )
+
+            self.assertTrue(result)
+            return 500 - engine.enemy_hp
+
+        self.assertEqual(attack_damage(), 100)
+
+        owned.is_equipped = True
+        owned.save(update_fields=["is_equipped"])
+        self.assertEqual(attack_damage(), 101)
+
+        owned.is_equipped = False
+        owned.save(update_fields=["is_equipped"])
+        self.assertEqual(attack_damage(), 100)
+
+    def test_equipped_defense_effect_changes_actual_damage(self):
+        """堅守の装備状態が被ダメージに反映される"""
+
+        from apps.inventory.models import Item, Equipment, OwnedEquipment
+
+        item = Item.objects.create(
+            name="堅守テスト鎧",
+            category=Item.Category.EQUIPMENT,
+        )
+        equipment = Equipment.objects.create(
+            item=item,
+            rank=Equipment.Rank.F,
+            slot=Equipment.Slot.WEAPON,
+            style=Equipment.Style.PHYSICAL,
+            base_battle_power=10,
+        )
+        owned = OwnedEquipment.objects.create(
+            character=self.character,
+            equipment=equipment,
+            battle_power=10,
+            special_effect="damage_reduction",
+            is_equipped=False,
+        )
+
+        def received_damage():
+            engine = BattleEngine(self.character, self.enemy)
+            engine.player_hp = 500
+
+            with (
+                patch.object(
+                    engine,
+                    "roll_percent",
+                    side_effect=[True, False],
+                ),
+                patch.object(
+                    engine,
+                    "calculate_physical_damage",
+                    return_value=100,
+                ),
+                patch.object(
+                    engine,
+                    "apply_player_received_damage_race_bonus",
+                    side_effect=lambda damage: damage,
+                ),
+            ):
+                engine.enemy_attack()
+
+            return 500 - engine.player_hp
+
+        self.assertEqual(received_damage(), 100)
+
+        owned.is_equipped = True
+        owned.save(update_fields=["is_equipped"])
+        self.assertEqual(received_damage(), 99)
+
+        owned.is_equipped = False
+        owned.save(update_fields=["is_equipped"])
+        self.assertEqual(received_damage(), 100)
+
+
+    def test_equipment_agility_and_luck_special_effects(self):
+        """俊敏・幸運が装備状態に応じて戦闘ステータスを増加させる"""
+
+        from apps.battle.engine.character_stats import (
+            get_character_base_combat_stat,
+        )
+        from apps.inventory.models import Item, Equipment, OwnedEquipment
+
+        item = Item.objects.create(
+            name="ステータス特殊能力テスト装備",
+            category=Item.Category.EQUIPMENT,
+        )
+        equipment = Equipment.objects.create(
+            item=item,
+            rank=Equipment.Rank.F,
+            slot=Equipment.Slot.WEAPON,
+            style=Equipment.Style.PHYSICAL,
+            base_battle_power=10,
+        )
+
+        # 装備補正による差を避けるため、
+        # このテストでは装備の通常ステータス加算を固定
+        with patch(
+            "apps.battle.engine.character_stats.get_equipment_stat_bonus",
+            return_value=0,
+        ):
+            base_agi = get_character_base_combat_stat(
+                self.character, "agility"
+            )
+            base_luk = get_character_base_combat_stat(
+                self.character, "luck"
+            )
+
+            owned = OwnedEquipment.objects.create(
+                character=self.character,
+                equipment=equipment,
+                battle_power=10,
+                special_effect="agility_up",
+                is_equipped=False,
+            )
+
+            self.assertEqual(
+                get_character_base_combat_stat(
+                    self.character, "agility"
+                ),
+                base_agi,
+            )
+
+            owned.is_equipped = True
+            owned.save(update_fields=["is_equipped"])
+
+            self.assertAlmostEqual(
+                get_character_base_combat_stat(
+                    self.character, "agility"
+                ),
+                base_agi * 1.01,
+            )
+
+            # 幸運の特殊能力に変更
+            owned.special_effect = "luck_up"
+            owned.save(update_fields=["special_effect"])
+
+            self.assertAlmostEqual(
+                get_character_base_combat_stat(
+                    self.character, "luck"
+                ),
+                base_luk * 1.01,
+            )
+
+            # 装備を外すと元に戻る
+            owned.is_equipped = False
+            owned.save(update_fields=["is_equipped"])
+
+            self.assertAlmostEqual(
+                get_character_base_combat_stat(
+                    self.character, "luck"
+                ),
+                base_luk,
+            )
+
+    def test_equipment_max_hp_and_mp_special_effects(self):
+        """生命・精神が最大HP・MPを1%増加させる"""
+
+        import math
+
+        from apps.battle.engine.character_stats import (
+            get_character_battle_max_resource,
+        )
+        from apps.inventory.models import Item, Equipment, OwnedEquipment
+
+        # 数値を分かりやすく固定
+        self.character.max_hp = 100
+        self.character.max_mp = 100
+        self.character.save(update_fields=["max_hp", "max_mp"])
+
+        item = Item.objects.create(
+            name="リソース特殊能力テスト装備",
+            category=Item.Category.EQUIPMENT,
+        )
+        equipment = Equipment.objects.create(
+            item=item,
+            rank=Equipment.Rank.F,
+            slot=Equipment.Slot.WEAPON,
+            style=Equipment.Style.PHYSICAL,
+            base_battle_power=10,
+        )
+        owned = OwnedEquipment.objects.create(
+            character=self.character,
+            equipment=equipment,
+            battle_power=10,
+            special_effect="max_hp_up",
+            is_equipped=False,
+        )
+
+        self.assertEqual(
+            get_character_battle_max_resource(self.character, "hp"),
+            100,
+        )
+
+        owned.is_equipped = True
+        owned.save(update_fields=["is_equipped"])
+
+        self.assertEqual(
+            get_character_battle_max_resource(self.character, "hp"),
+            math.ceil(100 * 1.01),
+        )
+
+        owned.special_effect = "max_mp_up"
+        owned.save(update_fields=["special_effect"])
+
+        self.assertEqual(
+            get_character_battle_max_resource(self.character, "mp"),
+            math.ceil(100 * 1.01),
+        )
+
+        owned.is_equipped = False
+        owned.save(update_fields=["is_equipped"])
+
+        self.assertEqual(
+            get_character_battle_max_resource(self.character, "mp"),
+            100,
+        )
+
+
+    def test_equipment_status_effect_does_not_activate_when_roll_fails(self):
+        """特殊能力の抽選に外れた場合、状態異常が発生しない"""
+
+        engine = self.engine
+
+        with (
+            patch(
+                "apps.inventory.models.OwnedEquipment.objects.filter"
+            ) as mock_filter,
+            patch.object(
+                engine,
+                "roll_percent",
+                return_value=False,
+            ) as mock_roll,
+        ):
+            mock_filter.return_value.values_list.return_value = [
+                "poison",
+                "paralysis",
+                "dex_down",
+            ]
+
+            engine.apply_equipment_status_effects()
+
+        self.assertEqual(engine.enemy_poison_turns, 0)
+        self.assertEqual(engine.enemy_paralysis_turns, 0)
+        self.assertEqual(
+            engine.enemy_combatant.equipment_dex_debuff_rate,
+            0.0,
+        )
+        self.assertEqual(
+            mock_roll.call_count,
+            3,
+        )
+
+    # ========================================================
+    # 装備特殊能力：未装備時の発動防止テスト
+    # ========================================================
+
+    def test_equipment_status_requires_equipped_item(self):
+        """毒牙は所持だけでは発動せず、装備時のみ発動する"""
+
+        from apps.inventory.models import (
+            Item,
+            Equipment,
+            OwnedEquipment,
+        )
+
+        item = Item.objects.create(
+            name="毒牙テスト剣",
+            category=Item.Category.EQUIPMENT,
+        )
+
+        equipment = Equipment.objects.create(
+            item=item,
+            rank=Equipment.Rank.F,
+            slot=Equipment.Slot.WEAPON,
+            style=Equipment.Style.PHYSICAL,
+            base_battle_power=10,
+        )
+
+        owned = OwnedEquipment.objects.create(
+            character=self.character,
+            equipment=equipment,
+            battle_power=10,
+            special_effect="poison",
+            is_equipped=False,
+        )
+
+        engine = BattleEngine(
+            self.character,
+            self.enemy,
+        )
+
+        # ========================================
+        # 未装備：毒牙は発動しない
+        # ========================================
+
+        with patch.object(
+            engine,
+            "roll_percent",
+            return_value=True,
+        ):
+            engine.apply_equipment_status_effects()
+
+        self.assertEqual(
+            engine.enemy_poison_turns,
+            0,
+        )
+
+        # ========================================
+        # 装備：毒牙が発動する
+        # ========================================
+
+        owned.is_equipped = True
+        owned.save(
+            update_fields=["is_equipped"]
+        )
+
+        with patch.object(
+            engine,
+            "roll_percent",
+            return_value=True,
+        ):
+            engine.apply_equipment_status_effects()
+
+        self.assertEqual(
+            engine.enemy_poison_turns,
+            1,
+        )
+
+
+    # ========================================================
+    # 装備特殊能力：複数敵への状態異常テスト
+    # ========================================================
+
+    def test_equipment_status_effects_are_target_specific(self):
+        """装備特殊能力の状態異常は攻撃対象の敵だけに付与される"""
+
+        enemy2 = Enemy.objects.create(
+            name="特殊能力テスト敵2",
+            max_hp=30,
+            max_mp=0,
+            strength=5,
+            intelligence=3,
+            dexterity=4,
+            agility=4,
+            vitality=4,
+            luck=3,
+        )
+
+        engine = BattleEngine(
+            self.character,
+            [
+                self.enemy,
+                enemy2,
+            ],
+        )
+
+        # ========================================
+        # 敵1に状態異常を付与
+        # ========================================
+
+        engine.current_enemy_index = 0
+
+        with (
+            patch(
+                "apps.inventory.models.OwnedEquipment.objects.filter"
+            ) as mock_filter,
+            patch.object(
+                engine,
+                "roll_percent",
+                return_value=True,
+            ),
+        ):
+            mock_filter.return_value.values_list.return_value = [
+                "poison",
+                "paralysis",
+                "dex_down",
+            ]
+
+            engine.apply_equipment_status_effects()
+
+        # 敵1には3種類すべて付与される
+        self.assertEqual(
+            engine.enemy_poison_turns,
+            1,
+        )
+
+        self.assertEqual(
+            engine.enemy_paralysis_turns,
+            1,
+        )
+
+        self.assertEqual(
+            engine.enemy_combatant.equipment_dex_debuff_rate,
+            0.01,
+        )
+
+        # ========================================
+        # 敵2には状態異常が付与されていない
+        # ========================================
+
+        engine.current_enemy_index = 1
+
+        self.assertEqual(
+            engine.enemy_poison_turns,
+            0,
+        )
+
+        self.assertEqual(
+            engine.enemy_paralysis_turns,
+            0,
+        )
+
+        self.assertEqual(
+            engine.enemy_combatant.equipment_dex_debuff_rate,
+            0.0,
+        )
+
+        # ========================================
+        # 敵1へ戻しても状態異常が保持されている
+        # ========================================
+
+        engine.current_enemy_index = 0
+
+        self.assertEqual(
+            engine.enemy_poison_turns,
+            1,
+        )
+
+        self.assertEqual(
+            engine.enemy_paralysis_turns,
+            1,
+        )
+
+        self.assertEqual(
+            engine.enemy_combatant.equipment_dex_debuff_rate,
+            0.01,
         )
 
 

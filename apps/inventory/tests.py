@@ -1177,3 +1177,40 @@ class EquipmentSpecialMultiplierTests(TestCase):
             ),
             1.0,
         )
+
+
+    # ========================================================
+    # 装備特殊能力：複数装備による重複テスト
+    # ========================================================
+
+    def test_same_special_effect_stacks(self):
+        """猛攻を2つ装備すると1.01の2乗が適用される"""
+
+        # 1つ目の猛攻装備
+        OwnedEquipment.objects.create(
+            character=self.character,
+            equipment=self.equipment,
+            battle_power=10,
+            special_effect="physical_damage",
+            is_equipped=True,
+        )
+
+        # 2つ目の猛攻装備
+        OwnedEquipment.objects.create(
+            character=self.character,
+            equipment=self.equipment,
+            battle_power=10,
+            special_effect="physical_damage",
+            is_equipped=True,
+        )
+
+        multiplier = get_equipment_special_multiplier(
+            self.character,
+            "physical_damage",
+        )
+
+        # 1.01 × 1.01 = 1.0201
+        self.assertAlmostEqual(
+            multiplier,
+            1.0201,
+        )

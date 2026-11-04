@@ -75,7 +75,8 @@ class BattleAttacksMixin:
                 f"{self.enemy.name}は"
                 "装備の特殊能力で麻痺状態になった！"
             )
-                # ===== 衰弱 =====
+
+        # ===== 衰弱 =====
         if (
             "dex_down" in equipped_effects
             and self.roll_percent(2)
