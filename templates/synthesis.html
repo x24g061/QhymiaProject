@@ -7,10 +7,7 @@
 
 {% block content %}
 
-<link
-    rel="stylesheet"
-    href="{% static 'css/synthesis.css' %}"
->
+<link rel="stylesheet" href="{% static 'css/synthesis.css' %}">
 
 <div class="synthesis-page">
 
@@ -27,10 +24,7 @@
 
                     {% if character.character_image_path %}
 
-                    <img
-                        src="{% static character.character_image_path %}"
-                        alt="{{ character.name }}"
-                    >
+                    <img src="{% static character.character_image_path %}" alt="{{ character.name }}">
 
                     {% else %}
 
@@ -66,10 +60,7 @@
         ======================================== -->
         <div class="synthesis-navigation">
 
-            <a
-                href="{% url 'home' %}"
-                class="synthesis-button synthesis-button-blue"
-            >
+            <a href="{% url 'home' %}" class="synthesis-button synthesis-button-blue">
                 ← ホームに戻る
             </a>
 
@@ -113,9 +104,9 @@
 
                         <strong>
                             {% if synthesis_cost == 0 %}
-                                無料
+                            無料
                             {% else %}
-                                {{ synthesis_cost }}Q
+                            {{ synthesis_cost }}Q
                             {% endif %}
                         </strong>
                     </div>
@@ -159,10 +150,7 @@
             <!-- ========================================
                  合成フォーム
             ======================================== -->
-            <form
-                method="post"
-                class="synthesis-form"
-            >
+            <form method="post" class="synthesis-form">
 
                 {% csrf_token %}
 
@@ -181,85 +169,111 @@
                 </div>
 
 
+
+                <!-- ========================================
+     合成可能な装備一覧
+======================================== -->
+
                 <div class="synthesis-equipment-list">
 
-                    {% for owned in owned_equipments %}
+                    {% if synthesis_groups %}
 
-                    <label class="synthesis-equipment-item">
+                    <table class="synthesis-group-table">
+                        <thead>
+                            <tr>
+                                <th>種類</th>
+                                <th>レアリティ</th>
+                                <th>アイテム名</th>
+                                <th>個数</th>
+                                <th>対象</th>
+                            </tr>
+                        </thead>
 
-                        <input
-                            type="checkbox"
-                            name="equipment_ids"
-                            value="{{ owned.id }}"
-                        >
+                        <tbody>
+                            {% for group in synthesis_groups %}
+                            <tr>
+                                <td>
+                                    {{ group.equipment.get_slot_display }}
+                                </td>
 
-                        <div class="synthesis-equipment-check">
-                            ✓
-                        </div>
+                                <td>
+                                    {{ group.equipment.rank }}
+                                </td>
 
+                                <td>
+                                    {{ group.equipment.item.name }}
+                                    +{{ group.level }}
+                                </td>
 
-                        <div class="synthesis-equipment-main">
+                                <td>
+                                    {{ group.count }}
+                                </td>
 
-                            <div class="synthesis-equipment-name">
+                                <td>
+                                    <input type="radio" name="selected_group" value="{{ forloop.counter }}"
+                                        class="synthesis-group-radio">
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
 
-                                <span class="synthesis-rank">
-                                    {{ owned.equipment.rank }}
-                                </span>
+                    <!-- 素材を3つ選ぶ -->
+                    {% for group in synthesis_groups %}
+                    <div class="synthesis-material-panel" data-group="{{ forloop.counter }}" hidden>
+                        <h3>
+                            {{ group.equipment.item.name }}
+                            +{{ group.level }}
+                        </h3>
 
-                                <strong>
-                                    {{ owned.equipment.item.name }}
-                                </strong>
+                        <p>
+                            合成に使用する装備を3個選択してください。
+                        </p>
 
-                            </div>
+                        {% for owned in group.owned_items %}
+                        <label class="synthesis-material-item">
 
+                            <input type="checkbox" name="equipment_ids" value="{{ owned.id }}" disabled>
 
-                            <div class="synthesis-equipment-detail">
+                            <span>
+                                {{ owned.equipment.item.name }}
+                                +{{ owned.enhancement_level }}
+                                （戦闘力 {{ owned.battle_power }}）
 
-                                <span>
-                                    強化値
-                                </span>
+                                {% if owned.special_effect %}
+                                【特殊能力：
+                                {{ owned.get_special_effect_display }}】
+                                {% endif %}
+                            </span>
 
-                                <strong>
-                                    +{{ owned.enhancement_level }}
-                                </strong>
+                        </label>
+                        {% endfor %}
 
+                        <p class="synthesis-selected-count">
+                            選択数：0 / 3
+                        </p>
+                    </div>
+                    {% endfor %}
 
-                                <span>
-                                    戦闘力
-                                </span>
-
-                                <strong>
-                                    {{ owned.battle_power }}
-                                </strong>
-
-                            </div>
-
-                        </div>
-
-                    </label>
-
-
-                    {% empty %}
+                    {% else %}
 
                     <div class="synthesis-empty">
-
                         <strong>
                             合成可能な装備がありません
                         </strong>
-
                         <p>
-                            同じ装備を3つ集めてから
-                            もう一度訪れてください。
+                            同じ装備・同じ強化値を
+                            3個以上集めてください。
                         </p>
-
                     </div>
 
-                    {% endfor %}
+                    {% endif %}
 
                 </div>
 
 
-                {% if owned_equipments %}
+
+                {% if synthesis_groups %}
 
                 <div class="synthesis-submit-area">
 
@@ -271,27 +285,24 @@
 
                         <strong>
                             {% if synthesis_cost == 0 %}
-                                無料
+                            無料
                             {% else %}
-                                {{ synthesis_cost }}Q
+                            {{ synthesis_cost }}Q
                             {% endif %}
                         </strong>
 
                     </div>
 
 
-                    <button
-                        type="submit"
-                        class="synthesis-submit-button"
-                    >
+                    <button type="submit" id="synthesis-submit" class="synthesis-submit-button" disabled>
 
                         {% if synthesis_cost == 0 %}
 
-                            無料で合成する
+                        無料で合成する
 
                         {% else %}
 
-                            {{ synthesis_cost }}Qで合成する
+                        {{ synthesis_cost }}Qで合成する
 
                         {% endif %}
 
@@ -311,10 +322,7 @@
         ======================================== -->
         <div class="synthesis-footer">
 
-            <a
-                href="{% url 'home' %}"
-                class="synthesis-button synthesis-button-blue"
-            >
+            <a href="{% url 'home' %}" class="synthesis-button synthesis-button-blue">
                 ← ホームに戻る
             </a>
 
@@ -323,5 +331,105 @@
     </div>
 
 </div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const radios = document.querySelectorAll(
+            ".synthesis-group-radio"
+        );
+
+        const panels = document.querySelectorAll(
+            ".synthesis-material-panel"
+        );
+
+        const submitButton = document.getElementById(
+            "synthesis-submit"
+        );
+
+        function updateSelection() {
+            const selected = document.querySelector(
+                ".synthesis-group-radio:checked"
+            );
+
+            panels.forEach(function (panel) {
+                const isActive = selected &&
+                    panel.dataset.group === selected.value;
+
+                panel.hidden = !isActive;
+
+                const checkboxes = panel.querySelectorAll(
+                    'input[name="equipment_ids"]'
+                );
+
+                checkboxes.forEach(function (checkbox) {
+                    checkbox.disabled = !isActive;
+
+                    if (!isActive) {
+                        checkbox.checked = false;
+                    }
+                });
+
+                if (!isActive) {
+                    return;
+                }
+
+                const checked = panel.querySelectorAll(
+                    'input[name="equipment_ids"]:checked'
+                );
+
+                const counter = panel.querySelector(
+                    ".synthesis-selected-count"
+                );
+
+                counter.textContent =
+                    "選択数：" + checked.length + " / 3";
+
+                if (submitButton) {
+                    submitButton.disabled = checked.length !== 3;
+                }
+            });
+
+            if (!selected && submitButton) {
+                submitButton.disabled = true;
+            }
+        }
+
+        radios.forEach(function (radio) {
+            radio.addEventListener("change", function () {
+                if (submitButton) {
+                    submitButton.disabled = true;
+                }
+
+                updateSelection();
+            });
+        });
+
+        panels.forEach(function (panel) {
+            const checkboxes = panel.querySelectorAll(
+                'input[name="equipment_ids"]'
+            );
+
+            checkboxes.forEach(function (checkbox) {
+                checkbox.addEventListener("change", function () {
+
+                    const checked = panel.querySelectorAll(
+                        'input[name="equipment_ids"]:checked'
+                    );
+
+                    if (checked.length > 3) {
+                        checkbox.checked = false;
+                    }
+
+                    updateSelection();
+                });
+            });
+        });
+
+        updateSelection();
+    });
+</script>
+
 
 {% endblock %}

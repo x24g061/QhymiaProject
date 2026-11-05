@@ -28,10 +28,8 @@ main {
     min-height: 100vh;
 
     background-image:
-        linear-gradient(
-            rgba(255, 255, 255, 0.45),
-            rgba(255, 255, 255, 0.45)
-        ),
+        linear-gradient(rgba(255, 255, 255, 0.45),
+            rgba(255, 255, 255, 0.45)),
         url("../images/synthesis-bg.jpg");
 
     background-size: cover;
@@ -47,8 +45,7 @@ main {
     margin: 0 auto;
 
     padding:
-        10px 0
-        45px;
+        10px 0 45px;
 }
 
 
@@ -66,8 +63,7 @@ main {
         rgba(255, 255, 255, 0.82);
 
     box-shadow:
-        0 2px 8px
-        rgba(30, 30, 30, 0.12);
+        0 2px 8px rgba(30, 30, 30, 0.12);
 }
 
 
@@ -219,8 +215,7 @@ main {
         rgba(255, 255, 255, 0.73);
 
     box-shadow:
-        0 3px 15px
-        rgba(0, 0, 0, 0.08);
+        0 3px 15px rgba(0, 0, 0, 0.08);
 }
 
 
@@ -239,8 +234,7 @@ main {
     padding-bottom: 16px;
 
     border-bottom:
-        1px solid
-        rgba(0, 0, 0, 0.18);
+        1px solid rgba(0, 0, 0, 0.18);
 }
 
 
@@ -260,7 +254,7 @@ main {
 }
 
 
-.synthesis-player-info > div {
+.synthesis-player-info>div {
     display: flex;
 
     flex-direction: column;
@@ -302,8 +296,7 @@ main {
         10px 14px;
 
     border:
-        1px solid
-        #8bbdcc;
+        1px solid #8bbdcc;
 
     background:
         rgba(234, 249, 252, 0.95);
@@ -333,8 +326,7 @@ main {
         10px 14px;
 
     border:
-        1px solid
-        #2d3a3f;
+        1px solid #2d3a3f;
 
     background:
         #68767d;
@@ -384,8 +376,7 @@ main {
         10px 14px;
 
     border:
-        1px solid
-        #ccd3d6;
+        1px solid #ccd3d6;
 
     background:
         rgba(255, 255, 255, 0.95);
@@ -433,8 +424,7 @@ main {
     justify-content: center;
 
     border:
-        2px solid
-        #ccd4d7;
+        2px solid #ccd4d7;
 
     background:
         #f4f4f4;
@@ -446,10 +436,7 @@ main {
 }
 
 
-.synthesis-equipment-item
-input:checked
-+
-.synthesis-equipment-check {
+.synthesis-equipment-item input:checked+.synthesis-equipment-check {
     border-color:
         #24add5;
 
@@ -493,8 +480,7 @@ input:checked
         4px 7px;
 
     border:
-        1px solid
-        #555;
+        1px solid #555;
 
     background:
         #3f484c;
@@ -559,8 +545,7 @@ input:checked
     padding-top: 18px;
 
     border-top:
-        2px solid
-        rgba(0, 0, 0, 0.72);
+        2px solid rgba(0, 0, 0, 0.72);
 }
 
 
@@ -606,8 +591,7 @@ input:checked
     font-weight: bold;
 
     box-shadow:
-        0 3px 7px
-        rgba(0, 0, 0, 0.12);
+        0 3px 7px rgba(0, 0, 0, 0.12);
 
     transition:
         opacity 0.15s,
@@ -632,8 +616,7 @@ input:checked
         35px 20px;
 
     border:
-        1px dashed
-        #aeb9bd;
+        1px dashed #aeb9bd;
 
     background:
         rgba(255, 255, 255, 0.8);
@@ -730,7 +713,7 @@ input:checked
     }
 
 
-    .synthesis-player-info > div {
+    .synthesis-player-info>div {
         flex-direction: row;
 
         justify-content: space-between;
@@ -738,4 +721,85 @@ input:checked
         text-align: left;
     }
 
+}
+
+
+/* 合成グループ一覧 */
+
+.synthesis-equipment-list {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.synthesis-group-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.synthesis-group-table th,
+.synthesis-group-table td {
+    padding: 12px;
+    border: 1px solid #d0d8dc;
+    text-align: center;
+    font-size: 14px;
+}
+
+.synthesis-group-table th {
+    background: #52636d;
+    color: white;
+}
+
+.synthesis-group-table td:nth-child(3) {
+    text-align: left;
+}
+
+.synthesis-group-radio {
+    width: 18px;
+    height: 18px;
+    accent-color: #229fc7;
+    cursor: pointer;
+}
+
+/* 選択したグループの素材一覧 */
+
+.synthesis-material-panel {
+    margin-top: 18px;
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #cbd7dc;
+}
+
+.synthesis-material-panel[hidden] {
+    display: none !important;
+}
+
+.synthesis-material-panel h3 {
+    margin: 0 0 8px;
+}
+
+.synthesis-material-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.synthesis-material-item input {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    accent-color: #229fc7;
+}
+
+.synthesis-selected-count {
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.synthesis-submit-button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
 }

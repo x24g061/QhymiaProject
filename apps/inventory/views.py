@@ -1,5 +1,7 @@
 from datetime import timedelta
 
+from collections import defaultdict
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
@@ -295,11 +297,12 @@ def synthesis(request):
         )
 
 
+    
     # ========================================================
-    # 合成可能な所持装備
+    # 合成可能な装備を種類・強化値ごとにまとめる
     # ========================================================
 
-    owned_equipments = (
+    owned_equipments = list(
         OwnedEquipment.objects
         .filter(
             character=character,
@@ -313,8 +316,39 @@ def synthesis(request):
             "equipment__rank",
             "equipment__item__name",
             "enhancement_level",
+            "id",
         )
     )
+
+    # 同じ装備・同じ強化値で分類
+    grouped_equipments = defaultdict(list)
+
+    for owned in owned_equipments:
+        key = (
+            owned.equipment_id,
+            owned.enhancement_level,
+        )
+
+        grouped_equipments[key].append(owned)
+
+    # 3個以上あるグループだけを表示
+    synthesis_groups = []
+
+    for (equipment_id, level), group in grouped_equipments.items():
+
+        if len(group) < 3:
+            continue
+
+        equipment = group[0].equipment
+
+    synthesis_groups.append({
+    "equipment_id": equipment_id,
+    "equipment": equipment,
+    "level": level,
+    "count": len(group),
+    "owned_ids": [owned.id for owned in group],
+    "owned_items": group,
+    })
 
 
     # ========================================================
@@ -331,10 +365,9 @@ def synthesis(request):
         "synthesis.html",
         {
             "character": character,
-            "owned_equipments":
-                owned_equipments,
-            "synthesis_cost":
-                synthesis_cost,
+            "owned_equipments": owned_equipments,
+            "synthesis_groups": synthesis_groups,
+            "synthesis_cost": synthesis_cost,
         },
     )
 
