@@ -2,8 +2,7 @@ from django.contrib import messages
 
 from django.contrib.auth.decorators import login_required
 
-from django.shortcuts import render, redirect
-
+from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 
 from django.db import transaction
@@ -127,27 +126,49 @@ def player_search(request):
 
 
 
-    messages.success(
+    # ========================================
+    # 検索したプレイヤーのプロフィールへ移動
+    # ========================================
 
-        request,
-
-        (
-
-            f"{character.name} / "
-
-            f"Lv.{character.level} / "
-
-            f"{character.gold}Q"
-
-        ),
-
+    return redirect(
+        "player_detail",
+        character_id=character.pk,
     )
 
+@login_required
+def player_detail(request, character_id):
+    """検索したプレイヤーのプロフィールを表示"""
 
+    character = get_object_or_404(
+        Character,
+        pk=character_id,
+    )
 
-    return redirect("home")
+    attribute = character.get_main_attribute()
 
+    attribute_values = {
+        "fire": character.fire,
+        "water": character.water,
+        "grass": character.grass,
+        "rock": character.rock,
+        "light": character.light,
+        "dark": character.dark,
+    }
 
+    main_attribute_value = attribute_values.get(
+        attribute,
+        None,
+    )
+
+    return render(
+        request,
+        "profile.html",
+        {
+            "character": character,
+            "is_other_profile": True,
+            "main_attribute_value": main_attribute_value,
+        },
+    )
 
 
 

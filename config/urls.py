@@ -13,6 +13,7 @@ from .views import (
     again,
     home,
     player_search,
+    player_detail,
 )
 
 urlpatterns = [
@@ -24,6 +25,12 @@ urlpatterns = [
         'player_search/',
         player_search,
         name='player_search',
+    ),
+
+    path(
+        "player/<int:character_id>/",
+        player_detail,
+        name="player_detail",
     ),
 
     path(
