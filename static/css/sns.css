@@ -15,7 +15,16 @@
     bottom: 24px;
 
     width: 420px;
-    max-width: calc(100vw - 20px);
+    height: min(78vh, 720px);
+
+    min-width: 320px;
+    min-height: 300px;
+
+    max-width: calc(100vw - 10px);
+    max-height: calc(100vh - 10px);
+
+    display: flex;
+    flex-direction: column;
 
     overflow: hidden;
 
@@ -61,6 +70,8 @@
     min-height: 62px;
 
     padding-left: 20px;
+
+    touch-action: none;
 
     color: #ffffff;
 
@@ -170,11 +181,9 @@
 ========================================================= */
 
 .mini-sns-body {
-    max-height:
-        min(
-            78vh,
-            680px
-        );
+    flex: 1;
+
+    min-height: 0;
 
     padding: 0;
 
@@ -1326,6 +1335,71 @@
     font-size: 11px;
 }
 
+/* =========================================================
+   サイズ変更ハンドル
+========================================================= */
+
+.mini-sns-resize-handle {
+    position: absolute;
+
+    right: 3px;
+    bottom: 3px;
+
+    width: 22px;
+    height: 22px;
+
+    z-index: 30;
+
+    cursor: nwse-resize;
+
+    touch-action: none;
+}
+
+
+.mini-sns-resize-handle::before,
+.mini-sns-resize-handle::after {
+    content: "";
+
+    position: absolute;
+
+    right: 4px;
+
+    height: 2px;
+
+    background:
+        rgba(52, 127, 145, 0.55);
+
+    border-radius: 999px;
+
+    transform:
+        rotate(-45deg);
+
+    transform-origin:
+        right center;
+
+    pointer-events: none;
+}
+
+
+.mini-sns-resize-handle::before {
+    bottom: 6px;
+
+    width: 14px;
+}
+
+
+.mini-sns-resize-handle::after {
+    bottom: 11px;
+
+    width: 8px;
+}
+
+
+.mini-sns-resize-handle:hover::before,
+.mini-sns-resize-handle:hover::after {
+    background:
+        rgba(52, 127, 145, 0.95);
+}
 
 /* =========================================================
    最小化
@@ -1337,9 +1411,19 @@
 
 
 .mini-sns.minimized {
-    width: 280px;
+    width: 280px !important;
+    height: 62px !important;
+
+    min-width: 280px;
+    min-height: 62px;
 
     border-radius: 18px;
+}
+
+
+.mini-sns.minimized
+.mini-sns-resize-handle {
+    display: none;
 }
 
 
@@ -1622,88 +1706,296 @@
 
 @media (max-width: 600px) {
 
+    /* =========================
+       ミニSNS本体
+    ========================= */
+
     .mini-sns {
-        right: 5px;
-        bottom: 5px;
+        right: 6px;
+        bottom: 6px;
 
         width:
             calc(
-                100% - 10px
+                100vw - 12px
             );
 
-        border-radius: 18px;
+        height:
+            min(
+                72vh,
+                620px
+            );
+
+        min-width: 300px;
+        min-height: 260px;
+
+        border-radius: 14px;
+
+        box-shadow:
+            0 10px 30px
+            rgba(20, 52, 61, 0.18);
     }
 
+
+    /* =========================
+       ヘッダー
+    ========================= */
 
     .mini-sns-header {
-        min-height: 56px;
+        min-height: 50px;
+
+        padding-left: 14px;
+
+        cursor: grab;
+
+        touch-action: none;
     }
 
 
-    .mini-sns-controls {
-        height: 56px;
-    }
-
-
-    .mini-sns-controls button {
-        width: 43px;
-        height: 56px;
+    .mini-sns-header:active {
+        cursor: grabbing;
     }
 
 
     .mini-sns-logo-button {
-        font-size: 20px;
+        font-size: 18px;
+
+        letter-spacing: 0.05em;
     }
 
 
-    .mini-sns-form-bottom {
-        gap: 7px;
+    /* =========================
+       操作ボタン
+    ========================= */
+
+    .mini-sns-controls {
+        height: 50px;
     }
 
 
-    .mini-sns-image-button,
-    .mini-sns-submit-button {
-        min-width: 0;
+    .mini-sns-controls button {
+        width: 42px;
+        height: 50px;
 
+        font-size: 21px;
+    }
+
+
+    /* =========================
+       スマホでは投稿機能を非表示
+    ========================= */
+
+    .mini-sns-compose-header,
+    .mini-sns-compose-panel {
+        display: none;
+    }
+
+
+    /* =========================
+       SNS本体
+    ========================= */
+
+    .mini-sns-body {
         flex: 1;
+
+        min-height: 0;
+
+        overflow-y: auto;
+
+        background:
+            rgba(
+                244,
+                250,
+                250,
+                0.96
+            );
+    }
+
+
+    /* =========================
+       タブ
+    ========================= */
+
+    .mini-sns-tabs {
+        gap: 4px;
+
+        padding: 7px;
+
+        background:
+            rgba(
+                255,
+                255,
+                255,
+                0.95
+            );
     }
 
 
     .mini-sns-tab {
-        font-size: 9px;
+        min-height: 34px;
+
+        padding:
+            4px
+            5px;
+
+        border-radius: 8px;
+
+        font-size: 10px;
+
+        box-shadow: none;
     }
 
+
+    /* =========================
+       投稿一覧
+    ========================= */
 
     .mini-sns-post-list {
-        padding: 8px;
+        gap: 7px;
 
-        gap: 8px;
+        padding: 7px;
     }
 
+
+    /* =========================
+       投稿カード
+    ========================= */
 
     .sns-post {
-        padding: 12px;
+        padding: 11px;
+
+        border-radius: 11px;
+
+        box-shadow:
+            0 3px 10px
+            rgba(27, 63, 72, 0.06);
     }
 
+
+    .sns-post:hover {
+        transform: none;
+
+        box-shadow:
+            0 3px 10px
+            rgba(27, 63, 72, 0.06);
+    }
+
+
+    /* =========================
+       ユーザー
+    ========================= */
+
+    .mini-sns-avatar {
+        width: 40px;
+        height: 40px;
+
+        border-radius: 9px;
+    }
+
+
+    .mini-sns-user-area {
+        gap: 8px;
+
+        padding-right: 0;
+    }
+
+
+    .mini-sns-user-info strong {
+        font-size: 12px;
+    }
+
+
+    /* =========================
+       投稿本文
+    ========================= */
+
+    .mini-sns-post-text {
+        margin:
+            9px
+            0;
+
+        font-size: 12px;
+
+        line-height: 1.6;
+    }
+
+
+    /* =========================
+       投稿画像
+    ========================= */
 
     .mini-sns-post-image-wrapper {
         height: 190px;
+
+        margin-top: 8px;
+
+        border-radius: 10px;
     }
 
 
-    .mini-sns-user-area,
+    /* =========================
+       操作部分
+    ========================= */
+
     .mini-sns-post-actions {
         padding-right: 0;
     }
 
 
-    .mini-sns-post-text {
-        margin-right: 0;
+    /* =========================
+       リサイズ
+    ========================= */
+
+    .mini-sns-resize-handle {
+        width: 30px;
+        height: 30px;
+
+        right: 1px;
+        bottom: 1px;
+
+        touch-action: none;
     }
 
 
+    /* =========================
+       最小化
+    ========================= */
+
+    .mini-sns.minimized {
+        width: 240px !important;
+        height: 50px !important;
+
+        min-width: 240px;
+        min-height: 50px;
+
+        border-radius: 12px;
+    }
+
+
+    .mini-sns.minimized
+    .mini-sns-header {
+        min-height: 50px;
+    }
+
+
+    .mini-sns.minimized
+    .mini-sns-controls {
+        height: 50px;
+    }
+
+
+    .mini-sns.minimized
+    .mini-sns-controls button {
+        width: 40px;
+        height: 50px;
+    }
+
+
+    /* =========================
+       全画面画像
+    ========================= */
+
     .mini-sns-image-modal {
-        padding: 15px;
+        padding: 12px;
     }
 
 
@@ -1715,9 +2007,7 @@
     .mini-sns-image-modal-next {
         right: 5px;
     }
-
 }
-
 
 /* =========================================================
    動きを減らす設定

@@ -563,6 +563,48 @@ main {
 
 @media (max-width: 600px) {
 
+    .admin-mode-banner {
+        display: flex;
+
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 12px;
+
+        padding:
+            12px
+            16px;
+    }
+
+
+    .admin-mode-banner strong {
+        position: static;
+
+        left: auto;
+
+        transform: none;
+
+        margin: 0;
+
+        white-space: nowrap;
+
+        font-size: 16px;
+
+        text-align: left;
+    }
+
+
+    .admin-mode-banner span {
+        margin-left: auto;
+
+        white-space: nowrap;
+
+        font-size: 11px;
+
+        text-align: right;
+    }
+
+
     .admin-player-search {
         flex-direction: column;
         align-items: stretch;
