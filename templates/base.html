@@ -30,8 +30,22 @@
             Qhymia
         </h1>
 
+
         {% block header_left_extra %}
         {% endblock %}
+
+
+        {% if user.is_authenticated %}
+
+            {% block header_logout %}
+
+            <a href="{% url 'accounts:logout' %}" class="site-header-logout">
+                ログアウト
+            </a>
+
+            {% endblock %}
+
+        {% endif %}
 
     </div>
 
@@ -46,33 +60,24 @@
 
         {% if user.is_authenticated %}
 
-        {% if request.session.admin_mode %}
+            {% if request.session.admin_mode %}
 
-        <span class="admin-mode-badge">
-            ADMIN MODE
-        </span>
+            <span class="admin-mode-badge">
+                ADMIN MODE
+            </span>
 
-        <a
-            href="{% url 'admin_panel' %}"
-            class="admin-menu-link"
-        >
-            管理者メニュー
-        </a>
+            <a
+                href="{% url 'admin_panel' %}"
+                class="admin-menu-link"
+            >
+                管理者メニュー
+            </a>
 
-        {% endif %}
-
-
-        {% block header_right_extra %}
-        {% endblock %}
+            {% endif %}
 
 
-        {% block header_logout %}
-
-        <a href="{% url 'accounts:logout' %}">
-            ログアウト
-        </a>
-
-        {% endblock %}
+            {% block header_right_extra %}
+            {% endblock %}
 
         {% endif %}
 

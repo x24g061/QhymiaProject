@@ -592,10 +592,23 @@ body {
         width: 100%;
     }
 
-    .character-list {
-        grid-template-columns: repeat(2, 1fr);
-    }
+    /* ランダム候補の外側 */
+.random-character-section > .character-list {
+    display: block;
+}
 
+
+/* ランダム8体を4列 × 2段にする */
+#random-character-list {
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 8px;
+}
     .section-heading {
         font-size: 17px;
     }

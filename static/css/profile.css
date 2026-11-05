@@ -1085,12 +1085,18 @@ body {
     }
 
 
-    .profile-detail-block:first-child::before,
-    .profile-detail-block:nth-child(2)::before {
-        left: 24px;
+.profile-detail-block:first-child::before,
+.profile-detail-block:nth-child(2)::before {
+    left: 50%;
 
-        font-size: 11px;
-    }
+    transform: translateX(-50%);
+
+    width: max-content;
+
+    font-size: 11px;
+
+    text-align: center;
+}
 
 
     .profile-radar-chart {

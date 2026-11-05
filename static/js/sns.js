@@ -9,6 +9,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeButton =
         document.getElementById("sns-close");
 
+    const resizeHandle =
+        document.getElementById(
+            "mini-sns-resize-handle"
+        );
+
     const openHomeButton =
         document.getElementById("sns-open-home");
 
@@ -406,6 +411,32 @@ document.addEventListener("DOMContentLoaded", function () {
             "auto";
     }
 
+    // =====================
+    // 保存サイズ
+    // =====================
+
+    const savedWidth =
+        localStorage.getItem(
+            "qhymiaMiniSnsWidth"
+        );
+
+    const savedHeight =
+        localStorage.getItem(
+            "qhymiaMiniSnsHeight"
+        );
+
+
+    if (
+        savedWidth &&
+        savedHeight
+    ) {
+
+        miniSns.style.width =
+            savedWidth + "px";
+
+        miniSns.style.height =
+            savedHeight + "px";
+    }
 
     // =====================
     // ホームから開く
@@ -884,67 +915,67 @@ document.addEventListener("DOMContentLoaded", function () {
         );
 
     }
-// =====================
-// 全画面画像を更新
-// =====================
+    // =====================
+    // 全画面画像を更新
+    // =====================
 
-function updateModalImage() {
+    function updateModalImage() {
 
-    if (
-        !imageModalImage ||
-        modalImages.length === 0
-    ) {
-        return;
-    }
+        if (
+            !imageModalImage ||
+            modalImages.length === 0
+        ) {
+            return;
+        }
 
 
-    imageModalImage.src =
-        modalImages[
+        imageModalImage.src =
+            modalImages[
             modalImageIndex
-        ];
+            ];
 
 
-    // =====================
-    // 左右ボタン
-    // =====================
+        // =====================
+        // 左右ボタン
+        // =====================
 
-    if (imageModalPrev) {
+        if (imageModalPrev) {
 
-        imageModalPrev.hidden =
-            modalImages.length <= 1 ||
-            modalImageIndex === 0;
-    }
+            imageModalPrev.hidden =
+                modalImages.length <= 1 ||
+                modalImageIndex === 0;
+        }
 
 
-    if (imageModalNext) {
+        if (imageModalNext) {
 
-        imageModalNext.hidden =
-            modalImages.length <= 1 ||
-            modalImageIndex ===
+            imageModalNext.hidden =
+                modalImages.length <= 1 ||
+                modalImageIndex ===
                 modalImages.length - 1;
+        }
+
+
+        // =====================
+        // 枚数表示
+        // =====================
+
+        if (
+            imageModalCounter &&
+            imageModalCurrent &&
+            imageModalTotal
+        ) {
+
+            imageModalCounter.hidden =
+                modalImages.length <= 1;
+
+            imageModalCurrent.textContent =
+                modalImageIndex + 1;
+
+            imageModalTotal.textContent =
+                modalImages.length;
+        }
     }
-
-
-    // =====================
-    // 枚数表示
-    // =====================
-
-    if (
-        imageModalCounter &&
-        imageModalCurrent &&
-        imageModalTotal
-    ) {
-
-        imageModalCounter.hidden =
-            modalImages.length <= 1;
-
-        imageModalCurrent.textContent =
-            modalImageIndex + 1;
-
-        imageModalTotal.textContent =
-            modalImages.length;
-    }
-}
     // =====================
     // 全画面画像を閉じる
     // =====================
@@ -980,52 +1011,52 @@ function updateModalImage() {
     }
 
     // =====================
-// 全画面画像 前へ
-// =====================
+    // 全画面画像 前へ
+    // =====================
 
-if (imageModalPrev) {
+    if (imageModalPrev) {
 
-    imageModalPrev.addEventListener(
-        "click",
-        function () {
+        imageModalPrev.addEventListener(
+            "click",
+            function () {
 
-            if (
-                modalImageIndex > 0
-            ) {
+                if (
+                    modalImageIndex > 0
+                ) {
 
-                modalImageIndex--;
+                    modalImageIndex--;
 
-                updateModalImage();
+                    updateModalImage();
+                }
+
             }
-
-        }
-    );
-}
+        );
+    }
 
 
-// =====================
-// 全画面画像 次へ
-// =====================
+    // =====================
+    // 全画面画像 次へ
+    // =====================
 
-if (imageModalNext) {
+    if (imageModalNext) {
 
-    imageModalNext.addEventListener(
-        "click",
-        function () {
+        imageModalNext.addEventListener(
+            "click",
+            function () {
 
-            if (
-                modalImageIndex <
-                modalImages.length - 1
-            ) {
+                if (
+                    modalImageIndex <
+                    modalImages.length - 1
+                ) {
 
-                modalImageIndex++;
+                    modalImageIndex++;
 
-                updateModalImage();
+                    updateModalImage();
+                }
+
             }
-
-        }
-    );
-}
+        );
+    }
     // =====================
     // 背景クリックで閉じる
     // =====================
@@ -1453,8 +1484,216 @@ if (imageModalNext) {
             }
         }
     );
+
+        // =====================
+    // サイズ変更
+    // PC / スマホ共通
     // =====================
-    // ドラッグ
+
+    let isResizing =
+        false;
+
+    let resizeStartX =
+        0;
+
+    let resizeStartY =
+        0;
+
+    let resizeStartWidth =
+        0;
+
+    let resizeStartHeight =
+        0;
+
+
+    if (resizeHandle) {
+
+        resizeHandle.addEventListener(
+            "pointerdown",
+            function (event) {
+
+                if (
+                    miniSns.classList.contains(
+                        "minimized"
+                    )
+                ) {
+                    return;
+                }
+
+
+                event.preventDefault();
+
+                event.stopPropagation();
+
+
+                isResizing =
+                    true;
+
+
+                const rect =
+                    miniSns
+                        .getBoundingClientRect();
+
+
+                resizeStartX =
+                    event.clientX;
+
+                resizeStartY =
+                    event.clientY;
+
+                resizeStartWidth =
+                    rect.width;
+
+                resizeStartHeight =
+                    rect.height;
+
+
+                document.body.style.userSelect =
+                    "none";
+
+
+                resizeHandle.setPointerCapture(
+                    event.pointerId
+                );
+
+            }
+        );
+    }
+
+
+    document.addEventListener(
+        "pointermove",
+        function (event) {
+
+            if (!isResizing) {
+                return;
+            }
+
+
+            event.preventDefault();
+
+
+            const deltaX =
+                event.clientX -
+                resizeStartX;
+
+            const deltaY =
+                event.clientY -
+                resizeStartY;
+
+
+            const rect =
+                miniSns
+                    .getBoundingClientRect();
+
+
+            const isMobile =
+                window.innerWidth <= 600;
+
+
+            const minWidth =
+                isMobile
+                    ? 300
+                    : 320;
+
+            const minHeight =
+                isMobile
+                    ? 260
+                    : 300;
+
+
+            const maxWidth =
+                window.innerWidth -
+                rect.left -
+                5;
+
+            const maxHeight =
+                window.innerHeight -
+                rect.top -
+                5;
+
+
+            const newWidth =
+                Math.max(
+                    minWidth,
+                    Math.min(
+                        resizeStartWidth +
+                        deltaX,
+                        maxWidth
+                    )
+                );
+
+
+            const newHeight =
+                Math.max(
+                    minHeight,
+                    Math.min(
+                        resizeStartHeight +
+                        deltaY,
+                        maxHeight
+                    )
+                );
+
+
+            miniSns.style.width =
+                newWidth + "px";
+
+            miniSns.style.height =
+                newHeight + "px";
+
+        }
+    );
+
+
+    function finishResize() {
+
+        if (!isResizing) {
+            return;
+        }
+
+
+        isResizing =
+            false;
+
+
+        document.body.style.userSelect =
+            "";
+
+
+        const rect =
+            miniSns
+                .getBoundingClientRect();
+
+
+        localStorage.setItem(
+            "qhymiaMiniSnsWidth",
+            rect.width
+        );
+
+
+        localStorage.setItem(
+            "qhymiaMiniSnsHeight",
+            rect.height
+        );
+
+    }
+
+
+    document.addEventListener(
+        "pointerup",
+        finishResize
+    );
+
+
+    document.addEventListener(
+        "pointercancel",
+        finishResize
+    );
+
+
+    // =====================
+    // ウィンドウ移動
+    // PC / スマホ共通
     // =====================
 
     const snsHeader =
@@ -1474,7 +1713,7 @@ if (imageModalNext) {
 
 
     snsHeader.addEventListener(
-        "mousedown",
+        "pointerdown",
         function (event) {
 
             if (
@@ -1484,6 +1723,14 @@ if (imageModalNext) {
             ) {
                 return;
             }
+
+
+            if (isResizing) {
+                return;
+            }
+
+
+            event.preventDefault();
 
 
             isDragging =
@@ -1504,6 +1751,12 @@ if (imageModalNext) {
                 rect.top;
 
 
+            miniSns.style.left =
+                rect.left + "px";
+
+            miniSns.style.top =
+                rect.top + "px";
+
             miniSns.style.right =
                 "auto";
 
@@ -1514,17 +1767,25 @@ if (imageModalNext) {
             document.body.style.userSelect =
                 "none";
 
+
+            snsHeader.setPointerCapture(
+                event.pointerId
+            );
+
         }
     );
 
 
     document.addEventListener(
-        "mousemove",
+        "pointermove",
         function (event) {
 
             if (!isDragging) {
                 return;
             }
+
+
+            event.preventDefault();
 
 
             let newLeft =
@@ -1537,12 +1798,19 @@ if (imageModalNext) {
 
 
             const maxLeft =
-                window.innerWidth -
-                miniSns.offsetWidth;
+                Math.max(
+                    0,
+                    window.innerWidth -
+                    miniSns.offsetWidth
+                );
+
 
             const maxTop =
-                window.innerHeight -
-                miniSns.offsetHeight;
+                Math.max(
+                    0,
+                    window.innerHeight -
+                    miniSns.offsetHeight
+                );
 
 
             newLeft =
@@ -1575,40 +1843,49 @@ if (imageModalNext) {
     );
 
 
-    document.addEventListener(
-        "mouseup",
-        function () {
+    function finishDrag() {
 
-            if (!isDragging) {
-                return;
-            }
-
-
-            isDragging =
-                false;
-
-
-            document.body.style.userSelect =
-                "";
-
-
-            const rect =
-                miniSns
-                    .getBoundingClientRect();
-
-
-            localStorage.setItem(
-                "qhymiaMiniSnsLeft",
-                rect.left
-            );
-
-
-            localStorage.setItem(
-                "qhymiaMiniSnsTop",
-                rect.top
-            );
-
+        if (!isDragging) {
+            return;
         }
+
+
+        isDragging =
+            false;
+
+
+        document.body.style.userSelect =
+            "";
+
+
+        const rect =
+            miniSns
+                .getBoundingClientRect();
+
+
+        localStorage.setItem(
+            "qhymiaMiniSnsLeft",
+            rect.left
+        );
+
+
+        localStorage.setItem(
+            "qhymiaMiniSnsTop",
+            rect.top
+        );
+
+    }
+
+
+    document.addEventListener(
+        "pointerup",
+        finishDrag
+    );
+
+
+    document.addEventListener(
+        "pointercancel",
+        finishDrag
     );
 
 });
