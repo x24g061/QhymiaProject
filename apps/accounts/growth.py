@@ -6,7 +6,7 @@ import random
 # ============================================================
 
 EXP_PER_LEVEL = 100
-
+MAX_LEVEL = 100
 
 # ============================================================
 # 職業ごとの成長ウェイト
@@ -503,7 +503,10 @@ def apply_character_exp(
 
     level_up_results = []
 
-    while character.exp >= EXP_PER_LEVEL:
+    while (
+        character.level < MAX_LEVEL
+        and character.exp >= EXP_PER_LEVEL
+    ):
 
         character.exp -= EXP_PER_LEVEL
 

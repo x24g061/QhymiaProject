@@ -10,7 +10,11 @@ from django.urls import reverse
 
 from apps.battle.models import ArenaState
 
-from .growth import increase_attribute_growth_weight
+from .growth import (
+    increase_attribute_growth_weight,
+    apply_character_exp,
+    apply_exploration_exp,
+)
 
 User = get_user_model()
 
@@ -343,3 +347,127 @@ class AttributeGrowthWeightTests(TestCase):
                 self.character,
                 "fire",
             )
+
+
+
+class LevelCapTests(TestCase):
+    """レベル100上限と余剰EXPの境界テスト。"""
+
+    def setUp(self):
+        self.user = User.objects.create_user(
+            user_id="level_cap_test_user",
+            email="level_cap_test@example.com",
+            password="testpass123",
+        )
+        self.character = Character.objects.create(
+            user=self.user,
+            name="レベル上限テスト",
+            job="wanderer",
+        )
+
+    def set_level_and_exp(self, level, exp):
+        self.character.level = level
+        self.character.exp = exp
+        self.character.save(
+            update_fields=["level", "exp"]
+        )
+
+    def test_exp_below_100_does_not_level_up(self):
+        """99EXPではレベルアップしない。"""
+        self.set_level_and_exp(99, 98)
+
+        result = apply_character_exp(
+            self.character, 1
+        )
+
+        self.character.refresh_from_db()
+        self.assertEqual(self.character.level, 99)
+        self.assertEqual(self.character.exp, 99)
+        self.assertEqual(result["level_up_count"], 0)
+
+    def test_exactly_100_exp_reaches_level_100(self):
+        """100EXPちょうどでLv.100になる。"""
+        self.set_level_and_exp(99, 99)
+
+        result = apply_character_exp(
+            self.character, 1
+        )
+
+        self.character.refresh_from_db()
+        self.assertEqual(self.character.level, 100)
+        self.assertEqual(self.character.exp, 0)
+        self.assertEqual(result["level_up_count"], 1)
+
+    def test_excess_exp_remains_at_level_100(self):
+        """Lv.100到達後の余剰EXPは残す。"""
+        self.set_level_and_exp(99, 99)
+
+        result = apply_character_exp(
+            self.character, 301
+        )
+
+        self.character.refresh_from_db()
+        self.assertEqual(self.character.level, 100)
+        self.assertEqual(self.character.exp, 300)
+        self.assertEqual(result["level_up_count"], 1)
+
+    def test_multiple_level_ups_stop_at_100(self):
+        """複数レベルアップしても100で止まる。"""
+        self.set_level_and_exp(98, 90)
+
+        result = apply_character_exp(
+            self.character, 310
+        )
+
+        self.character.refresh_from_db()
+        self.assertEqual(self.character.level, 100)
+        self.assertEqual(self.character.exp, 200)
+        self.assertEqual(result["level_up_count"], 2)
+
+    def test_level_100_gains_exp_without_growth(self):
+        """Lv.100ではEXPだけ増えて能力は成長しない。"""
+        self.set_level_and_exp(100, 99)
+
+        # Lv.100では成長関数を呼んではいけない
+        with patch(
+            "apps.accounts.growth.level_up_once"
+        ) as mock_level_up:
+            result = apply_character_exp(
+                self.character, 8
+            )
+
+        self.character.refresh_from_db()
+
+        self.assertEqual(self.character.level, 100)
+        self.assertEqual(self.character.exp, 107)
+        self.assertEqual(result["level_up_count"], 0)
+        mock_level_up.assert_not_called()
+
+    def test_level_100_exploration_recovers_hp_mp(self):
+        """Lv.100でも探索後のHP/MP回復は行われる。"""
+        self.set_level_and_exp(100, 300)
+
+        self.character.current_hp = 1
+        self.character.current_mp = 1
+        self.character.save(
+            update_fields=["current_hp", "current_mp"]
+        )
+
+        result = apply_exploration_exp(
+            self.character, 10
+        )
+
+        self.character.refresh_from_db()
+
+        self.assertEqual(self.character.level, 100)
+        self.assertEqual(self.character.exp, 310)
+        self.assertEqual(result["level_up_count"], 0)
+
+        self.assertEqual(
+            self.character.current_hp,
+            self.character.max_hp,
+        )
+        self.assertEqual(
+            self.character.current_mp,
+            self.character.max_mp,
+        )
