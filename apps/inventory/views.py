@@ -331,24 +331,30 @@ def synthesis(request):
 
         grouped_equipments[key].append(owned)
 
+    
+    # ========================================================
     # 3個以上あるグループだけを表示
+    # ========================================================
+
     synthesis_groups = []
 
     for (equipment_id, level), group in grouped_equipments.items():
 
+        # 3個未満は合成できないため除外
         if len(group) < 3:
             continue
 
         equipment = group[0].equipment
 
-    synthesis_groups.append({
-    "equipment_id": equipment_id,
-    "equipment": equipment,
-    "level": level,
-    "count": len(group),
-    "owned_ids": [owned.id for owned in group],
-    "owned_items": group,
-    })
+        synthesis_groups.append({
+            "equipment_id": equipment_id,
+            "equipment": equipment,
+            "level": level,
+            "count": len(group),
+            "owned_ids": [owned.id for owned in group],
+            "owned_items": group,
+        })
+
 
 
     # ========================================================

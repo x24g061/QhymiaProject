@@ -24,6 +24,20 @@
 
     <div class="shop-page">
 
+        <!-- ========================================
+             購入・出品結果の通知
+        ======================================== -->
+        {% if messages %}
+        <div class="shop-message-area">
+            {% for message in messages %}
+            <div
+                class="shop-message {% if 'error' in message.tags %}shop-message-error{% else %}shop-message-success{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
 
         <!-- =====================================================
          上部メニュー
