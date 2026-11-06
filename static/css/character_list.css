@@ -156,9 +156,12 @@ main {
 
     background: transparent;
 
+    color: inherit;
+
     cursor: pointer;
 
     text-align: center;
+    text-decoration: none;
 }
 
 

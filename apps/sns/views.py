@@ -170,6 +170,30 @@ def sns_page(request):
         posts = get_recommended_posts()
 
 
+        # ========================================
+    # 表示中の投稿ID
+    # ========================================
+
+    post_ids = [
+        post.id
+        for post in posts
+    ]
+
+
+    # ========================================
+    # いいね済み投稿ID
+    # ========================================
+
+    liked_post_ids = set(
+        Like.objects.filter(
+            user=request.user,
+            post_id__in=post_ids,
+        ).values_list(
+            "post_id",
+            flat=True,
+        )
+    )
+
     # ========================================
     # お気に入り投稿ID
     # ========================================
@@ -403,6 +427,9 @@ def mini_sns_feed(request):
                 posts,
 
             "mini_sns_liked_post_ids":
+                liked_post_ids,
+
+            "liked_post_ids":
                 liked_post_ids,
 
             "mini_sns_favorite_post_ids":

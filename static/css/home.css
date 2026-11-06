@@ -824,7 +824,108 @@ main {
 
     font-size: 11px;
 }
+/* =========================================================
+   MAIN ATTRIBUTE
+========================================================= */
 
+.character-header .home-main-attribute {
+    display: inline-block;
+
+    margin: 0;
+
+    padding:
+        4px
+        9px;
+
+    border-radius: 999px;
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+
+/* 火 */
+.home-main-attribute.attribute-fire {
+    color: #c43d32;
+
+    background:
+        rgba(196, 61, 50, 0.10);
+
+    border:
+        1px solid rgba(196, 61, 50, 0.24);
+}
+
+
+/* 水 */
+.home-main-attribute.attribute-water {
+    color: #3278c4;
+
+    background:
+        rgba(50, 120, 196, 0.10);
+
+    border:
+        1px solid rgba(50, 120, 196, 0.24);
+}
+
+
+/* 草 */
+.home-main-attribute.attribute-grass {
+    color: #3b8f50;
+
+    background:
+        rgba(59, 143, 80, 0.10);
+
+    border:
+        1px solid rgba(59, 143, 80, 0.24);
+}
+
+
+/* 岩 */
+.home-main-attribute.attribute-rock {
+    color: #8a6745;
+
+    background:
+        rgba(138, 103, 69, 0.11);
+
+    border:
+        1px solid rgba(138, 103, 69, 0.26);
+}
+
+
+/* 光 */
+.home-main-attribute.attribute-light {
+    color: #b58a22;
+
+    background:
+        rgba(211, 169, 59, 0.13);
+
+    border:
+        1px solid rgba(211, 169, 59, 0.30);
+}
+
+
+/* 闇 */
+.home-main-attribute.attribute-dark {
+    color: #7547a8;
+
+    background:
+        rgba(117, 71, 168, 0.10);
+
+    border:
+        1px solid rgba(117, 71, 168, 0.25);
+}
+
+
+/* 同率1位 */
+.home-main-attribute.attribute-neutral {
+    color: #687980;
+
+    background:
+        rgba(104, 121, 128, 0.10);
+
+    border:
+        1px solid rgba(104, 121, 128, 0.22);
+}
 
 /* =========================================================
    EXP / HP / MP

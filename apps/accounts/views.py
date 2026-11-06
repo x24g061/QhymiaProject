@@ -158,13 +158,49 @@ def character_create_view(request):
         min(8, len(available_characters))
     )
 
+
+    # ========================================
+    # 選択中キャラクター
+    # ========================================
+
     selected_character = (
         random_characters[0]
         if random_characters
         else None
     )
 
+
+    # キャラクター一覧から選択された番号
+    selected_number = request.GET.get(
+        "character"
+    )
+
+    try:
+        selected_number = int(
+            selected_number
+        )
+
+    except (TypeError, ValueError):
+        selected_number = None
+
+
+    # 実在する画像なら選択状態にする
+    if selected_number in available_numbers:
+
+        selected_character = next(
+            (
+                character
+                for character
+                in available_characters
+                if character["number"]
+                == selected_number
+            ),
+            selected_character,
+        )
+
+
     if request.method == "POST":
+        
         character_name = request.POST.get(
             "character_name",
             ""

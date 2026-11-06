@@ -346,14 +346,30 @@
             <!-- 投稿操作 -->
             <div class="sns-post-actions">
 
-                <button type="button" class="like-button" data-post-id="{{ post.id }}">
-                    <span class="like-icon">♡</span>
+                <button type="button" class="like-button
+    {% if post.id in liked_post_ids %}
+        liked
+    {% endif %}" data-post-id="{{ post.id }}">
+
+                    <span class="like-icon
+    {% if post.id in liked_post_ids %}
+        liked
+    {% endif %}">
+
+                        {% if post.id in liked_post_ids %}
+                        ♥
+                        {% else %}
+                        ♡
+                        {% endif %}
+
+                    </span>
 
                     いいね
 
                     <span class="like-count">
                         {{ post.likes.count }}
                     </span>
+
                 </button>
 
 
@@ -1317,12 +1333,38 @@
                                     await response.json();
 
 
-                                button
-                                    .querySelector(
+                                const icon =
+                                    button.querySelector(
+                                        ".like-icon"
+                                    );
+
+
+                                const count =
+                                    button.querySelector(
                                         ".like-count"
-                                    )
-                                    .textContent =
+                                    );
+
+
+                                count.textContent =
                                     data.like_count;
+
+
+                                icon.textContent =
+                                    data.liked
+                                        ? "♥"
+                                        : "♡";
+
+
+                                icon.classList.toggle(
+                                    "liked",
+                                    data.liked
+                                );
+
+
+                                button.classList.toggle(
+                                    "liked",
+                                    data.liked
+                                );
 
                             }
                         );
