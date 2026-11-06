@@ -345,6 +345,110 @@ class ArenaScreenTests(TestCase):
         self.assertContains(response, "獲得経験値：8 EXP")
         self.assertEqual(ArenaBattleHistory.objects.get().result, "draw")
 
+    def test_draw_moves_down_one_floor_at_boundaries(self):
+        """引き分け時は1階下降し、マスターは移動しない。"""
+
+        cases = [
+            (1, 1),
+            (2, 1),
+            (10, 9),
+            (100, 99),
+        ]
+
+        for start_floor, expected_floor in cases:
+            with self.subTest(floor=start_floor):
+
+                # 前回のマスター設定を解除
+                ArenaFloor.objects.filter(
+                    master=self.defender,
+                ).update(master=None)
+
+                # 指定階層にマスターを配置
+                floor = ArenaFloor.objects.get(
+                    pk=start_floor,
+                )
+                floor.master = self.defender
+                floor.save(update_fields=["master"])
+
+                # 両者を同じ階層に配置
+                ArenaState.objects.filter(
+                    pk=self.state.pk,
+                ).update(
+                    floor_id=start_floor,
+                    current_hp=62,
+                    current_mp=19,
+                )
+
+                ArenaState.objects.filter(
+                    pk=self.defender_state.pk,
+                ).update(
+                    floor_id=start_floor,
+                    current_hp=77,
+                    current_mp=29,
+                )
+
+                # 前回のクールタイムを解除
+                Character.objects.filter(
+                    pk=self.character.pk,
+                ).update(
+                    exploration_cooldown_until=None,
+                )
+
+                # 引き分けを発生させる
+                self.challenge(winner="draw")
+
+                self.state.refresh_from_db()
+                self.defender_state.refresh_from_db()
+                floor.refresh_from_db()
+
+                # 挑戦者は1階下降（最低1階）
+                self.assertEqual(
+                    self.state.floor_id,
+                    expected_floor,
+                )
+
+                # マスターは変更されない
+                self.assertEqual(
+                    floor.master_id,
+                    self.defender.pk,
+                )
+                self.assertEqual(
+                    self.defender_state.floor_id,
+                    start_floor,
+                )
+
+                # 挑戦者のHP/MPは全回復
+                self.assertEqual(
+                    (self.state.current_hp,
+                     self.state.current_mp),
+                    (100, 40),
+                )
+
+                # 防衛者のHP/MPは引き継ぐ
+                self.assertEqual(
+                    (self.defender_state.current_hp,
+                     self.defender_state.current_mp),
+                    (30, 14),
+                )
+
+                # 対戦履歴も正しく保存される
+                history = (
+                    ArenaBattleHistory.objects
+                    .latest("pk")
+                )
+
+                self.assertEqual(history.result, "draw")
+                self.assertEqual(history.gained_exp, 8)
+                self.assertEqual(
+                    history.challenger_floor_after,
+                    expected_floor,
+                )
+                self.assertEqual(
+                    history.defender_floor_after,
+                    start_floor,
+                )
+
+
     def test_refresh_after_cooldown_does_not_repeat_battle_or_rewards(self):
         response = self.challenge(follow=False)
         Character.objects.filter(pk=self.character.pk).update(

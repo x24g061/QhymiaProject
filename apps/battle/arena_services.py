@@ -203,22 +203,22 @@ def claim_vacant_arena_floor(character):
 @transaction.atomic
 def challenge_arena_master(challenger):
     """
-    現在階のマスターに挑戦する。
+    現在階のフロアマスターに挑戦する。
 
     勝利：
-        挑戦者がマスターになる。
-        旧マスターは階層番号+1へ移動。
-        両者HP/MP全回復。
+        挑戦者が新マスターになる。
+        旧マスターは1階上へ移動する。
+        両者の闘技場HP/MPを全回復する。
 
-    敗北・引き分け：
-        挑戦者は階層番号-2へ移動する。
-        ただし最低1階とする。
-        防衛者は残HP/MPを引き継ぐ。
+    敗北：
+        挑戦者は2階下降する（最低1階）。
 
-    挑戦者にEXPを付与し、探索と共通のCTを開始する。
-    挑戦者にEXPを付与し、
-    勝利時はアイテムドロップ抽選を行い、
-    探索と共通のCTを開始する。
+    引き分け：
+        挑戦者は1階下降する（最低1階）。
+
+    敗北・引き分け時：
+        挑戦者の闘技場HP/MPを全回復する。
+        防衛者は移動せず、戦闘後のHP/MPを引き継ぐ。
     """
 
     # 現在階を一旦取得
@@ -391,13 +391,23 @@ def challenge_arena_master(challenger):
     # 挑戦者敗北・引き分け
     # ========================================
 
+
     else:
 
-        # 挑戦者は2階層下へ。最低1階。
-        challenger_state.floor_id = max(
-            1,
-            floor.floor - 2,
-        )
+        if winner == "defender":
+            # 敗北：挑戦者は2階下降
+            challenger_state.floor_id = max(
+                1,
+                floor.floor - 2,
+            )
+
+        else:
+            # 引き分け：挑戦者は1階下降
+            challenger_state.floor_id = max(
+                1,
+                floor.floor - 1,
+            )
+
 
         challenger_state.current_hp = locked_challenger.max_hp
         challenger_state.current_mp = locked_challenger.max_mp 
