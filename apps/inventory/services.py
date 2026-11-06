@@ -89,8 +89,7 @@ def calculate_equipment_battle_power(
 # 特殊能力の抽選
 # ========================================
 
-SPECIAL_EFFECT_CHANCE = 0.001  # 0.1%
-
+SPECIAL_EFFECT_CHANCE = 1 / 3  # 約33.3%
 
 def determine_special_effect(
     equipments,
