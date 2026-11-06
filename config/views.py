@@ -568,18 +568,26 @@ def admin_player_edit(request, character_id):
     if request.method == "POST":
 
         before_values = {
-            "level": character.level,
-            "exp": character.exp,
-            "gold": character.gold,
-            "max_hp": character.max_hp,
-            "max_mp": character.max_mp,
-            "strength": character.strength,
-            "intelligence": character.intelligence,
-            "dexterity": character.dexterity,
-            "agility": character.agility,
-            "vitality": character.vitality,
-            "luck": character.luck,
-        }
+        "level": character.level,
+        "exp": character.exp,
+        "gold": character.gold,
+        "max_hp": character.max_hp,
+        "max_mp": character.max_mp,
+
+        "strength": character.strength,
+        "intelligence": character.intelligence,
+        "dexterity": character.dexterity,
+        "agility": character.agility,
+        "vitality": character.vitality,
+        "luck": character.luck,
+
+        "fire": character.fire,
+        "water": character.water,
+        "grass": character.grass,
+        "rock": character.rock,
+        "light": character.light,
+        "dark": character.dark,
+}
 
         try:
             character.level = int(
@@ -669,23 +677,79 @@ def admin_player_edit(request, character_id):
                 )
             )
 
+
+# ========================================
+# 属性値
+# ========================================
+
+            character.fire = int(
+                request.POST.get(
+                    "fire",
+                    character.fire,
+                )
+            )
+
+            character.water = int(
+                request.POST.get(
+                    "water",
+                    character.water,
+                )
+            )
+
+            character.grass = int(
+                request.POST.get(
+                    "grass",
+                    character.grass,
+                )
+            )
+
+            character.rock = int(
+                request.POST.get(
+                    "rock",
+                    character.rock,
+                )
+            )
+
+            character.light = int(
+                request.POST.get(
+                    "light",
+                    character.light,
+                )
+            )
+
+            character.dark = int(
+                request.POST.get(
+                    "dark",
+                    character.dark,
+                )
+            )
+
+
             character.save()
             # =================================================
             # 管理者変更履歴
             # =================================================
 
             field_labels = {
-                "level": "レベル",
-                "exp": "EXP",
-                "gold": "所持Q",
-                "max_hp": "最大HP",
-                "max_mp": "最大MP",
-                "strength": "STR",
-                "intelligence": "INT",
-                "dexterity": "DEX",
-                "agility": "AGI",
-                "vitality": "VIT",
-                "luck": "LUK",
+            "level": "レベル",
+            "exp": "EXP",
+            "gold": "所持Q",
+            "max_hp": "最大HP",
+            "max_mp": "最大MP",
+
+            "strength": "STR",
+            "intelligence": "INT",
+            "dexterity": "DEX",
+            "agility": "AGI",
+            "vitality": "VIT",
+            "luck": "LUK",
+
+            "fire": "火属性",
+            "water": "水属性",
+            "grass": "草属性",
+            "rock": "岩属性",
+            "light": "光属性",
+            "dark": "闇属性",
             }
 
             changes = {}
@@ -1051,8 +1115,8 @@ def home(request):
 
 
 
-    main_attribute_name = "-"
-
+    main_attribute_name = "無"
+    main_attribute_key = "neutral" 
     main_attribute_value = 0
 
 
@@ -1098,42 +1162,61 @@ def home(request):
 
         arena_context = get_arena_home_context(character)
 
+                # ========================================
+        # ホーム表示用メイン属性
+        # 6属性の中で最も高い属性を表示
         # ========================================
 
-        # 得意属性
+        attribute_values = {
+            "fire": character.fire,
+            "water": character.water,
+            "grass": character.grass,
+            "rock": character.rock,
+            "light": character.light,
+            "dark": character.dark,
+        }
 
-        # ========================================
 
-
-
-        main_attribute_name = (
-
-            character.get_main_attribute_display()
-
-        )
-
+        attribute_names = {
+            "fire": "火",
+            "water": "水",
+            "grass": "草",
+            "rock": "岩",
+            "light": "光",
+            "dark": "闇",
+        }
 
 
         main_attribute_value = max(
-
-            character.fire,
-
-            character.water,
-
-            character.grass,
-
-            character.rock,
-
-            character.light,
-
-            character.dark,
-
+            attribute_values.values()
         )
 
 
+        highest_attributes = [
+            attribute
+            for attribute, value
+            in attribute_values.items()
+            if value == main_attribute_value
+        ]
 
 
+        # 同率1位なら無属性扱い
+        if len(highest_attributes) == 1:
 
+            main_attribute_key = (
+                highest_attributes[0]
+            )
+
+            main_attribute_name = (
+                attribute_names[
+                    main_attribute_key
+                ]
+            )
+
+        else:
+
+            main_attribute_key = "neutral"
+            main_attribute_name = "無"
         # ========================================
 
         # 装備戦闘力
@@ -1231,13 +1314,13 @@ def home(request):
         "character": character,
 
         "main_attribute_name":
-
             main_attribute_name,
 
+        "main_attribute_key":
+            main_attribute_key,
+
         "main_attribute_value":
-
             main_attribute_value,
-
         "battle_power":
 
             battle_power,

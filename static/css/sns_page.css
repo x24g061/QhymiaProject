@@ -1054,10 +1054,23 @@ main {
 }
 
 
+
 .like-icon {
-    color: #d75e6c;
+    color: #8b9a9e;
 
     font-size: 16px;
+
+    transition:
+        color 0.18s ease,
+        transform 0.18s ease;
+}
+
+
+.like-icon.liked {
+    color: #e04f61;
+
+    transform:
+        scale(1.15);
 }
 
 

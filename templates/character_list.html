@@ -41,37 +41,48 @@
 
     {% for character in characters %}
 
-    <button
-        type="button"
-        class="character-item"
-        data-character-number="{{ character.number }}"
-    >
+    {% if character.image %}
 
-        <div class="character-image">
+<a
+    href="{% url 'accounts:character_create' %}?character={{ character.number }}"
+    class="character-item"
+>
 
-            {% if character.image %}
+    <div class="character-image">
 
-                <img
-                    src="{% static character.image %}"
-                    alt="キャラクター No.{{ character.number|stringformat:'03d' }}"
-                >
+        <img
+            src="{% static character.image %}"
+            alt="キャラクター No.{{ character.number|stringformat:'03d' }}"
+        >
 
-            {% else %}
+    </div>
 
-                <span class="character-placeholder">
-                    いら<br>
-                    すと
-                </span>
+    <p class="character-number">
+        No. {{ character.number|stringformat:"03d" }}
+    </p>
 
-            {% endif %}
+</a>
 
-        </div>
+{% else %}
 
-        <p class="character-number">
-            No. {{ character.number|stringformat:"03d" }}
-        </p>
+<div class="character-item">
 
-    </button>
+    <div class="character-image">
+
+        <span class="character-placeholder">
+            いら<br>
+            すと
+        </span>
+
+    </div>
+
+    <p class="character-number">
+        No. {{ character.number|stringformat:"03d" }}
+    </p>
+
+</div>
+
+{% endif %}
 
     {% endfor %}
 

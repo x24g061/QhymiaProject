@@ -186,7 +186,7 @@
                                 {{ character.name }}
                             </h3>
 
-                            <p>
+                            <p class="home-main-attribute attribute-{{ main_attribute_key }}">
                                 {{ main_attribute_name }} 属性
                             </p>
 
@@ -804,7 +804,7 @@
 
                             あと
 
-                            <span id="exploration-cooldown-seconds">
+                            <span id="exploration-cooldown-seconds" class="js-cooldown-seconds">
                                 {{ exploration_cooldown_remaining }}
                             </span>
 
@@ -918,8 +918,15 @@
                         あなたがフロアマスターです
                     </button>
                     {% elif exploration_cooldown_remaining > 0 %}
+
                     <button type="button" class="explore-button explore-button-disabled" disabled>
-                        戦闘待機中（あと約{{ exploration_cooldown_remaining }}秒）
+                        戦闘待機中（あと約
+
+                        <span class="js-cooldown-seconds">
+                            {{ exploration_cooldown_remaining }}
+                        </span>
+
+                        秒）
                     </button>
                     {% else %}
                     <form method="post" action="{% url 'battle:arena_battle' %}">
