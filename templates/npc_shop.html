@@ -4,6 +4,9 @@
 <html lang="ja">
 
 <head>
+
+    <link rel="stylesheet" href="{% static 'css/market-notifications.css' %}">
+
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -569,5 +572,8 @@
     </div>
 
 </body>
+{% if user.is_authenticated %}
+<script src="{% static 'js/market-notifications.js' %}" defer></script>
+{% endif %}
 
 </html>

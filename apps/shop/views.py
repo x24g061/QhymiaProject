@@ -10,9 +10,13 @@ from apps.inventory.models import (
     OwnedEquipment,
 )
 
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
+
 from .models import (
     ShopStock,
     MarketListing,
+    MarketSaleNotification,
 )
 
 
@@ -893,6 +897,76 @@ def buy_market_listing(
             "sold_at",
         ]
     )
+
+
+    # ========================================================
+    # 出品者への売却通知を作成
+    # ========================================================
+
+    # 装備の場合は強化値を含める
+    if listing.owned_equipment:
+
+        item_name = (
+            f"{listing.item.name} "
+            f"+{listing.owned_equipment.enhancement_level}"
+        )
+
+        sale_message = (
+            f"{item_name}が"
+            f"{total_price}Qで売れました！"
+        )
+
+    # 通常アイテムの場合は個数を含める
+    else:
+
+        sale_message = (
+            f"{listing.item.name}が"
+            f"{listing.quantity}個、"
+            f"{total_price}Qで売れました！"
+        )
+
+    
+    # ========================================================
+    # 出品者への売却通知をDBに保存
+    # ========================================================
+
+    notification = MarketSaleNotification.objects.create(
+        recipient=seller,
+        listing=listing,
+        message=sale_message,
+    )
+
+    # ========================================================
+    # 購入確定後にWebSocketで通知を送信
+    # ========================================================
+
+    channel_layer = get_channel_layer()
+
+    if channel_layer is not None:
+
+        # 出品者のユーザーIDを使った専用グループ
+        group_name = f"sale_user_{seller.user_id}"
+
+        event = {
+            "type": "sale.notification",
+            "notification_id": notification.id,
+            "message": notification.message,
+            "created_at": notification.created_at.isoformat(),
+        }
+
+        def send_sale_notification():
+            async_to_sync(channel_layer.group_send)(
+                group_name,
+                event,
+            )
+
+        # DBの取引が確定した場合だけ送信
+        transaction.on_commit(
+            send_sale_notification,
+            robust=True,
+        )
+
+
 
     # ========================================================
     # 購入完了メッセージ

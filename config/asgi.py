@@ -1,3 +1,4 @@
+
 import os
 
 from django.core.asgi import get_asgi_application
@@ -25,8 +26,14 @@ from channels.routing import (
     URLRouter,
 )
 
+# オープンチャット
 from apps.chat.routing import (
-    websocket_urlpatterns,
+    websocket_urlpatterns as chat_websocket_patterns,
+)
+
+# ショップのリアルタイム通知
+from apps.shop.routing import (
+    websocket_urlpatterns as shop_websocket_patterns,
 )
 
 
@@ -44,7 +51,8 @@ application = ProtocolTypeRouter(
         "websocket":
             AuthMiddlewareStack(
                 URLRouter(
-                    websocket_urlpatterns
+                    chat_websocket_patterns
+                    + shop_websocket_patterns
                 )
             ),
     }

@@ -122,3 +122,50 @@ class MarketListing(models.Model):
             f"{self.item.name} ×{self.quantity} "
             f"- {self.unit_price}Q"
         )
+
+
+# ============================================================
+# フリーマーケット売却通知
+# ============================================================
+
+class MarketSaleNotification(models.Model):
+    """
+    フリーマーケットで商品が売れた際の通知。
+
+    ・出品者本人に通知
+    ・売却情報を保存
+    ・既読 / 未読を管理
+    """
+
+    recipient = models.ForeignKey(
+        Character,
+        on_delete=models.CASCADE,
+        related_name="market_sale_notifications",
+    )
+
+    listing = models.OneToOneField(
+        MarketListing,
+        on_delete=models.CASCADE,
+        related_name="sale_notification",
+    )
+
+    message = models.TextField(
+        max_length=500,
+    )
+
+    is_read = models.BooleanField(
+        default=False,
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return (
+            f"{self.recipient.name}: "
+            f"{self.message}"
+        )
