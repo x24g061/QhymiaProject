@@ -33,6 +33,7 @@ from .progression import (
 
 from .services import BattleEngine
 from .drops import grant_exploration_drop
+from .enemy_icons import enemy_image_path
 
 
 # ========================================
@@ -289,6 +290,17 @@ def battle(request):
     )
 
     battle_result = engine.run()
+
+
+    # 敵画像を設定する
+    # テスト用の戦闘結果にenemiesがない場合も対応
+    for enemy_result in battle_result.get("enemies", []):
+        enemy_result["image_path"] = enemy_image_path(
+            selected_floor,
+            enemy_result["name"],
+            boss_encounter,
+        )
+
 
 
     # ========================================================

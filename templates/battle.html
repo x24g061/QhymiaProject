@@ -149,14 +149,25 @@
 
                 {% for enemy_result in battle_result.enemies %}
 
-                    <div class="fighter enemy">
+                    <div class="fighter enemy{% if enemy_result.hp == 0 %} is-defeated{% endif %}">
 
                         <h2 class="fighter-name">
                             {{ enemy_result.name }}
                         </h2>
 
-                        <div class="fighter-icon">
-                            敵アイコン
+                        {% if boss_encounter %}
+                            <span class="boss-badge">BOSS</span>
+                        {% endif %}
+                        <div class="fighter-icon enemy-icon-frame">
+                            {% if enemy_result.image_path %}
+                                <img
+                                    src="{% static enemy_result.image_path %}"
+                                    alt="{{ enemy_result.name }}"
+                                    class="enemy-battle-icon"
+                                >
+                            {% else %}
+                                <span class="enemy-icon-fallback">{{ enemy_result.name|slice:":1" }}</span>
+                            {% endif %}
                         </div>
 
                         <div class="action-gauge">
@@ -257,7 +268,7 @@
         <!-- ==================================================
              戦闘結果
         =================================================== -->
-        <section class="battle-result">
+        <section class="battle-result battle-result--{{ battle_result.winner }}">
 
 
             {% if battle_result.winner == "player" %}
