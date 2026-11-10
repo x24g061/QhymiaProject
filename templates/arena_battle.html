@@ -1,85 +1,23 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}闘技場の結果 | Qhymia{% endblock %}
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/battle.css' %}">
-<link rel="stylesheet" href="{% static 'css/arena.css' %}">
-{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/battle_timeline.css' %}">{% endblock %}
 {% block content %}
-<div class="battle-screen arena-result-screen">
-    <header class="battle-header">
-        <p>闘技場{{ history.floor }}階</p>
-        <h1 class="game-title">闘技場の結果：{{ history.get_result_display }}</h1>
-    </header>
-    <p class="encounter-message">{{ character.name }} VS {{ opponent.name }}</p>
-
-    <section class="battle-field" aria-label="戦闘終了時の状態">
-        <div class="fighter">
-            <h2 class="fighter-name">{{ character.name }}</h2>
-            <div class="fighter-icon">
-                {% if character.character_image_path %}
-                <img src="{% static character.character_image_path %}" alt="{{ character.name }}" class="arena-result-avatar">
-                {% else %}{{ character.name|slice:":1" }}{% endif %}
-            </div>
-            <p>戦闘終了時 HP：{{ history.challenger_hp_after }}</p>
-            <p>戦闘終了時 MP：{{ history.challenger_mp_after }}</p>
-            <p>戦闘後の階層：{{ history.challenger_floor_after }}階</p>
-        </div>
-        <strong class="vs">VS</strong>
-        <div class="fighter">
-            <h2 class="fighter-name">{{ opponent.name }}</h2>
-            <div class="fighter-icon">
-                {% if opponent.character_image_path %}
-                <img src="{% static opponent.character_image_path %}" alt="{{ opponent.name }}" class="arena-result-avatar">
-                {% else %}{{ opponent.name|slice:":1" }}{% endif %}
-            </div>
-            <p>戦闘終了時 HP：{{ history.defender_hp_after }}</p>
-            <p>戦闘終了時 MP：{{ history.defender_mp_after }}</p>
-            <p>戦闘後の階層：{{ history.defender_floor_after }}階</p>
-        </div>
-    </section>
-
-    <section class="arena-result-summary" aria-label="対戦結果">
-        <div>
-            <h2>{{ history.get_result_display }}</h2>
-            {% if history.result == 'win' %}
-            <p>あなたが{{ history.floor }}階のフロアマスターになりました。</p>
-            {% elif history.result == 'draw' %}
-            <p>決着がつかなかったため、{{ history.challenger_floor_after }}階へ移動しました。</p>
-            {% else %}
-            <p>{{ history.challenger_floor_after }}階へ移動しました。</p>
-            {% endif %}
-            {% if history.gained_exp != None %}
-            <p class="arena-exp-reward">獲得経験値：{{ history.gained_exp }} EXP</p>
-            {% endif %}
-            {% if history.drop_result %}
-            <p class="arena-item-reward">
-                アイテム獲得：
-                {{ history.drop_result.name }}
-                ×{{ history.drop_result.quantity }}
-            </p>
-            {% endif %}
-        </div>
-        <div>
-            <h2>現在の闘技場状態</h2>
-            <p>階層：{{ arena_state.floor_id }}階</p>
-            <p>HP：{{ arena_state.current_hp }} / {{ character.max_hp }}</p>
-            <p>MP：{{ arena_state.current_mp }} / {{ character.max_mp }}</p>
-        </div>
-    </section>
-
-    <section class="battle-log" aria-label="戦闘ログ">
-        <h2>戦闘ログ</h2>
-        <ul class="arena-battle-logs">
-            {% for line in history.battle_logs %}
-            <li>{{ line }}</li>
-            {% empty %}
-            <li>戦闘ログはありません。</li>
-            {% endfor %}
-        </ul>
-    </section>
-    <div class="arena-result-actions">
-        <a href="{% url 'home' %}" class="return-button">ホームへ戻る</a>
-    </div>
-</div>
+<main class="battle-screen qh-battle-page qh-arena-page">
+  <div class="qh-page-head"><strong>キュメイア</strong></div>
+  <header class="qh-battle-banner"><span aria-hidden="true">⚔</span><div><small>闘技場 {{ history.floor }}階</small><h1>{{ character.name }} VS {{ opponent.name }}</h1></div></header>
+  <h2 class="qh-log-heading">保存された戦闘ログ</h2>
+  {% include 'components/battle_turn_timeline.html' with is_arena=True battle_logs=history.battle_logs %}
+  <section class="qh-outcome" aria-label="闘技場の結果">
+    <h2>闘技場の結果：{{ history.get_result_display }}</h2>
+    {% if history.result == 'win' %}<p>あなたが{{ history.floor }}階のフロアマスターになりました。</p>
+    {% elif history.result == 'draw' %}<p>引き分け。{{ history.challenger_floor_after }}階へ移動しました。</p>
+    {% else %}<p>{{ history.challenger_floor_after }}階へ移動しました。</p>{% endif %}
+    {% if history.gained_exp != None %}<p><strong>獲得経験値：{{ history.gained_exp }} EXP</strong></p>{% endif %}
+    {% if history.drop_result %}<p>アイテム獲得：{{ history.drop_result.name }} ×{{ history.drop_result.quantity }}</p>{% endif %}
+    <div class="qh-after-fight"><div><strong>{{ character.name }}</strong><p>戦闘終了時 HP {{ history.challenger_hp_after }} / MP {{ history.challenger_mp_after }}</p><p>戦闘後 {{ history.challenger_floor_after }}階</p></div><div><strong>{{ opponent.name }}</strong><p>戦闘終了時 HP {{ history.defender_hp_after }} / MP {{ history.defender_mp_after }}</p><p>戦闘後 {{ history.defender_floor_after }}階</p></div></div>
+    <p>現在の闘技場HP・MP：{{ arena_state.current_hp }} / {{ character.max_hp }}、{{ arena_state.current_mp }} / {{ character.max_mp }}</p>
+  </section>
+  <div class="qh-return"><a href="{% url 'home' %}" class="return-button">街へ戻る</a></div>
+</main>
 {% endblock %}

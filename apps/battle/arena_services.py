@@ -486,6 +486,7 @@ def challenge_arena_master(challenger):
         floor=floor.floor,
         result=history_result,
         battle_logs=result["logs"],
+        battle_timeline=result.get("timeline", []),
         gained_exp=gained_exp,
         drop_result=drop_result,
         challenger_hp_after=battle_hp_mp["challenger_hp"],

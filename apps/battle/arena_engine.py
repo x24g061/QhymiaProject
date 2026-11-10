@@ -1,4 +1,5 @@
 from apps.battle.combatants import PlayerCombatant
+from apps.battle.timeline import arena_turn_snapshot
 from apps.inventory.services import get_equipment_special_multiplier
 
 from apps.battle.engine.calculations import (
@@ -89,6 +90,7 @@ class ArenaBattleEngine:
 
         # 戦闘ログ
         self.logs = []
+        self.turn_timeline = []
 
         # ========================================
         # 闘技場：状態異常
@@ -692,7 +694,12 @@ class ArenaBattleEngine:
             ):
                 self.challenger_combatant.initiative -= 100
 
+                _timeline_log_start = len(self.logs)
                 self.challenger_normal_attack()
+                self.turn_timeline.append(arena_turn_snapshot(
+                    self, "player", self.challenger.name,
+                    self.logs[_timeline_log_start:], len(self.turn_timeline) + 1,
+                ))
 
                                 # 毒による自滅も含めて戦闘終了を判定
                 if (
@@ -711,7 +718,12 @@ class ArenaBattleEngine:
             ):
                 self.defender_combatant.initiative -= 100
 
+                _timeline_log_start = len(self.logs)
                 self.defender_normal_attack()
+                self.turn_timeline.append(arena_turn_snapshot(
+                    self, "enemy", self.defender.name,
+                    self.logs[_timeline_log_start:], len(self.turn_timeline) + 1,
+                ))
 
                 # 毒による自滅も含めて戦闘終了を判定
                 if (
@@ -752,6 +764,7 @@ class ArenaBattleEngine:
         return {
             "winner": winner,
             "logs": list(self.logs),
+            "timeline": self.turn_timeline,
 
             "challenger_hp": self.challenger_hp,
             "challenger_mp": self.challenger_mp,

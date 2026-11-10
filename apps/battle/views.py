@@ -33,6 +33,7 @@ from .progression import (
 
 from .services import BattleEngine
 from .drops import grant_exploration_drop
+from .timeline import prepare_timeline
 from .enemy_icons import enemy_image_path
 
 
@@ -303,6 +304,13 @@ def battle(request):
 
 
 
+    # 行動ごとの敵画像も結びつける（模擬戦闘結果は空配列でも動く）
+    for turn in battle_result.get("timeline", []):
+        for target in turn.get("opponents", []):
+            target["image_path"] = enemy_image_path(
+                selected_floor, target["name"], boss_encounter
+            )
+
     # ========================================================
     # ボス戦の勝敗による階層進行更新
     # ========================================================
@@ -423,6 +431,7 @@ def battle(request):
             # テンプレートで扱いやすいよう
             # ログも単独で渡す
             "battle_logs": battle_result["logs"],
+            "timeline": prepare_timeline(battle_result.get("timeline", [])),
 
             # EXP
             "exp_gained": battle_result["exp_gained"],
@@ -644,6 +653,7 @@ def arena_result(request, history_id):
         challenger=character,
     )
     return render(request, "arena_battle.html", {
+        "timeline": prepare_timeline(history.battle_timeline),
         "character": character,
         "opponent": history.defender,
         "history": history,
