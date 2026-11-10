@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 from collections import defaultdict
-
+from apps.shop.models import MarketListing
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
@@ -302,11 +302,20 @@ def synthesis(request):
     # 合成可能な装備を種類・強化値ごとにまとめる
     # ========================================================
 
+
+    # ========================================================
+    # 合成候補の装備を取得
+    # 出品中の装備は候補から除外
+    # ========================================================
+
     owned_equipments = list(
         OwnedEquipment.objects
         .filter(
             character=character,
             is_equipped=False,
+        )
+        .exclude(
+            market_listings__status=MarketListing.Status.LISTED,
         )
         .select_related(
             "equipment",
@@ -318,6 +327,7 @@ def synthesis(request):
             "enhancement_level",
             "id",
         )
+        .distinct()
     )
 
     # 同じ装備・同じ強化値で分類
