@@ -1,41 +1,38 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="ja">
 
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>
         {% block title %}Qhymia{% endblock %}
     </title>
 
-    {% load static %}
-
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/sns.css' %}">
-
+    <link rel="stylesheet" href="{% static 'css/market-notifications.css' %}">
     {% block extra_css %}
     {% endblock %}
 </head>
 
 <body>
 
-<header class="site-header">
+    <header class="site-header">
 
-    <!-- 左 -->
-    <div class="header-left">
+        <!-- 左 -->
+        <div class="header-left">
 
-        <h1>
-            Qhymia
-        </h1>
-
-
-        {% block header_left_extra %}
-        {% endblock %}
+            <h1>
+                Qhymia
+            </h1>
 
 
-        {% if user.is_authenticated %}
+            {% block header_left_extra %}
+            {% endblock %}
+
+
+            {% if user.is_authenticated %}
 
             {% block header_logout %}
 
@@ -45,20 +42,20 @@
 
             {% endblock %}
 
-        {% endif %}
+            {% endif %}
 
-    </div>
-
-
-    <!-- 中央 -->
-    <div class="header-center">
-    </div>
+        </div>
 
 
-    <!-- 右 -->
-    <div class="header-right">
+        <!-- 中央 -->
+        <div class="header-center">
+        </div>
 
-        {% if user.is_authenticated %}
+
+        <!-- 右 -->
+        <div class="header-right">
+
+            {% if user.is_authenticated %}
 
             {% if request.session.admin_mode %}
 
@@ -66,10 +63,7 @@
                 ADMIN MODE
             </span>
 
-            <a
-                href="{% url 'admin_panel' %}"
-                class="admin-menu-link"
-            >
+            <a href="{% url 'admin_panel' %}" class="admin-menu-link">
                 管理者メニュー
             </a>
 
@@ -79,11 +73,11 @@
             {% block header_right_extra %}
             {% endblock %}
 
-        {% endif %}
+            {% endif %}
 
-    </div>
+        </div>
 
-</header>
+    </header>
 
     <main>
 
@@ -114,5 +108,8 @@
     </script>
 
 </body>
+{% if user.is_authenticated %}
+<script src="{% static 'js/market-notifications.js' %}" defer></script>
+{% endif %}
 
 </html>
