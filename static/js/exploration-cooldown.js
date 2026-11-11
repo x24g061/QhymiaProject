@@ -2,6 +2,39 @@ document.addEventListener(
     "DOMContentLoaded",
     function () {
 
+        // 選択階層をキャラクターごとに記憶する。
+        // CT終了時の自動再読み込みでも選択が戻らないようにする。
+        const floorSelect = document.getElementById("exploration-floor");
+
+        if (floorSelect) {
+            const key = "qhymia:exploration-floor:" + floorSelect.dataset.characterId;
+
+            try {
+                const savedFloor = localStorage.getItem(key);
+                if (savedFloor !== null) {
+                    const available = Array.from(floorSelect.options).some(
+                        (option) => option.value === savedFloor && !option.disabled
+                    );
+                    if (available) {
+                        floorSelect.value = savedFloor;
+                    } else {
+                        localStorage.removeItem(key);
+                    }
+                }
+
+                const rememberFloor = () => localStorage.setItem(key, floorSelect.value);
+                floorSelect.addEventListener("change", rememberFloor);
+
+                // 選択後に即送信された場合にも保存する。
+                const form = floorSelect.closest("form");
+                if (form) {
+                    form.addEventListener("submit", rememberFloor);
+                }
+            } catch (error) {
+                // ストレージ制限下でも探索操作自体は続行できる。
+            }
+        }
+
         const button =
             document.getElementById(
                 "exploration-cooldown-button"

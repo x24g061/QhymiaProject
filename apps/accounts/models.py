@@ -1,3 +1,5 @@
+import math
+
 from django.conf import settings
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser
@@ -371,7 +373,7 @@ class Character(models.Model):
             - timezone.now()
         ).total_seconds()
 
-        return max(0, int(remaining))
+        return max(0, math.ceil(remaining))
 
     def __str__(self):
         return self.name
