@@ -1,5 +1,7 @@
 import random
 
+from apps.battle.timeline import exploration_turn_snapshot
+
 
 # ============================================================
 # BattleEngine 戦闘進行
@@ -41,6 +43,8 @@ class BattleCoreMixin:
         self.logs.append(
             "戦闘開始！"
         )
+
+        turn_timeline = []
 
         # 無限ループ防止
         loop_count = 0
@@ -97,6 +101,8 @@ class BattleCoreMixin:
                     self.enemy.name
                 )
 
+                _timeline_log_start = len(self.logs)
+
                 action_code = (
                     self.player_turn()
                 )
@@ -111,6 +117,11 @@ class BattleCoreMixin:
                     self.logs.append(
                         f"{target_name}を倒した！"
                     )
+
+                turn_timeline.append(exploration_turn_snapshot(
+                    self, "player", self.character.name,
+                    self.logs[_timeline_log_start:], len(turn_timeline) + 1,
+                ))
 
                 # 敵が全滅したら終了
                 if not (
@@ -145,6 +156,7 @@ class BattleCoreMixin:
                     enemy_combatant.is_alive()
                 )
 
+                _timeline_log_start = len(self.logs)
                 self.enemy_turn()
 
                 # 毒などで自分のターン開始時に
@@ -157,6 +169,11 @@ class BattleCoreMixin:
                         f"{enemy_combatant.name}"
                         "を倒した！"
                     )
+
+                turn_timeline.append(exploration_turn_snapshot(
+                    self, "enemy", enemy_combatant.name,
+                    self.logs[_timeline_log_start:], len(turn_timeline) + 1,
+                ))
 
                 # プレイヤーが倒れたら終了
                 if self.player_hp <= 0:
@@ -233,6 +250,7 @@ class BattleCoreMixin:
         return {
 
             "winner": winner,
+            "timeline": turn_timeline,
 
             "logs": self.logs,
 

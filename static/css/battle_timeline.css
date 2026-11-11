@@ -1,0 +1,54 @@
+/* 探索・闘技場共通 戦闘の時系列表示。双方同じ構造・配色。 */
+* {box-sizing: border-box}
+body.qh-battle-body {margin: 0}
+.qh-battle-page {color: #142334!important; font-family: "Yu Gothic", Meiryo, system-ui, sans-serif; width:100%!important; max-width: 1280px!important; min-height: 100vh; margin:0 auto!important; padding: 0 18px 34px!important; background:linear-gradient(155deg,rgba(237,249,255,.76),rgba(221,240,228,.66)),radial-gradient(ellipse at 20% 18%, #fff 0, transparent 40%),linear-gradient(180deg,#9fcae5 2%,#e8f4fa 48%,#c1daae 75%,#92b783 100%); border-left:1px solid #8ea7ac; border-right:1px solid #8ea7ac;}
+.qh-page-head {height:48px; display:flex; justify-content:flex-end; align-items:center; font-size:18px; color:#334452}
+.qh-battle-banner {display:flex;align-items:center;gap:14px;margin:0 0 20px;padding:14px 17px;border:1px solid #8bb2c3;border-radius:8px;background:rgba(255,255,255,.54)}
+.qh-battle-banner>span {font-size:36px;color:#b9460d}
+.qh-battle-banner h1 {font-size:clamp(18px,2.15vw,26px);color:#111c29;margin:3px 0}
+.qh-battle-banner small {font-weight:700;color:#475a62}
+.qh-roster {display:flex;gap:16px;align-items:center;justify-content:center;border:1px solid #8ca4b2;background:rgba(255,255,255,.68);margin-bottom:20px;padding:12px 16px;border-radius:6px}
+.qh-roster-player,.qh-roster-enemy{display:flex;align-items:center;gap:10px;min-width:0;font-size:14px}
+.qh-roster-player img,.qh-roster-enemy img{display:block;width:64px;height:64px;object-fit:contain;image-rendering:pixelated}
+.qh-roster-enemies{display:flex;flex-wrap:wrap;gap:16px}
+.qh-roster-vs{font-weight:900}
+.qh-roster-enemy.is-defeated img{opacity:.55;filter:grayscale(1)}
+.qh-log-heading{color:#182d40;margin:14px 0 8px;font-size:16px}
+.qh-turn {margin: 0 0 18px; border:1px solid rgba(84,112,120,.55); background:rgba(255,255,255,.5);border-radius:6px;overflow:hidden}
+.qh-turn-number {display:flex;justify-content:center;position:relative;background:#737d83;color:#fff;font-size:17px;padding:7px 10px;letter-spacing:.04em;text-align:center}
+.qh-turn-number span {position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:12px;letter-spacing:0;color:#eef5f7}
+.qh-team-lines {display:grid;grid-template-columns:minmax(0,1fr) 50px minmax(0,1fr);align-items:center;gap:9px;padding:14px;background:rgba(255,255,255,.65)}
+.qh-side {min-width:0;display:flex;gap:12px;align-items:center}
+.qh-enemy-list {min-width:0;display:flex;flex-direction:column;gap:14px}
+.qh-opponent {min-width:0;width:100%;display:flex;align-items:center;gap:12px}
+.qh-portrait {width:56px;min-width:56px;height:64px;display:flex;align-items:center;justify-content:center;border:1px solid #c4d2d5;border-radius:5px;background:#e5f2f7;font-weight:800;font-size:22px;color:#354f65}
+.qh-portrait img,.qh-portrait .character-battle-icon,.qh-portrait .enemy-battle-icon {width:52px;height:58px;object-fit:contain;image-rendering:pixelated}
+.qh-bars {flex:1;min-width:0}
+.qh-who {display:block;font-size:13px;margin-bottom:5px;overflow-wrap:anywhere}
+.qh-vital {display:grid;grid-template-columns:25px minmax(0,1fr) 65px;gap:5px;align-items:center;margin:3px 0;font-size:12px}
+.qh-vital small {white-space:nowrap;font-size:11px;text-align:right;font-variant-numeric:tabular-nums}
+.qh-meter {height:10px;background:#a8aeae;border-radius:3px;overflow:hidden}
+.qh-fill {height:100%;transition:none}
+.qh-hp {background:#09ad54}
+.qh-mp {background:#008ad8}
+.qh-versus {text-align:center;font-size:15px;font-weight:800;color:#252c35}
+.qh-acting .qh-portrait {border-color:#df8b41;box-shadow:0 0 0 2px rgba(246,163,73,.28)}
+.qh-fallen .qh-portrait img {filter:grayscale(.95);opacity:.56}
+.qh-action-report {display:flex;gap:11px;align-items:flex-start;min-height:72px;border-top:1px solid #cbd9dc;background:rgba(244,252,252,.69);padding:12px 16px;color:#171e25}
+.qh-actor-icon {width:42px;font-size:28px;font-weight:900;color:#a33909;flex:none;text-align:center}
+.qh-action-enemy .qh-actor-icon {color:#9a1c83}
+.qh-message-list p {font-size:15px;margin:3px 0 7px;line-height:1.65}
+.qh-damage {font-size:21px;color:#d31112;font-weight:900}
+.qh-critical {font-weight:700}
+.qh-legacy-log,.qh-outcome {padding:18px 20px;margin:18px 0;border-radius:6px;border:1px solid #a0b7c1;background:rgba(255,255,255,.78)}
+.qh-legacy-log h2,.qh-outcome h2 {font-size:23px;margin:0 0 8px;color:#193a4b}
+.qh-legacy-log p {margin:6px 0}
+.qh-outcome p {margin:8px 0}
+.qh-outcome ul {margin:5px 0}
+.qh-level-detail {margin:12px 0;padding:12px;background:rgba(223,241,245,.68)}
+.qh-after-fight {display:flex;gap:15px;flex-wrap:wrap;margin:14px 0}
+.qh-after-fight>div {flex:1;min-width:220px;background:#e8f2f6;padding:10px}
+.qh-return {display:flex;justify-content:space-between;margin:18px 0 4px}
+.qh-return a {display:inline-block;padding:9px 20px;border:1px solid #263d4b;background:white;color:#183348!important;text-decoration:none!important;border-radius:4px}
+.qh-return a:hover {background:#dceff5}
+@media(max-width:750px){.qh-battle-page{padding:0 10px 26px!important}.qh-team-lines{grid-template-columns:minmax(0,1fr);gap:7px}.qh-versus{font-size:13px}.qh-vital{grid-template-columns:25px minmax(0,1fr) 66px}.qh-portrait{width:50px;min-width:50px}.qh-turn-number span{position:static;transform:none;margin-left:12px}.qh-message-list p{font-size:13px}}

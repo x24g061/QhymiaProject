@@ -449,6 +449,9 @@ class ArenaBattleHistory(models.Model):
         blank=True,
     )
 
+    # 戦闘行動ごとのHP/MPとログ。過去の履歴では空配列。
+    battle_timeline = models.JSONField(default=list, blank=True)
+
     # 旧履歴は付与量を保存していないため、未記録をNULLで表す。
     gained_exp = models.PositiveIntegerField(
         null=True,

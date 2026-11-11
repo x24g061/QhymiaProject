@@ -325,3 +325,217 @@ body {
         font-size: 28px;
     }
 }
+
+/* === Qhymia battle readability refresh v1 === */
+:root {
+    --battle-bg: #0b1324;
+    --battle-panel: #15233a;
+    --battle-panel-2: #1d2e48;
+    --battle-border: #3d5879;
+    --battle-text: #eaf2ff;
+    --battle-muted: #b5c8df;
+    --battle-accent: #6faafa;
+}
+
+body {
+    color: var(--battle-text);
+    background: radial-gradient(ellipse at top, #253e61 0%, var(--battle-bg) 72%);
+    line-height: 1.55;
+}
+
+.battle-screen {
+    width: min(1180px, 100%);
+    padding: clamp(16px, 3vw, 32px);
+}
+
+.battle-header { margin-bottom: 20px; }
+.game-title { font-size: clamp(27px, 3vw, 36px); letter-spacing: .08em; }
+.turn-count {
+    position: static;
+    display: inline-block;
+    margin-bottom: 9px;
+    padding: 3px 13px;
+    border: 1px solid var(--battle-border);
+    border-radius: 100px;
+    color: var(--battle-muted);
+    background: rgba(10, 20, 35, .55);
+    font-size: 13px;
+}
+
+.encounter-message {
+    margin: 10px 0 20px;
+    padding: 14px 18px;
+    border: 1px solid var(--battle-border);
+    border-radius: 12px;
+    background: rgba(14, 28, 48, .78);
+    color: var(--battle-text);
+    font-size: clamp(15px, 1.7vw, 18px);
+}
+.encounter-message p { margin: 0; }
+
+.battle-field {
+    display: grid;
+    grid-template-columns: minmax(220px, .92fr) 56px minmax(0, 2fr);
+    align-items: center;
+    gap: 16px;
+    padding: 20px;
+    border: 1px solid var(--battle-border);
+    border-radius: 18px;
+    background: rgba(10, 20, 35, .72);
+}
+
+.fighter,
+.enemy-party .fighter {
+    width: 100%;
+    min-width: 0;
+    padding: 18px 14px;
+    border: 1px solid var(--battle-border);
+    border-radius: 14px;
+    background: linear-gradient(180deg, var(--battle-panel-2), var(--battle-panel));
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+}
+.fighter-name,
+.enemy-party .fighter-name {
+    min-height: 2.8em;
+    margin: 0 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(15px, 1.6vw, 19px);
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+.enemy-party {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    align-items: stretch;
+    gap: 12px;
+    max-width: none;
+}
+
+.fighter-icon,
+.enemy-party .fighter-icon {
+    display: flex;
+    width: min(144px, 100%);
+    height: 144px;
+    margin: 0 auto 18px;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px solid #456487;
+    border-radius: 12px;
+    background: radial-gradient(circle, #2f4a64 0%, #102038 74%);
+}
+.character-battle-icon,
+.enemy-battle-icon {
+    display: block;
+    width: 120px;
+    height: 120px;
+    max-width: 96%;
+    max-height: 96%;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+.enemy-icon-fallback {
+    font-size: 36px;
+    font-weight: 800;
+    color: #afc8ee;
+}
+.enemy.is-defeated .enemy-battle-icon { filter: grayscale(1); opacity: .42; }
+.enemy.is-defeated .fighter-name { color: #a4b3c6; }
+.boss-badge {
+    display: inline-block;
+    margin: -3px 0 10px;
+    padding: 2px 12px;
+    border: 1px solid #b98243;
+    border-radius: 999px;
+    color: #ffd49e;
+    background: #493623;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .08em;
+}
+.vs { color: var(--battle-accent); font-size: clamp(25px, 3vw, 37px); }
+
+/* 戦闘は終了済みの結果画面なので、固定値のダミー行動ゲージは隠す */
+.action-gauge { display: none; }
+
+.status {
+    display: grid;
+    grid-template-columns: 32px minmax(0, 1fr) max-content;
+    align-items: center;
+    gap: 7px;
+    margin: 8px 0;
+    font-size: 13px;
+}
+.status p { color: var(--battle-muted); }
+.status span { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.status-bar {
+    height: 12px;
+    border: 1px solid #56708f;
+    background: #0a1626;
+}
+.enemy-party .status {
+    grid-template-columns: 32px minmax(0, 1fr);
+    margin: 10px 0;
+}
+.enemy-party .status > span { grid-column: 2; grid-row: 1; justify-self: end; }
+.enemy-party .status .status-bar { grid-column: 1 / -1; grid-row: 2; }
+
+.battle-log,
+.battle-result {
+    margin-top: 22px;
+    padding: 22px;
+    border: 1px solid var(--battle-border);
+    border-radius: 16px;
+    background: rgba(17, 32, 52, .94);
+}
+.battle-log { max-height: 420px; overflow: auto; }
+.battle-log h2 { color: var(--battle-text); font-size: 22px; }
+.battle-log p {
+    margin: 6px 0;
+    padding: 8px 12px;
+    border-left: 3px solid #46699e;
+    border-radius: 4px;
+    background: #22334e;
+    font-size: 14px;
+    text-align: left;
+}
+.battle-result { font-size: 17px; }
+.result-text { font-size: clamp(22px, 2.5vw, 28px); }
+.battle-result--player .result-text { color: #9fdfaf; }
+.battle-result--enemy .result-text { color: #ffb1b1; }
+.battle-result--draw .result-text { color: #f4d18e; }
+.battle-result .level-up-result,
+.battle-result .drop-result { margin-top: 18px; }
+.battle-result .level-up-detail { margin: 12px auto; }
+.return-area { margin: 26px 0 8px; }
+.return-button {
+    border: 1px solid #7bb8ff;
+    border-radius: 10px;
+    background: #2866ad;
+    color: #fff;
+    transition: background .18s ease;
+}
+.return-button:hover { background: #347bce; opacity: 1; }
+.return-button:focus-visible { outline: 3px solid #9cc9ff; outline-offset: 3px; }
+
+@media (max-width: 900px) {
+    .battle-field {
+        grid-template-columns: 1fr;
+        padding: 14px;
+        gap: 12px;
+    }
+    .fighter.player { max-width: 450px; justify-self: center; }
+    .vs { text-align: center; }
+    .enemy-party { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+}
+@media (max-width: 450px) {
+    .battle-screen { padding: 12px; }
+    .battle-field { padding: 10px; }
+    .enemy-party { grid-template-columns: 1fr; }
+    .fighter, .enemy-party .fighter { padding: 14px; }
+    .fighter-name, .enemy-party .fighter-name { min-height: 0; }
+    .battle-log, .battle-result { padding: 14px; }
+}
+/* === END Qhymia battle readability refresh v1 === */

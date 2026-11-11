@@ -1,0 +1,54 @@
+{% load static %}
+<section class="qh-turns" aria-label="ターン別戦闘記録">
+{% for turn in timeline %}
+  <article class="qh-turn">
+    <div class="qh-turn-number">{{ turn.turn }} ターン <span>{{ turn.actor }}の行動</span></div>
+    <div class="qh-team-lines">
+      <div class="qh-side qh-side-player{% if turn.side == 'player' %} qh-acting{% endif %}">
+        <div class="qh-portrait">
+          {% if character.character_image_path %}
+          <img src="{% static character.character_image_path %}" alt="{{ character.name }}" class="character-battle-icon">
+          {% else %}<span>{{ character.name|slice:":1" }}</span>{% endif %}
+        </div>
+        <div class="qh-bars">
+          <strong class="qh-who">{{ turn.player.name }}</strong>
+          <div class="qh-vital"><span>HP</span><div class="qh-meter"><div class="qh-fill qh-hp" style="width: {{ turn.player.hp_percent }}%"></div></div><small>{{ turn.player.hp }} / {{ turn.player.max_hp }}</small></div>
+          <div class="qh-vital"><span>MP</span><div class="qh-meter"><div class="qh-fill qh-mp" style="width: {{ turn.player.mp_percent }}%"></div></div><small>{{ turn.player.mp }} / {{ turn.player.max_mp }}</small></div>
+        </div>
+      </div>
+      <span class="qh-versus">VS</span>
+      <div class="qh-side qh-enemy-list">
+      {% for target in turn.opponents %}
+        <div class="qh-opponent{% if target.hp == 0 %} qh-fallen{% endif %}{% if turn.side == 'enemy' and target.name == turn.actor %} qh-acting{% endif %}">
+          <div class="qh-portrait">
+            {% if is_arena %}
+              {% if opponent.character_image_path %}<img src="{% static opponent.character_image_path %}" alt="{{ opponent.name }}" class="enemy-battle-icon">
+              {% else %}<span>{{ target.name|slice:":1" }}</span>{% endif %}
+            {% elif target.image_path %}<img src="{% static target.image_path %}" alt="{{ target.name }}" class="enemy-battle-icon">
+            {% else %}<span>{{ target.name|slice:":1" }}</span>{% endif %}
+          </div>
+          <div class="qh-bars">
+            <strong class="qh-who">{{ target.name }}</strong>
+            <div class="qh-vital"><span>HP</span><div class="qh-meter"><div class="qh-fill qh-hp" style="width: {{ target.hp_percent }}%"></div></div><small>{{ target.hp }} / {{ target.max_hp }}</small></div>
+            <div class="qh-vital"><span>MP</span><div class="qh-meter"><div class="qh-fill qh-mp" style="width: {{ target.mp_percent }}%"></div></div><small>{{ target.mp }} / {{ target.max_mp }}</small></div>
+          </div>
+        </div>
+      {% endfor %}
+      </div>
+    </div>
+    <div class="qh-action-report qh-action-{{ turn.side }}">
+      <span class="qh-actor-icon" aria-hidden="true">{% if turn.side == 'player' %}⚔{% else %}◆{% endif %}</span>
+      <div class="qh-message-list">
+      {% for message in turn.messages %}
+        <p{% if message.critical %} class="qh-critical"{% endif %}>{% for part in message.parts %}{% if part.damage %}<strong class="qh-damage">{{ part.text }}</strong>{% else %}{{ part.text }}{% endif %}{% endfor %}</p>
+      {% empty %}<p>{{ turn.actor }}は行動した。</p>{% endfor %}
+      </div>
+    </div>
+  </article>
+{% empty %}
+  <div class="qh-legacy-log">
+    <h2>戦闘経過</h2>
+    {% for line in battle_logs %}<p>{{ line }}</p>{% empty %}<p>戦闘ログはありません。</p>{% endfor %}
+  </div>
+{% endfor %}
+</section>
