@@ -30,39 +30,121 @@ def get_arena_state(character):
 
 
 def get_arena_home_context(character):
-    """ホームの階層カードと挑戦ボタンに必要な闘技場情報。"""
-    state = get_arena_state(character)
-    floor_numbers = [state.floor_id - 1, state.floor_id, state.floor_id + 1]
-    floors = {
-        floor.pk: floor
-        for floor in ArenaFloor.objects.filter(
-            pk__in=floor_numbers,
-        ).select_related("master", "master__arena_state")
-    }
+    """
+    ホーム画面の闘技場情報。
+
+    ・フロアマスターが存在する階だけ表示
+    ・1階 → 100階の順番
+    ・現在階は強調表示
+    ・挑戦処理用の現在階マスター情報も返す
+    """
+
+    state = get_arena_state(
+        character
+    )
+
+
+    # ========================================
+    # 現在階
+    # ========================================
+
+    current_floor = (
+        ArenaFloor.objects
+        .select_related(
+            "master",
+            "master__arena_state",
+        )
+        .get(
+            pk=state.floor_id
+        )
+    )
+
+
+    # ========================================
+    # マスターがいる階だけ取得
+    # ========================================
+
+    occupied_floors = (
+        ArenaFloor.objects
+        .filter(
+            master__isnull=False
+        )
+        .select_related(
+            "master",
+            "master__arena_state",
+        )
+        .order_by(
+            "floor"
+        )
+    )
+
+
+    # ========================================
+    # ホーム表示用カード
+    # ========================================
+
     cards = []
-    for number in floor_numbers:
-        floor = floors.get(number)
-        master = floor.master if floor else None
-        master_state = getattr(master, "arena_state", None)
-        cards.append({
-            "floor": number,
-            "exists": 1 <= number <= 100,
-            "is_current": number == state.floor_id,
-            "master": master,
-            "is_self": master is not None and master.pk == character.pk,
-            "hp": master_state.current_hp if master_state else 0,
-            "mp": master_state.current_mp if master_state else 0,
-            "attribute": master.get_main_attribute() if master else "neutral",
-        })
-    current_floor = floors[state.floor_id]
+
+    for floor in occupied_floors:
+
+        master = floor.master
+
+        master_state = getattr(
+            master,
+            "arena_state",
+            None,
+        )
+
+
+        cards.append(
+            {
+                "floor":
+                    floor.floor,
+
+                "is_current":
+                    floor.floor
+                    == state.floor_id,
+
+                "master":
+                    master,
+
+                "is_self":
+                    master.pk
+                    == character.pk,
+
+                "hp": (
+                    master_state.current_hp
+                    if master_state
+                    else 0
+                ),
+
+                "mp": (
+                    master_state.current_mp
+                    if master_state
+                    else 0
+                ),
+
+                "attribute":
+                    master.get_main_attribute(),
+            }
+        )
+
+
     return {
-        "arena_state": state,
-        "arena_cards": cards,
-        "arena_master": current_floor.master,
-        "arena_is_master": current_floor.master_id == character.pk,
+        "arena_state":
+            state,
+
+        "arena_cards":
+            cards,
+
+        # 現在階の挑戦処理用
+        "arena_master":
+            current_floor.master,
+
+        "arena_is_master":
+            current_floor.master_id
+            == character.pk,
     }
-
-
 # ========================================================
 # 闘技場・探索共通クールタイム
 # ========================================================

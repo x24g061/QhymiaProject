@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+設定 | Qhymia
+{% endblock %}
+
+
+{% block extra_css %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'css/settings.css' %}"
+>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="settings-page">
+
+
+    <!-- ========================================
+         ヘッダー
+    ======================================== -->
+
+    <div class="settings-header">
+
+        <div>
+
+            <p class="settings-label">
+                SETTINGS
+            </p>
+
+            <h1>
+                設定
+            </h1>
+
+            <p>
+                ゲーム内の表示や通知などを変更できます。
+            </p>
+
+        </div>
+
+
+        <a
+            href="{% url 'home' %}"
+            class="settings-back-button"
+        >
+            ← ホームへ戻る
+        </a>
+
+    </div>
+
+
+    <form
+        method="post"
+        class="settings-form"
+    >
+
+        {% csrf_token %}
+
+
+        <!-- ========================================
+             SNS設定
+        ======================================== -->
+
+        <section class="settings-section">
+
+            <div class="settings-section-heading">
+
+                <p class="settings-section-label">
+                    SNS
+                </p>
+
+                <h2>
+                    SNS設定
+                </h2>
+
+            </div>
+
+
+            <div class="settings-item">
+
+                <div class="settings-item-text">
+
+                    <strong>
+                        合成結果のSNS投稿確認
+                    </strong>
+
+                    <p>
+                        大成功・超大成功・
+                        +7以上の装備合成に成功した際に、
+                        SNSへの投稿を確認する画面を表示します。
+                    </p>
+
+                </div>
+
+
+                <label class="settings-switch">
+
+                    <input
+                        type="checkbox"
+                        name="synthesis_sns_prompt_enabled"
+
+                        {% if game_settings.synthesis_sns_prompt_enabled %}
+                            checked
+                        {% endif %}
+                    >
+
+                    <span class="settings-switch-slider">
+                    </span>
+
+                </label>
+
+            </div>
+
+        </section>
+
+
+        <!-- ========================================
+             保存
+        ======================================== -->
+
+        <div class="settings-actions">
+
+            <button type="submit">
+                設定を保存
+            </button>
+
+        </div>
+
+
+    </form>
+
+</div>
+
+{% endblock %}

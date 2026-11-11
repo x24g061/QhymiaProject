@@ -113,11 +113,23 @@
                 {% endif %}
             </div>
 
-            <div>
-                <a href="{% url 'admin_player_edit' character.id %}" class="admin-edit-button">
-                    編集
-                </a>
-            </div>
+            <div class="admin-player-actions">
+
+    <a
+        href="{% url 'admin_player_detail' character.id %}"
+        class="admin-detail-button"
+    >
+        詳細
+    </a>
+
+    <a
+        href="{% url 'admin_player_edit' character.id %}"
+        class="admin-edit-button"
+    >
+        編集
+    </a>
+
+</div>
         </div>
 
         {% empty %}

@@ -2,6 +2,7 @@ import random
 
 from datetime import timedelta
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 from django.db import transaction
 from django.shortcuts import render, redirect
 from django.conf import settings
@@ -15,7 +16,13 @@ from apps.battle.models import (
 )
 from pathlib import Path
 from .forms import SignUpForm
-from .models import Character, User
+from .models import (
+    Character,
+    User,
+    UserSettings,
+)
+
+
 
 
 
@@ -24,21 +31,123 @@ def logout_view(request):
     return redirect("accounts:login")
 
 
+@login_required
+def settings_view(request):
+
+    # ========================================
+    # ユーザー設定取得
+    # ========================================
+
+    user_settings, _ = (
+        UserSettings.objects.get_or_create(
+            user=request.user
+        )
+    )
+
+
+    # ========================================
+    # 設定保存
+    # ========================================
+
+    if request.method == "POST":
+
+        synthesis_sns_prompt_enabled = (
+            request.POST.get(
+                "synthesis_sns_prompt_enabled"
+            )
+            == "on"
+        )
+
+
+        user_settings.synthesis_sns_prompt_enabled = (
+            synthesis_sns_prompt_enabled
+        )
+
+        user_settings.save(
+            update_fields=[
+                "synthesis_sns_prompt_enabled",
+                "updated_at",
+            ]
+        )
+
+
+        if not synthesis_sns_prompt_enabled:
+
+            request.session.pop(
+                "synthesis_sns_share",
+                None,
+            )
+
+
+        messages.success(
+            request,
+            "設定を保存しました。",
+        )
+
+        return redirect(
+            "accounts:settings"
+        )
+
+
+    return render(
+        request,
+        "settings.html",
+        {
+            "game_settings":
+                user_settings,
+        },
+    )
+
+
 def login_view(request):
     error_message = None
 
+
+
+    # ========================================
+    # ログイン画面ランキング
+    # ========================================
+    #
+    # 優先順位
+    # 1. 回帰数が多い
+    # 2. 回帰数が同じならレベルが高い
+    # 3. それも同じならID順
+    # ========================================
+
+    ranking = (
+        Character.objects
+        .order_by(
+            "-reincarnation_count",
+            "-level",
+            "id",
+        )[:3]
+    )
+
+
     if request.method == "POST":
-        login_id = request.POST.get("user_id", "").strip()
-        password = request.POST.get("password")
+        login_id = request.POST.get(
+            "user_id",
+            "",
+        ).strip()
+
+        password = request.POST.get(
+            "password"
+        )
 
         # メールアドレスで入力された場合
         if "@" in login_id:
-            user_obj = User.objects.filter(
-                email__iexact=login_id
-            ).first()
+            user_obj = (
+                User.objects
+                .filter(
+                    email__iexact=login_id
+                )
+                .first()
+            )
 
             if user_obj:
-                login_id = user_obj.user_id
+                login_id = (
+                    user_obj.user_id
+                )
 
         user = authenticate(
             request,
@@ -47,31 +156,49 @@ def login_view(request):
         )
 
         if user is not None:
-            login(request, user)
+            login(
+                request,
+                user,
+            )
 
-            if not Character.objects.filter(user=user).exists():
-                return redirect("accounts:character_create")
+            if not Character.objects.filter(
+                user=user
+            ).exists():
 
-            next_url = request.GET.get("next")
+                return redirect(
+                    "accounts:character_create"
+                )
+
+            next_url = request.GET.get(
+                "next"
+            )
 
             if next_url:
-                return redirect(next_url)
+                return redirect(
+                    next_url
+                )
 
-            return redirect("home")
+            return redirect(
+                "home"
+            )
 
-        error_message = "固有ID・メールアドレスまたはパスワードが正しくありません。"
-
-
+        error_message = (
+            "固有ID・メールアドレスまたは"
+            "パスワードが正しくありません。"
+        )
 
 
     return render(
         request,
         "login.html",
-    {
-        "error_message": error_message,
-    },
-        )
+        {
+            "error_message":
+                error_message,
 
+            "ranking":
+                ranking,
+        },
+    )
 
 def signup_view(request):
     if request.method == "POST":

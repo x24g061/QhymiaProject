@@ -332,7 +332,62 @@
 
 </div>
 
+<!-- ========================================
+     SNS共有確認
+======================================== -->
 
+{% if synthesis_sns_share %}
+
+<div
+    id="synthesis-share-modal"
+    class="synthesis-share-overlay"
+>
+
+    <div class="synthesis-share-modal">
+
+        <p class="synthesis-share-label">
+            SYNTHESIS RESULT
+        </p>
+
+        <h2>
+            合成成功！
+        </h2>
+
+        <p class="synthesis-share-result">
+            {{ synthesis_sns_share.equipment_name }}
+            +{{ synthesis_sns_share.level }}
+        </p>
+
+        <p class="synthesis-share-question">
+            この合成結果をSNSに投稿しますか？
+        </p>
+
+
+        <div class="synthesis-share-actions">
+
+            <a
+                href="{% url 'sns' %}?draft={{ synthesis_sns_share.text|urlencode }}"
+                class="synthesis-share-yes"
+            >
+                はい
+            </a>
+
+
+            <button
+                type="button"
+                id="synthesis-share-no"
+                class="synthesis-share-no"
+            >
+                いいえ
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endif %}
 <script>
     document.addEventListener("DOMContentLoaded", function () {
 
@@ -426,8 +481,40 @@
                 });
             });
         });
+        // ========================================
+        // SNS共有確認
+        // ========================================
+
+        const shareModal =
+            document.getElementById(
+                "synthesis-share-modal"
+            );
+
+        const shareNoButton =
+            document.getElementById(
+                "synthesis-share-no"
+            );
+
+
+        if (
+            shareModal &&
+            shareNoButton
+        ) {
+
+            shareNoButton.addEventListener(
+                "click",
+                function () {
+
+                    shareModal.remove();
+
+                }
+            );
+
+        }
+
 
         updateSelection();
+        
     });
 </script>
 

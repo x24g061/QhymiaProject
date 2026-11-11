@@ -15,7 +15,18 @@
 
 {% block header_right_extra %}
 
-<button type="button" id="sns-open-home" class="header-mini-sns-button">
+<a
+    href="{% url 'accounts:settings' %}"
+    class="header-settings-button"
+>
+    設定
+</a>
+
+<button
+    type="button"
+    id="sns-open-home"
+    class="header-mini-sns-button"
+>
     ミニSNSを開く
 </button>
 

@@ -11,6 +11,7 @@ from .views import (
     login_view,
     logout_view,
     signup_view,
+    settings_view,
     profile_view,
     terms_view,
     tokushoho_view,
@@ -30,6 +31,12 @@ urlpatterns = [
         "profile/",
         profile_view,
         name="profile",
+    ),
+    #設定画面
+    path(
+    "settings/",
+    settings_view,
+    name="settings",
     ),
 
         # 手相

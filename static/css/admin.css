@@ -962,3 +962,210 @@ main {
 
     color: #71838b;
 }
+
+/* ========================================
+   ADMIN プレイヤー操作
+======================================== */
+
+.admin-player-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.admin-detail-button,
+.admin-edit-button {
+    display: inline-block;
+
+    padding:
+        7px
+        13px;
+
+    border: none;
+    border-radius: 7px;
+
+    background:
+        #3d7287;
+
+    color:
+        #ffffff;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    transition:
+        background 0.15s;
+}
+
+
+.admin-detail-button:hover,
+.admin-edit-button:hover {
+    background:
+        #315f70;
+}
+
+
+/* ========================================
+   ADMIN アカウント詳細
+======================================== */
+
+.admin-account-detail-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+
+.admin-account-detail-item {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+
+    padding:
+        16px
+        18px;
+
+    border:
+        1px solid #dce5e8;
+
+    border-radius: 10px;
+
+    background:
+        #f8fafb;
+}
+
+
+.admin-account-detail-item span {
+    color:
+        #74878f;
+
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
+.admin-account-detail-item strong {
+    color:
+        #263f49;
+
+    font-size: 15px;
+
+    overflow-wrap:
+        anywhere;
+}
+
+
+/* ========================================
+   詳細 → 編集
+======================================== */
+
+.admin-detail-edit-area {
+    margin-top: 22px;
+}
+
+
+/* ========================================
+   危険な操作
+======================================== */
+
+.admin-danger-section {
+    margin-top: 24px;
+
+    padding:
+        24px;
+
+    border:
+        1px solid #e7baba;
+
+    border-radius: 14px;
+
+    background:
+        #fffafa;
+}
+
+
+.admin-danger-section h2 {
+    margin:
+        0
+        0
+        12px;
+
+    color:
+        #a52e2e;
+}
+
+
+.admin-danger-section p {
+    margin:
+        6px
+        0;
+
+    color:
+        #765555;
+
+    line-height: 1.7;
+}
+
+
+.admin-delete-account-button {
+    margin-top: 16px;
+
+    padding:
+        10px
+        18px;
+
+    border: none;
+    border-radius: 8px;
+
+    background:
+        #b83232;
+
+    color:
+        #ffffff;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.admin-delete-account-button:hover {
+    background:
+        #922626;
+}
+
+
+.admin-self-delete-warning {
+    margin-top: 16px !important;
+
+    font-weight: bold;
+
+    color:
+        #a52e2e !important;
+}
+
+
+/* ========================================
+   アカウント詳細 スマホ
+======================================== */
+
+@media (max-width: 600px) {
+
+    .admin-account-detail-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+}

@@ -1,0 +1,309 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+アカウント詳細 | Qhymia
+{% endblock %}
+
+{% block content %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'css/admin.css' %}"
+>
+
+
+<!-- ========================================
+     ADMIN MODE
+======================================== -->
+
+<div class="admin-mode-banner">
+
+    <strong>
+        ADMIN MODE
+    </strong>
+
+    <span>
+        管理者権限で操作しています
+    </span>
+
+</div>
+
+
+<div class="admin-edit-page">
+
+
+    <!-- ========================================
+         ヘッダー
+    ======================================== -->
+
+    <div class="admin-edit-header">
+
+        <div>
+
+            <p class="admin-panel-label">
+                ACCOUNT DETAIL
+            </p>
+
+            <h1>
+                アカウント詳細
+            </h1>
+
+            <p>
+                {{ character.name }} の
+                アカウント情報
+            </p>
+
+        </div>
+
+
+        <a href="{% url 'admin_panel' %}">
+            ← 管理者メニューへ戻る
+        </a>
+
+    </div>
+
+
+    <!-- ========================================
+         アカウント情報
+    ======================================== -->
+
+    <section class="admin-edit-section">
+
+        <h2>
+            アカウント情報
+        </h2>
+
+
+        <div class="admin-account-detail-grid">
+
+
+            <!-- キャラクター名 -->
+
+            <div class="admin-account-detail-item">
+
+                <span>
+                    キャラクター名
+                </span>
+
+                <strong>
+                    {{ character.name }}
+                </strong>
+
+            </div>
+
+
+            <!-- アカウントID -->
+
+            <div class="admin-account-detail-item">
+
+                <span>
+                    アカウントID
+                </span>
+
+                <strong>
+                    {{ character.user.user_id }}
+                </strong>
+
+            </div>
+
+
+            <!-- メールアドレス -->
+
+            <div class="admin-account-detail-item">
+
+                <span>
+                    メールアドレス
+                </span>
+
+                <strong>
+
+                    {% if character.user.email %}
+
+                        {{ character.user.email }}
+
+                    {% else %}
+
+                        -
+
+                    {% endif %}
+
+                </strong>
+
+            </div>
+
+
+            <!-- 作成日時 -->
+
+            <div class="admin-account-detail-item">
+
+                <span>
+                    アカウント作成日時
+                </span>
+
+                <strong>
+                    {{ character.user.date_joined|date:"Y/m/d H:i:s" }}
+                </strong>
+
+            </div>
+
+
+            <!-- 回帰 -->
+
+            <div class="admin-account-detail-item">
+
+                <span>
+                    回帰回数
+                </span>
+
+                <strong>
+                    {{ character.reincarnation_count }}回
+                </strong>
+
+            </div>
+
+
+            <!-- レベル -->
+
+            <div class="admin-account-detail-item">
+
+                <span>
+                    レベル
+                </span>
+
+                <strong>
+                    Lv.{{ character.level }}
+                </strong>
+
+            </div>
+
+
+            <!-- EXP -->
+
+            <div class="admin-account-detail-item">
+
+                <span>
+                    EXP
+                </span>
+
+                <strong>
+                    {{ character.exp }}
+                </strong>
+
+            </div>
+
+
+            <!-- Q -->
+
+            <div class="admin-account-detail-item">
+
+                <span>
+                    所持Q
+                </span>
+
+                <strong>
+                    {{ character.gold }}Q
+                </strong>
+
+            </div>
+
+
+            <!-- 闘技場 -->
+
+            <div class="admin-account-detail-item">
+
+                <span>
+                    闘技場階層
+                </span>
+
+                <strong>
+
+                    {% if character.arena_state %}
+
+                        {{ character.arena_state.floor_id }}階
+
+                    {% else %}
+
+                        未登録
+
+                    {% endif %}
+
+                </strong>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- ========================================
+             編集
+        ======================================== -->
+
+        <div class="admin-detail-edit-area">
+
+            <a
+                href="{% url 'admin_player_edit' character.id %}"
+                class="admin-edit-button"
+            >
+                プレイヤー情報を編集
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- ========================================
+         危険な操作
+    ======================================== -->
+
+    <section class="admin-danger-section">
+
+        <h2>
+            危険な操作
+        </h2>
+
+        <p>
+            アカウントを削除すると、
+            キャラクターや関連データも削除されます。
+        </p>
+
+        <p>
+            この操作は元に戻すことができません。
+        </p>
+
+
+        {% if character.user.pk == request.user.pk %}
+
+        <p class="admin-self-delete-warning">
+            現在操作中のアカウント自身は削除できません。
+        </p>
+
+        {% else %}
+
+        <form
+            method="post"
+            action="{% url 'admin_delete_account' character.id %}"
+        >
+
+            {% csrf_token %}
+
+            <button
+                type="submit"
+                class="admin-delete-account-button"
+                onclick="return confirm('{{ character.name|escapejs }} のアカウントを本当に削除しますか？\n\nキャラクターや関連データも削除されます。\nこの操作は元に戻せません。');"
+            >
+                アカウントを削除
+            </button>
+
+        </form>
+
+        {% endif %}
+
+    </section>
+
+
+</div>
+
+{% endblock %}
