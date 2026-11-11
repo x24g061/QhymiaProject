@@ -1,6 +1,6 @@
 
 from django.db import transaction
-
+from apps.shop.models import MarketListing
 from .models import OwnedEquipment
 import random
 
@@ -222,23 +222,28 @@ def unequip_item(
     return owned_equipment
 
 
+
 # ========================================
 # 合成条件の確認
 # ========================================
 
-def validate_synthesis_equipments(
-    equipments,
-):
+def validate_synthesis_equipments(equipments):
     """
     装備合成に使う3つの装備が
     合成条件を満たしているか確認する。
     """
 
-    # 合成には3つちょうど必要
+    # ========================================
+    # 3つちょうど選択されているか
+    # ========================================
+
     if len(equipments) != 3:
         return False, "合成には装備が3つ必要です。"
 
-    # 同じ所持装備を重複選択できない
+    # ========================================
+    # 同じ装備個体の重複を禁止
+    # ========================================
+
     equipment_instance_ids = [
         equipment.id
         for equipment in equipments
@@ -247,14 +252,20 @@ def validate_synthesis_equipments(
     if len(set(equipment_instance_ids)) != 3:
         return False, "異なる所持装備を3つ選んでください。"
 
-    # 装備中の装備は素材にできない
+    # ========================================
+    # 装備中の装備を除外
+    # ========================================
+
     if any(
         equipment.is_equipped
         for equipment in equipments
     ):
         return False, "装備中の装備は合成できません。"
 
-    # 3つとも同じ種類の装備か確認
+    # ========================================
+    # 同じ種類の装備か確認
+    # ========================================
+
     equipment_ids = {
         equipment.equipment_id
         for equipment in equipments
@@ -263,7 +274,10 @@ def validate_synthesis_equipments(
     if len(equipment_ids) != 1:
         return False, "同じ装備を3つ選んでください。"
 
-    # 3つとも同じ強化値か確認
+    # ========================================
+    # 同じ強化値か確認
+    # ========================================
+
     enhancement_levels = {
         equipment.enhancement_level
         for equipment in equipments
@@ -272,9 +286,26 @@ def validate_synthesis_equipments(
     if len(enhancement_levels) != 1:
         return False, "同じ+値の装備を3つ選んでください。"
 
+    # ========================================
+    # フリーマーケット出品中チェック
+    # ========================================
+
+    is_listed = MarketListing.objects.filter(
+        owned_equipment_id__in=equipment_instance_ids,
+        status=MarketListing.Status.LISTED,
+    ).exists()
+
+    if is_listed:
+        return (
+            False,
+            "フリーマーケットに出品中の装備は合成できません。",
+        )
+
+    # ========================================
+    # すべての条件を満たした場合のみ許可
+    # ========================================
+
     return True, ""
-
-
 # ========================================
 # 合成失敗率
 # ========================================
