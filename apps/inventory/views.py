@@ -13,7 +13,10 @@ from django.shortcuts import (
 from django.utils import timezone
 from django.views.decorators.http import require_POST
 
-from apps.accounts.models import Character
+from apps.accounts.models import (
+    Character,
+    UserSettings,
+)
 from apps.accounts.growth import increase_attribute_growth_weight
 
 from .models import (
@@ -183,6 +186,15 @@ def synthesis(request):
 
     character = request.user.character
 
+    # ========================================
+    # ユーザー設定
+    # ========================================
+
+    user_settings, _ = (
+        UserSettings.objects.get_or_create(
+            user=request.user
+        )
+    )
 
     # ========================================================
     # 合成実行
@@ -292,6 +304,143 @@ def synthesis(request):
                 "超大成功！ +3強化されました。",
             )
 
+
+        # ====================================================
+        # SNS共有候補
+        # ====================================================
+
+        new_equipment = result.get(
+            "equipment"
+        )
+
+
+        if new_equipment is not None:
+
+            result_type = result["result"]
+
+            new_level = (
+                new_equipment.enhancement_level
+            )
+
+            equipment_name = (
+                new_equipment
+                .equipment
+                .item
+                .name
+            )
+
+            equipment_rank = (
+                new_equipment
+                .equipment
+                .rank
+            )
+
+
+            # ================================================
+            # SNS共有対象
+            # ================================================
+            #
+            # ・大成功
+            # ・超大成功
+            # ・完成後+7以上
+            #
+            # ================================================
+
+            should_share = (
+                result_type
+                in {
+                    "great_success",
+                    "super_success",
+                }
+                or
+                new_level >= 7
+            )
+
+
+            # ================================================
+            # デバッグ
+            # ================================================
+
+            # print(
+            #     "SNS SHARE DEBUG:",
+            #     {
+            #         "result_type":
+            #             result_type,
+
+            #         "new_level":
+            #             new_level,
+
+            #         "should_share":
+            #             should_share,
+
+            #         "setting":
+            #             user_settings
+            #             .synthesis_sns_prompt_enabled,
+            #     }
+            # )
+
+
+            # ================================================
+            # 設定がONの場合のみ投稿確認を表示
+            # ================================================
+
+            if (
+                should_share
+                and
+                user_settings.synthesis_sns_prompt_enabled
+            ):
+
+                # print(
+                #     "SNS SHARE SESSION SAVE"
+                # )
+
+                if (
+                    result_type
+                    == "super_success"
+                ):
+
+                    share_text = (
+                        f"超大成功！"
+                        f"【{equipment_rank}】"
+                        f"{equipment_name}の合成に成功して"
+                        f"+{new_level}になった！"
+                    )
+
+                elif (
+                    result_type
+                    == "great_success"
+                ):
+
+                    share_text = (
+                        f"大成功！"
+                        f"【{equipment_rank}】"
+                        f"{equipment_name}の合成に成功して"
+                        f"+{new_level}になった！"
+                    )
+
+                else:
+
+                    share_text = (
+                        f"【{equipment_rank}】"
+                        f"{equipment_name}の合成に成功して"
+                        f"+{new_level}になった！"
+                    )
+
+
+                request.session[
+                    "synthesis_sns_share"
+                ] = {
+                    "text":
+                        share_text,
+
+                    "equipment_name":
+                        equipment_name,
+
+                    "level":
+                        new_level,
+                }
+
+
         return redirect(
             "inventory:synthesis"
         )
@@ -375,15 +524,41 @@ def synthesis(request):
         character.get_synthesis_cost()
     )
 
+    # ========================================================
+    # SNS共有確認
+    # ========================================================
+
+    synthesis_sns_share = (
+        request.session.pop(
+            "synthesis_sns_share",
+            None,
+        )
+    )
+
+
+    # print(
+    #     "SNS SHARE GET DEBUG:",
+    #     synthesis_sns_share,
+    # )
 
     return render(
         request,
         "synthesis.html",
         {
-            "character": character,
-            "owned_equipments": owned_equipments,
-            "synthesis_groups": synthesis_groups,
-            "synthesis_cost": synthesis_cost,
+            "character":
+                character,
+
+            "owned_equipments":
+                owned_equipments,
+
+            "synthesis_groups":
+                synthesis_groups,
+
+            "synthesis_cost":
+                synthesis_cost,
+
+            "synthesis_sns_share":
+                synthesis_sns_share,
         },
     )
 

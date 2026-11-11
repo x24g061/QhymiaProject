@@ -68,6 +68,36 @@ class User(AbstractUser):
     def __str__(self):
         return self.user_id
 
+# ===== ユーザー設定 =====
+
+class UserSettings(models.Model):
+
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="game_settings",
+    )
+
+    # ========================================
+    # SNS関連
+    # ========================================
+
+    synthesis_sns_prompt_enabled = models.BooleanField(
+        default=True,
+        help_text=(
+            "装備合成の大成功・超大成功・"
+            "高強化成功時にSNS投稿確認を表示する"
+        ),
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True,
+    )
+
+    def __str__(self):
+        return (
+            f"{self.user.user_id} の設定"
+        )
 
 # ===== キャラクター情報 =====
 

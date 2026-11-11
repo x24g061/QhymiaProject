@@ -1573,32 +1573,217 @@ main {
 }
 
 
-.arena-card-list {
+/* =========================================================
+   ARENA SLIDER
+========================================================= */
+
+.arena-slider-shell {
     display: grid;
 
     grid-template-columns:
-        repeat(3,
-            minmax(0,
-                1fr));
+        42px
+        minmax(0, 1fr)
+        42px;
+
+    align-items: center;
+
+    gap: 10px;
 
     width: 100%;
-    max-width: 960px;
+    max-width: 1050px;
 
-    margin: 0 auto;
+    margin:
+        0 auto;
+}
+
+
+.arena-card-list {
+    display: flex;
+
+    align-items: stretch;
 
     gap: 17px;
 
-    align-items: stretch;
+    width: 100%;
+
+    padding:
+        8px
+        4px
+        18px;
+
+    overflow-x: auto;
+
+    scroll-behavior: smooth;
+
+    scroll-snap-type:
+        x mandatory;
+
+    scrollbar-width:
+        thin;
 }
 
 
 .arena-card-slot {
     display: flex;
 
+    align-items: stretch;
+    justify-content: center;
+
+    flex:
+        0
+        0
+        300px;
+
+    min-width: 300px;
+
+    scroll-snap-align:
+        start;
+}
+
+/* ========================================
+   スライドボタン
+======================================== */
+
+.arena-slider-button {
+    width: 42px;
+    height: 58px;
+
+    display: flex;
+
     align-items: center;
     justify-content: center;
 
-    min-width: 0;
+    padding: 0;
+
+    border:
+        1px solid rgba(
+            49,
+            101,
+            113,
+            0.22
+        );
+
+    border-radius: 12px;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.88
+        );
+
+    color:
+        var(--main-dark);
+
+    font-size: 30px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s,
+        color 0.2s,
+        opacity 0.2s;
+}
+
+
+.arena-slider-button:hover:not(:disabled) {
+    color:
+        #ffffff;
+
+    background:
+        var(--main);
+}
+
+
+.arena-slider-button:disabled {
+    opacity: 0.28;
+
+    cursor: default;
+}
+
+
+/* ========================================
+   プロフィールリンク
+======================================== */
+
+.arena-card-profile-link {
+    display: block;
+
+    width: fit-content;
+
+    margin:
+        0 auto 10px;
+
+    text-decoration: none;
+
+    border-radius: 16px;
+}
+
+
+.arena-card-profile-link
+.arena-card-avatar {
+    margin:
+        0;
+}
+
+
+.arena-card-profile-link:hover
+.arena-card-avatar {
+    transform:
+        translateY(-2px);
+
+    border-color:
+        var(--main);
+
+    box-shadow:
+        0
+        8px
+        20px
+        rgba(
+            36,
+            95,
+            108,
+            0.22
+        );
+}
+
+
+.arena-card-avatar {
+    transition:
+        transform 0.18s,
+        border-color 0.18s,
+        box-shadow 0.18s;
+}
+
+
+/* ========================================
+   空席
+======================================== */
+
+.arena-slider-empty {
+    width: 100%;
+
+    padding:
+        30px;
+
+    box-sizing: border-box;
+
+    color:
+        var(--muted);
+
+    text-align: center;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.66
+        );
+
+    border-radius: 16px;
 }
 
 
@@ -2704,7 +2889,72 @@ main {
 
 }
 
+/* =========================================================
+   SETTINGS BUTTON
+========================================================= */
 
+.header-settings-button {
+    min-height: 38px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding:
+        0 16px;
+
+    color:
+        #ffffff;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.10
+        );
+
+    border:
+        1px solid
+        rgba(
+            255,
+            255,
+            255,
+            0.28
+        );
+
+    border-radius: 12px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    text-decoration: none;
+
+    box-sizing:
+        border-box;
+
+    transition:
+        background 0.2s,
+        transform 0.2s;
+}
+
+
+.header-settings-button:hover {
+    color:
+        #ffffff;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.19
+        );
+
+    transform:
+        translateY(-1px);
+}
 /* =========================================================
    SMALL MOBILE
 ========================================================= */
@@ -2842,4 +3092,32 @@ main {
     .home-right>.chat-card {
         order: 6;
     }
+}
+
+@media (max-width: 600px) {
+
+    .arena-slider-shell {
+        grid-template-columns:
+            34px
+            minmax(0, 1fr)
+            34px;
+
+        gap: 6px;
+    }
+
+
+    .arena-slider-button {
+        width: 34px;
+        height: 52px;
+
+        font-size: 25px;
+    }
+
+
+    .arena-card-slot {
+        flex-basis: 245px;
+
+        min-width: 245px;
+    }
+
 }

@@ -15,6 +15,8 @@ from apps.accounts.models import (
 
 from apps.sns.models import Post
 
+from django.views.decorators.http import require_POST
+
 from apps.battle.models import ArenaFloor, ArenaState
 
 from apps.battle.arena_services import (
@@ -334,6 +336,203 @@ def admin_panel(request):
             "admin_access_logs": admin_access_logs,
             "admin_change_logs": admin_change_logs,
         },
+    )
+
+@login_required
+def admin_player_detail(
+    request,
+    character_id,
+):
+
+    # ========================================
+    # ADMIN MODE確認
+    # ========================================
+
+    if not request.session.get(
+        "admin_mode"
+    ):
+
+        messages.error(
+            request,
+            "管理者モードを有効にしてください。",
+        )
+
+        return redirect(
+            "home"
+        )
+
+
+    # ========================================
+    # プレイヤー取得
+    # ========================================
+
+    character = get_object_or_404(
+        Character.objects.select_related(
+            "user",
+            "arena_state",
+        ),
+        pk=character_id,
+    )
+
+
+    return render(
+        request,
+        "admin_player_detail.html",
+        {
+            "character":
+                character,
+        },
+    )
+
+@login_required
+@require_POST
+def admin_delete_account(
+    request,
+    character_id,
+):
+
+    # ========================================
+    # ADMIN MODE確認
+    # ========================================
+
+    if not request.session.get(
+        "admin_mode"
+    ):
+
+        messages.error(
+            request,
+            "管理者モードを有効にしてください。",
+        )
+
+        return redirect(
+            "home"
+        )
+
+
+    # ========================================
+    # 削除対象取得
+    # ========================================
+
+    character = get_object_or_404(
+        Character.objects.select_related(
+            "user"
+        ),
+        pk=character_id,
+    )
+
+    target_user = character.user
+
+
+    # ========================================
+    # 自分自身は削除不可
+    # ========================================
+
+    if (
+        target_user.pk
+        == request.user.pk
+    ):
+
+        messages.error(
+            request,
+            "現在操作中のアカウント自身は削除できません。",
+        )
+
+        return redirect(
+            "admin_player_detail",
+            character_id=character.pk,
+        )
+
+
+    target_name = (
+        character.name
+    )
+
+    target_account_id = (
+        target_user.user_id
+    )
+
+    target_email = (
+        target_user.email
+    )
+
+
+    # ========================================
+    # 削除処理
+    # ========================================
+
+    with transaction.atomic():
+
+        admin_character = getattr(
+            request.user,
+            "character",
+            None,
+        )
+
+
+        # ====================================
+        # 管理者変更履歴
+        # ====================================
+
+        AdminChangeLog.objects.create(
+            user=request.user,
+
+            account_id=
+                request.user.user_id,
+
+            character_name=(
+                admin_character.name
+                if admin_character
+                else ""
+            ),
+
+            target_character=
+                character,
+
+            target_character_name=
+                target_name,
+
+            action_type=
+                "player_update",
+
+            changes={
+                "account_delete": {
+                    "label":
+                        "アカウント削除",
+
+                    "before": (
+                        f"{target_account_id} "
+                        f"({target_email})"
+                    ),
+
+                    "after":
+                        "削除済み",
+                }
+            },
+        )
+
+
+        # ====================================
+        # User削除
+        # ====================================
+        #
+        # User → Character はCASCADEなので
+        # キャラクターも同時に削除される
+        # ====================================
+
+        target_user.delete()
+
+
+    messages.success(
+        request,
+        (
+            f"{target_name}の"
+            "アカウントを削除しました。"
+        ),
+    )
+
+
+    return redirect(
+        "admin_panel"
     )
 @login_required
 def admin_access_history(request):

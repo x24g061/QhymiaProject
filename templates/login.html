@@ -194,6 +194,7 @@
                             <tr>
                                 <th>順位</th>
                                 <th>キャラクター</th>
+                                <th>回帰数</th>
                                 <th>Lv</th>
                             </tr>
                         </thead>
@@ -213,6 +214,10 @@
                                 </td>
 
                                 <td>
+                                    {{ character.reincarnation_count }}
+                                </td>
+
+                                <td>
                                     {{ character.level }}
                                 </td>
                             </tr>
@@ -224,10 +229,12 @@
                                 <td>1</td>
                                 <td>---</td>
                                 <td>---</td>
+                                <td>---</td>
                             </tr>
 
                             <tr>
                                 <td>2</td>
+                                <td>---</td>
                                 <td>---</td>
                                 <td>---</td>
                             </tr>
@@ -236,8 +243,8 @@
                                 <td>3</td>
                                 <td>---</td>
                                 <td>---</td>
+                                <td>---</td>
                             </tr>
-
                             {% endif %}
 
                         </tbody>

@@ -235,7 +235,28 @@ def sns_page(request):
 
     else:
 
-        form = PostForm()
+        # ========================================
+        # 投稿下書き
+        # ========================================
+
+        draft_text = request.GET.get(
+            "draft",
+            "",
+        ).strip()
+
+
+        if draft_text:
+
+            form = PostForm(
+                initial={
+                    "text":
+                        draft_text,
+                }
+            )
+
+        else:
+
+            form = PostForm()
 
 
     # ========================================

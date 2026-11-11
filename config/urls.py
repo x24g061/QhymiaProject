@@ -10,6 +10,8 @@ from .views import (
     admin_access_history,
     admin_change_history,
     admin_player_edit,
+    admin_player_detail,
+    admin_delete_account,
     again,
     home,
     player_search,
@@ -62,7 +64,17 @@ urlpatterns = [
         again,
         name='again',
     ),
+    path(
+    "admin-panel/player/<int:character_id>/",
+    admin_player_detail,
+    name="admin_player_detail",
+    ),
 
+    path(
+    "admin-panel/player/<int:character_id>/delete/",
+    admin_delete_account,
+    name="admin_delete_account",
+    ),
     path(
         'admin-panel/player/<int:character_id>/edit/',
         admin_player_edit,
