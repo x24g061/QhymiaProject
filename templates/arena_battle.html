@@ -1,8 +1,15 @@
-{% extends 'base.html' %}
+
 {% load static %}
-{% block title %}闘技場の結果 | Qhymia{% endblock %}
-{% block extra_css %}<link rel="stylesheet" href="{% static 'css/battle_timeline.css' %}">{% endblock %}
-{% block content %}
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>闘技場の結果 | キュメイア</title>
+    <link rel="stylesheet" href="{% static 'css/battle_timeline.css' %}">
+</head>
+<body class="qh-battle-body">
+
 <main class="battle-screen qh-battle-page qh-arena-page">
   <div class="qh-page-head"><strong>キュメイア</strong></div>
   <header class="qh-battle-banner"><span aria-hidden="true">⚔</span><div><small>闘技場 {{ history.floor }}階</small><h1>{{ character.name }} VS {{ opponent.name }}</h1></div></header>
@@ -20,4 +27,5 @@
   </section>
   <div class="qh-return"><a href="{% url 'home' %}" class="return-button">街へ戻る</a></div>
 </main>
-{% endblock %}
+</body>
+</html>
