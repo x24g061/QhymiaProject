@@ -7,61 +7,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>
-        {% block title %}Qhymia{% endblock %}
-    </title>
+    <title>{% block title %}Qhymia{% endblock %}</title>
 
-
+    <!-- ========================================
+         共通CSS
+    ======================================== -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/sns.css' %}">
     <link rel="stylesheet" href="{% static 'css/market-notifications.css' %}">
 
+    <!-- ========================================
+         ゲーム設定
+         テーマを早期適用して画面のちらつきを防止
+    ======================================== -->
+    <script src="{% static 'js/game-settings.js' %}"></script>
+
+    <!-- ========================================
+         ページ固有CSS
+    ======================================== -->
     {% block extra_css %}
     {% endblock %}
+
+    <!-- ========================================
+         ゲーム設定CSS
+         ページ固有CSSより後に読み込む
+    ======================================== -->
+    <link rel="stylesheet" href="{% static 'css/game-settings.css' %}">
 
 </head>
 
 <body>
 
+    <!-- ========================================
+         共通ヘッダー
+    ======================================== -->
     <header class="site-header">
 
-        <!-- 左 -->
+        <!-- 左側：ロゴ・ログアウト -->
         <div class="header-left">
 
-            <h1>
-                Qhymia
-            </h1>
-
+            <h1>Qhymia</h1>
 
             {% block header_left_extra %}
             {% endblock %}
 
-
             {% if user.is_authenticated %}
 
             {% block header_logout %}
-
             <a href="{% url 'accounts:logout' %}" class="site-header-logout">
                 ログアウト
             </a>
-
             {% endblock %}
 
             {% endif %}
 
         </div>
 
-
-        <!-- 中央 -->
+        <!-- 中央：将来の拡張領域 -->
         <div class="header-center">
         </div>
 
-
-        <!-- 右 -->
+        <!-- 右側：各種メニュー -->
         <div class="header-right">
 
             {% if user.is_authenticated %}
 
+            <!-- 管理者モード -->
             {% if request.session.admin_mode %}
 
             <span class="admin-mode-badge">
@@ -74,9 +85,14 @@
 
             {% endif %}
 
-
+            <!-- ページ固有ボタン -->
             {% block header_right_extra %}
             {% endblock %}
+
+            <!-- 共通設定ボタン -->
+            <a href="{% url 'accounts:settings' %}" class="header-settings-button">
+                設定
+            </a>
 
             {% endif %}
 
@@ -84,37 +100,49 @@
 
     </header>
 
+    <!-- ========================================
+         メインコンテンツ
+    ======================================== -->
     <main>
 
+        <!-- Djangoメッセージ -->
         {% if messages %}
+
         <div class="message-area">
+
             {% for message in messages %}
+
             <div class="message {{ message.tags }}">
                 {{ message }}
             </div>
+
             {% endfor %}
+
         </div>
+
         {% endif %}
 
+        <!-- ページ固有コンテンツ -->
         {% block content %}
         {% endblock %}
 
     </main>
 
-
-    <!-- =====================
+    <!-- ========================================
          全画面共通ミニSNS
-    ====================== -->
-
+    ======================================== -->
     {% include "sns.html" %}
 
+    <!-- ========================================
+         共通JavaScript
+    ======================================== -->
+    <script src="{% static 'js/sns.js' %}"></script>
 
-    <script src="{% static 'js/sns.js' %}">
-    </script>
+    <!-- 売却通知WebSocket -->
+    {% if user.is_authenticated %}
+    <script src="{% static 'js/market-notifications.js' %}" defer></script>
+    {% endif %}
 
 </body>
-{% if user.is_authenticated %}
-<script src="{% static 'js/market-notifications.js' %}" defer></script>
-{% endif %}
 
 </html>

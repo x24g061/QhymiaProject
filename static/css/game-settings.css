@@ -1,0 +1,280 @@
+/* =========================================
+   ゲーム設定メニュー
+========================================= */
+
+.game-settings-menu {
+    position: relative;
+    z-index: 1000;
+}
+
+.game-settings-trigger {
+    list-style: none;
+    padding: 9px 14px;
+    border: 1px solid rgba(255, 255, 255, .3);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, .1);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.game-settings-trigger::-webkit-details-marker {
+    display: none;
+}
+
+.game-settings-trigger:hover {
+    background: rgba(255, 255, 255, .2);
+}
+
+.game-settings-panel {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(300px, calc(100vw - 24px));
+    padding: 20px;
+    border: 1px solid #536779;
+    border-radius: 14px;
+    background: #202d39;
+    color: #f2f5f9;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, .35);
+}
+
+.game-settings-panel h2 {
+    margin: 0 0 20px;
+    font-size: 18px;
+}
+
+.game-settings-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.game-settings-field label {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.game-settings-field select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #748595;
+    border-radius: 8px;
+    background: #354453;
+    color: white;
+}
+
+#game-settings-reset {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #637e94;
+    border-radius: 8px;
+    background: #314c63;
+    color: white;
+    cursor: pointer;
+}
+
+.game-settings-note {
+    margin: 12px 0 0;
+    font-size: 11px;
+    color: #b6c5d1;
+    text-align: center;
+}
+
+/* =========================================
+   フォント設定
+========================================= */
+
+:root {
+    --game-font: "Yu Gothic", "Meiryo", sans-serif;
+}
+
+body,
+body .qh-home,
+body button,
+body input,
+body select,
+body textarea {
+    font-family: var(--game-font) !important;
+}
+
+html[data-game-font="mincho"] {
+    --game-font: "Yu Mincho", "Hiragino Mincho ProN", serif;
+}
+
+html[data-game-font="rounded"] {
+    --game-font: "Hiragino Maru Gothic ProN",
+        "Yu Gothic", sans-serif;
+}
+
+/* =========================================
+   ダークモード
+========================================= */
+
+html[data-game-theme="dark"] {
+    color-scheme: dark;
+}
+
+html[data-game-theme="dark"] body {
+    background-color: #111923 !important;
+    background-image:
+        linear-gradient(rgba(7, 13, 22, .86),
+            rgba(7, 13, 22, .86)),
+        url("../images/home.jpg") !important;
+    color: #e8eef5;
+}
+
+html[data-game-theme="dark"] .qh-home {
+    --text: #e8eef5;
+    --muted: #a9bac8;
+
+    --panel: rgba(29, 41, 54, .96);
+    --panel-light: rgba(40, 54, 69, .92);
+    --border: rgba(158, 182, 205, .22);
+
+    --main-soft: #263d4d;
+    --main-pale: #1c2c39;
+}
+
+/* 共通パネル */
+
+html[data-game-theme="dark"] .game-panel,
+html[data-game-theme="dark"] .home-card,
+html[data-game-theme="dark"] .arena-panel {
+    background: rgba(29, 41, 54, .96);
+    color: #e8eef5;
+    border-color: rgba(160, 190, 215, .22);
+}
+
+/* 汎用フォーム */
+
+html[data-game-theme="dark"] main input,
+html[data-game-theme="dark"] main select,
+html[data-game-theme="dark"] main textarea {
+    background-color: #263544;
+    color: #f2f6fb;
+    border-color: #61758a;
+}
+
+/* 設定メニューの白文字は維持 */
+
+html[data-game-theme="dark"] .game-settings-panel {
+    color: #f2f5f9;
+}
+
+/* =========================================
+   小さい画面
+========================================= */
+
+@media (max-width: 700px) {
+    .game-settings-trigger {
+        padding: 7px 9px;
+        font-size: 10px;
+    }
+
+    .game-settings-panel {
+        position: fixed;
+        top: 72px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+
+/* ========================================
+   ゲーム設定画面のレイアウト修正
+======================================== */
+
+.game-display-settings .settings-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 190px;
+    align-items: center;
+    gap: 24px;
+    padding: 22px;
+}
+
+.game-display-settings .settings-item-text {
+    min-width: 0;
+    width: auto;
+    overflow-wrap: normal;
+    word-break: normal;
+}
+
+.game-display-settings .settings-item-text strong,
+.game-display-settings .settings-item-text p {
+    writing-mode: horizontal-tb;
+    overflow-wrap: normal;
+    word-break: normal;
+}
+
+.game-display-settings .game-setting-select {
+    width: 190px;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid #cbdadd;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+.game-display-settings .game-settings-reset {
+    display: inline-block;
+    width: 190px !important;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 11px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.game-display-settings .game-settings-save-note {
+    margin: 0;
+    padding: 0 22px 22px;
+    font-size: 12px;
+}
+
+/* スマートフォン対応 */
+@media (max-width: 600px) {
+    .game-display-settings .settings-item {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+    }
+
+    .game-display-settings .game-setting-select,
+    .game-display-settings .game-settings-reset {
+        width: 100% !important;
+    }
+}
+
+/* ダークモード動作確認 */
+
+html[data-game-theme="dark"] body {
+    background-color: #101820 !important;
+    background-image: none !important;
+    color: #e6edf3;
+}
+
+html[data-game-theme="dark"] .settings-header,
+html[data-game-theme="dark"] .settings-section {
+    background-color: #1d2935 !important;
+    border-color: #354859 !important;
+}
+
+html[data-game-theme="dark"] .settings-header h1,
+html[data-game-theme="dark"] .settings-section-heading h2,
+html[data-game-theme="dark"] .settings-item-text strong {
+    color: #edf4fa !important;
+}
+
+html[data-game-theme="dark"] .settings-header p,
+html[data-game-theme="dark"] .settings-item-text p {
+    color: #a9bac8 !important;
+}

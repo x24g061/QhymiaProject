@@ -8,10 +8,7 @@
 
 {% block extra_css %}
 
-<link
-    rel="stylesheet"
-    href="{% static 'css/settings.css' %}"
->
+<link rel="stylesheet" href="{% static 'css/settings.css' %}">
 
 {% endblock %}
 
@@ -44,22 +41,100 @@
         </div>
 
 
-        <a
-            href="{% url 'home' %}"
-            class="settings-back-button"
-        >
+        <a href="{% url 'home' %}" class="settings-back-button">
             ← ホームへ戻る
         </a>
 
     </div>
 
 
-    <form
-        method="post"
-        class="settings-form"
-    >
+    <form method="post" class="settings-form">
 
         {% csrf_token %}
+
+
+        <!-- ========================================
+     ゲーム設定
+======================================== -->
+
+        <section class="settings-section game-display-settings">
+
+            <div class="settings-section-heading">
+                <p class="settings-section-label">
+                    DISPLAY
+                </p>
+
+                <h2>ゲーム設定</h2>
+            </div>
+
+            <!-- 画面テーマ -->
+            <div class="settings-item">
+
+                <div class="settings-item-text">
+                    <strong>画面テーマ</strong>
+                    <p>
+                        ゲーム画面の明るさを変更できます。
+                        ダークモードでは背景やパネルを暗く表示します。
+                    </p>
+                </div>
+
+                <select id="game-theme" class="game-setting-select" aria-label="画面テーマ">
+                    <option value="light">
+                        ☀ ライトモード
+                    </option>
+                    <option value="dark">
+                        🌙 ダークモード
+                    </option>
+                </select>
+
+            </div>
+
+            <!-- フォント -->
+            <div class="settings-item">
+
+                <div class="settings-item-text">
+                    <strong>フォント</strong>
+                    <p>
+                        ゲーム内で使用する文字の書体を変更できます。
+                    </p>
+                </div>
+
+                <select id="game-font" class="game-setting-select" aria-label="フォント">
+                    <option value="standard">
+                        標準ゴシック
+                    </option>
+                    <option value="mincho">
+                        明朝体
+                    </option>
+                    <option value="rounded">
+                        丸ゴシック
+                    </option>
+                </select>
+
+            </div>
+
+            <!-- 初期化 -->
+            <div class="settings-item">
+
+                <div class="settings-item-text">
+                    <strong>表示設定を初期化</strong>
+                    <p>
+                        画面テーマとフォントを初期状態に戻します。
+                    </p>
+                </div>
+
+                <button type="button" id="game-settings-reset" class="game-settings-reset">
+                    初期設定に戻す
+                </button>
+
+            </div>
+
+            <p class="game-settings-save-note">
+                ※ 表示設定は変更すると自動保存されます。
+            </p>
+
+        </section>
+
 
 
         <!-- ========================================
@@ -98,21 +173,25 @@
                 </div>
 
 
+
+
                 <label class="settings-switch">
 
-                    <input
-                        type="checkbox"
-                        name="synthesis_sns_prompt_enabled"
+                    {% if game_settings.synthesis_sns_prompt_enabled %}
 
-                        {% if game_settings.synthesis_sns_prompt_enabled %}
-                            checked
-                        {% endif %}
-                    >
+                    <input type="checkbox" name="synthesis_sns_prompt_enabled" checked>
 
-                    <span class="settings-switch-slider">
-                    </span>
+                    {% else %}
+
+                    <input type="checkbox" name="synthesis_sns_prompt_enabled">
+
+                    {% endif %}
+
+                    <span class="settings-switch-slider"></span>
 
                 </label>
+
+
 
             </div>
 
