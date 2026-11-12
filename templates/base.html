@@ -9,41 +9,28 @@
 
     <title>{% block title %}Qhymia{% endblock %}</title>
 
-    <!-- ========================================
-         共通CSS
-    ======================================== -->
+    <!-- 共通CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/sns.css' %}">
     <link rel="stylesheet" href="{% static 'css/market-notifications.css' %}">
 
-    <!-- ========================================
-         ゲーム設定
-         テーマを早期適用して画面のちらつきを防止
-    ======================================== -->
+    <!-- テーマ設定をページ表示前に適用 -->
     <script src="{% static 'js/game-settings.js' %}"></script>
 
-    <!-- ========================================
-         ページ固有CSS
-    ======================================== -->
+    <!-- ページ固有CSS -->
     {% block extra_css %}
     {% endblock %}
 
-    <!-- ========================================
-         ゲーム設定CSS
-         ページ固有CSSより後に読み込む
-    ======================================== -->
+    <!-- 共通ゲーム設定CSS -->
     <link rel="stylesheet" href="{% static 'css/game-settings.css' %}">
 
 </head>
 
-<body>
+<body class="{% block body_class %}{% endblock %}">
 
-    <!-- ========================================
-         共通ヘッダー
-    ======================================== -->
+    <!-- 共通ヘッダー -->
     <header class="site-header">
 
-        <!-- 左側：ロゴ・ログアウト -->
         <div class="header-left">
 
             <h1>Qhymia</h1>
@@ -63,16 +50,14 @@
 
         </div>
 
-        <!-- 中央：将来の拡張領域 -->
-        <div class="header-center">
-        </div>
+        <!-- 中央：拡張用 -->
+        <div class="header-center"></div>
 
-        <!-- 右側：各種メニュー -->
+        <!-- 右側：メニュー -->
         <div class="header-right">
 
             {% if user.is_authenticated %}
 
-            <!-- 管理者モード -->
             {% if request.session.admin_mode %}
 
             <span class="admin-mode-badge">
@@ -85,11 +70,9 @@
 
             {% endif %}
 
-            <!-- ページ固有ボタン -->
             {% block header_right_extra %}
             {% endblock %}
 
-            <!-- 共通設定ボタン -->
             <a href="{% url 'accounts:settings' %}" class="header-settings-button">
                 設定
             </a>
@@ -100,12 +83,9 @@
 
     </header>
 
-    <!-- ========================================
-         メインコンテンツ
-    ======================================== -->
+    <!-- メインコンテンツ -->
     <main>
 
-        <!-- Djangoメッセージ -->
         {% if messages %}
 
         <div class="message-area">
@@ -122,25 +102,20 @@
 
         {% endif %}
 
-        <!-- ページ固有コンテンツ -->
         {% block content %}
         {% endblock %}
 
     </main>
 
-    <!-- ========================================
-         全画面共通ミニSNS
-    ======================================== -->
+    <!-- 共通ミニSNS -->
     {% include "sns.html" %}
 
-    <!-- ========================================
-         共通JavaScript
-    ======================================== -->
+    <!-- 共通JavaScript -->
     <script src="{% static 'js/sns.js' %}"></script>
 
-    <!-- 売却通知WebSocket -->
     {% if user.is_authenticated %}
-    <script src="{% static 'js/market-notifications.js' %}" defer></script>
+    <script src="{% static 'js/market-notifications.js' %}" defer>
+    </script>
     {% endif %}
 
 </body>

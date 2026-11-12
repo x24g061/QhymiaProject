@@ -119,15 +119,6 @@ html[data-game-theme="dark"] {
     color-scheme: dark;
 }
 
-html[data-game-theme="dark"] body {
-    background-color: #111923 !important;
-    background-image:
-        linear-gradient(rgba(7, 13, 22, .86),
-            rgba(7, 13, 22, .86)),
-        url("../images/home.jpg") !important;
-    color: #e8eef5;
-}
-
 html[data-game-theme="dark"] .qh-home {
     --text: #e8eef5;
     --muted: #a9bac8;
@@ -256,12 +247,6 @@ html[data-game-theme="dark"] .game-settings-panel {
 
 /* ダークモード動作確認 */
 
-html[data-game-theme="dark"] body {
-    background-color: #101820 !important;
-    background-image: none !important;
-    color: #e6edf3;
-}
-
 html[data-game-theme="dark"] .settings-header,
 html[data-game-theme="dark"] .settings-section {
     background-color: #1d2935 !important;
@@ -277,4 +262,77 @@ html[data-game-theme="dark"] .settings-item-text strong {
 html[data-game-theme="dark"] .settings-header p,
 html[data-game-theme="dark"] .settings-item-text p {
     color: #a9bac8 !important;
+}
+
+
+/* ============================================
+   Qhymia ホーム背景 昼夜切り替え
+============================================ */
+
+/* ライトモード：昼の街 */
+html:not([data-game-theme="dark"]) body.home-page {
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.58),
+            rgba(255, 255, 255, 0.58)),
+        url("../images/home.jpg") !important;
+
+    background-color: #e7edf0;
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* ダークモード：夜の街 */
+html[data-game-theme="dark"] body.home-page {
+    background-image:
+        linear-gradient(rgba(5, 12, 26, 0.24),
+            rgba(5, 12, 26, 0.46)),
+        url("../images/home_night.jpg") !important;
+
+    background-color: #0b1423 !important;
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #e8eef5;
+}
+
+/* 夜の街に合わせた半透明パネル */
+html[data-game-theme="dark"] body.home-page .qh-home {
+    --text: #e8eef5;
+    --muted: #adbdca;
+    --panel: rgba(27, 40, 55, 0.90);
+    --panel-light: rgba(37, 51, 67, 0.86);
+    --border: rgba(155, 187, 210, 0.24);
+}
+
+/* スマートフォン */
+@media (max-width: 700px) {
+    html body.home-page {
+        background-attachment: scroll !important;
+    }
+}
+
+/* ホーム以外：既存の背景を暗くする */
+html[data-game-theme="dark"] body:not(.home-page) {
+    background-color: #354250 !important;
+    background-blend-mode: multiply;
+    color: #e8eef5;
+}
+
+/* ホーム：夜の街に切り替える */
+html[data-game-theme="dark"] body.home-page {
+    background-image:
+        linear-gradient(rgba(5, 12, 26, 0.24),
+            rgba(5, 12, 26, 0.46)),
+        url("../images/home_night.jpg") !important;
+
+    background-color: #0b1423 !important;
+    background-blend-mode: normal;
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #e8eef5;
 }
