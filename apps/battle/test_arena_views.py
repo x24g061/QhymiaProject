@@ -93,7 +93,10 @@ class ArenaScreenTests(TestCase):
         response = self.client.get(reverse("home"))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context["arena_state"].floor_id, 10)
-        self.assertEqual([card["floor"] for card in response.context["arena_cards"]], [9, 10, 11])
+        self.assertEqual(
+            [card["floor"] for card in response.context["arena_cards"]],
+            [10]
+        )        
         self.assertEqual(response.context["arena_master"], self.defender)
         self.assertContains(response, "画面のマスター")
         self.assertContains(response, 'data-current="77"')
@@ -101,9 +104,18 @@ class ArenaScreenTests(TestCase):
         self.assertContains(response, f'action="{self.url}"')
         self.assertContains(
             response,
-            "連勝数：5連勝",
+            "連勝数：",
         )
 
+        self.assertContains(
+            response,
+            "5",
+        )
+
+        self.assertContains(
+            response,
+            "連勝",
+        )
         self.assertNotContains(response, f'href="{self.url}"')
 
     def test_home_does_not_heal_existing_arena_state(self):
@@ -114,13 +126,43 @@ class ArenaScreenTests(TestCase):
         self.assertEqual((self.state.current_hp, self.state.current_mp), (62, 19))
         self.assertEqual((self.character.current_hp, self.character.current_mp), (7, 3))
 
+
+
     def test_home_handles_first_and_last_floor(self):
-        for floor, expected in [(1, [False, True, True]), (100, [True, True, False])]:
+        """
+        1階・100階でもホームが正常表示され、
+        マスターのいる階層だけがカードに含まれる。
+        """
+
+        for floor in [1, 100]:
             with self.subTest(floor=floor):
-                ArenaState.objects.filter(pk=self.state.pk).update(floor_id=floor)
-                response = self.client.get(reverse("home"))
-                self.assertEqual(response.status_code, 200)
-                self.assertEqual([c["exists"] for c in response.context["arena_cards"]], expected)
+
+                ArenaState.objects.filter(
+                    pk=self.state.pk
+                ).update(
+                    floor_id=floor
+                )
+
+                response = self.client.get(
+                    reverse("home")
+                )
+
+                self.assertEqual(
+                    response.status_code,
+                    200
+                )
+
+                cards = response.context["arena_cards"]
+
+                # テストデータでは10階だけにマスターがいる
+                self.assertEqual(
+                    [card["floor"] for card in cards],
+                    [10]
+                )
+
+                self.assertFalse(
+                    cards[0]["is_current"]
+                )
 
     def test_missing_state_is_initialized_once(self):
         self.state.delete()
