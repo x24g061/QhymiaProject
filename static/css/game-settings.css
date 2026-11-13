@@ -336,3 +336,2453 @@ html[data-game-theme="dark"] body.home-page {
     background-attachment: fixed;
     color: #e8eef5;
 }
+
+
+/* ============================================
+   Qhymia 夜のホーム画面
+   視認性・配色の調整
+============================================ */
+
+/* ホーム全体の基本色 */
+html[data-game-theme="dark"] body.home-page .qh-home {
+    --text: #e8eef5;
+    --muted: #b4c3d1;
+    --panel: rgba(24, 36, 52, 0.92);
+    --panel-light: rgba(35, 49, 65, 0.90);
+    --border: rgba(145, 178, 205, 0.28);
+}
+
+/* メインカード */
+html[data-game-theme="dark"] body.home-page .home-card,
+html[data-game-theme="dark"] body.home-page .arena-panel {
+    background: rgba(24, 36, 52, 0.92) !important;
+    border-color: rgba(145, 178, 205, 0.28);
+    color: #e8eef5;
+}
+
+/* 見出し */
+html[data-game-theme="dark"] body.home-page .card-heading h2,
+html[data-game-theme="dark"] body.home-page .arena-collapse-heading h2 {
+    color: #f0f6fc !important;
+}
+
+/* ステータスの基本文字 */
+html[data-game-theme="dark"] body.home-page .status-line,
+html[data-game-theme="dark"] body.home-page .character-meta,
+html[data-game-theme="dark"] body.home-page .card-description {
+    color: #dce7f0;
+}
+
+/* ステータス数値 */
+html[data-game-theme="dark"] body.home-page .status-line strong,
+html[data-game-theme="dark"] body.home-page .character-meta strong {
+    color: #ffffff;
+}
+
+/* 説明文 */
+html[data-game-theme="dark"] body.home-page .section-label {
+    color: #89c7dc;
+}
+
+/* 闘技場カード内の文字 */
+html[data-game-theme="dark"] body.home-page .arena-card-vitals,
+html[data-game-theme="dark"] body.home-page .arena-card-streak {
+    color: #243e4c !important;
+}
+
+/* ========================================
+   ダークモード：内側カードを明るいグレーに統一
+======================================== */
+
+/* 行動メニュー */
+html[data-game-theme="dark"] body.home-page .qh-home .home-action-button {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+    color: #193b48 !important;
+}
+
+/* 行動メニューのタイトル */
+html[data-game-theme="dark"] body.home-page .qh-home .home-action-button strong {
+    color: #193b48 !important;
+}
+
+/* 行動メニューの説明文 */
+html[data-game-theme="dark"] body.home-page .qh-home .home-action-button small {
+    color: #586c78 !important;
+}
+
+/* ステータスのキャラクターカード */
+html[data-game-theme="dark"] body.home-page .qh-home .character-header {
+    background: #c4c9cf !important;
+    color: #193b48 !important;
+}
+
+/* ステータスの能力値カード */
+html[data-game-theme="dark"] body.home-page .qh-home .status-box {
+    background: #c4c9cf !important;
+    color: #193b48 !important;
+}
+
+/* 能力値の数値 */
+html[data-game-theme="dark"] body.home-page .qh-home .status-box strong {
+    color: #193b48 !important;
+}
+
+/* ホバー時 */
+html[data-game-theme="dark"] body.home-page .qh-home .home-action-button:hover {
+    background: #d6dbe0 !important;
+    border-color: #8db3c4 !important;
+}
+
+/* ダークモード：闘技場タイトルの文字色 */
+html[data-game-theme="dark"] body.home-page .arena-collapse-heading h2 {
+    color: #19343c !important;
+}
+
+/* =========================================
+   ダークモード：home画面の白い部分を暗く統一
+========================================= */
+
+html[data-game-theme="dark"] body.home-page .arena-section,
+html[data-game-theme="dark"] body.home-page .arena-collapse-heading,
+html[data-game-theme="dark"] body.home-page .arena-battle-area,
+html[data-game-theme="dark"] body.home-page .character-status-section,
+html[data-game-theme="dark"] body.home-page .action-menu-section,
+html[data-game-theme="dark"] body.home-page .exploration-section,
+html[data-game-theme="dark"] body.home-page .status-card,
+html[data-game-theme="dark"] body.home-page .action-card,
+html[data-game-theme="dark"] body.home-page .exploration-card {
+    background: rgba(20, 32, 48, 0.92) !important;
+    border: 1px solid rgba(110, 150, 190, 0.22) !important;
+    color: #e6edf5 !important;
+}
+
+/* 闘技場の上見出し部分 */
+html[data-game-theme="dark"] body.home-page .arena-collapse-heading h2,
+html[data-game-theme="dark"] body.home-page .character-status-section h2,
+html[data-game-theme="dark"] body.home-page .action-menu-section h2,
+html[data-game-theme="dark"] body.home-page .exploration-section h2 {
+    color: #f2f7fb !important;
+}
+
+/* 小見出し */
+html[data-game-theme="dark"] body.home-page .arena-collapse-heading p,
+html[data-game-theme="dark"] body.home-page .character-status-section p,
+html[data-game-theme="dark"] body.home-page .action-menu-section p,
+html[data-game-theme="dark"] body.home-page .exploration-section p {
+    color: #aebdcb !important;
+}
+
+/* ステータス内の白ボックス */
+html[data-game-theme="dark"] body.home-page .status-box,
+html[data-game-theme="dark"] body.home-page .profile-card,
+html[data-game-theme="dark"] body.home-page .character-summary,
+html[data-game-theme="dark"] body.home-page .stat-box {
+    background: rgba(210, 218, 228, 0.88) !important;
+    color: #183040 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+/* 行動メニューの各ボタン */
+html[data-game-theme="dark"] body.home-page .action-link,
+html[data-game-theme="dark"] body.home-page .action-menu-card,
+html[data-game-theme="dark"] body.home-page .action-menu-item {
+    background: rgba(210, 218, 228, 0.90) !important;
+    color: #183040 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+/* 行動メニューの説明文 */
+html[data-game-theme="dark"] body.home-page .action-link small,
+html[data-game-theme="dark"] body.home-page .action-menu-card small,
+html[data-game-theme="dark"] body.home-page .action-menu-item small,
+html[data-game-theme="dark"] body.home-page .action-link p,
+html[data-game-theme="dark"] body.home-page .action-menu-card p,
+html[data-game-theme="dark"] body.home-page .action-menu-item p {
+    color: #5d7386 !important;
+}
+
+/* 検索欄 */
+html[data-game-theme="dark"] body.home-page input[type="text"],
+html[data-game-theme="dark"] body.home-page input[type="search"] {
+    background: rgba(25, 39, 58, 0.95) !important;
+    color: #eef5fb !important;
+    border: 1px solid rgba(120, 150, 190, 0.30) !important;
+}
+
+html[data-game-theme="dark"] body.home-page input[type="text"]::placeholder,
+html[data-game-theme="dark"] body.home-page input[type="search"]::placeholder {
+    color: #9cb0c3 !important;
+}
+
+/* 闘技場の白カード */
+html[data-game-theme="dark"] body.home-page .arena-card,
+html[data-game-theme="dark"] body.home-page .arena-master-card,
+html[data-game-theme="dark"] body.home-page .arena-character-card {
+    background: rgba(218, 225, 234, 0.95) !important;
+    color: #183040 !important;
+}
+
+/* 闘技場カード内の細かい文字 */
+html[data-game-theme="dark"] body.home-page .arena-card p,
+html[data-game-theme="dark"] body.home-page .arena-card span,
+html[data-game-theme="dark"] body.home-page .arena-master-card p,
+html[data-game-theme="dark"] body.home-page .arena-master-card span {
+    color: #183040 !important;
+}
+
+
+/* ============================================
+   Qhymia ダークモード
+   ミニゲーム・オープンチャット統一
+============================================ */
+
+/* ========================================
+   ミニゲーム：外側のパネル
+======================================== */
+
+html[data-game-theme="dark"] body.home-page .qh-home .mini-game-section {
+    background: rgba(24, 36, 52, 0.94) !important;
+    border: 1px solid rgba(145, 178, 205, 0.28) !important;
+    color: #e8eef5 !important;
+}
+
+/* ミニゲームのタイトル */
+html[data-game-theme="dark"] body.home-page .qh-home .mini-game-header h2 {
+    color: #f0f6fc !important;
+    border-bottom-color: rgba(145, 178, 205, 0.18);
+}
+
+/* ミニゲームの説明文 */
+html[data-game-theme="dark"] body.home-page .qh-home .mini-game-description,
+html[data-game-theme="dark"] body.home-page .qh-home .mini-game-footer {
+    color: #b4c3d1 !important;
+}
+
+/* 釣りなどのミニゲームボタン */
+html[data-game-theme="dark"] body.home-page .qh-home .mini-game-item {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+    color: #193b48 !important;
+}
+
+/* ミニゲーム名 */
+html[data-game-theme="dark"] body.home-page .qh-home .mini-game-info strong {
+    color: #193b48 !important;
+}
+
+/* ミニゲームの説明 */
+html[data-game-theme="dark"] body.home-page .qh-home .mini-game-info small {
+    color: #586c78 !important;
+}
+
+/* ホバー */
+html[data-game-theme="dark"] body.home-page .qh-home .mini-game-item:hover {
+    background: #d6dbe0 !important;
+}
+
+
+/* ========================================
+   オープンチャット：外側のパネル
+======================================== */
+
+html[data-game-theme="dark"] body.home-page .qh-home .chat-card {
+    background: rgba(24, 36, 52, 0.94) !important;
+    border-color: rgba(145, 178, 205, 0.28) !important;
+}
+
+/* メッセージ一覧の背景 */
+html[data-game-theme="dark"] body.home-page .qh-home .chat-messages {
+    background: rgba(13, 23, 37, 0.90) !important;
+    border-color: rgba(145, 178, 205, 0.20) !important;
+}
+
+/* 個別メッセージ */
+html[data-game-theme="dark"] body.home-page .qh-home .chat-message {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+}
+
+/* メッセージ本文・ユーザー名 */
+html[data-game-theme="dark"] body.home-page .qh-home .chat-message p,
+html[data-game-theme="dark"] body.home-page .qh-home .chat-message-header strong {
+    color: #193b48 !important;
+}
+
+/* 投稿時間 */
+html[data-game-theme="dark"] body.home-page .qh-home .chat-message-header span {
+    color: #586c78 !important;
+}
+
+/* チャット入力欄 */
+html[data-game-theme="dark"] body.home-page .qh-home .chat-form input {
+    background: #17283a !important;
+    color: #e8eef5 !important;
+    border-color: #415b70 !important;
+}
+
+/* 入力欄のプレースホルダー */
+html[data-game-theme="dark"] body.home-page .qh-home .chat-form input::placeholder {
+    color: #91a9bb !important;
+}
+
+/* チャット送信ボタン */
+html[data-game-theme="dark"] body.home-page .qh-home .chat-form button {
+    background: #347f91 !important;
+    color: #ffffff !important;
+}
+
+/* 空メッセージ・読み込み中 */
+html[data-game-theme="dark"] body.home-page .qh-home .chat-loading,
+html[data-game-theme="dark"] body.home-page .qh-home .chat-empty {
+    color: #b4c3d1 !important;
+}
+
+
+/* ============================================
+   Qhymia 全画面ダークモード
+   ホーム以外の基本デザイン
+============================================ */
+
+html[data-game-theme="dark"] {
+    --dark-bg: #101923;
+    --dark-panel: #1c2938;
+    --dark-panel-light: #263748;
+    --dark-border: #40586a;
+    --dark-text: #edf4fa;
+    --dark-muted: #adbfce;
+    --dark-accent: #83c4dc;
+}
+
+/* 各ページの基本文字色 */
+html[data-game-theme="dark"] :is(.inventory-page,
+    .shop-page,
+    .tactics-page,
+    .sns-page,
+    .profile-page,
+    .again-page,
+    .palm-page,
+    .synthesis-page,
+    .fishing-page,
+    .character-list-page) {
+    --text: var(--dark-text);
+    --muted: var(--dark-muted);
+    --main-deep: var(--dark-text);
+    --main-soft: #243b4b;
+    --main-pale: #203341;
+
+    color: var(--dark-text);
+}
+
+/* ========================================
+   倉庫・ショップ
+======================================== */
+
+html[data-game-theme="dark"] :is(.inventory-side-menu,
+    .inventory-main,
+    .inventory-panel,
+    .side-menu,
+    .market-area,
+    .q-charge-section,
+    .money-box) {
+    background: var(--dark-panel) !important;
+    border-color: var(--dark-border) !important;
+    color: var(--dark-text) !important;
+}
+
+/* テーブル */
+html[data-game-theme="dark"] :is(.equipment-table,
+    .item-table,
+    .table-wrapper,
+    .equipment-row,
+    .table-row) {
+    background-color: var(--dark-panel-light) !important;
+    border-color: var(--dark-border) !important;
+    color: var(--dark-text) !important;
+}
+
+/* ========================================
+   戦術・スキル
+======================================== */
+
+html[data-game-theme="dark"] :is(.tactics-card,
+    .tactics-profile,
+    .tactics-stat,
+    .tactics-slot,
+    .tactics-skill) {
+    background: var(--dark-panel) !important;
+    border-color: var(--dark-border) !important;
+    color: var(--dark-text) !important;
+}
+
+/* ========================================
+   SNS
+======================================== */
+
+html[data-game-theme="dark"] :is(.sns-hero,
+    .sns-navigation,
+    .sns-create-post,
+    .sns-post-box,
+    .sns-empty) {
+    background: var(--dark-panel) !important;
+    border-color: var(--dark-border) !important;
+    color: var(--dark-text) !important;
+}
+
+/* ========================================
+   プロフィール・回帰・手相
+======================================== */
+
+html[data-game-theme="dark"] :is(.profile-summary-section,
+    .profile-detail-section,
+    .profile-info-box,
+    .profile-detail-block,
+    .again-hero,
+    .again-guide,
+    .again-execution,
+    .again-status-card,
+    .bonus-section,
+    .palm-fortune-header,
+    .palm-detail,
+    .palm-chart-panel,
+    .palm-item-panel) {
+    background: var(--dark-panel) !important;
+    border-color: var(--dark-border) !important;
+    color: var(--dark-text) !important;
+}
+
+/* ========================================
+   装備合成
+======================================== */
+
+html[data-game-theme="dark"] :is(.synthesis-main,
+    .synthesis-equipment-item,
+    .synthesis-material-panel,
+    .synthesis-material-item,
+    .synthesis-rule) {
+    background: var(--dark-panel) !important;
+    border-color: var(--dark-border) !important;
+    color: var(--dark-text) !important;
+}
+
+/* ========================================
+   見出し・説明文
+======================================== */
+
+html[data-game-theme="dark"] :is(.inventory-title,
+    .shop-title,
+    .tactics-section-heading,
+    .profile-player-name,
+    .mini-sns-post-text,
+    .sns-post-text,
+    .synthesis-equipment-name) {
+    color: var(--dark-text) !important;
+}
+
+/* ========================================
+   入力欄
+======================================== */
+
+html[data-game-theme="dark"] main :is(input:not([type="checkbox"]):not([type="radio"]),
+    textarea,
+    select) {
+    background-color: #263748;
+    color: #edf4fa;
+    border-color: #536d80;
+}
+
+/* ============================================
+   Qhymia ダークモード共通文字デザイン
+   ホーム画面の配色に統一
+============================================ */
+
+html[data-game-theme="dark"] {
+    --qh-dark-panel: #182434;
+    --qh-dark-text: #f0f6fc;
+    --qh-dark-muted: #b4c3d1;
+    --qh-dark-accent: #8fc7de;
+    --qh-dark-card: #c4c9cf;
+    --qh-dark-card-text: #193b48;
+    --qh-dark-card-muted: #586c78;
+}
+
+/* ページ全体の基本文字色 */
+html[data-game-theme="dark"] main {
+    color: var(--qh-dark-text);
+}
+
+/* セクション見出し */
+html[data-game-theme="dark"] main :is(.inventory-title,
+    .shop-title,
+    .tactics-heading h1,
+    .sns-hero h1,
+    .profile-player-name,
+    .again-hero h1,
+    .palm-fortune-header h1,
+    .synthesis-main-header h2,
+    .fishing-heading h1) {
+    color: var(--qh-dark-text) !important;
+}
+
+/* ラベル・英語の小見出し */
+html[data-game-theme="dark"] main :is(.inventory-label,
+    .shop-label,
+    .tactics-eyebrow,
+    .sns-label,
+    .again-label,
+    .palm-small-label,
+    .synthesis-label) {
+    color: var(--qh-dark-accent) !important;
+}
+
+/* 説明文 */
+html[data-game-theme="dark"] main :is(.side-description,
+    .tactics-description,
+    .sns-hero-description,
+    .again-description,
+    .palm-panel-description,
+    .fishing-description) {
+    color: var(--qh-dark-muted) !important;
+}
+
+
+/* ============================================
+   Qhymia DARK MODE : INVENTORY
+   倉庫専用ダークモード
+============================================ */
+
+/* 倉庫全体の文字・CSS変数 */
+html[data-game-theme="dark"] .inventory-page {
+    --text: #f0f6fc;
+    --muted: #b4c3d1;
+    --main-deep: #f0f6fc;
+    --main-dark: #8fc7de;
+    --main-soft: #293d4c;
+    --main-pale: #253948;
+    --panel: rgba(24, 36, 52, 0.94);
+    --border: rgba(145, 178, 205, 0.28);
+
+    color: #f0f6fc;
+}
+
+/* 上部ナビゲーション */
+html[data-game-theme="dark"] .inventory-page .inventory-top-menu {
+    background: rgba(24, 36, 52, 0.94) !important;
+    border-color: rgba(145, 178, 205, 0.28) !important;
+    color: #f0f6fc;
+}
+
+/* ホーム・ショップへ戻るボタン */
+html[data-game-theme="dark"] .inventory-page .inventory-top-menu .top-button {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+    color: #193b48 !important;
+}
+
+/* 外側のパネル */
+html[data-game-theme="dark"] .inventory-page :is(.inventory-side-menu,
+    .inventory-main) {
+    background: rgba(24, 36, 52, 0.94) !important;
+    border-color: rgba(145, 178, 205, 0.28) !important;
+    color: #f0f6fc;
+}
+
+/* 倉庫のタイトル */
+html[data-game-theme="dark"] .inventory-page .inventory-title h1,
+html[data-game-theme="dark"] .inventory-page .inventory-side-menu h2 {
+    color: #f0f6fc !important;
+}
+
+/* 小見出し */
+html[data-game-theme="dark"] .inventory-page .inventory-label {
+    color: #8fc7de !important;
+}
+
+/* 説明文 */
+html[data-game-theme="dark"] .inventory-page :is(.inventory-title p:not(.inventory-label),
+    .side-description) {
+    color: #b4c3d1 !important;
+}
+
+/* サイドメニューのボタン */
+html[data-game-theme="dark"] .inventory-page .side-button {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+    color: #193b48 !important;
+}
+
+/* 選択中のメニュー */
+html[data-game-theme="dark"] .inventory-page .side-button.active {
+    background: #347f91 !important;
+    color: #ffffff !important;
+}
+
+/* カテゴリの背景 */
+html[data-game-theme="dark"] .inventory-page .category-tabs {
+    background: #223243 !important;
+    border-bottom-color: #40586a !important;
+}
+
+/* カテゴリボタン */
+html[data-game-theme="dark"] .inventory-page .category-button {
+    background: #c4c9cf !important;
+    color: #193b48 !important;
+    border-color: #aeb8c1 !important;
+}
+
+html[data-game-theme="dark"] .inventory-page .category-button.active {
+    background: #347f91 !important;
+    color: #ffffff !important;
+}
+
+/* テーブル全体 */
+html[data-game-theme="dark"] .inventory-page :is(.equipment-table,
+    .item-table,
+    .table-wrapper) {
+    background: #243545 !important;
+    border-color: #40586a !important;
+    color: #f0f6fc;
+}
+
+/* 装備・アイテムの行 */
+html[data-game-theme="dark"] .inventory-page :is(.equipment-row,
+    .item-row) {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+    color: #193b48 !important;
+}
+
+/* テーブルのヘッダーは青系を維持 */
+html[data-game-theme="dark"] .inventory-page :is(.equipment-header,
+    .item-header) {
+    background: #285f6c !important;
+    color: #ffffff !important;
+}
+
+/* 明るい行の文字 */
+html[data-game-theme="dark"] .inventory-page :is(.equipment-row,
+    .item-row) :is(.table-cell,
+    .item-name-cell,
+    strong,
+    small,
+    span) {
+    color: #193b48;
+}
+
+/* 補助説明文 */
+html[data-game-theme="dark"] .inventory-page :is(.equipment-row,
+    .item-row) .item-name-cell small {
+    color: #586c78 !important;
+}
+
+/* 装備操作のボタン */
+html[data-game-theme="dark"] .inventory-page .equipment-action-button {
+    background: #347f91 !important;
+    color: #ffffff !important;
+}
+
+/* 取り外しボタン */
+html[data-game-theme="dark"] .inventory-page .equipment-action-button.remove {
+    background: #d7dce1 !important;
+    color: #193b48 !important;
+}
+
+/* スマホ表示も既存レイアウトを維持 */
+@media (max-width: 700px) {
+    html[data-game-theme="dark"] .inventory-page {
+        color: #f0f6fc;
+    }
+}
+
+/* 倉庫：既存の壁紙を夜仕様に */
+html[data-game-theme="dark"] body:has(.inventory-page) {
+    background-image:
+        linear-gradient(rgba(7, 14, 25, 0.68),
+            rgba(7, 14, 25, 0.78)),
+        url("../images/inventory.jpg") !important;
+
+    background-color: #101923 !important;
+    background-blend-mode: normal;
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
+}
+
+/* ========================================
+   ダークモード：倉庫の種類バッジ修正
+======================================== */
+
+html[data-game-theme="dark"] .inventory-page .category-tag {
+    background: #d8e0e6 !important;
+    color: #193b48 !important;
+    border: 1px solid #a5b6c2 !important;
+}
+
+/* 装備一覧の中でも文字色を確実に適用 */
+html[data-game-theme="dark"] .inventory-page .equipment-row .category-tag,
+html[data-game-theme="dark"] .inventory-page .item-row .category-tag {
+    background: #d8e0e6 !important;
+    color: #193b48 !important;
+}
+
+
+/* ============================================
+   Qhymia DARK MODE : SHOP / MARKET
+   ショップ・フリマ共通デザイン
+============================================ */
+
+/* ショップの既存壁紙を暗くする */
+html[data-game-theme="dark"] body:has(.shop-page) {
+    background-image:
+        linear-gradient(rgba(7, 14, 25, 0.70),
+            rgba(7, 14, 25, 0.80)),
+        url("../images/shop.jpeg") !important;
+
+    background-color: #101923 !important;
+    background-blend-mode: normal;
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
+}
+
+/* 共通配色 */
+html[data-game-theme="dark"] .shop-page {
+    --text: #f0f6fc;
+    --muted: #b4c3d1;
+    --main-deep: #f0f6fc;
+    --main-dark: #8fc7de;
+    --main-soft: #293d4c;
+    --main-pale: #253948;
+    --panel: rgba(24, 36, 52, 0.94);
+    --border: rgba(145, 178, 205, 0.28);
+
+    color: #f0f6fc;
+}
+
+/* 上部メニューとメインパネル */
+html[data-game-theme="dark"] .shop-page :is(.top-menu,
+    .side-menu,
+    .market-area) {
+    background: rgba(24, 36, 52, 0.94) !important;
+    border-color: rgba(145, 178, 205, 0.28) !important;
+    color: #f0f6fc;
+}
+
+/* タイトルエリア */
+html[data-game-theme="dark"] .shop-page .shop-title {
+    background: linear-gradient(135deg, #182434, #263d4e) !important;
+    border-color: #40586a !important;
+}
+
+/* タイトル・見出し */
+html[data-game-theme="dark"] .shop-page :is(.shop-title h1,
+    .side-menu h2,
+    .market-toolbar h2,
+    .q-charge-header h2) {
+    color: #f0f6fc !important;
+}
+
+/* 小見出し */
+html[data-game-theme="dark"] .shop-page :is(.shop-label,
+    .market-small-title,
+    .q-charge-small-title) {
+    color: #8fc7de !important;
+}
+
+/* 説明文 */
+html[data-game-theme="dark"] .shop-page :is(.side-description,
+    .q-charge-description) {
+    color: #b4c3d1 !important;
+}
+
+/* 上部ボタン・サイドボタン */
+html[data-game-theme="dark"] .shop-page :is(.top-button,
+    .side-button) {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+    color: #193b48 !important;
+}
+
+/* 選択中のサイドボタン */
+html[data-game-theme="dark"] .shop-page .side-button.active {
+    background: #347f91 !important;
+    color: #ffffff !important;
+    border-color: #347f91 !important;
+}
+
+/* 無効ボタンは無効状態を維持 */
+html[data-game-theme="dark"] .shop-page .top-button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* 所持Q */
+html[data-game-theme="dark"] .shop-page .money-box {
+    background: #263748 !important;
+    border-color: #40586a !important;
+    color: #b4c3d1 !important;
+}
+
+html[data-game-theme="dark"] .shop-page .money-box strong {
+    color: #ffffff !important;
+}
+
+/* カテゴリ欄 */
+html[data-game-theme="dark"] .shop-page .category-tabs {
+    background: #223243 !important;
+    border-color: #40586a !important;
+}
+
+html[data-game-theme="dark"] .shop-page .category-button {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+    color: #193b48 !important;
+}
+
+html[data-game-theme="dark"] .shop-page .category-button.active {
+    background: #347f91 !important;
+    color: #ffffff !important;
+}
+
+/* 商品テーブルの外枠 */
+html[data-game-theme="dark"] .shop-page .item-table {
+    background: #243545 !important;
+    border-color: #40586a !important;
+}
+
+/* テーブル見出し */
+html[data-game-theme="dark"] .shop-page .table-header {
+    background: #285f6c !important;
+    color: #ffffff !important;
+}
+
+/* 商品行をホームと同じグレーに */
+html[data-game-theme="dark"] .shop-page .table-row {
+    background: #c4c9cf !important;
+    border-bottom-color: #aeb8c1 !important;
+    color: #193b48 !important;
+}
+
+html[data-game-theme="dark"] .shop-page .table-row:hover {
+    background: #d6dbe0 !important;
+}
+
+/* 商品行の文字 */
+html[data-game-theme="dark"] .shop-page .table-row :is(.table-cell,
+    .item-name-cell,
+    strong,
+    span) {
+    color: #193b48;
+}
+
+/* 商品の説明 */
+html[data-game-theme="dark"] .shop-page .table-row .description-cell {
+    color: #586c78 !important;
+}
+
+/* 種類バッジ */
+html[data-game-theme="dark"] .shop-page .table-row .category-tag {
+    background: #e0e6ea !important;
+    color: #193b48 !important;
+    border-color: #a5b6c2 !important;
+}
+
+/* 購入ボタン */
+html[data-game-theme="dark"] .shop-page .buy-button {
+    background: #347f91 !important;
+    color: #ffffff !important;
+}
+
+/* 購入できない商品 */
+html[data-game-theme="dark"] .shop-page .buy-button:disabled,
+html[data-game-theme="dark"] .shop-page .buy-button.disabled {
+    background: #87949e !important;
+    color: #263748 !important;
+}
+
+/* Q購入セクション */
+html[data-game-theme="dark"] .shop-page .q-charge-section {
+    background: #182434 !important;
+    border-color: #40586a !important;
+}
+
+/* Q購入カード */
+html[data-game-theme="dark"] .shop-page .q-charge-card {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+    color: #193b48 !important;
+}
+
+html[data-game-theme="dark"] .shop-page .q-charge-card :is(.q-amount, .q-price) {
+    color: #193b48 !important;
+}
+
+/* Q購入ボタン */
+html[data-game-theme="dark"] .shop-page .q-purchase-button {
+    background: #347f91 !important;
+    color: #ffffff !important;
+}
+
+/* Q購入に関する注意文 */
+html[data-game-theme="dark"] .shop-page .q-charge-notice {
+    background: #263748 !important;
+    border-color: #40586a !important;
+    color: #b4c3d1 !important;
+}
+
+/* 検索・並び替え */
+html[data-game-theme="dark"] .shop-page .toolbar-controls :is(input, select) {
+    background: #263748 !important;
+    border-color: #536d80 !important;
+    color: #f0f6fc !important;
+}
+
+html[data-game-theme="dark"] .shop-page .toolbar-controls input::placeholder {
+    color: #9fb2c1 !important;
+}
+
+
+/* ============================================
+   Qhymia DARK MODE : TACTICS
+   戦術画面のダークモード統一
+============================================ */
+
+/* 戦術画面の既存背景を暗くする */
+html[data-game-theme="dark"] body:has(.tactics-page) {
+    background-image:
+        linear-gradient(rgba(7, 14, 25, 0.70),
+            rgba(7, 14, 25, 0.80)),
+        url("../images/senjutu.jpg") !important;
+
+    background-color: #101923 !important;
+    background-blend-mode: normal;
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
+}
+
+/* 戦術画面の共通配色 */
+html[data-game-theme="dark"] .tactics-page {
+    --text: #f0f6fc;
+    --muted: #b4c3d1;
+    --main-deep: #f0f6fc;
+    --main-dark: #8fc7de;
+    --main-soft: #293d4c;
+    --main-pale: #253948;
+    --panel: rgba(24, 36, 52, 0.94);
+    --border: rgba(145, 178, 205, 0.28);
+
+    color: #f0f6fc;
+}
+
+/* 上部の戦術タイトル */
+html[data-game-theme="dark"] .tactics-page .tactics-heading {
+    background: linear-gradient(135deg,
+            rgba(24, 36, 52, 0.97),
+            rgba(35, 56, 73, 0.96)) !important;
+
+    border-color: #40586a !important;
+    color: #f0f6fc !important;
+}
+
+html[data-game-theme="dark"] .tactics-page .tactics-heading h1 {
+    color: #f0f6fc !important;
+}
+
+/* 小見出し */
+html[data-game-theme="dark"] .tactics-page .tactics-eyebrow {
+    color: #8fc7de !important;
+}
+
+/* ヘッダーの説明 */
+html[data-game-theme="dark"] .tactics-page .tactics-intro {
+    color: #b4c3d1 !important;
+}
+
+/* ホームへ戻るボタン */
+html[data-game-theme="dark"] .tactics-page .tactics-home-link {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+    color: #193b48 !important;
+}
+
+/* 外側のセクション */
+html[data-game-theme="dark"] .tactics-page .tactics-card {
+    background: rgba(24, 36, 52, 0.94) !important;
+    border-color: rgba(145, 178, 205, 0.28) !important;
+    color: #f0f6fc !important;
+}
+
+/* セクション見出し */
+html[data-game-theme="dark"] .tactics-page :is(.tactics-section-heading h2,
+    .tactics-subheading) {
+    color: #f0f6fc !important;
+}
+
+/* 暗いセクション内の説明 */
+html[data-game-theme="dark"] .tactics-page .tactics-description,
+html[data-game-theme="dark"] .tactics-page .tactics-empty {
+    color: #b4c3d1 !important;
+}
+
+/* キャラクター情報・能力値・スロット・スキル */
+html[data-game-theme="dark"] .tactics-page :is(.tactics-profile-item,
+    .tactics-stat,
+    .tactics-slot,
+    .tactics-skill) {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+    color: #193b48 !important;
+}
+
+/* 内側カードのタイトル・数値 */
+html[data-game-theme="dark"] .tactics-page :is(.tactics-profile-item strong,
+    .tactics-stat strong,
+    .tactics-slot-heading h3,
+    .tactics-skill-heading h3) {
+    color: #193b48 !important;
+}
+
+/* 内側カードの補助ラベル */
+html[data-game-theme="dark"] .tactics-page :is(.tactics-profile-item span,
+    .tactics-stat span,
+    .tactics-slot-heading span,
+    .tactics-field label) {
+    color: #586c78 !important;
+}
+
+/* スキル説明 */
+html[data-game-theme="dark"] .tactics-page .tactics-skill-description {
+    color: #193b48 !important;
+}
+
+/* スキルのMP・属性バッジ */
+html[data-game-theme="dark"] .tactics-page :is(.tactics-skill-mp,
+    .tactics-skill-tag,
+    .tactics-skill-meta span) {
+    background: #e0e6ea !important;
+    border-color: #a5b6c2 !important;
+    color: #193b48 !important;
+}
+
+/* スロットの選択欄 */
+html[data-game-theme="dark"] .tactics-page .tactics-field :is(select,
+    input) {
+    background: #edf1f4 !important;
+    border-color: #a5b6c2 !important;
+    color: #193b48 !important;
+}
+
+/* 選択欄のフォーカス */
+html[data-game-theme="dark"] .tactics-page .tactics-field :is(select,
+    input):focus {
+    border-color: #347f91 !important;
+    outline-color: #347f91;
+}
+
+/* 保存ボタン */
+html[data-game-theme="dark"] .tactics-page .tactics-save {
+    background: #347f91 !important;
+    color: #ffffff !important;
+}
+
+/* 保存ボタンのホバー */
+html[data-game-theme="dark"] .tactics-page .tactics-save:hover {
+    background: #4095aa !important;
+}
+
+
+/* ============================================
+   Qhymia DARK MODE : SNS
+   SNS専用画面
+============================================ */
+
+/* SNSの既存壁紙を暗くする */
+html[data-game-theme="dark"] body:has(.sns-page) {
+    background-image:
+        linear-gradient(rgba(7, 14, 25, 0.70),
+            rgba(7, 14, 25, 0.80)),
+        url("../images/sns.jpg") !important;
+
+    background-color: #101923 !important;
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+/* 共通カラー */
+html[data-game-theme="dark"] .sns-page {
+    --text: #f0f6fc;
+    --muted: #b4c3d1;
+    --main-deep: #f0f6fc;
+    --main-dark: #8fc7de;
+    --main-soft: #293d4c;
+    --main-pale: #253948;
+    --panel: rgba(24, 36, 52, 0.94);
+    --border: rgba(145, 178, 205, 0.28);
+
+    color: #f0f6fc;
+}
+
+/* SNSの外側パネル */
+html[data-game-theme="dark"] .sns-page :is(.sns-hero,
+    .sns-navigation,
+    .sns-create-post,
+    .sns-list-heading,
+    .sns-empty) {
+    background: rgba(24, 36, 52, 0.94) !important;
+    border-color: rgba(145, 178, 205, 0.28) !important;
+    color: #f0f6fc !important;
+}
+
+/* 見出し */
+html[data-game-theme="dark"] .sns-page :is(.sns-hero h1,
+    .sns-navigation-title h2,
+    .sns-create-header h2,
+    .sns-list-heading h2,
+    .sns-empty h3) {
+    color: #f0f6fc !important;
+}
+
+/* 英語ラベル */
+html[data-game-theme="dark"] .sns-page .sns-label {
+    color: #8fc7de !important;
+}
+
+/* 説明文 */
+html[data-game-theme="dark"] .sns-page :is(.sns-hero-description,
+    .sns-form-label) {
+    color: #b4c3d1 !important;
+}
+
+/* ホームへ戻るボタン */
+html[data-game-theme="dark"] .sns-page :is(.sns-home-button,
+    .sns-back-button) {
+    background: #c4c9cf !important;
+    color: #193b48 !important;
+    border-color: #aeb8c1 !important;
+}
+
+/* SNSタブ */
+html[data-game-theme="dark"] .sns-page .sns-tab {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+    color: #193b48 !important;
+}
+
+/* 選択中のタブ */
+html[data-game-theme="dark"] .sns-page .sns-tab.active {
+    background: #347f91 !important;
+    border-color: #347f91 !important;
+    color: #ffffff !important;
+}
+
+html[data-game-theme="dark"] .sns-page .sns-tab.active .sns-tab-icon {
+    color: #ffffff !important;
+}
+
+/* 投稿入力欄 */
+html[data-game-theme="dark"] .sns-page .sns-create-text textarea {
+    background: #263748 !important;
+    border-color: #536d80 !important;
+    color: #f0f6fc !important;
+}
+
+html[data-game-theme="dark"] .sns-page .sns-create-text textarea::placeholder {
+    color: #9fb2c1 !important;
+}
+
+/* 投稿ボタン */
+html[data-game-theme="dark"] .sns-page .sns-submit-button {
+    background: #347f91 !important;
+    color: #ffffff !important;
+}
+
+/* 投稿カードはホームの内側カードと同じグレー */
+html[data-game-theme="dark"] .sns-page .sns-post-box {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+    color: #193b48 !important;
+}
+
+/* 投稿カードの上部 */
+html[data-game-theme="dark"] .sns-page .sns-post-header {
+    background: #d6dbe0 !important;
+    border-bottom-color: #aeb8c1 !important;
+}
+
+/* 投稿カード内の基本文字 */
+html[data-game-theme="dark"] .sns-page .sns-post-box :is(.sns-character-name,
+    .sns-post-text,
+    .sns-user-information,
+    .sns-post-content) {
+    color: #193b48 !important;
+}
+
+/* 投稿時間 */
+html[data-game-theme="dark"] .sns-page .sns-post-box :is(.sns-post-time,
+    .sns-time-label) {
+    color: #586c78 !important;
+}
+
+/* 投稿カード内のボタン */
+html[data-game-theme="dark"] .sns-page .sns-post-actions {
+    border-color: #aeb8c1 !important;
+}
+
+/* 空の投稿一覧 */
+html[data-game-theme="dark"] .sns-page .sns-empty {
+    color: #b4c3d1 !important;
+}
+
+/* おすすめ表示のバッジ */
+html[data-game-theme="dark"] .sns-page .sns-recommended-label {
+    background: #e7dcc0 !important;
+    border-color: #cbb680 !important;
+    color: #765719 !important;
+}
+
+/* 投稿画像の背景 */
+html[data-game-theme="dark"] .sns-page .sns-image-wrapper {
+    background: #17283a !important;
+    border-color: #40586a !important;
+}
+
+/* ホバー時 */
+html[data-game-theme="dark"] .sns-page .sns-tab:hover:not(.active),
+html[data-game-theme="dark"] .sns-page:is(.sns-home-button, .sns-back-button):hover {
+    background: #d6dbe0 !important;
+}
+
+
+/* ============================================
+   Qhymia DARK MODE : PROFILE
+   プロフィール専用ダークモード
+============================================ */
+
+/* 既存の背景画像を暗くする */
+html[data-game-theme="dark"] body:has(.profile-page) {
+    background-image:
+        linear-gradient(rgba(7, 14, 25, 0.72),
+            rgba(7, 14, 25, 0.82)),
+        url("../images/character-list-bg.jpg") !important;
+
+    background-color: #101923 !important;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #f0f6fc;
+}
+
+/* ヘッダー */
+html[data-game-theme="dark"] .profile-page .profile-header {
+    background: rgba(24, 36, 52, 0.96) !important;
+    border-bottom-color: #40586a !important;
+}
+
+html[data-game-theme="dark"] .profile-page .profile-header h1 {
+    color: #f0f6fc !important;
+}
+
+/* ホームへ戻る */
+html[data-game-theme="dark"] .profile-page .profile-back-button {
+    color: #8fc7de !important;
+}
+
+/* 外側のパネル */
+html[data-game-theme="dark"] .profile-page :is(.profile-summary-section,
+    .profile-detail-section,
+    .no-character) {
+    background: rgba(24, 36, 52, 0.94) !important;
+    border-color: rgba(145, 178, 205, 0.28) !important;
+    color: #f0f6fc !important;
+}
+
+/* プレイヤー名 */
+html[data-game-theme="dark"] .profile-page .profile-player-name strong {
+    color: #f0f6fc !important;
+}
+
+/* ラベル */
+html[data-game-theme="dark"] .profile-page .profile-main-label {
+    color: #8fc7de !important;
+}
+
+/* 詳細パネル */
+html[data-game-theme="dark"] .profile-page .profile-detail-block {
+    background: #263748 !important;
+    border-color: #40586a !important;
+    color: #f0f6fc !important;
+}
+
+/* 詳細セクションのタイトル */
+html[data-game-theme="dark"] .profile-page .profile-detail-section::before,
+html[data-game-theme="dark"] .profile-page .profile-detail-block::before {
+    color: #8fc7de !important;
+}
+
+/* ステータスの内側カード */
+html[data-game-theme="dark"] .profile-page .profile-info-box {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+    color: #193b48 !important;
+}
+
+/* 内側カードのラベル */
+html[data-game-theme="dark"] .profile-page .profile-info-label {
+    color: #586c78 !important;
+}
+
+/* 内側カードの数値 */
+html[data-game-theme="dark"] .profile-page .profile-info-box strong {
+    color: #193b48 !important;
+}
+
+/* 種族名のアクセント */
+html[data-game-theme="dark"] .profile-page .profile-race-value {
+    color: #216b80 !important;
+}
+
+/* キャラクター画像が未設定の場合 */
+html[data-game-theme="dark"] .profile-page .profile-character-placeholder {
+    background: #263748 !important;
+    border-color: #536d80 !important;
+    color: #b4c3d1 !important;
+}
+
+/* レーダーチャートの背景 */
+html[data-game-theme="dark"] .profile-page .profile-radar-chart {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+}
+
+/* レーダーチャートの線 */
+html[data-game-theme="dark"] .profile-page .radar-outline {
+    stroke: #536d80;
+    fill: rgba(255, 255, 255, 0.18);
+}
+
+html[data-game-theme="dark"] .profile-page .radar-line {
+    stroke: rgba(58, 90, 105, 0.35);
+}
+
+/* レーダーチャートの数値文字 */
+html[data-game-theme="dark"] .profile-page .profile-radar-svg text {
+    fill: #193b48 !important;
+}
+
+
+/* ============================================
+   Qhymia DARK MODE : REINCARNATION
+   回帰画面
+============================================ */
+
+/* 背景 */
+html[data-game-theme="dark"] body:has(.again-page) {
+    background-image:
+        linear-gradient(rgba(7, 14, 25, 0.72),
+            rgba(7, 14, 25, 0.82)),
+        url("../images/kaiki.jpg") !important;
+
+    background-color: #101923 !important;
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
+}
+
+/* 共通カラー */
+html[data-game-theme="dark"] .again-page {
+    --text: #f0f6fc;
+    --muted: #b4c3d1;
+    --main-deep: #f0f6fc;
+    --main-dark: #8fc7de;
+    --main-soft: #293d4c;
+    --main-pale: #253948;
+    --panel: rgba(24, 36, 52, 0.94);
+    --border: rgba(145, 178, 205, 0.28);
+
+    color: #f0f6fc;
+}
+
+/* 外側のパネル */
+html[data-game-theme="dark"] .again-page :is(.again-hero,
+    .again-guide,
+    .again-execution,
+    .bonus-section) {
+    background: rgba(24, 36, 52, 0.94) !important;
+    border-color: rgba(145, 178, 205, 0.28) !important;
+    color: #f0f6fc !important;
+}
+
+/* 見出し */
+html[data-game-theme="dark"] .again-page :is(.again-hero h1,
+    .again-guide h2,
+    .section-heading h2,
+    .bonus-header h2,
+    .status-group-title) {
+    color: #f0f6fc !important;
+}
+
+/* 英語ラベル */
+html[data-game-theme="dark"] .again-page .again-label {
+    color: #8fc7de !important;
+}
+
+/* 説明文 */
+html[data-game-theme="dark"] .again-page :is(.again-description,
+    .again-guide p:not(.again-label)) {
+    color: #b4c3d1 !important;
+}
+
+/* ステータス比較カード */
+html[data-game-theme="dark"] .again-page .again-status-card {
+    background: #263748 !important;
+    border-color: #40586a !important;
+    color: #f0f6fc !important;
+}
+
+/* 比較カードのヘッダー */
+html[data-game-theme="dark"] .again-page .status-card-heading {
+    background: #31465a !important;
+    border-bottom-color: #40586a !important;
+    color: #f0f6fc !important;
+}
+
+html[data-game-theme="dark"] .again-page .status-card-heading :is(h2, h3, strong) {
+    color: #f0f6fc !important;
+}
+
+/* ステータスの個別行 */
+html[data-game-theme="dark"] .again-page .status-row {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+}
+
+/* ステータス名 */
+html[data-game-theme="dark"] .again-page .status-row span {
+    color: #586c78 !important;
+}
+
+/* ステータス値 */
+html[data-game-theme="dark"] .again-page .status-row strong {
+    color: #193b48 !important;
+}
+
+/* ボーナス情報 */
+html[data-game-theme="dark"] .again-page .bonus-group-title {
+    color: #8fc7de !important;
+}
+
+/* ボーナスの個別行 */
+html[data-game-theme="dark"] .again-page .bonus-grid>div {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+    color: #193b48 !important;
+}
+
+html[data-game-theme="dark"] .again-page .bonus-grid>div :is(span, strong) {
+    color: #193b48 !important;
+}
+
+/* 戻るボタン */
+html[data-game-theme="dark"] .again-page .back-button {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+    color: #193b48 !important;
+}
+
+/* 回帰実行ボタン：目立つ青を維持 */
+html[data-game-theme="dark"] .again-page .again-button:not(.back-button) {
+    background: #347f91 !important;
+    color: #ffffff !important;
+}
+
+/* 無効状態 */
+html[data-game-theme="dark"] .again-page .again-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+/* ============================================
+   Qhymia DARK MODE : PALM READING
+   手相画面
+============================================ */
+
+/* 手相画面の背景 */
+html[data-game-theme="dark"] .palm-page {
+    background-image:
+        linear-gradient(rgba(7, 14, 25, 0.72),
+            rgba(7, 14, 25, 0.82)),
+        url("../images/palm-bg.jpg") !important;
+
+    background-color: #101923 !important;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #f0f6fc !important;
+}
+
+/* 外側のパネル */
+html[data-game-theme="dark"] .palm-page :is(.palm-fortune-header,
+    .palm-locked-panel,
+    .palm-detail,
+    .palm-chart-panel,
+    .palm-item-panel) {
+    background: rgba(24, 36, 52, 0.94) !important;
+    border-color: rgba(145, 178, 205, 0.28) !important;
+    color: #f0f6fc !important;
+}
+
+/* 見出し */
+html[data-game-theme="dark"] .palm-page :is(.palm-fortune-header h1,
+    .palm-panel-heading h2,
+    .palm-item-heading h2) {
+    color: #f0f6fc !important;
+}
+
+/* 小見出し */
+html[data-game-theme="dark"] .palm-page .palm-small-label {
+    color: #8fc7de !important;
+}
+
+/* 説明文 */
+html[data-game-theme="dark"] .palm-page :is(.palm-fortune-text,
+    .palm-lock-description,
+    .palm-panel-description,
+    .palm-item-description,
+    .palm-item-note,
+    .palm-unlock-note,
+    .palm-detail-text) {
+    color: #b4c3d1 !important;
+}
+
+/* ホームへ戻る */
+html[data-game-theme="dark"] .palm-page .palm-home-button {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+    color: #193b48 !important;
+}
+
+/* 成長情報カード */
+html[data-game-theme="dark"] .palm-page .palm-growth-item {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+    color: #193b48 !important;
+}
+
+html[data-game-theme="dark"] .palm-page .palm-growth-item span {
+    color: #586c78 !important;
+}
+
+html[data-game-theme="dark"] .palm-page .palm-growth-item strong {
+    color: #193b48 !important;
+}
+
+/* レーダーチャートの背景 */
+html[data-game-theme="dark"] .palm-page .palm-radar-chart {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+}
+
+/* レーダーチャート */
+html[data-game-theme="dark"] .palm-page .palm-radar-outline {
+    stroke: #536d80;
+    fill: rgba(255, 255, 255, 0.18);
+}
+
+html[data-game-theme="dark"] .palm-page .palm-radar-line {
+    stroke: rgba(58, 90, 105, 0.35);
+}
+
+html[data-game-theme="dark"] .palm-page .palm-radar-svg text {
+    fill: #193b48 !important;
+}
+
+/* 属性選択欄 */
+html[data-game-theme="dark"] .palm-page .palm-item-select {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+    color: #193b48 !important;
+}
+
+/* 属性選択のラベル */
+html[data-game-theme="dark"] .palm-page .palm-item-label {
+    color: #b4c3d1 !important;
+}
+
+/* 手相解放ボタン */
+html[data-game-theme="dark"] .palm-page .palm-unlock-button {
+    background: #347f91 !important;
+    color: #ffffff !important;
+}
+
+/* 属性変更ボタン */
+html[data-game-theme="dark"] .palm-page .palm-item-button {
+    background: #347f91 !important;
+    color: #ffffff !important;
+}
+
+/* ボタンの無効状態 */
+html[data-game-theme="dark"] .palm-page:is(.palm-item-button, .palm-unlock-button):disabled {
+    opacity: 0.48;
+    cursor: not-allowed;
+}
+
+/* キャラクター画像が未設定の場合 */
+html[data-game-theme="dark"] .palm-page .palm-fortune-character {
+    border-color: #40586a !important;
+}
+
+
+/* ============================================
+   Qhymia DARK MODE : SYNTHESIS
+   装備合成画面
+============================================ */
+
+/* 合成画面の背景 */
+html[data-game-theme="dark"] .synthesis-page {
+    background-image:
+        linear-gradient(rgba(7, 14, 25, 0.72),
+            rgba(7, 14, 25, 0.82)),
+        url("../images/synthesis-bg.jpg") !important;
+
+    background-color: #101923 !important;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #f0f6fc;
+}
+
+/* 外側のパネル */
+html[data-game-theme="dark"] .synthesis-page :is(.synthesis-shop-header,
+    .synthesis-main) {
+    background: rgba(24, 36, 52, 0.94) !important;
+    border: 1px solid rgba(145, 178, 205, 0.28) !important;
+    border-radius: 18px;
+    color: #f0f6fc !important;
+}
+
+/* タイトル */
+html[data-game-theme="dark"] .synthesis-page :is(.synthesis-shop-title h1,
+    .synthesis-main-header h2) {
+    color: #f0f6fc !important;
+}
+
+/* 英語ラベル */
+html[data-game-theme="dark"] .synthesis-page .synthesis-label {
+    color: #8fc7de !important;
+}
+
+/* 合成屋の説明 */
+html[data-game-theme="dark"] .synthesis-page .synthesis-shop-title p:last-child {
+    color: #b4c3d1 !important;
+}
+
+/* キャラクター画像未設定 */
+html[data-game-theme="dark"] .synthesis-page .synthesis-character-image span {
+    color: #b4c3d1 !important;
+}
+
+/* ホームに戻るボタン */
+html[data-game-theme="dark"] .synthesis-page .synthesis-button-blue {
+    background: #c4c9cf !important;
+    color: #193b48 !important;
+    border: 1px solid #aeb8c1 !important;
+    border-radius: 10px;
+}
+
+/* 上部情報 */
+html[data-game-theme="dark"] .synthesis-page .synthesis-main-header {
+    border-bottom-color: #40586a !important;
+}
+
+html[data-game-theme="dark"] .synthesis-page .synthesis-player-info span {
+    color: #b4c3d1 !important;
+}
+
+html[data-game-theme="dark"] .synthesis-page .synthesis-player-info strong {
+    color: #f0f6fc !important;
+}
+
+/* 合成条件 */
+html[data-game-theme="dark"] .synthesis-page .synthesis-rule {
+    background: #263748 !important;
+    border-color: #40586a !important;
+    color: #f0f6fc !important;
+    border-radius: 10px;
+}
+
+/* 合成グループ一覧 */
+html[data-game-theme="dark"] .synthesis-page .synthesis-group-table {
+    background: #c4c9cf !important;
+    color: #193b48 !important;
+}
+
+html[data-game-theme="dark"] .synthesis-page .synthesis-group-table th {
+    background: #285f6c !important;
+    border-color: #40586a !important;
+    color: #ffffff !important;
+}
+
+html[data-game-theme="dark"] .synthesis-page .synthesis-group-table td {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+    color: #193b48 !important;
+}
+
+/* グループ選択 */
+html[data-game-theme="dark"] .synthesis-page .synthesis-group-radio {
+    accent-color: #347f91;
+}
+
+/* 装備一覧のカード */
+html[data-game-theme="dark"] .synthesis-page .synthesis-equipment-item {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+    color: #193b48 !important;
+    border-radius: 10px;
+}
+
+/* ホバー */
+html[data-game-theme="dark"] .synthesis-page .synthesis-equipment-item:hover {
+    background: #d6dbe0 !important;
+    border-color: #347f91 !important;
+}
+
+/* 選択された装備 */
+html[data-game-theme="dark"] .synthesis-page .synthesis-equipment-item:has(input:checked) {
+    background: #d9e9ef !important;
+    border-color: #347f91 !important;
+}
+
+/* 装備名 */
+html[data-game-theme="dark"] .synthesis-page .synthesis-equipment-name strong {
+    color: #193b48 !important;
+}
+
+/* 装備のランクバッジ */
+html[data-game-theme="dark"] .synthesis-page .synthesis-rank {
+    background: #285f6c !important;
+    border-color: #347f91 !important;
+    color: #ffffff !important;
+}
+
+/* 装備の詳細 */
+html[data-game-theme="dark"] .synthesis-page .synthesis-equipment-detail span {
+    color: #586c78 !important;
+}
+
+html[data-game-theme="dark"] .synthesis-page .synthesis-equipment-detail strong {
+    color: #193b48 !important;
+}
+
+/* 素材選択パネル */
+html[data-game-theme="dark"] .synthesis-page .synthesis-material-panel {
+    background: #263748 !important;
+    border-color: #40586a !important;
+    border-radius: 12px;
+    color: #f0f6fc !important;
+}
+
+/* 素材選択パネルの見出し */
+html[data-game-theme="dark"] .synthesis-page .synthesis-material-panel h3 {
+    color: #f0f6fc !important;
+}
+
+/* 素材リスト */
+html[data-game-theme="dark"] .synthesis-page .synthesis-material-item {
+    border-bottom-color: #40586a !important;
+    color: #f0f6fc !important;
+}
+
+/* 選択済み素材 */
+html[data-game-theme="dark"] .synthesis-page .synthesis-material-item:has(input:checked) {
+    background: #314b5f !important;
+    border-radius: 8px;
+}
+
+/* チェックボックスの選択色 */
+html[data-game-theme="dark"] .synthesis-page .synthesis-material-item input {
+    accent-color: #347f91;
+}
+
+/* 合成費用 */
+html[data-game-theme="dark"] .synthesis-page .synthesis-price span {
+    color: #b4c3d1 !important;
+}
+
+html[data-game-theme="dark"] .synthesis-page .synthesis-price strong {
+    color: #f0f6fc !important;
+}
+
+/* 合成ボタン */
+html[data-game-theme="dark"] .synthesis-page .synthesis-submit-button {
+    background: #347f91 !important;
+    color: #ffffff !important;
+    border-radius: 12px;
+}
+
+/* 実行不能状態 */
+html[data-game-theme="dark"] .synthesis-page .synthesis-submit-button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+/* 合成ボタン周辺の区切り */
+html[data-game-theme="dark"] .synthesis-page .synthesis-submit-area {
+    border-top-color: #40586a !important;
+}
+
+/* 装備がない場合 */
+html[data-game-theme="dark"] .synthesis-page .synthesis-empty {
+    background: #263748 !important;
+    border-color: #536d80 !important;
+    color: #f0f6fc !important;
+}
+
+html[data-game-theme="dark"] .synthesis-page .synthesis-empty p {
+    color: #b4c3d1 !important;
+}
+
+/* システムメッセージ */
+html[data-game-theme="dark"] .synthesis-page .synthesis-message {
+    background: #263748 !important;
+    border-color: #536d80 !important;
+    color: #f0f6fc !important;
+}
+
+/* ========================================
+   SNS共有確認モーダル
+======================================== */
+
+/* モーダル本体 */
+html[data-game-theme="dark"] .synthesis-page .synthesis-share-modal {
+    background: #182434 !important;
+    border-color: #40586a !important;
+    color: #f0f6fc !important;
+}
+
+/* モーダルの見出し */
+html[data-game-theme="dark"] .synthesis-page .synthesis-share-modal h2 {
+    color: #f0f6fc !important;
+}
+
+/* モーダルの補助ラベル */
+html[data-game-theme="dark"] .synthesis-page .synthesis-share-label {
+    color: #8fc7de !important;
+}
+
+/* モーダル内の質問 */
+html[data-game-theme="dark"] .synthesis-page .synthesis-share-question {
+    color: #b4c3d1 !important;
+}
+
+/* 合成結果 */
+html[data-game-theme="dark"] .synthesis-page .synthesis-share-result {
+    color: #8fc7de !important;
+}
+
+/* 共有する */
+html[data-game-theme="dark"] .synthesis-page .synthesis-share-yes {
+    background: #347f91 !important;
+    border-color: #347f91 !important;
+    color: #ffffff !important;
+}
+
+/* 共有しない */
+html[data-game-theme="dark"] .synthesis-page .synthesis-share-no {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+    color: #193b48 !important;
+}
+
+
+/* ============================================
+   Qhymia DARK MODE : FISHING
+   釣りミニゲーム
+============================================ */
+
+/* ページ全体 */
+html[data-game-theme="dark"] .fishing-page {
+    color: #f0f6fc !important;
+}
+
+/* タイトル */
+html[data-game-theme="dark"] .fishing-page .fishing-heading h2 {
+    color: #f0f6fc !important;
+}
+
+/* 英語の小見出し */
+html[data-game-theme="dark"] .fishing-page .fishing-subtitle {
+    color: #8fc7de !important;
+}
+
+/* 説明 */
+html[data-game-theme="dark"] .fishing-page .fishing-description {
+    color: #b4c3d1 !important;
+}
+
+/* ホームへ戻る */
+html[data-game-theme="dark"] .fishing-page .fishing-home {
+    color: #8fc7de !important;
+}
+
+/* ゲームカード */
+html[data-game-theme="dark"] .fishing-page .fishing-card {
+    background: #182434 !important;
+    border-color: #40586a !important;
+    color: #f0f6fc !important;
+}
+
+/* 釣りの風景は既存の色を維持 */
+
+/* 風景のメッセージ */
+html[data-game-theme="dark"] .fishing-page .fishing-scene-label {
+    background: #c4c9cf !important;
+    color: #193b48 !important;
+}
+
+/* ゲーム中のメッセージ */
+html[data-game-theme="dark"] .fishing-page .fishing-message {
+    color: #f0f6fc !important;
+}
+
+/* ゲージのタイトル・数値 */
+html[data-game-theme="dark"] .fishing-page .fishing-meter-heading {
+    color: #f0f6fc !important;
+}
+
+/* ゲージの背景だけ暗くする */
+html[data-game-theme="dark"] .fishing-page progress,
+html[data-game-theme="dark"] .fishing-page progress::-webkit-progress-bar {
+    background: #34485a !important;
+}
+
+/* ゲージの進行色は元の緑・黄・赤を維持 */
+
+/* 補助情報 */
+html[data-game-theme="dark"] .fishing-page :is(.fishing-details,
+    .fishing-help,
+    .fishing-prototype) {
+    color: #b4c3d1 !important;
+}
+
+/* 釣り開始ボタン */
+html[data-game-theme="dark"] .fishing-page .fishing-start {
+    background: #347f91 !important;
+    color: #ffffff !important;
+}
+
+/* 引き寄せボタン */
+html[data-game-theme="dark"] .fishing-page .fishing-hold {
+    background: #285f79 !important;
+    color: #ffffff !important;
+}
+
+/* 引き寄せ中 */
+html[data-game-theme="dark"] .fishing-page .fishing-hold.is-holding {
+    background: #173f53 !important;
+}
+
+/* 成功時の結果表示 */
+html[data-game-theme="dark"] .fishing-page .fishing-result:not(.is-failure) {
+    background: #284b43 !important;
+    color: #d1f5e1 !important;
+}
+
+/* 失敗時の結果表示 */
+html[data-game-theme="dark"] .fishing-page .fishing-result.is-failure {
+    background: #552c35 !important;
+    color: #ffd5db !important;
+}
+
+
+/* ============================================
+   Qhymia DARK MODE : CHARACTER LIST
+   キャラクター一覧
+============================================ */
+
+/* 既存背景を暗くする */
+html[data-game-theme="dark"] .character-list-page {
+    background-image:
+        linear-gradient(rgba(7, 14, 25, 0.72),
+            rgba(7, 14, 25, 0.82)),
+        url("../images/character-list-bg.jpg") !important;
+
+    background-color: #101923 !important;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #f0f6fc !important;
+}
+
+/* 上部ヘッダー */
+html[data-game-theme="dark"] .character-list-page .character-list-header {
+    background: rgba(24, 36, 52, 0.94) !important;
+    border-bottom-color: #40586a !important;
+}
+
+/* ページタイトル */
+html[data-game-theme="dark"] .character-list-page .character-list-title {
+    color: #f0f6fc !important;
+}
+
+/* 説明文 */
+html[data-game-theme="dark"] .character-list-page .character-list-guide {
+    color: #b4c3d1 !important;
+}
+
+/* 戻るリンク */
+html[data-game-theme="dark"] .character-list-page .back-link {
+    color: #8fc7de !important;
+}
+
+/* キャラクター画像の背景 */
+html[data-game-theme="dark"] .character-list-page .character-image {
+    background: #c4c9cf !important;
+    border-color: #536d80 !important;
+}
+
+/* 画像枠のホバー */
+html[data-game-theme="dark"] .character-list-page .character-item:hover .character-image {
+    background: #d6dbe0 !important;
+    border-color: #8fc7de !important;
+}
+
+/* キャラクター番号 */
+html[data-game-theme="dark"] .character-list-page .character-number {
+    background: #263748 !important;
+    color: #f0f6fc !important;
+}
+
+/* 画像未設定時 */
+html[data-game-theme="dark"] .character-list-page .character-placeholder {
+    color: #193b48 !important;
+}
+
+/* 下部ページ切り替え */
+html[data-game-theme="dark"] .character-list-page .character-pagination {
+    background: rgba(24, 36, 52, 0.94) !important;
+    border-top-color: #40586a !important;
+}
+
+/* ページ番号 */
+html[data-game-theme="dark"] .character-list-page .pagination-number {
+    color: #f0f6fc !important;
+}
+
+/* 前へ・次へ */
+html[data-game-theme="dark"] .character-list-page .pagination-button {
+    color: #8fc7de !important;
+}
+
+/* 無効なページボタン */
+html[data-game-theme="dark"] .character-list-page .pagination-button:disabled {
+    color: #62798a !important;
+    cursor: not-allowed;
+}
+
+
+/* ============================================
+   Qhymia DARK MODE
+   キャラクター作成・ログイン・新規登録
+============================================ */
+
+/* ========================================
+   1. 背景画像を暗くする
+======================================== */
+
+html[data-game-theme="dark"] .character-create-page {
+    background-image:
+        linear-gradient(rgba(7, 14, 25, 0.72),
+            rgba(7, 14, 25, 0.82)),
+        url("../images/character-create-bg.jpg") !important;
+    background-color: #101923 !important;
+    color: #f0f6fc !important;
+}
+
+html[data-game-theme="dark"] .login-page {
+    background-image:
+        linear-gradient(rgba(7, 14, 25, 0.72),
+            rgba(7, 14, 25, 0.82)),
+        url("../images/sinki.jpg") !important;
+    background-color: #101923 !important;
+    color: #f0f6fc !important;
+}
+
+html[data-game-theme="dark"] .signup-page {
+    background-image:
+        linear-gradient(rgba(7, 14, 25, 0.72),
+            rgba(7, 14, 25, 0.82)),
+        url("../images/signup-bg.jpg") !important;
+    background-color: #101923 !important;
+    color: #f0f6fc !important;
+}
+
+/* ========================================
+   2. 外側のコンテンツ
+======================================== */
+
+html[data-game-theme="dark"] :is(.character-create-form,
+    .login-content,
+    .signup-content) {
+    background: rgba(24, 36, 52, 0.94) !important;
+    border: 1px solid #40586a !important;
+    color: #f0f6fc !important;
+}
+
+/* 画面タイトル */
+html[data-game-theme="dark"] :is(.character-create-title,
+    .login-title,
+    .signup-title) {
+    color: #f0f6fc !important;
+}
+
+/* 説明文 */
+html[data-game-theme="dark"] :is(.login-description,
+    .signup-description,
+    .name-warning,
+    .random-description) {
+    color: #b4c3d1 !important;
+}
+
+/* 英語ラベル・小見出し */
+html[data-game-theme="dark"] :is(.login-separator,
+    .signup-separator,
+    .login-form-title,
+    .signup-form-title,
+    .section-heading) {
+    color: #8fc7de !important;
+}
+
+/* ========================================
+   3. キャラクター作成
+======================================== */
+
+/* キャラクター名入力 */
+html[data-game-theme="dark"] .character-create-page #character_name,
+html[data-game-theme="dark"] .character-create-page #character_number {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+    color: #193b48 !important;
+}
+
+/* キャラクター名ラベル */
+html[data-game-theme="dark"] .character-create-page .name-label {
+    color: #f0f6fc !important;
+}
+
+/* キャラクター画像枠 */
+html[data-game-theme="dark"] .character-create-page :is(.character-image-placeholder,
+    .character-card) {
+    background: #c4c9cf !important;
+    border-color: #536d80 !important;
+    color: #193b48 !important;
+}
+
+/* キャラクター選択時 */
+html[data-game-theme="dark"] .character-create-page .character-card:hover {
+    background: #d6dbe0 !important;
+    border-color: #347f91 !important;
+}
+
+/* 能力値 */
+html[data-game-theme="dark"] .character-create-page :is(.status-label,
+    .status-item,
+    .selected-character-info) {
+    color: #f0f6fc;
+}
+
+/* キャラクター関連リンク */
+html[data-game-theme="dark"] .character-create-page :is(.character-link,
+    .passive-link) {
+    color: #8fc7de !important;
+}
+
+/* ランダム選択・作成ボタン */
+html[data-game-theme="dark"] .character-create-page :is(.random-button,
+    .create-character-button) {
+    background: #347f91 !important;
+    color: #ffffff !important;
+    border-color: #347f91 !important;
+}
+
+/* ========================================
+   4. ログイン・新規登録
+======================================== */
+
+/* 入力欄のラベル */
+html[data-game-theme="dark"] :is(.login-form-group label,
+    .signup-form-group label) {
+    color: #f0f6fc !important;
+}
+
+/* 入力欄 */
+html[data-game-theme="dark"] :is(.login-form-group input,
+    .signup-form-group input) {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+    color: #193b48 !important;
+}
+
+/* 入力欄のヒント */
+html[data-game-theme="dark"] :is(.login-form-group input,
+    .signup-form-group input)::placeholder {
+    color: #586c78 !important;
+}
+
+/* ログイン・登録ボタン */
+html[data-game-theme="dark"] :is(.login-button,
+    .signup-button) {
+    background: #347f91 !important;
+    color: #ffffff !important;
+}
+
+/* 補足説明 */
+html[data-game-theme="dark"] :is(.login-notes,
+    .signup-notes,
+    .signup-warning) {
+    color: #b4c3d1 !important;
+}
+
+/* ========================================
+   5. ログイン画面の情報欄
+======================================== */
+
+/* ランキング・更新情報 */
+html[data-game-theme="dark"] .login-page :is(.login-info-box,
+    .ranking-box,
+    .update-box) {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+    color: #193b48 !important;
+}
+
+/* 明るい情報欄の文字 */
+html[data-game-theme="dark"] .login-page :is(.login-info-box,
+    .ranking-box,
+    .update-box) :is(p,
+    span,
+    strong,
+    td,
+    th) {
+    color: #193b48;
+}
+
+/* 情報欄の見出し */
+html[data-game-theme="dark"] .login-page .login-section-title {
+    color: #f0f6fc !important;
+}
+
+/* 利用規約案内 */
+html[data-game-theme="dark"] .login-page .terms-notice {
+    background: #263748 !important;
+    border-color: #40586a !important;
+    color: #f0f6fc !important;
+}
+
+html[data-game-theme="dark"] .login-page .terms-notice-title {
+    color: #f0f6fc !important;
+}
+
+/* フッターの文字 */
+html[data-game-theme="dark"] :is(.login-footer,
+    .signup-footer) {
+    color: #b4c3d1 !important;
+}
+
+/* フッターリンク */
+html[data-game-theme="dark"] :is(.login-footer-links a,
+    .signup-footer-links a) {
+    color: #8fc7de !important;
+}
+
+
+/* ============================================
+   Qhymia DARK MODE : SETTINGS
+   設定画面
+============================================ */
+
+/* 設定画面の基本色 */
+html[data-game-theme="dark"] .settings-page {
+    color: #f0f6fc;
+}
+
+/* ヘッダーと設定セクション */
+html[data-game-theme="dark"] .settings-page :is(.settings-header,
+    .settings-section) {
+    background: rgba(24, 36, 52, 0.94) !important;
+    border-color: rgba(145, 178, 205, 0.28) !important;
+    color: #f0f6fc !important;
+}
+
+/* タイトル・項目名 */
+html[data-game-theme="dark"] .settings-page :is(.settings-header h1,
+    .settings-section-heading h2,
+    .settings-item-text strong) {
+    color: #f0f6fc !important;
+}
+
+/* 小見出し */
+html[data-game-theme="dark"] .settings-page :is(.settings-label,
+    .settings-section-label) {
+    color: #8fc7de !important;
+}
+
+/* 説明文 */
+html[data-game-theme="dark"] .settings-page :is(.settings-header p:not(.settings-label),
+    .settings-item-text p) {
+    color: #b4c3d1 !important;
+}
+
+/* セクションの区切り */
+html[data-game-theme="dark"] .settings-page .settings-section-heading {
+    border-bottom-color: #40586a !important;
+}
+
+/* 設定項目の区切り */
+html[data-game-theme="dark"] .settings-page .settings-item+.settings-item {
+    border-top: 1px solid #40586a;
+}
+
+/* 戻るボタン */
+html[data-game-theme="dark"] .settings-page .settings-back-button {
+    background: #c4c9cf !important;
+    border-color: #aeb8c1 !important;
+    color: #193b48 !important;
+}
+
+/* スイッチOFF */
+html[data-game-theme="dark"] .settings-page .settings-switch-slider {
+    background: #536d80 !important;
+}
+
+/* スイッチON */
+html[data-game-theme="dark"] .settings-page .settings-switch input:checked+.settings-switch-slider {
+    background: #347f91 !important;
+}
+
+/* 保存ボタン */
+html[data-game-theme="dark"] .settings-page .settings-actions button {
+    background: #347f91 !important;
+    color: #ffffff !important;
+}
+
+/* ホバー */
+html[data-game-theme="dark"] .settings-page .settings-actions button:hover {
+    background: #4095aa !important;
+}
+
+
+/* ============================================
+   Qhymia DARK MODE : LEGAL PAGES
+   利用規約・特商法・プライバシー
+============================================ */
+
+/* 既存の背景画像を暗くする */
+html[data-game-theme="dark"] body:has(.terms-page) {
+    background-image:
+        linear-gradient(rgba(7, 14, 25, 0.72),
+            rgba(7, 14, 25, 0.82)),
+        url("../images/signup-bg.jpg") !important;
+
+    background-color: #101923 !important;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    color: #f0f6fc !important;
+}
+
+/* 規約のメインパネル */
+html[data-game-theme="dark"] .terms-page .terms-container {
+    background: rgba(24, 36, 52, 0.96) !important;
+    border-color: #40586a !important;
+    color: #f0f6fc !important;
+}
+
+/* ページタイトル・各条項の見出し */
+html[data-game-theme="dark"] .terms-page :is(.terms-title-area h1,
+    .terms-section h2) {
+    color: #f0f6fc !important;
+}
+
+/* 導入文・規約本文・箇条書き */
+html[data-game-theme="dark"] .terms-page :is(.terms-title-area p,
+    .terms-section p,
+    .terms-section li,
+    .terms-date) {
+    color: #b4c3d1 !important;
+}
+
+/* 各条項の区切り線 */
+html[data-game-theme="dark"] .terms-page :is(.terms-title-area,
+    .terms-section,
+    .terms-actions) {
+    border-color: #40586a !important;
+}
+
+/* 特商法の表全体 */
+html[data-game-theme="dark"] .terms-page .tokushoho-table {
+    border-color: #40586a !important;
+}
+
+/* 特商法の表の行 */
+html[data-game-theme="dark"] .terms-page .tokushoho-row {
+    border-color: #40586a !important;
+}
+
+/* 特商法：項目名 */
+html[data-game-theme="dark"] .terms-page .tokushoho-label {
+    background: #263748 !important;
+    color: #f0f6fc !important;
+    border-color: #40586a !important;
+}
+
+/* 特商法：記載内容 */
+html[data-game-theme="dark"] .terms-page .tokushoho-value {
+    background: #c4c9cf !important;
+    color: #193b48 !important;
+    border-color: #40586a !important;
+}
+
+/* 特商法：注意事項 */
+html[data-game-theme="dark"] .terms-page .tokushoho-note {
+    background: #263748 !important;
+    border-left-color: #347f91 !important;
+}
+
+html[data-game-theme="dark"] .terms-page .tokushoho-note h2 {
+    color: #f0f6fc !important;
+}
+
+html[data-game-theme="dark"] .terms-page .tokushoho-note p {
+    color: #b4c3d1 !important;
+}
+
+/* プライバシーポリシー：補足欄 */
+html[data-game-theme="dark"] .terms-page .privacy-placeholder {
+    background: #263748 !important;
+    border-left-color: #347f91 !important;
+    color: #f0f6fc !important;
+}
+
+/* 規約から戻るボタン */
+html[data-game-theme="dark"] .terms-page .terms-back-button {
+    background: #347f91 !important;
+    color: #ffffff !important;
+    border-radius: 10px;
+}
+
+/* フッター */
+html[data-game-theme="dark"] .terms-page .terms-footer {
+    background: rgba(24, 36, 52, 0.94) !important;
+    border-top-color: #40586a !important;
+    color: #b4c3d1 !important;
+}
