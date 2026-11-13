@@ -1,5 +1,6 @@
 from apps.battle.combatants import PlayerCombatant
 from apps.battle.timeline import arena_turn_snapshot
+from apps.battle.initiative import calculate_gauge_gain, action_priority
 from apps.inventory.services import get_equipment_special_multiplier
 
 from apps.battle.engine.calculations import (
@@ -643,6 +644,21 @@ class ArenaBattleEngine:
 
         tick_count = 0
 
+        # 戦闘開始時の最高AGIを固定
+        reference_agi = max(
+            1.0,
+            self.get_combat_stat(
+                self.challenger,
+                self.challenger_combatant,
+                "agility",
+            ),
+            self.get_combat_stat(
+                self.defender,
+                self.defender_combatant,
+                "agility",
+            ),
+        )
+
         # ========================================
         # 戦闘ループ
         # ========================================
@@ -654,78 +670,96 @@ class ArenaBattleEngine:
         ):
             tick_count += 1
 
-            # ====================================
-            # AGIを取得
-            # ====================================
 
-            challenger_agi = self.get_combat_stat(
-                self.challenger,
-                self.challenger_combatant,
-                "agility",
-            )
+            # 全参加者のゲージを更新
+            ready = []
 
-            defender_agi = self.get_combat_stat(
-                self.defender,
-                self.defender_combatant,
-                "agility",
-            )
+            participants = [
+                (
+                    0, "challenger",
+                    self.challenger,
+                    self.challenger_combatant,
+                ),
+                (
+                    1, "defender",
+                    self.defender,
+                    self.defender_combatant,
+                ),
+            ]
 
-            # ====================================
-            # 行動ゲージ加算
-            # ====================================
+            for order, side, character, combatant in participants:
+                effective_agi = self.get_combat_stat(
+                    character,
+                    combatant,
+                    "agility",
+                )
 
-            self.challenger_combatant.initiative += max(
-                0,
-                challenger_agi,
-            )
+                before = combatant.initiative
 
-            self.defender_combatant.initiative += max(
-                0,
-                defender_agi,
-            )
+                gain = calculate_gauge_gain(
+                    effective_agi,
+                    reference_agi,
+                )
 
-            # ====================================
-            # 挑戦者の行動
-            # ====================================
+                combatant.initiative += gain
 
-            if (
-                self.challenger_combatant.initiative
-                >= 100
-            ):
-                self.challenger_combatant.initiative -= 100
+                if combatant.initiative >= 100:
+                    ready.append((
+                        action_priority(
+                            before,
+                            gain,
+                            effective_agi,
+                            order,
+                        ),
+                        side,
+                        combatant,
+                    ))
 
-                _timeline_log_start = len(self.logs)
-                self.challenger_normal_attack()
-                self.turn_timeline.append(arena_turn_snapshot(
-                    self, "player", self.challenger.name,
-                    self.logs[_timeline_log_start:], len(self.turn_timeline) + 1,
-                ))
+            # ゲージ100への到達順で行動
+            ready.sort(key=lambda entry: entry[0])
 
-                                # 毒による自滅も含めて戦闘終了を判定
+            for _, side, combatant in ready:
+
+                # すでに決着していれば行動しない
                 if (
                     self.challenger_hp <= 0
                     or self.defender_hp <= 0
                 ):
                     break
 
-            # ====================================
-            # 防衛者の行動
-            # ====================================
+                # 1ループ中の行動は最大1回
+                # 余剰ゲージは繰り越す
+                combatant.initiative -= 100
 
-            if (
-                self.defender_combatant.initiative
-                >= 100
-            ):
-                self.defender_combatant.initiative -= 100
+                log_start = len(self.logs)
 
-                _timeline_log_start = len(self.logs)
-                self.defender_normal_attack()
-                self.turn_timeline.append(arena_turn_snapshot(
-                    self, "enemy", self.defender.name,
-                    self.logs[_timeline_log_start:], len(self.turn_timeline) + 1,
-                ))
+                if side == "challenger":
+                    self.challenger_normal_attack()
 
-                # 毒による自滅も含めて戦闘終了を判定
+                    self.turn_timeline.append(
+                        arena_turn_snapshot(
+                            self,
+                            "player",
+                            self.challenger.name,
+                            self.logs[log_start:],
+                            len(self.turn_timeline) + 1,
+                        )
+                    )
+
+                else:
+                    self.defender_normal_attack()
+
+                    self.turn_timeline.append(
+                        arena_turn_snapshot(
+                            self,
+                            "enemy",
+                            self.defender.name,
+                            self.logs[log_start:],
+                            len(self.turn_timeline) + 1,
+                        )
+                    )
+
+                # 毒による自滅も含めて終了判定
                 if (
                     self.challenger_hp <= 0
                     or self.defender_hp <= 0

@@ -1,6 +1,7 @@
 import random
 
 from apps.battle.timeline import exploration_turn_snapshot
+from apps.battle.initiative import calculate_gauge_gain, action_priority
 
 
 # ============================================================
@@ -46,6 +47,14 @@ class BattleCoreMixin:
 
         turn_timeline = []
 
+        reference_agi = max(
+            [1.0, self.get_player_stat("agility")]
+            + [
+                enemy.enemy.agility
+                for enemy in self.get_alive_enemy_combatants()
+            ]
+        )
+
         # 無限ループ防止
         loop_count = 0
         max_loop = 1000
@@ -62,122 +71,113 @@ class BattleCoreMixin:
 
             loop_count += 1
 
-            # ====================================================
-            # イニシアチブ加算
-            # ====================================================
 
-            # プレイヤー
-            self.player_initiative += (
-                self.get_player_stat(
-                    "agility"
-                )
+            # 全員のゲージを加算し、行動可能者を集める
+            ready = []
+
+            player_agi = self.get_player_stat("agility")
+            player_before = self.player_initiative
+            player_gain = calculate_gauge_gain(
+                player_agi, reference_agi
             )
-
-            # 生存している敵全員
-            for enemy_combatant in (
-                self.get_alive_enemy_combatants()
-            ):
-
-                enemy_combatant.initiative += (
-                    enemy_combatant
-                    .enemy
-                    .agility
-                )
-
-            # ====================================================
-            # プレイヤー行動
-            # ====================================================
+            self.player_initiative += player_gain
 
             if self.player_initiative >= 100:
-
-                self.player_initiative -= 100
-
-                # 生存敵からランダムで
-                # 今回のターゲットを選択
-                if not self.select_random_alive_enemy():
-                    break
-
-                target_name = (
-                    self.enemy.name
-                )
-
-                _timeline_log_start = len(self.logs)
-
-                action_code = (
-                    self.player_turn()
-                )
-
-                self.finish_player_action(
-                    action_code
-                )
-
-                # 今回狙った敵を倒した場合
-                if self.enemy_hp <= 0:
-
-                    self.logs.append(
-                        f"{target_name}を倒した！"
-                    )
-
-                turn_timeline.append(exploration_turn_snapshot(
-                    self, "player", self.character.name,
-                    self.logs[_timeline_log_start:], len(turn_timeline) + 1,
+                ready.append((
+                    action_priority(
+                        player_before, player_gain, player_agi, 0
+                    ),
+                    "player",
+                    None,
                 ))
 
-                # 敵が全滅したら終了
-                if not (
-                    self.get_alive_enemy_combatants()
-                ):
-                    break
-
-            # ====================================================
-            # 敵行動
-            # ====================================================
-
-            for index, enemy_combatant in enumerate(
-                self.enemy_combatants
-            ):
-
-                # 倒れている敵は行動しない
-                if not enemy_combatant.is_alive():
+            for index, enemy in enumerate(self.enemy_combatants):
+                if not enemy.is_alive():
                     continue
 
-                # 行動ゲージが100未満なら
-                # まだ行動できない
-                if enemy_combatant.initiative < 100:
-                    continue
-
-                # この敵を現在敵として設定
-                self.current_enemy_index = index
-
-                enemy_combatant.initiative -= 100
-
-                # 行動前は生存していたか
-                was_alive = (
-                    enemy_combatant.is_alive()
+                enemy_agi = enemy.enemy.agility
+                before = enemy.initiative
+                gain = calculate_gauge_gain(
+                    enemy_agi, reference_agi
                 )
+                enemy.initiative += gain
 
-                _timeline_log_start = len(self.logs)
-                self.enemy_turn()
+                if enemy.initiative >= 100:
+                    ready.append((
+                        action_priority(
+                            before, gain, enemy_agi, index + 1
+                        ),
+                        "enemy",
+                        index,
+                    ))
 
-                # 毒などで自分のターン開始時に
-                # 倒れた場合
-                if (
-                    was_alive
-                    and not enemy_combatant.is_alive()
-                ):
-                    self.logs.append(
-                        f"{enemy_combatant.name}"
-                        "を倒した！"
-                    )
+            # ゲージ到達時刻の早い順に行動
+            ready.sort(key=lambda entry: entry[0])
 
-                turn_timeline.append(exploration_turn_snapshot(
-                    self, "enemy", enemy_combatant.name,
-                    self.logs[_timeline_log_start:], len(turn_timeline) + 1,
-                ))
+            for _, side, index in ready:
 
-                # プレイヤーが倒れたら終了
                 if self.player_hp <= 0:
                     break
+
+                if not self.get_alive_enemy_combatants():
+                    break
+
+                if side == "player":
+                    self.player_initiative -= 100
+
+                    if not self.select_random_alive_enemy():
+                        break
+
+                    target_name = self.enemy.name
+                    log_start = len(self.logs)
+
+                    action_code = self.player_turn()
+                    self.finish_player_action(action_code)
+
+                    if self.enemy_hp <= 0:
+                        self.logs.append(
+                            f"{target_name}を倒した！"
+                        )
+
+                    turn_timeline.append(
+                        exploration_turn_snapshot(
+                            self,
+                            "player",
+                            self.character.name,
+                            self.logs[log_start:],
+                            len(turn_timeline) + 1,
+                        )
+                    )
+
+                else:
+                    enemy = self.enemy_combatants[index]
+
+                    # 先の行動で倒された敵は行動しない
+                    if not enemy.is_alive():
+                        continue
+
+                    self.current_enemy_index = index
+                    enemy.initiative -= 100
+
+                    was_alive = enemy.is_alive()
+                    log_start = len(self.logs)
+
+                    self.enemy_turn()
+
+                    if was_alive and not enemy.is_alive():
+                        self.logs.append(
+                            f"{enemy.name}を倒した！"
+                        )
+
+                    turn_timeline.append(
+                        exploration_turn_snapshot(
+                            self,
+                            "enemy",
+                            enemy.name,
+                            self.logs[log_start:],
+                            len(turn_timeline) + 1,
+                        )
+                    )
 
             if self.player_hp <= 0:
                 break
