@@ -9,8 +9,10 @@ from django.db import transaction
 
 from apps.accounts.models import (
     Character,
+    User,
     AdminModeAccessLog,
     AdminChangeLog,
+    AdminModeAuthorizedUser,
 )
 
 from apps.sns.models import Post
@@ -38,7 +40,36 @@ from apps.inventory.models import (
     InventoryItem,
 )
 
+# ========================================
+# ADMIN MODE 権限確認
+# ========================================
 
+def is_admin_authorized(user):
+
+    if not user.is_authenticated:
+        return False
+
+    return (
+        AdminModeAuthorizedUser.objects
+        .filter(
+            user=user
+        )
+        .exists()
+    )
+
+
+def is_admin_mode_active(request):
+
+    return (
+        request.session.get(
+            "admin_mode",
+            False,
+        )
+        and
+        is_admin_authorized(
+            request.user
+        )
+    )
 
 # ========================================
 
@@ -47,61 +78,67 @@ from apps.inventory.models import (
 # ========================================
 
 @login_required
-
 def player_search(request):
 
     if request.method != "POST":
-
         return redirect("home")
 
-
-
-    query = request.POST.get("query", "").strip()
-
-
+    query = request.POST.get(
+        "query",
+        "",
+    ).strip()
 
     if not query:
-
         messages.error(
-
             request,
-
             "検索内容を入力してください。",
-
         )
-
         return redirect("home")
 
 
-
+    # ========================================
     # 管理者モード起動コマンド
+    # ========================================
 
     if query == "/admin":
 
-        return redirect("admin_mode_login")
+        if not is_admin_authorized(
+            request.user
+        ):
 
+            request.session[
+                "admin_mode"
+            ] = False
 
+            messages.error(
+                request,
+                "このアカウントには管理者権限がありません。",
+            )
 
-    # 管理者モード解除コマンド
+            return redirect(
+                "home"
+            )
 
-    if query == "/adminoff":
-
-        request.session["admin_mode"] = False
-
-
-
-        messages.success(
-
-            request,
-
-            "管理者モードを解除しました。",
-
+        return redirect(
+            "admin_mode_login"
         )
 
 
+    # 管理者モード解除コマンド
+    if query == "/adminoff":
 
-        return redirect("home")
+        request.session[
+            "admin_mode"
+        ] = False
 
+        messages.success(
+            request,
+            "管理者モードを解除しました。",
+        )
+
+        return redirect(
+            "home"
+        )
 
 
     # 通常のプレイヤー検索
@@ -183,6 +220,26 @@ def player_detail(request, character_id):
 @login_required
 
 def admin_mode_login(request):
+    # ========================================
+    # 管理者許可ユーザー確認
+    # ========================================
+
+    if not is_admin_authorized(
+        request.user
+    ):
+
+        request.session[
+            "admin_mode"
+        ] = False
+
+        messages.error(
+            request,
+            "このアカウントには管理者権限がありません。",
+        )
+
+        return redirect(
+            "home"
+        )
 
     if request.method == "POST":
 
@@ -252,31 +309,35 @@ def admin_mode_login(request):
 
 
 @login_required
-
 def admin_panel(request):
 
+    # ========================================
+    # ADMIN MODE確認
+    # ========================================
 
+    if not is_admin_mode_active(
+        request
+    ):
 
-    # 管理者モードでなければ入れない
-
-    if not request.session.get("admin_mode"):
+        request.session[
+            "admin_mode"
+        ] = False
 
         messages.error(
-
             request,
-
             "管理者モードを有効にしてください。",
-
         )
 
-        return redirect("home")
-
+        return redirect(
+            "home"
+        )
 
 
     # 検索文字列
-
-    query = request.GET.get("q", "").strip()
-
+    query = request.GET.get(
+        "q",
+        "",
+    ).strip()
 
 
     characters = (
@@ -326,18 +387,232 @@ def admin_panel(request):
         .order_by("-created_at")[:15]
     )
 
+    admin_authorized_users = (
+        AdminModeAuthorizedUser.objects
+        .select_related(
+            "user",
+            "added_by",
+        )
+        .order_by(
+            "user__user_id"
+        )
+    )
+
+
     return render(
         request,
         "admin_panel.html",
         {
-            "characters": characters,
-            "query": query,
-            "posts": posts,
-            "admin_access_logs": admin_access_logs,
-            "admin_change_logs": admin_change_logs,
+            "characters":
+                characters,
+
+            "query":
+                query,
+
+            "posts":
+                posts,
+
+            "admin_access_logs":
+                admin_access_logs,
+
+            "admin_change_logs":
+                admin_change_logs,
+
+            "admin_authorized_users":
+                admin_authorized_users,
         },
     )
+@login_required
+@require_POST
+def admin_authorized_user_add(request):
 
+    # ========================================
+    # ADMIN MODE確認
+    # ========================================
+
+    if not is_admin_mode_active(
+        request
+    ):
+
+        request.session[
+            "admin_mode"
+        ] = False
+
+        messages.error(
+            request,
+            "管理者モードを有効にしてください。",
+        )
+
+        return redirect(
+            "home"
+        )
+
+
+    # ========================================
+    # 追加するアカウントID
+    # ========================================
+
+    user_id = request.POST.get(
+        "user_id",
+        "",
+    ).strip()
+
+
+    if not user_id:
+
+        messages.error(
+            request,
+            "追加するプレイヤーIDを入力してください。",
+        )
+
+        return redirect(
+            "admin_panel"
+        )
+
+
+    # ========================================
+    # ユーザー取得
+    # ========================================
+
+    target_user = (
+        User.objects
+        .filter(
+            user_id__iexact=user_id
+        )
+        .first()
+    )
+
+
+    if target_user is None:
+
+        messages.error(
+            request,
+            "指定されたプレイヤーIDは存在しません。",
+        )
+
+        return redirect(
+            "admin_panel"
+        )
+
+
+    # ========================================
+    # 管理者許可登録
+    # ========================================
+
+    authorization, created = (
+        AdminModeAuthorizedUser.objects
+        .get_or_create(
+            user=target_user,
+            defaults={
+                "added_by":
+                    request.user,
+            },
+        )
+    )
+
+
+    if created:
+
+        messages.success(
+            request,
+            (
+                f"{target_user.user_id}を"
+                "ADMIN MODE許可ユーザーに追加しました。"
+            ),
+        )
+
+    else:
+
+        messages.info(
+            request,
+            (
+                f"{target_user.user_id}は"
+                "すでに許可されています。"
+            ),
+        )
+
+
+    return redirect(
+        "admin_panel"
+    )
+
+
+@login_required
+@require_POST
+def admin_authorized_user_remove(
+    request,
+    authorization_id,
+):
+
+    # ========================================
+    # ADMIN MODE確認
+    # ========================================
+
+    if not is_admin_mode_active(
+        request
+    ):
+
+        request.session[
+            "admin_mode"
+        ] = False
+
+        messages.error(
+            request,
+            "管理者モードを有効にしてください。",
+        )
+
+        return redirect(
+            "home"
+        )
+
+
+    authorization = get_object_or_404(
+        AdminModeAuthorizedUser.objects
+        .select_related(
+            "user"
+        ),
+        pk=authorization_id,
+    )
+
+
+    # ========================================
+    # 自分自身の権限削除は禁止
+    # ========================================
+
+    if (
+        authorization.user_id
+        == request.user.pk
+    ):
+
+        messages.error(
+            request,
+            "現在操作中の自分自身の管理者権限は削除できません。",
+        )
+
+        return redirect(
+            "admin_panel"
+        )
+
+
+    removed_user_id = (
+        authorization.user.user_id
+    )
+
+    authorization.delete()
+
+
+    messages.success(
+        request,
+        (
+            f"{removed_user_id}の"
+            "ADMIN MODE権限を削除しました。"
+        ),
+    )
+
+
+    return redirect(
+        "admin_panel"
+    )
 @login_required
 def admin_player_detail(
     request,
@@ -348,8 +623,8 @@ def admin_player_detail(
     # ADMIN MODE確認
     # ========================================
 
-    if not request.session.get(
-        "admin_mode"
+    if not is_admin_mode_active(
+        request
     ):
 
         messages.error(
@@ -395,8 +670,8 @@ def admin_delete_account(
     # ADMIN MODE確認
     # ========================================
 
-    if not request.session.get(
-        "admin_mode"
+    if not is_admin_mode_active(
+        request
     ):
 
         messages.error(
@@ -538,7 +813,7 @@ def admin_delete_account(
 def admin_access_history(request):
 
     # 管理者モードでなければ入れない
-    if not request.session.get("admin_mode"):
+    if not is_admin_mode_active(request):
         messages.error(
             request,
             "管理者モードを有効にしてください。",
@@ -565,7 +840,7 @@ def admin_access_history(request):
 def admin_change_history(request):
 
     # 管理者モードでなければ入れない
-    if not request.session.get("admin_mode"):
+    if not is_admin_mode_active(request):
         messages.error(
             request,
             "管理者モードを有効にしてください。",
@@ -596,7 +871,7 @@ def admin_change_history(request):
 def admin_player_edit(request, character_id):
 
     # 管理者モードでなければ拒否
-    if not request.session.get("admin_mode"):
+    if not is_admin_mode_active(request):
         messages.error(
             request,
             "管理者モードを有効にしてください。",

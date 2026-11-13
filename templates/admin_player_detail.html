@@ -7,10 +7,7 @@
 
 {% block content %}
 
-<link
-    rel="stylesheet"
-    href="{% static 'css/admin.css' %}"
->
+<link rel="stylesheet" href="{% static 'css/admin.css' %}">
 
 
 <!-- ========================================
@@ -107,7 +104,7 @@
 
             </div>
 
-
+        
             <!-- メールアドレス -->
 
             <div class="admin-account-detail-item">
@@ -120,11 +117,11 @@
 
                     {% if character.user.email %}
 
-                        {{ character.user.email }}
+                    {{ character.user.email }}
 
                     {% else %}
 
-                        -
+                    -
 
                     {% endif %}
 
@@ -220,11 +217,11 @@
 
                     {% if character.arena_state %}
 
-                        {{ character.arena_state.floor_id }}階
+                    {{ character.arena_state.floor_id }}階
 
                     {% else %}
 
-                        未登録
+                    未登録
 
                     {% endif %}
 
@@ -242,10 +239,7 @@
 
         <div class="admin-detail-edit-area">
 
-            <a
-                href="{% url 'admin_player_edit' character.id %}"
-                class="admin-edit-button"
-            >
+            <a href="{% url 'admin_player_edit' character.id %}" class="admin-edit-button">
                 プレイヤー情報を編集
             </a>
 
@@ -282,18 +276,12 @@
 
         {% else %}
 
-        <form
-            method="post"
-            action="{% url 'admin_delete_account' character.id %}"
-        >
+        <form method="post" action="{% url 'admin_delete_account' character.id %}">
 
             {% csrf_token %}
 
-            <button
-                type="submit"
-                class="admin-delete-account-button"
-                onclick="return confirm('{{ character.name|escapejs }} のアカウントを本当に削除しますか？\n\nキャラクターや関連データも削除されます。\nこの操作は元に戻せません。');"
-            >
+            <button type="submit" class="admin-delete-account-button"
+                onclick="return confirm('{{ character.name|escapejs }} のアカウントを本当に削除しますか？\n\nキャラクターや関連データも削除されます。\nこの操作は元に戻せません。');">
                 アカウントを削除
             </button>
 
