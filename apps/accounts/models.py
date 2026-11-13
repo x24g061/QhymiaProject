@@ -564,7 +564,36 @@ class Character(models.Model):
             ]
         )
 
+# ===== 管理者モード許可ユーザー =====
 
+class AdminModeAuthorizedUser(models.Model):
+
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="admin_mode_authorization",
+    )
+
+    added_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="admin_mode_authorizations_added",
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+    )
+
+    class Meta:
+        ordering = [
+            "user__user_id",
+        ]
+
+    def __str__(self):
+        return self.user.user_id
+        
 # ===== 管理者モードアクセス履歴 =====
 
 class AdminModeAccessLog(models.Model):

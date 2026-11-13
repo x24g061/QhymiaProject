@@ -52,7 +52,173 @@
         </form>
 
     </div>
+<!-- ========================================
+     ADMIN MODE 許可ユーザー管理
+======================================== -->
 
+<section class="admin-authorized-section">
+
+    <div class="admin-panel-header">
+
+        <div>
+
+            <p class="admin-panel-label">
+                ADMIN AUTHORIZATION
+            </p>
+
+            <h2>
+                管理者権限
+            </h2>
+
+            <p>
+                ADMIN MODEを使用できるプレイヤーIDを管理します。
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <form
+        method="post"
+        action="{% url 'admin_authorized_user_add' %}"
+        class="admin-authorized-add-form"
+    >
+
+        {% csrf_token %}
+
+        <input
+            type="text"
+            name="user_id"
+            placeholder="QH000000"
+            autocomplete="off"
+            required
+        >
+
+        <button type="submit">
+            管理者に追加
+        </button>
+
+    </form>
+
+
+    <div class="admin-authorized-list">
+
+        <div class="admin-authorized-header">
+
+            <div>
+                プレイヤーID
+            </div>
+
+            <div>
+                キャラクター
+            </div>
+
+            <div>
+                追加者
+            </div>
+
+            <div>
+                登録日時
+            </div>
+
+            <div>
+                操作
+            </div>
+
+        </div>
+
+
+        {% for authorization in admin_authorized_users %}
+
+        <div class="admin-authorized-row">
+
+            <div>
+                <strong>
+                    {{ authorization.user.user_id }}
+                </strong>
+            </div>
+
+
+            <div>
+
+                {% if authorization.user.character %}
+
+                    {{ authorization.user.character.name }}
+
+                {% else %}
+
+                    -
+
+                {% endif %}
+
+            </div>
+
+
+            <div>
+
+                {% if authorization.added_by %}
+
+                    {{ authorization.added_by.user_id }}
+
+                {% else %}
+
+                    初期登録
+
+                {% endif %}
+
+            </div>
+
+
+            <div>
+                {{ authorization.created_at|date:"Y/m/d H:i" }}
+            </div>
+
+
+            <div>
+
+                {% if authorization.user == request.user %}
+
+                    <span class="admin-current-user">
+                        操作中
+                    </span>
+
+                {% else %}
+
+                    <form
+                        method="post"
+                        action="{% url 'admin_authorized_user_remove' authorization.id %}"
+                        onsubmit="return confirm('このプレイヤーの管理者権限を削除しますか？');"
+                    >
+
+                        {% csrf_token %}
+
+                        <button
+                            type="submit"
+                            class="admin-authorized-remove-button"
+                        >
+                            権限削除
+                        </button>
+
+                    </form>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <p>
+            管理者許可ユーザーはいません。
+        </p>
+
+        {% endfor %}
+
+    </div>
+
+</section>
     <form method="get" action="{% url 'admin_panel' %}" class="admin-player-search">
 
         <input type="text" name="q" value="{{ query }}" placeholder="プレイヤー名を検索" autocomplete="off">

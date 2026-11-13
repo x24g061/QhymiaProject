@@ -7,6 +7,8 @@ from .views import (
     admin_mode_login,
     admin_mode_logout,
     admin_panel,
+    admin_authorized_user_add,
+    admin_authorized_user_remove,
     admin_access_history,
     admin_change_history,
     admin_player_edit,
@@ -51,7 +53,17 @@ urlpatterns = [
     admin_change_history,
     name='admin_change_history',
     ),
+    path(
+    "admin-panel/authorized-users/add/",
+    admin_authorized_user_add,
+    name="admin_authorized_user_add",
+    ),
 
+    path(
+    "admin-panel/authorized-users/<int:authorization_id>/remove/",
+    admin_authorized_user_remove,
+    name="admin_authorized_user_remove",
+    ),
     # 管理者モードログイン
     path(
         'admin_mode_login/',
