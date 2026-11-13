@@ -11,6 +11,58 @@ from apps.inventory.services import (
 
 class BattleAttacksMixin:
 
+    def get_attack_equipment_multiplier(self, effect_code):
+        return get_equipment_special_multiplier(self.character, effect_code)
+
+    def get_target_skill_actor(self):
+        return getattr(self.enemy_combatant, "skill_actor", None)
+
+    def adjust_target_hit_rate(self, hit_rate):
+        target = self.get_target_skill_actor()
+        if target is not None:
+            if target.hide_turns > 0:
+                hit_rate *= 0.90
+            if target.stealth_active:
+                hit_rate = max(50, hit_rate - 10)
+        return hit_rate
+
+    def deal_target_damage(self, damage, magic=False):
+        """敵味方共通の被弾処理。反射・反撃から再反撃は発生させない。"""
+        target = self.get_target_skill_actor()
+        if target is not None:
+            if not magic and target.steel_body_turns > 0:
+                damage *= 0.60
+            if target.solid_stance_turns > 0:
+                damage *= 0.80
+            damage = target.apply_player_received_damage_race_bonus(damage)
+            damage *= target.get_attack_equipment_multiplier("damage_reduction")
+            # フロストアーマーの軽減率は現行プレイヤー側も未実装。
+            # 未確定の倍率を敵側だけに追加しない。
+        damage = max(1, int(damage))
+        self.enemy_hp -= damage
+        if target is not None and not getattr(self, "_is_counter_attack", False):
+            if target.shadow_step_turns > 0 and self.player_hp > 0:
+                reflected = max(1, int(damage * 0.40))
+                self.player_hp -= reflected
+                self.logs.append(
+                    f"シャドウステップ！ {self.character.name}に"
+                    f"{reflected}反射ダメージ！"
+                )
+            if (target.player_hp > 0 and self.player_hp > 0
+                    and target.counter_stance_turns > 0
+                    and target.counter_remaining > 0):
+                target.counter_remaining -= 1
+                target._is_counter_attack = True
+                try:
+                    target.player_physical_skill_hit(
+                        skill_name="反撃",
+                        base_damage=target.get_player_stat("strength") * 1.3,
+                        attribute="neutral",
+                    )
+                finally:
+                    target._is_counter_attack = False
+        return damage
+
     # ========================================
     # 装備特殊能力：状態異常
     # ========================================
@@ -136,9 +188,10 @@ class BattleAttacksMixin:
             attacker_dex=self.get_player_stat(
                 "dexterity"
             ),
-            defender_agi=self.enemy.agility,
+            defender_agi=self.get_enemy_stat("agility"),
         )
 
+        hit_rate = self.adjust_target_hit_rate(hit_rate)
         if not self.roll_percent(hit_rate):
 
             self.logs.append(
@@ -152,7 +205,7 @@ class BattleAttacksMixin:
             strength=self.get_player_stat(
                 "strength"
             ),
-            defender_vit=self.enemy.vitality,
+            defender_vit=self.get_enemy_stat("vitality"),
         )
 
         # ===== クリティカル =====
@@ -160,7 +213,7 @@ class BattleAttacksMixin:
         critical_rate = (
             self.calculate_critical_rate(
                 attacker_luck=self.get_player_stat("luck"),
-                defender_luck=self.enemy.luck,
+                defender_luck=self.get_enemy_stat("luck"),
             )
         )
 
@@ -227,17 +280,14 @@ class BattleAttacksMixin:
             )
         )
         # ===== 特殊能力：猛攻 =====
-        damage *= get_equipment_special_multiplier(
-            self.character,
-            "physical_damage",
-        )
+        damage *= self.get_attack_equipment_multiplier("physical_damage")
         # 最終的に整数化
         damage = max(
             1,
             int(damage),
         )
 
-        self.enemy_hp -= damage
+        damage = self.deal_target_damage(damage)
 
         # ===== 装備特殊能力：毒牙・痺れ刃 =====
         self.apply_equipment_status_effects()
@@ -292,7 +342,7 @@ class BattleAttacksMixin:
         """
 
         # すでに敵を倒していた場合は何もしない
-        if self.enemy_hp <= 0:
+        if self.player_hp <= 0 or self.enemy_hp <= 0:
             return False
 
         # ログに表示する攻撃名
@@ -313,9 +363,10 @@ class BattleAttacksMixin:
                 attacker_dex=self.get_player_stat(
                     "dexterity"
                 ),
-                defender_agi=self.enemy.agility,
+                defender_agi=self.get_enemy_stat("agility"),
             )
 
+            hit_rate = self.adjust_target_hit_rate(hit_rate)
             if not self.roll_percent(hit_rate):
 
                 self.logs.append(
@@ -334,7 +385,7 @@ class BattleAttacksMixin:
 
         damage = (
             base_damage
-            - self.enemy.vitality * 0.5
+            - self.get_enemy_stat("vitality") * 0.5
         )
 
         damage = max(
@@ -351,7 +402,7 @@ class BattleAttacksMixin:
         critical_rate = (
             self.calculate_critical_rate(
                 attacker_luck=luck,
-                defender_luck=self.enemy.luck,
+                defender_luck=self.get_enemy_stat("luck"),
             )
         )
 
@@ -409,10 +460,7 @@ class BattleAttacksMixin:
         )
         # ===== 特殊能力：猛攻 =====
 
-        damage *= get_equipment_special_multiplier(
-            self.character,
-            "physical_damage",
-        )
+        damage *= self.get_attack_equipment_multiplier("physical_damage")
 
         # ===== 最終ダメージ =====
 
@@ -421,7 +469,7 @@ class BattleAttacksMixin:
             int(damage),
         )
 
-        self.enemy_hp -= damage
+        damage = self.deal_target_damage(damage)
 
         # ===== 装備特殊能力：毒牙・痺れ刃 =====
         self.apply_equipment_status_effects()
@@ -485,7 +533,7 @@ class BattleAttacksMixin:
         """
 
         # すでに敵を倒していた場合
-        if self.enemy_hp <= 0:
+        if self.player_hp <= 0 or self.enemy_hp <= 0:
             return False
 
         # ログ表示名
@@ -503,9 +551,10 @@ class BattleAttacksMixin:
             attacker_dex=self.get_player_stat(
                 "dexterity"
             ),
-            defender_agi=self.enemy.agility,
+            defender_agi=self.get_enemy_stat("agility"),
         )
 
+        hit_rate = self.adjust_target_hit_rate(hit_rate)
         if not self.roll_percent(hit_rate):
 
             self.logs.append(
@@ -531,7 +580,7 @@ class BattleAttacksMixin:
 
         if not ignore_magic_defense:
             damage -= (
-                self.enemy.intelligence
+                self.get_enemy_stat("intelligence")
                 * 0.3
             )
 
@@ -586,10 +635,7 @@ class BattleAttacksMixin:
 
         # ===== 特殊能力：魔導 =====
 
-        damage *= get_equipment_special_multiplier(
-            self.character,
-            "magic_damage",
-        )
+        damage *= self.get_attack_equipment_multiplier("magic_damage")
 
         # ============================
         # 最終ダメージ
@@ -600,7 +646,7 @@ class BattleAttacksMixin:
             int(damage),
         )
 
-        self.enemy_hp -= damage
+        damage = self.deal_target_damage(damage, magic=True)
 
         # ===== 装備特殊能力：毒牙・痺れ刃 =====
         self.apply_equipment_status_effects()
@@ -703,7 +749,7 @@ class BattleAttacksMixin:
 
         critical_rate = (
             self.calculate_critical_rate(
-                attacker_luck=self.enemy.luck,
+                attacker_luck=self.get_enemy_stat("luck"),
                 defender_luck=self.get_player_stat("luck"),
             )
         )
@@ -716,7 +762,7 @@ class BattleAttacksMixin:
 
             damage *= (
                 self.calculate_critical_multiplier(
-                    self.enemy.luck
+                    self.get_enemy_stat("luck")
                 )
             )
 

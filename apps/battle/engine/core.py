@@ -50,7 +50,7 @@ class BattleCoreMixin:
         reference_agi = max(
             [1.0, self.get_player_stat("agility")]
             + [
-                enemy.enemy.agility
+                self.get_enemy_stat("agility", enemy)
                 for enemy in self.get_alive_enemy_combatants()
             ]
         )
@@ -95,7 +95,7 @@ class BattleCoreMixin:
                 if not enemy.is_alive():
                     continue
 
-                enemy_agi = enemy.enemy.agility
+                enemy_agi = self.get_enemy_stat("agility", enemy)
                 before = enemy.initiative
                 gain = calculate_gauge_gain(
                     enemy_agi, reference_agi
