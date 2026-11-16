@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_GET, require_POST
 
 from apps.accounts.models import AdminChangeLog
+from config.views import is_admin_mode_active
 
 from .forms import PostForm
 from .models import Favorite, Like, Post
@@ -22,7 +23,7 @@ from .services import (
 def admin_delete_post(request, post_id):
 
     # 管理者モードでなければ削除不可
-    if not request.session.get("admin_mode"):
+    if not is_admin_mode_active(request):
         return JsonResponse(
             {
                 "error": "管理者権限がありません。"
@@ -465,6 +466,7 @@ def mini_sns_feed(request):
 # ========================================
 
 @login_required
+@require_POST
 def toggle_like(request, post_id):
 
     post = get_object_or_404(
@@ -506,6 +508,7 @@ def toggle_like(request, post_id):
 # ========================================
 
 @login_required
+@require_POST
 def toggle_favorite(
     request,
     post_id,
