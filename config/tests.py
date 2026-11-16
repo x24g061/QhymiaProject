@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from apps.accounts.models import User, Character
+from apps.accounts.models import User, Character, AdminChangeLog, AdminModeAuthorizedUser
 from apps.inventory.models import (
     Item,
     Equipment,
@@ -17,6 +17,7 @@ class AdminEquipmentGrantTests(TestCase):
             email="admintest@example.com",
             password="testpass123",
         )
+        AdminModeAuthorizedUser.objects.create(user=self.user)
 
         self.character = Character.objects.create(
             user=self.user,
@@ -50,6 +51,38 @@ class AdminEquipmentGrantTests(TestCase):
         session["admin_mode"] = True
         session.save()
 
+
+    def test_edit_requires_authorization_and_active_admin_mode(self):
+        """許可レコードと有効な管理者モードの両方が必要。"""
+        url = reverse("admin_player_edit", args=[self.character.pk])
+        for authorized, active in [(False, True), (True, False)]:
+            if authorized:
+                AdminModeAuthorizedUser.objects.get_or_create(user=self.user)
+            else:
+                AdminModeAuthorizedUser.objects.filter(user=self.user).delete()
+            session = self.client.session
+            session["admin_mode"] = active
+            session.save()
+
+            for method in ["get", "post"]:
+                with self.subTest(authorized=authorized, active=active, method=method):
+                    response = getattr(self.client, method)(
+                        url,
+                        {
+                            "level": 10,
+                            "exp": 50,
+                            "gold": 999,
+                            "grant_equipment_id": self.equipment.pk,
+                            "grant_quantity": 3,
+                            "grant_enhancement_level": 2,
+                        },
+                    )
+                    self.assertRedirects(response, reverse("home"), fetch_redirect_response=False)
+                    self.character.refresh_from_db()
+                    self.assertEqual(self.character.level, 1)
+                    self.assertEqual(self.character.exp, 0)
+                    self.assertFalse(OwnedEquipment.objects.filter(character=self.character).exists())
+                    self.assertFalse(AdminChangeLog.objects.exists())
 
     def test_admin_can_grant_equipment(
         self,
