@@ -331,24 +331,15 @@ def battle(request):
                 ]
             )
 
-        # ----------------------------------------------------
-        # ボス戦敗北・引き分け
-        # ----------------------------------------------------
+        # 勝敗にかかわらず、次のボス遭遇までの回数を数え直す。
+        # 撃破済み状態は維持し、解放済みの階層を閉じない。
+        floor_progress.exploration_count = 0
 
-        else:
-
-            # ボスに勝てなかった場合は
-            # 探索回数を0に戻す。
-            #
-            # 再び0.5%を引くか、
-            # 200回探索する必要がある。
-            floor_progress.exploration_count = 0
-
-            floor_progress.save(
-                update_fields=[
-                    "exploration_count",
-                ]
-            )
+        floor_progress.save(
+            update_fields=[
+                "exploration_count",
+            ]
+        )
 
 
     # ========================================================

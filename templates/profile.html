@@ -13,6 +13,10 @@
     </title>
 
     <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+
+    <!-- ゲーム設定：ダークモード・フォント変更 -->
+    <script src="{% static 'js/game-settings.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/game-settings.css' %}">
 </head>
 
 
@@ -396,69 +400,69 @@
                     <!-- 自分のプロフィール：既存の属性一覧 -->
                     <div class="profile-stat-grid">
 
-                            <div class="profile-info-box">
-                                <span class="profile-info-label">
-                                    火
-                                </span>
+                        <div class="profile-info-box">
+                            <span class="profile-info-label">
+                                火
+                            </span>
 
-                                <strong>
-                                    {{ character.fire }}
-                                </strong>
-                            </div>
-
-
-                            <div class="profile-info-box">
-                                <span class="profile-info-label">
-                                    水
-                                </span>
-
-                                <strong>
-                                    {{ character.water }}
-                                </strong>
-                            </div>
+                            <strong>
+                                {{ character.fire }}
+                            </strong>
+                        </div>
 
 
-                            <div class="profile-info-box">
-                                <span class="profile-info-label">
-                                    草
-                                </span>
+                        <div class="profile-info-box">
+                            <span class="profile-info-label">
+                                水
+                            </span>
 
-                                <strong>
-                                    {{ character.grass }}
-                                </strong>
-                            </div>
-
-
-                            <div class="profile-info-box">
-                                <span class="profile-info-label">
-                                    岩
-                                </span>
-
-                                <strong>
-                                    {{ character.rock }}
-                                </strong>
-                            </div>
+                            <strong>
+                                {{ character.water }}
+                            </strong>
+                        </div>
 
 
-                            <div class="profile-info-box">
-                                <span class="profile-info-label">
-                                    光
-                                </span>
+                        <div class="profile-info-box">
+                            <span class="profile-info-label">
+                                草
+                            </span>
 
-                                <strong>
-                                    {{ character.light }}
-                                </strong>
-                            </div>
+                            <strong>
+                                {{ character.grass }}
+                            </strong>
+                        </div>
 
 
-                            <div class="profile-info-box">
-                                <span class="profile-info-label">
-                                    闇
-                                </span>
+                        <div class="profile-info-box">
+                            <span class="profile-info-label">
+                                岩
+                            </span>
 
-                                <strong>
-                                    {{ character.dark }}
-                                </strong>
+                            <strong>
+                                {{ character.rock }}
+                            </strong>
+                        </div>
+
+
+                        <div class="profile-info-box">
+                            <span class="profile-info-label">
+                                光
+                            </span>
+
+                            <strong>
+                                {{ character.light }}
+                            </strong>
+                        </div>
+
+
+                        <div class="profile-info-box">
+                            <span class="profile-info-label">
+                                闇
+                            </span>
+
+                            <strong>
+                                {{ character.dark }}
+                            </strong>
 
                         </div>
 
