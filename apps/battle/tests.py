@@ -3408,12 +3408,8 @@ class ExplorationBossProgressionTests(TestCase):
         )
 
 
-    def test_defeated_boss_does_not_reappear(self):
-        """
-        すでに撃破済みのボスは、
-        200回以上探索していても
-        再出現しないことを確認する。
-        """
+    def test_defeated_boss_uses_same_encounter_conditions(self):
+        """撃破済みでも0.5%抽選と200回保証を適用する。"""
 
         progress = FloorProgress.objects.create(
             character=self.character,
@@ -3422,18 +3418,19 @@ class ExplorationBossProgressionTests(TestCase):
             boss_defeated=True,
         )
 
-        with patch(
-            "apps.battle.progression.random.random",
-            return_value=0.0,
-        ):
-
-            result = should_encounter_boss(
-                progress
-            )
-
-        self.assertFalse(
-            result
-        )
+        for count, roll, expected in [
+            (1, 0.0049, True),
+            (199, 0.005, False),
+            (200, 0.999, True),
+            (201, 0.999, True),
+        ]:
+            with self.subTest(count=count, roll=roll):
+                progress.exploration_count = count
+                with patch(
+                    "apps.battle.progression.random.random",
+                    return_value=roll,
+                ):
+                    self.assertEqual(should_encounter_boss(progress), expected)
 
 
     def test_boss_win_unlocks_next_floor(self):
@@ -3484,6 +3481,8 @@ class ExplorationBossProgressionTests(TestCase):
         )
 
         progress.refresh_from_db()
+
+        self.assertEqual(progress.exploration_count, 0)
 
         self.assertTrue(
             progress.boss_defeated
@@ -3551,6 +3550,77 @@ class ExplorationBossProgressionTests(TestCase):
         self.assertFalse(
             progress.boss_defeated
         )
+
+
+    def test_boss_reencounter_preserves_unlock_and_restarts_count(self):
+        """再戦の全勝敗で回数をリセットし、解放済み階層を維持する。"""
+        progress = FloorProgress.objects.create(
+            character=self.character,
+            floor=1,
+            exploration_count=199,
+            boss_defeated=True,
+        )
+        other_floor = FloorProgress.objects.create(
+            character=self.character,
+            floor=2,
+            exploration_count=37,
+        )
+        for winner in ["player", "enemy", "draw"]:
+            with self.subTest(winner=winner):
+                progress.exploration_count = 199
+                progress.save(update_fields=["exploration_count"])
+                Character.objects.filter(pk=self.character.pk).update(
+                    exploration_cooldown_until=None,
+                )
+                with (
+                    patch(
+                        "apps.battle.progression.random.random",
+                        return_value=0.999,
+                    ),
+                    patch("apps.battle.views.BattleEngine") as engine,
+                    patch("apps.battle.views.grant_exploration_drop", return_value=None),
+                ):
+                    engine.return_value.run.return_value = {
+                        "winner": winner, "logs": [], "exp_gained": 0,
+                    }
+                    response = self.client.post(reverse("battle:battle"), {"floor": 1})
+                self.assertEqual(response.status_code, 200)
+                self.assertTrue(response.context["boss_encounter"])
+                enemies = response.context["enemies"]
+                self.assertEqual(len(enemies), 1)
+                self.assertTrue(enemies[0].is_boss)
+                self.assertEqual(enemies[0].floor, 1)
+                progress.refresh_from_db()
+                self.assertEqual(progress.exploration_count, 0)
+                self.assertTrue(progress.boss_defeated)
+                self.assertEqual(get_max_unlocked_floor(self.character), 2)
+                other_floor.refresh_from_db()
+                self.assertEqual(other_floor.exploration_count, 37)
+
+    def test_exploration_after_boss_win_returns_to_normal_roll(self):
+        """200回目で勝っても、次の探索は確定ボスにならない。"""
+        progress = FloorProgress.objects.create(
+            character=self.character, floor=1, exploration_count=199,
+        )
+        with (
+            patch("apps.battle.progression.random.random", return_value=0.999),
+            patch("apps.battle.views.BattleEngine") as engine,
+            patch("apps.battle.views.grant_exploration_drop", return_value=None),
+        ):
+            engine.return_value.run.return_value = {
+                "winner": "player", "logs": [], "exp_gained": 0,
+            }
+            first = self.client.post(reverse("battle:battle"), {"floor": 1})
+            self.assertTrue(first.context["boss_encounter"])
+            Character.objects.filter(pk=self.character.pk).update(
+                exploration_cooldown_until=None,
+            )
+            second = self.client.post(reverse("battle:battle"), {"floor": 1})
+        self.assertEqual(second.status_code, 200)
+        self.assertFalse(second.context["boss_encounter"])
+        progress.refresh_from_db()
+        self.assertEqual(progress.exploration_count, 1)
+        self.assertTrue(progress.boss_defeated)
 
 
 class ArenaVacantClaimTests(TestCase):
