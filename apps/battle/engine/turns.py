@@ -119,6 +119,9 @@ class BattleTurnsMixin:
         # 行動開始時の種族パッシブ
         # ========================================
 
+        if not self.process_action_status(self.player_combatant):
+            return "skip"
+
         self.apply_player_turn_start_race_passive()
 
         # ========================================
@@ -256,87 +259,91 @@ class BattleTurnsMixin:
         状態異常は現在対象となっている敵にのみ適用。
         """
 
+        actor = getattr(self.enemy_combatant, "skill_actor", None)
+        if not self.process_action_status(self.enemy_combatant):
+            if actor is not None:
+                actor.finish_player_action("skip")
+            return
+        if actor is None:
+            self.enemy_attack()
+        else:
+            # 状態異常はここで処理済み。スキル本体・MP・スロット進行は共通。
+            action_code = actor.player_turn()
+            actor.finish_player_action(action_code)
+
+    def process_action_status(self, combatant):
+        """自分の行動開始時に毒・睡眠・麻痺を処理する。"""
         # ========================================
         # 毒ダメージ
         # ========================================
 
-        if self.enemy_poison_turns > 0:
+        if combatant.poison_turns > 0:
 
             poison_damage = max(
                 1,
                 int(
-                    self.enemy.max_hp
+                    combatant.max_hp
                     * 0.10
                 ),
             )
 
-            self.enemy_hp -= poison_damage
+            combatant.hp -= poison_damage
 
             # 毒の残りターンを減らす
-            self.enemy_poison_turns -= 1
+            combatant.poison_turns -= 1
 
             self.logs.append(
-                f"{self.enemy.name}は"
+                f"{combatant.name}は"
                 f"毒で{poison_damage}ダメージ！"
             )
 
             # 毒ダメージで倒れた場合は
             # そのターンの行動を終了
-            if self.enemy_hp <= 0:
-                return
+            if combatant.hp <= 0:
+                return False
 
         # ========================================
         # 睡眠
         # ========================================
 
-        if self.enemy_sleep_turns > 0:
+        if combatant.sleep_turns > 0:
 
-            self.enemy_sleep_turns -= 1
+            combatant.sleep_turns -= 1
 
             self.logs.append(
-                f"{self.enemy.name}は"
+                f"{combatant.name}は"
                 "眠っていて行動できない！"
             )
 
-            return
+            return False
 
         # ========================================
         # 麻痺
         # ========================================
 
-        if self.enemy_paralysis_turns > 0:
+        if combatant.paralysis_turns > 0:
 
-            self.enemy_paralysis_turns -= 1
+            combatant.paralysis_turns -= 1
 
             # 麻痺中は50%の確率で行動不能
             if self.roll_percent(50):
 
                 self.logs.append(
-                    f"{self.enemy.name}は"
+                    f"{combatant.name}は"
                     "麻痺していて行動できない！"
                 )
 
-                return
+                return False
 
             # 麻痺の残りターンが0になった場合
-            if self.enemy_paralysis_turns == 0:
+            if combatant.paralysis_turns == 0:
 
                 self.logs.append(
-                    f"{self.enemy.name}の"
+                    f"{combatant.name}の"
                     "麻痺が解けた！"
                 )
 
-        # ========================================
-        # 通常攻撃
-        # ========================================
-        #
-        # 毒・睡眠・麻痺によって
-        # 行動不能になっていなければ実行。
-        #
-        # ※麻痺のif文の外に置くこと！
-        # ========================================
-
-        self.enemy_attack()
+        return True
 
     # ========================================================
     # 敵ターン：衰弱の解除処理

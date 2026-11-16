@@ -30,10 +30,11 @@ class BattleStatsMixin:
         探索・闘技場共通処理へ委譲する。
         """
 
-        return get_character_combat_stat(
+        value = get_character_combat_stat(
             self.character,
             stat_name,
 
+            base_value=self.get_player_base_stat(stat_name),
             current_hp=self.player_hp,
             max_hp=self.player_max_hp,
 
@@ -76,6 +77,24 @@ class BattleStatsMixin:
                 self.healing_shield_turns
             ),
         )
+
+        if stat_name == "dexterity":
+            value *= 1.0 - max(
+                getattr(self.player_combatant, "dex_debuff_rate", 0.0),
+                getattr(self.player_combatant, "equipment_dex_debuff_rate", 0.0),
+            )
+        return value
+
+    def get_player_base_stat(self, stat_name):
+        # Noneなら共通関数が従来どおり装備・職業・種族を計算する。
+        return None
+
+    def get_enemy_stat(self, stat_name, combatant=None):
+        combatant = combatant or self.enemy_combatant
+        actor = getattr(combatant, "skill_actor", None)
+        if actor is not None:
+            return actor.get_player_stat(stat_name)
+        return getattr(combatant.enemy, stat_name)
 
     # ========================================================
     # 得意属性

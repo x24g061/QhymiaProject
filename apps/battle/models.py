@@ -166,6 +166,12 @@ class Enemy(models.Model):
         default=10,
     )
 
+    # Noneの通常敵は従来の疲労なし。ボスは設計表のSTから開始する。
+    max_stamina = models.PositiveIntegerField(null=True, blank=True)
+    skill_codes = models.JSONField(default=list, blank=True)
+    # v1データ移行を戻す際、移行直前の個別調整値まで復元する。
+    balance_before_v1 = models.JSONField(null=True, editable=False)
+
     # ===== 基本能力 =====
 
     strength = models.PositiveIntegerField(

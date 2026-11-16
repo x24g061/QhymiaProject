@@ -169,6 +169,17 @@ class BattleEngine(
         self.preset_index = 0
 
 
+        self.initialize_skill_state()
+
+        # 敵側も同じスキル実行処理を使う（通常敵は従来どおり）。
+        from apps.battle.enemy_skills import EnemySkillActor
+
+        for combatant in self.enemy_combatants:
+            if getattr(combatant.enemy, "is_boss", False):
+                combatant.skill_actor = EnemySkillActor(self, combatant)
+
+    def initialize_skill_state(self):
+        """プレイヤー・ボス共通の戦闘内スキル状態。"""
         # ===== 放浪人用の戦闘状態 =====
 
         # 歩行者の残り有効行動数

@@ -57,6 +57,18 @@ class Combatant:
         # 行動順を決めるためのゲージ
         self.initiative = 0
 
+        # 敵スキルから受ける状態異常も戦闘内だけで管理する。
+        self.sleep_turns = 0
+        self.poison_turns = 0
+        self.paralysis_turns = 0
+        self.dex_debuff_rate = 0.0
+        self.equipment_dex_debuff_rate = 0.0
+
+
+    def consume_stamina(self, amount):
+        # ST未導入の通常敵・既存データでは消費しない。
+        if getattr(self, "stamina", None) is not None:
+            self.stamina = max(0, self.stamina - amount)
 
     def is_alive(self):
         """
@@ -259,6 +271,9 @@ class EnemyCombatant(Combatant):
     def __init__(self, enemy):
 
         self.enemy = enemy
+        self.max_stamina = getattr(enemy, "max_stamina", None)
+        self.stamina = self.max_stamina
+        self.skill_actor = None
 
         super().__init__(
             name=enemy.name,

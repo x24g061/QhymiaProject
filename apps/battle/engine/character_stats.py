@@ -198,6 +198,7 @@ def get_character_combat_stat(
     character,
     stat_name,
     *,
+    base_value=None,
     current_hp=None,
     max_hp=None,
     current_stamina=None,
@@ -226,9 +227,9 @@ def get_character_combat_stat(
     を反映する。
     """
 
-    value = get_character_base_combat_stat(
-        character,
-        stat_name,
+    value = (
+        get_character_base_combat_stat(character, stat_name)
+        if base_value is None else base_value
     )
 
     # ========================================

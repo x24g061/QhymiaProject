@@ -20,9 +20,10 @@ class WandererSkillsMixin:
             attacker_dex=self.get_player_stat(
                 "dexterity"
             ),
-            defender_agi=self.enemy.agility,
+            defender_agi=self.get_enemy_stat("agility"),
         )
 
+        hit_rate = self.adjust_target_hit_rate(hit_rate)
         if not self.roll_percent(hit_rate):
 
             self.logs.append(
@@ -54,7 +55,7 @@ class WandererSkillsMixin:
 
         damage = (
             base_damage
-            - self.enemy.vitality * 0.5
+            - self.get_enemy_stat("vitality") * 0.5
         )
 
         damage = max(
@@ -65,7 +66,7 @@ class WandererSkillsMixin:
         critical_rate = (
             self.calculate_critical_rate(
                 luck,
-                self.enemy.luck,
+                self.get_enemy_stat("luck"),
             )
         )
 
@@ -96,7 +97,7 @@ class WandererSkillsMixin:
             int(damage),
         )
 
-        self.enemy_hp -= damage
+        damage = self.deal_target_damage(damage)
 
         if is_critical:
 

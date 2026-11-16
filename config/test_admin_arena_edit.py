@@ -8,6 +8,7 @@ from apps.accounts.models import (
     User,
     Character,
     AdminChangeLog,
+    AdminModeAuthorizedUser,
 )
 from apps.battle.models import ArenaFloor, ArenaState
 
@@ -20,6 +21,7 @@ class AdminArenaEditTests(TestCase):
             email="admin-edit@example.com",
             password="testpass123",
         )
+        AdminModeAuthorizedUser.objects.create(user=self.admin_user)
 
         self.player_user = User.objects.create_user(
             user_id="arena_edit_user",
@@ -225,6 +227,28 @@ class AdminArenaEditTests(TestCase):
 
         self.assertEqual(self.state.floor_id, 3)
         self.assertEqual(self.character.reincarnation_count, 1)
+
+    def test_unauthorized_user_is_rejected_even_with_admin_mode(self):
+        """許可を取り消されたユーザーは有効なセッションでも編集できない。"""
+        AdminModeAuthorizedUser.objects.filter(user=self.admin_user).delete()
+        self.assertTrue(self.client.session["admin_mode"])
+
+        for method in ["get", "post"]:
+            with self.subTest(method=method):
+                response = getattr(self.client, method)(
+                    self.url,
+                    {
+                        "edit_type": "arena_reincarnation",
+                        "arena_floor": 5,
+                        "reincarnation_count": 10,
+                    },
+                )
+                self.assertRedirects(response, reverse("home"), fetch_redirect_response=False)
+                self.state.refresh_from_db()
+                self.character.refresh_from_db()
+                self.assertEqual(self.state.floor_id, 3)
+                self.assertEqual(self.character.reincarnation_count, 1)
+                self.assertFalse(AdminChangeLog.objects.exists())
 
     def test_missing_arena_state_is_created(self):
         """闘技場状態がないキャラも編集できる。"""
