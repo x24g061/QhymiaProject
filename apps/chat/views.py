@@ -43,7 +43,7 @@ def send_message(request):
     try:
         data = json.loads(request.body)
 
-    except json.JSONDecodeError:
+    except (json.JSONDecodeError, UnicodeDecodeError):
         return JsonResponse(
             {
                 "error":
@@ -52,10 +52,24 @@ def send_message(request):
             status=400,
         )
 
+    if not isinstance(data, dict):
+        return JsonResponse(
+            {"error": "送信データが正しくありません"},
+            status=400,
+        )
+
     message = data.get(
         "message",
         ""
-    ).strip()
+    )
+
+    if not isinstance(message, str):
+        return JsonResponse(
+            {"error": "送信データが正しくありません"},
+            status=400,
+        )
+
+    message = message.strip()
 
     if not message:
         return JsonResponse(
