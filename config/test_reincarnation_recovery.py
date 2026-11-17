@@ -61,6 +61,8 @@ class ReincarnationRecoveryTests(TestCase):
 
         session = self.client.session
         session["reincarnation_bonus_points"] = bonus_points
+        # 現行プレビューと同じキャラクター・回帰世代を設定する。
+        session["reincarnation_preview_version"] = [self.character.pk, self.character.reincarnation_count]
         session.save()
 
     def test_reincarnation_recovers_all_hp_and_mp(self):

@@ -190,6 +190,8 @@
 
         <p class="tactics-description">
             現在のキャラクターが使用できるスキル一覧です。
+            現職の固有スキルと永久習得スキルから、最大5枠を設定できます。
+            永久習得：{{ permanent_skill_count }}種類（保有数の上限なし）。
         </p>
 
         <div class="tactics-skills-grid">
@@ -200,6 +202,11 @@
 
                 <div class="tactics-skill-heading">
                     <h3>{{ skill.name }}</h3>
+                    {% if skill.id in permanent_skill_ids %}
+                    <span class="tactics-skill-tag">永久習得</span>
+                    {% else %}
+                    <span class="tactics-skill-tag">現職固有</span>
+                    {% endif %}
 
                     {% if skill.is_passive %}
                     <span class="tactics-skill-tag">PASSIVE</span>

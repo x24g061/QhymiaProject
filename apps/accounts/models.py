@@ -103,6 +103,11 @@ class UserSettings(models.Model):
 
 class Character(models.Model):
 
+    permanent_skills = models.ManyToManyField(
+        "battle.Skill", blank=True, related_name="permanent_learners",
+        help_text="回帰で永久習得したスキル。現在の職業に関係なく使用可能。",
+    )
+
 
 
     # ユーザーとキャラクターを1対1で紐づける

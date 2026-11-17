@@ -102,6 +102,8 @@ class Command(BaseCommand):
             "profile_sha256": hashlib.sha256(sim.PROFILE_FILE.read_bytes()).hexdigest(),
             "trials": options["trials"], "seed_base": options["seed_base"], "detail": options["detail"],
             "cases": [{"profile": row, "tactic": tactic, "use_scale": scale,
+                       "permanent_skill_codes": sorted(set(row.get("permanent_skill_codes", []))),
+                       "permanent_skill_count": len(set(row.get("permanent_skill_codes", []))),
                        "slots": sim.tactic(row["job"], tactic, scale)} for row, tactic, scale in selected],
             "notes": sim.TACTIC_NOTES}
         completed = []

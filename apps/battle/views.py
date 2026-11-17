@@ -440,15 +440,13 @@ def battle(request):
 
 
 @login_required
+@transaction.atomic
 def tactics(request):
-    character = request.user.character
+    from apps.accounts.models import Character
+    from .skill_access import available_skills as get_available_skills
+    character = Character.objects.select_for_update().get(user=request.user)
 
-    # 現在の職業で使用できるスキルだけ取得
-    available_skills = (
-        Skill.objects
-        .filter(job=character.job)
-        .order_by("id")
-    )
+    available_skills = get_available_skills(character)
 
     error_message = None
 
@@ -479,7 +477,15 @@ def tactics(request):
                 )
                 continue
 
-            # 他職業のスキルをPOSTで送られても使用不可
+            try:
+                skill_id = int(skill_id)
+                if not 0 < skill_id <= 9223372036854775807:
+                    raise ValueError
+            except (TypeError, ValueError):
+                error_message = f"SLOT {slot} のスキルが正しくありません。"
+                break
+
+            # 現職でも永久習得でもないスキルは拒否する。
             skill = available_skills.filter(
                 id=skill_id
             ).first()
@@ -590,6 +596,8 @@ def tactics(request):
             "available_skills": available_skills,
             "preset_slots": preset_slots,
             "error_message": error_message,
+            "permanent_skill_ids": set(character.permanent_skills.values_list("id", flat=True)),
+            "permanent_skill_count": character.permanent_skills.count(),
         },
     )
 

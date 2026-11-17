@@ -52,8 +52,8 @@ def run_case(self,case):
             if label=="buff_debuff":
                 engine.challenger.agility=1000 if sum(s=="player" for s,t in events)==1 else 0
 
-        engine.challenger_normal_attack=player
-        engine.defender_normal_attack=lambda:events.append(("enemy0",calls//participants))
+        engine.challenger_turn=player
+        engine.defender_turn=lambda:events.append(("enemy0",calls//participants))
 
     def gain(agi,reference):
         nonlocal calls

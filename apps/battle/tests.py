@@ -386,7 +386,8 @@ class ArenaBattleEngineTests(TestCase):
             0,
         )
 
-        mock_roll.assert_not_called()
+        # 探索共通の麻痺50%判定でスキップした。
+        mock_roll.assert_called_once_with(50)
 
     def test_arena_equipment_dex_down_expires_after_action(self):
         """衰弱のDEX低下が命中判定に反映されて解除される"""
@@ -402,9 +403,9 @@ class ArenaBattleEngineTests(TestCase):
 
         with (
             patch.object(
-                engine,
-                "get_combat_stat",
-                side_effect=lambda character, combatant, stat_name:
+                engine.challenger_actor,
+                "get_player_base_stat",
+                side_effect=lambda stat_name:
                     100 if stat_name == "dexterity" else 10,
             ),
             patch(
@@ -449,19 +450,17 @@ class ArenaBattleEngineTests(TestCase):
         before_hp = engine.challenger_hp
 
         # 1行動目：毒ダメージと麻痺を処理
-        result = engine.challenger_normal_attack()
+        with patch("apps.battle.arena_engine.roll_percent", return_value=True):
+            result = engine.challenger_normal_attack()
 
         self.assertFalse(result["hit"])
-        self.assertEqual(
-            engine.challenger_hp,
-            before_hp - 10,
-        )
+        self.assertEqual(engine.challenger_hp, before_hp - 10)
 
         self.assertEqual(status["poison"], 0)
         self.assertEqual(status["paralysis"], 0)
 
-        # 麻痺で攻撃していないため衰弱は残る
-        self.assertEqual(status["dex_down"], 1)
+        # 探索の敵側と同様、skipでも行動終了時に装備衰弱を解除。
+        self.assertEqual(status["dex_down"], 0)
 
         # 2行動目：攻撃を試み、衰弱が解除される
         with patch(
@@ -732,6 +731,9 @@ class ArenaBattleEngineTests(TestCase):
             return 1.0
 
         with (
+            # 特殊能力の倍率だけを検証するため、得意属性補正を除く。
+            patch.object(engine.challenger_actor, "get_player_main_attribute", return_value=None),
+            patch.object(engine.defender_actor, "get_player_main_attribute", return_value=None),
             patch(
                 "apps.battle.arena_engine.roll_percent",
                 side_effect=[True, False],
