@@ -1,0 +1,2 @@
+case,profile_id,floor,job,variant,tactic,use_scale,trials,valid,exceptions,wins,losses,draws,win_rate,wilson95,mean_loops,median_loops,loop_limits,player_mean_actions,boss_mean_actions,mean_action_difference
+p052-paired-F8-C-u1,p052-paired-F8,5,warrior,paired-F+8,C,1,100,100,0,100,0,0,1.0,"[0.9630065017930143, 1]",2.4,2.0,0,1.4,0,1.4

@@ -1,0 +1,385 @@
+{
+  "schema": 2,
+  "source_sha256": "f50defb0ab9e6f590d56eec13a2ec61c9c0d25baf62da5917a832f9f63989b7c",
+  "commit": "f15502296590af533f7d28e412e746596ede29c2",
+  "engine": "apps.battle.services.BattleEngine",
+  "postgresql": true,
+  "profile_sha256": "582433dd6205bee13f82aedf80e307d8a4d42e80bf19e972e336b01d095327a1",
+  "trials": 5,
+  "seed_base": 20261117,
+  "detail": true,
+  "cases": [
+    {
+      "profile": {
+        "floor": 12,
+        "variant": "mid-unarmed",
+        "job": "warrior",
+        "race": "human",
+        "reincarnations": 654,
+        "level": 90,
+        "seed": 20261116,
+        "target_power": 82500,
+        "power": 82500,
+        "stats": {
+          "max_hp": 29520,
+          "max_mp": 11737,
+          "strength": 5843,
+          "intelligence": 5920,
+          "dexterity": 5968,
+          "agility": 5886,
+          "vitality": 5765,
+          "luck": 5922
+        },
+        "attributes": {
+          "fire": 5879,
+          "water": 5900,
+          "grass": 5939,
+          "rock": 5898,
+          "light": 5752,
+          "dark": 5893
+        },
+        "combat_start": {
+          "strength": 5843.0,
+          "intelligence": 5920.0,
+          "dexterity": 5968.0,
+          "agility": 5886.0,
+          "vitality": 6341.500000000001,
+          "luck": 6810.299999999999,
+          "max_hp": 29520,
+          "max_mp": 11737
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 0,
+          "dexterity": 0,
+          "agility": 0,
+          "vitality": 0,
+          "luck": 0
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p070"
+      },
+      "tactic": "D",
+      "use_scale": 1,
+      "slots": [
+        [
+          "solid_stance",
+          4
+        ],
+        [
+          "counter_stance",
+          4
+        ],
+        [
+          "steel_body",
+          4
+        ],
+        [
+          "flare_blade",
+          3
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 7,
+        "variant": "mid-unarmed",
+        "job": "hunter",
+        "race": "human",
+        "reincarnations": 95,
+        "level": 63,
+        "seed": 20261116,
+        "target_power": 12500,
+        "power": 12500,
+        "stats": {
+          "max_hp": 4665,
+          "max_mp": 1710,
+          "strength": 827,
+          "intelligence": 891,
+          "dexterity": 869,
+          "agility": 845,
+          "vitality": 858,
+          "luck": 913
+        },
+        "attributes": {
+          "fire": 854,
+          "water": 877,
+          "grass": 922,
+          "rock": 886,
+          "light": 894,
+          "dark": 875
+        },
+        "combat_start": {
+          "strength": 827.0,
+          "intelligence": 891.0,
+          "dexterity": 955.9000000000001,
+          "agility": 845.0,
+          "vitality": 858.0,
+          "luck": 1049.9499999999998,
+          "max_hp": 4665,
+          "max_mp": 1710
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 0,
+          "dexterity": 0,
+          "agility": 0,
+          "vitality": 0,
+          "luck": 0
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p103"
+      },
+      "tactic": "D",
+      "use_scale": 1,
+      "slots": [
+        [
+          "sleep_arrow",
+          4
+        ],
+        [
+          "hide",
+          3
+        ],
+        [
+          "poison_arrow",
+          4
+        ],
+        [
+          "hunter_eye",
+          2
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 6,
+        "variant": "searched-F-set",
+        "job": "wizard",
+        "race": "human",
+        "reincarnations": 20,
+        "level": 97,
+        "seed": 20261116,
+        "target_power": 5000,
+        "power": 5000,
+        "stats": {
+          "max_hp": 1160,
+          "max_mp": 583,
+          "strength": 203,
+          "intelligence": 218,
+          "dexterity": 210,
+          "agility": 225,
+          "vitality": 219,
+          "luck": 207
+        },
+        "attributes": {
+          "fire": 217,
+          "water": 210,
+          "grass": 246,
+          "rock": 234,
+          "light": 228,
+          "dark": 211
+        },
+        "combat_start": {
+          "strength": 203.0,
+          "intelligence": 550.0,
+          "dexterity": 325.0,
+          "agility": 387.0,
+          "vitality": 354.0,
+          "luck": 420.9,
+          "max_hp": 1160,
+          "max_mp": 583
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [
+          {
+            "name": "ひび割れた木杖",
+            "rank": "F",
+            "slot": "weapon",
+            "style": "magic",
+            "enhancement": 5,
+            "power": 210,
+            "special_effect": null
+          },
+          {
+            "name": "色褪せた術帽",
+            "rank": "F",
+            "slot": "head",
+            "style": "magic",
+            "enhancement": 6,
+            "power": 299,
+            "special_effect": null
+          },
+          {
+            "name": "古布のローブ",
+            "rank": "F",
+            "slot": "armor",
+            "style": "magic",
+            "enhancement": 5,
+            "power": 189,
+            "special_effect": null
+          },
+          {
+            "name": "薄布の魔術靴",
+            "rank": "F",
+            "slot": "feet",
+            "style": "magic",
+            "enhancement": 7,
+            "power": 550,
+            "special_effect": null
+          },
+          {
+            "name": "曇った魔石飾り",
+            "rank": "F",
+            "slot": "accessory",
+            "style": "magic",
+            "enhancement": 7,
+            "power": 481,
+            "special_effect": null
+          }
+        ],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 282,
+          "dexterity": 115,
+          "agility": 162,
+          "vitality": 135,
+          "luck": 159
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p149"
+      },
+      "tactic": "D",
+      "use_scale": 1,
+      "slots": [
+        [
+          "megido",
+          4
+        ],
+        [
+          "fire",
+          4
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 12,
+        "variant": "mid-unarmed",
+        "job": "assassin",
+        "race": "human",
+        "reincarnations": 655,
+        "level": 76,
+        "seed": 20261116,
+        "target_power": 82500,
+        "power": 82499,
+        "stats": {
+          "max_hp": 29410,
+          "max_mp": 11818,
+          "strength": 5822,
+          "intelligence": 5934,
+          "dexterity": 5981,
+          "agility": 5915,
+          "vitality": 5762,
+          "luck": 5920
+        },
+        "attributes": {
+          "fire": 5882,
+          "water": 5898,
+          "grass": 5937,
+          "rock": 5895,
+          "light": 5755,
+          "dark": 5895
+        },
+        "combat_start": {
+          "strength": 5822.0,
+          "intelligence": 5934.0,
+          "dexterity": 5981.0,
+          "agility": 6506.500000000001,
+          "vitality": 5762.0,
+          "luck": 6807.999999999999,
+          "max_hp": 29410,
+          "max_mp": 11818
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 0,
+          "dexterity": 0,
+          "agility": 0,
+          "vitality": 0,
+          "luck": 0
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p310"
+      },
+      "tactic": "D",
+      "use_scale": 1,
+      "slots": [
+        [
+          "stealth",
+          1
+        ],
+        [
+          "shadow_step",
+          5
+        ],
+        [
+          "flashbang",
+          4
+        ],
+        [
+          "poison_dagger",
+          3
+        ]
+      ]
+    }
+  ],
+  "notes": {
+    "wizard:D": "完成済みの防御・回復技がないため真の耐久戦術は成立しない。防御無視/低MPの代用比較。",
+    "grappler:D": "回復・防御技なし。STRバフ中心の補助構成という限定的比較。",
+    "hunter:D": "回復なし。状態異常/命中低下中心。",
+    "counts": "回数は比較用の有限予算。最適化済みではない。--use-scaleでアクティブ回数だけを変更可能。"
+  }
+}

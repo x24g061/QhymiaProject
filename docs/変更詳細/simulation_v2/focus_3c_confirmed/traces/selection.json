@@ -1,0 +1,10 @@
+{
+  "phase": "traces",
+  "conditions": 12,
+  "battles": 12,
+  "estimated_battle_seconds": 6.4,
+  "setup_allowance_seconds": 10,
+  "seed_base": 30361117,
+  "trials": 1,
+  "selection_script_sha256": "7bc8568862f1140abe9c0f16855326180aa8f950f35d93f7d346ada724f7d648"
+}

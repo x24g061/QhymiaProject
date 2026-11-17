@@ -1,0 +1,1189 @@
+{
+  "schema": 2,
+  "source_sha256": "f50defb0ab9e6f590d56eec13a2ec61c9c0d25baf62da5917a832f9f63989b7c",
+  "commit": "f15502296590af533f7d28e412e746596ede29c2",
+  "engine": "apps.battle.services.BattleEngine",
+  "postgresql": true,
+  "profile_sha256": "582433dd6205bee13f82aedf80e307d8a4d42e80bf19e972e336b01d095327a1",
+  "trials": 1,
+  "seed_base": 30361117,
+  "detail": true,
+  "cases": [
+    {
+      "profile": {
+        "floor": 8,
+        "variant": "mid-unarmed",
+        "job": "grappler",
+        "race": "human",
+        "reincarnations": 198,
+        "level": 96,
+        "seed": 20261116,
+        "target_power": 25500,
+        "power": 25500,
+        "stats": {
+          "max_hp": 9230,
+          "max_mp": 3556,
+          "strength": 1805,
+          "intelligence": 1827,
+          "dexterity": 1800,
+          "agility": 1747,
+          "vitality": 1780,
+          "luck": 1823
+        },
+        "attributes": {
+          "fire": 1736,
+          "water": 1808,
+          "grass": 1932,
+          "rock": 1855,
+          "light": 1793,
+          "dark": 1845
+        },
+        "combat_start": {
+          "strength": 1985.5000000000002,
+          "intelligence": 1827.0,
+          "dexterity": 1800.0,
+          "agility": 1747.0,
+          "vitality": 1780.0,
+          "luck": 2096.45,
+          "max_hp": 9230,
+          "max_mp": 3556
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 0,
+          "dexterity": 0,
+          "agility": 0,
+          "vitality": 0,
+          "luck": 0
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p010"
+      },
+      "tactic": "A",
+      "use_scale": 1,
+      "slots": []
+    },
+    {
+      "profile": {
+        "floor": 8,
+        "variant": "mid-unarmed",
+        "job": "grappler",
+        "race": "human",
+        "reincarnations": 198,
+        "level": 96,
+        "seed": 20261116,
+        "target_power": 25500,
+        "power": 25500,
+        "stats": {
+          "max_hp": 9230,
+          "max_mp": 3556,
+          "strength": 1805,
+          "intelligence": 1827,
+          "dexterity": 1800,
+          "agility": 1747,
+          "vitality": 1780,
+          "luck": 1823
+        },
+        "attributes": {
+          "fire": 1736,
+          "water": 1808,
+          "grass": 1932,
+          "rock": 1855,
+          "light": 1793,
+          "dark": 1845
+        },
+        "combat_start": {
+          "strength": 1985.5000000000002,
+          "intelligence": 1827.0,
+          "dexterity": 1800.0,
+          "agility": 1747.0,
+          "vitality": 1780.0,
+          "luck": 2096.45,
+          "max_hp": 9230,
+          "max_mp": 3556
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 0,
+          "dexterity": 0,
+          "agility": 0,
+          "vitality": 0,
+          "luck": 0
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p010"
+      },
+      "tactic": "B",
+      "use_scale": 1,
+      "slots": [
+        [
+          "fighting_spirit",
+          2
+        ],
+        [
+          "double_punch",
+          4
+        ],
+        [
+          "true_fist",
+          4
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 8,
+        "variant": "mid-unarmed",
+        "job": "grappler",
+        "race": "human",
+        "reincarnations": 198,
+        "level": 96,
+        "seed": 20261116,
+        "target_power": 25500,
+        "power": 25500,
+        "stats": {
+          "max_hp": 9230,
+          "max_mp": 3556,
+          "strength": 1805,
+          "intelligence": 1827,
+          "dexterity": 1800,
+          "agility": 1747,
+          "vitality": 1780,
+          "luck": 1823
+        },
+        "attributes": {
+          "fire": 1736,
+          "water": 1808,
+          "grass": 1932,
+          "rock": 1855,
+          "light": 1793,
+          "dark": 1845
+        },
+        "combat_start": {
+          "strength": 1985.5000000000002,
+          "intelligence": 1827.0,
+          "dexterity": 1800.0,
+          "agility": 1747.0,
+          "vitality": 1780.0,
+          "luck": 2096.45,
+          "max_hp": 9230,
+          "max_mp": 3556
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 0,
+          "dexterity": 0,
+          "agility": 0,
+          "vitality": 0,
+          "luck": 0
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p010"
+      },
+      "tactic": "C",
+      "use_scale": 1,
+      "slots": [
+        [
+          "true_fist",
+          8
+        ],
+        [
+          "rapid_barrage",
+          4
+        ],
+        [
+          "double_punch",
+          4
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 6,
+        "variant": "searched-F-set",
+        "job": "warrior",
+        "race": "human",
+        "reincarnations": 20,
+        "level": 89,
+        "seed": 20261116,
+        "target_power": 5000,
+        "power": 5000,
+        "stats": {
+          "max_hp": 1250,
+          "max_mp": 493,
+          "strength": 216,
+          "intelligence": 189,
+          "dexterity": 206,
+          "agility": 218,
+          "vitality": 236,
+          "luck": 205
+        },
+        "attributes": {
+          "fire": 214,
+          "water": 207,
+          "grass": 241,
+          "rock": 227,
+          "light": 226,
+          "dark": 207
+        },
+        "combat_start": {
+          "strength": 435.0,
+          "intelligence": 189.0,
+          "dexterity": 354.0,
+          "agility": 387.0,
+          "vitality": 488.40000000000003,
+          "luck": 373.74999999999994,
+          "max_hp": 1250,
+          "max_mp": 493
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [
+          {
+            "name": "欠けた鉄剣",
+            "rank": "F",
+            "slot": "weapon",
+            "style": "physical",
+            "enhancement": 5,
+            "power": 210,
+            "special_effect": null
+          },
+          {
+            "name": "古びた鉄兜",
+            "rank": "F",
+            "slot": "head",
+            "style": "physical",
+            "enhancement": 5,
+            "power": 168,
+            "special_effect": null
+          },
+          {
+            "name": "擦り切れた革鎧",
+            "rank": "F",
+            "slot": "armor",
+            "style": "physical",
+            "enhancement": 6,
+            "power": 337,
+            "special_effect": null
+          },
+          {
+            "name": "傷んだ革靴",
+            "rank": "F",
+            "slot": "feet",
+            "style": "physical",
+            "enhancement": 7,
+            "power": 550,
+            "special_effect": null
+          },
+          {
+            "name": "錆びた腕輪",
+            "rank": "F",
+            "slot": "accessory",
+            "style": "physical",
+            "enhancement": 7,
+            "power": 481,
+            "special_effect": null
+          }
+        ],
+        "equipment_bonuses": {
+          "strength": 219,
+          "intelligence": 0,
+          "dexterity": 148,
+          "agility": 169,
+          "vitality": 208,
+          "luck": 120
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p053"
+      },
+      "tactic": "B",
+      "use_scale": 1,
+      "slots": [
+        [
+          "steel_body",
+          3
+        ],
+        [
+          "flare_blade",
+          5
+        ],
+        [
+          "counter_stance",
+          3
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 6,
+        "variant": "searched-F-set",
+        "job": "warrior",
+        "race": "human",
+        "reincarnations": 20,
+        "level": 89,
+        "seed": 20261116,
+        "target_power": 5000,
+        "power": 5000,
+        "stats": {
+          "max_hp": 1250,
+          "max_mp": 493,
+          "strength": 216,
+          "intelligence": 189,
+          "dexterity": 206,
+          "agility": 218,
+          "vitality": 236,
+          "luck": 205
+        },
+        "attributes": {
+          "fire": 214,
+          "water": 207,
+          "grass": 241,
+          "rock": 227,
+          "light": 226,
+          "dark": 207
+        },
+        "combat_start": {
+          "strength": 435.0,
+          "intelligence": 189.0,
+          "dexterity": 354.0,
+          "agility": 387.0,
+          "vitality": 488.40000000000003,
+          "luck": 373.74999999999994,
+          "max_hp": 1250,
+          "max_mp": 493
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [
+          {
+            "name": "欠けた鉄剣",
+            "rank": "F",
+            "slot": "weapon",
+            "style": "physical",
+            "enhancement": 5,
+            "power": 210,
+            "special_effect": null
+          },
+          {
+            "name": "古びた鉄兜",
+            "rank": "F",
+            "slot": "head",
+            "style": "physical",
+            "enhancement": 5,
+            "power": 168,
+            "special_effect": null
+          },
+          {
+            "name": "擦り切れた革鎧",
+            "rank": "F",
+            "slot": "armor",
+            "style": "physical",
+            "enhancement": 6,
+            "power": 337,
+            "special_effect": null
+          },
+          {
+            "name": "傷んだ革靴",
+            "rank": "F",
+            "slot": "feet",
+            "style": "physical",
+            "enhancement": 7,
+            "power": 550,
+            "special_effect": null
+          },
+          {
+            "name": "錆びた腕輪",
+            "rank": "F",
+            "slot": "accessory",
+            "style": "physical",
+            "enhancement": 7,
+            "power": 481,
+            "special_effect": null
+          }
+        ],
+        "equipment_bonuses": {
+          "strength": 219,
+          "intelligence": 0,
+          "dexterity": 148,
+          "agility": 169,
+          "vitality": 208,
+          "luck": 120
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p053"
+      },
+      "tactic": "C",
+      "use_scale": 1,
+      "slots": [
+        [
+          "one_hit_kill",
+          6
+        ],
+        [
+          "flare_blade",
+          8
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 8,
+        "variant": "mid-unarmed",
+        "job": "warrior",
+        "race": "human",
+        "reincarnations": 201,
+        "level": 30,
+        "seed": 20261116,
+        "target_power": 25500,
+        "power": 25500,
+        "stats": {
+          "max_hp": 9235,
+          "max_mp": 3552,
+          "strength": 1791,
+          "intelligence": 1843,
+          "dexterity": 1802,
+          "agility": 1736,
+          "vitality": 1794,
+          "luck": 1834
+        },
+        "attributes": {
+          "fire": 1745,
+          "water": 1797,
+          "grass": 1913,
+          "rock": 1838,
+          "light": 1799,
+          "dark": 1827
+        },
+        "combat_start": {
+          "strength": 1791.0,
+          "intelligence": 1843.0,
+          "dexterity": 1802.0,
+          "agility": 1736.0,
+          "vitality": 1973.4,
+          "luck": 2109.1,
+          "max_hp": 9235,
+          "max_mp": 3552
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 0,
+          "dexterity": 0,
+          "agility": 0,
+          "vitality": 0,
+          "luck": 0
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p058"
+      },
+      "tactic": "A",
+      "use_scale": 1,
+      "slots": []
+    },
+    {
+      "profile": {
+        "floor": 8,
+        "variant": "mid-unarmed",
+        "job": "warrior",
+        "race": "human",
+        "reincarnations": 201,
+        "level": 30,
+        "seed": 20261116,
+        "target_power": 25500,
+        "power": 25500,
+        "stats": {
+          "max_hp": 9235,
+          "max_mp": 3552,
+          "strength": 1791,
+          "intelligence": 1843,
+          "dexterity": 1802,
+          "agility": 1736,
+          "vitality": 1794,
+          "luck": 1834
+        },
+        "attributes": {
+          "fire": 1745,
+          "water": 1797,
+          "grass": 1913,
+          "rock": 1838,
+          "light": 1799,
+          "dark": 1827
+        },
+        "combat_start": {
+          "strength": 1791.0,
+          "intelligence": 1843.0,
+          "dexterity": 1802.0,
+          "agility": 1736.0,
+          "vitality": 1973.4,
+          "luck": 2109.1,
+          "max_hp": 9235,
+          "max_mp": 3552
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 0,
+          "dexterity": 0,
+          "agility": 0,
+          "vitality": 0,
+          "luck": 0
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p058"
+      },
+      "tactic": "B",
+      "use_scale": 1,
+      "slots": [
+        [
+          "steel_body",
+          3
+        ],
+        [
+          "flare_blade",
+          5
+        ],
+        [
+          "counter_stance",
+          3
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 8,
+        "variant": "mid-unarmed",
+        "job": "warrior",
+        "race": "human",
+        "reincarnations": 201,
+        "level": 30,
+        "seed": 20261116,
+        "target_power": 25500,
+        "power": 25500,
+        "stats": {
+          "max_hp": 9235,
+          "max_mp": 3552,
+          "strength": 1791,
+          "intelligence": 1843,
+          "dexterity": 1802,
+          "agility": 1736,
+          "vitality": 1794,
+          "luck": 1834
+        },
+        "attributes": {
+          "fire": 1745,
+          "water": 1797,
+          "grass": 1913,
+          "rock": 1838,
+          "light": 1799,
+          "dark": 1827
+        },
+        "combat_start": {
+          "strength": 1791.0,
+          "intelligence": 1843.0,
+          "dexterity": 1802.0,
+          "agility": 1736.0,
+          "vitality": 1973.4,
+          "luck": 2109.1,
+          "max_hp": 9235,
+          "max_mp": 3552
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 0,
+          "dexterity": 0,
+          "agility": 0,
+          "vitality": 0,
+          "luck": 0
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p058"
+      },
+      "tactic": "C",
+      "use_scale": 1,
+      "slots": [
+        [
+          "one_hit_kill",
+          6
+        ],
+        [
+          "flare_blade",
+          8
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 6,
+        "variant": "searched-F-set",
+        "job": "wizard",
+        "race": "human",
+        "reincarnations": 20,
+        "level": 97,
+        "seed": 20261116,
+        "target_power": 5000,
+        "power": 5000,
+        "stats": {
+          "max_hp": 1160,
+          "max_mp": 583,
+          "strength": 203,
+          "intelligence": 218,
+          "dexterity": 210,
+          "agility": 225,
+          "vitality": 219,
+          "luck": 207
+        },
+        "attributes": {
+          "fire": 217,
+          "water": 210,
+          "grass": 246,
+          "rock": 234,
+          "light": 228,
+          "dark": 211
+        },
+        "combat_start": {
+          "strength": 203.0,
+          "intelligence": 550.0,
+          "dexterity": 325.0,
+          "agility": 387.0,
+          "vitality": 354.0,
+          "luck": 420.9,
+          "max_hp": 1160,
+          "max_mp": 583
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [
+          {
+            "name": "ひび割れた木杖",
+            "rank": "F",
+            "slot": "weapon",
+            "style": "magic",
+            "enhancement": 5,
+            "power": 210,
+            "special_effect": null
+          },
+          {
+            "name": "色褪せた術帽",
+            "rank": "F",
+            "slot": "head",
+            "style": "magic",
+            "enhancement": 6,
+            "power": 299,
+            "special_effect": null
+          },
+          {
+            "name": "古布のローブ",
+            "rank": "F",
+            "slot": "armor",
+            "style": "magic",
+            "enhancement": 5,
+            "power": 189,
+            "special_effect": null
+          },
+          {
+            "name": "薄布の魔術靴",
+            "rank": "F",
+            "slot": "feet",
+            "style": "magic",
+            "enhancement": 7,
+            "power": 550,
+            "special_effect": null
+          },
+          {
+            "name": "曇った魔石飾り",
+            "rank": "F",
+            "slot": "accessory",
+            "style": "magic",
+            "enhancement": 7,
+            "power": 481,
+            "special_effect": null
+          }
+        ],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 282,
+          "dexterity": 115,
+          "agility": 162,
+          "vitality": 135,
+          "luck": 159
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p149"
+      },
+      "tactic": "B",
+      "use_scale": 1,
+      "slots": [
+        [
+          "fire",
+          4
+        ],
+        [
+          "stella",
+          4
+        ],
+        [
+          "megido",
+          2
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 6,
+        "variant": "searched-F-set",
+        "job": "wizard",
+        "race": "human",
+        "reincarnations": 20,
+        "level": 97,
+        "seed": 20261116,
+        "target_power": 5000,
+        "power": 5000,
+        "stats": {
+          "max_hp": 1160,
+          "max_mp": 583,
+          "strength": 203,
+          "intelligence": 218,
+          "dexterity": 210,
+          "agility": 225,
+          "vitality": 219,
+          "luck": 207
+        },
+        "attributes": {
+          "fire": 217,
+          "water": 210,
+          "grass": 246,
+          "rock": 234,
+          "light": 228,
+          "dark": 211
+        },
+        "combat_start": {
+          "strength": 203.0,
+          "intelligence": 550.0,
+          "dexterity": 325.0,
+          "agility": 387.0,
+          "vitality": 354.0,
+          "luck": 420.9,
+          "max_hp": 1160,
+          "max_mp": 583
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [
+          {
+            "name": "ひび割れた木杖",
+            "rank": "F",
+            "slot": "weapon",
+            "style": "magic",
+            "enhancement": 5,
+            "power": 210,
+            "special_effect": null
+          },
+          {
+            "name": "色褪せた術帽",
+            "rank": "F",
+            "slot": "head",
+            "style": "magic",
+            "enhancement": 6,
+            "power": 299,
+            "special_effect": null
+          },
+          {
+            "name": "古布のローブ",
+            "rank": "F",
+            "slot": "armor",
+            "style": "magic",
+            "enhancement": 5,
+            "power": 189,
+            "special_effect": null
+          },
+          {
+            "name": "薄布の魔術靴",
+            "rank": "F",
+            "slot": "feet",
+            "style": "magic",
+            "enhancement": 7,
+            "power": 550,
+            "special_effect": null
+          },
+          {
+            "name": "曇った魔石飾り",
+            "rank": "F",
+            "slot": "accessory",
+            "style": "magic",
+            "enhancement": 7,
+            "power": 481,
+            "special_effect": null
+          }
+        ],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 282,
+          "dexterity": 115,
+          "agility": 162,
+          "vitality": 135,
+          "luck": 159
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p149"
+      },
+      "tactic": "C",
+      "use_scale": 1,
+      "slots": [
+        [
+          "stella",
+          8
+        ],
+        [
+          "explosion",
+          4
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 6,
+        "variant": "searched-F-set",
+        "job": "priest",
+        "race": "human",
+        "reincarnations": 20,
+        "level": 98,
+        "seed": 20261116,
+        "target_power": 5000,
+        "power": 5000,
+        "stats": {
+          "max_hp": 1155,
+          "max_mp": 556,
+          "strength": 204,
+          "intelligence": 210,
+          "dexterity": 206,
+          "agility": 229,
+          "vitality": 231,
+          "luck": 215
+        },
+        "attributes": {
+          "fire": 218,
+          "water": 210,
+          "grass": 248,
+          "rock": 234,
+          "light": 228,
+          "dark": 211
+        },
+        "combat_start": {
+          "strength": 204.0,
+          "intelligence": 494.0,
+          "dexterity": 322.0,
+          "agility": 389.0,
+          "vitality": 380.0,
+          "luck": 423.2,
+          "max_hp": 1213,
+          "max_mp": 584
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [
+          {
+            "name": "ひび割れた木杖",
+            "rank": "F",
+            "slot": "weapon",
+            "style": "magic",
+            "enhancement": 5,
+            "power": 210,
+            "special_effect": null
+          },
+          {
+            "name": "色褪せた術帽",
+            "rank": "F",
+            "slot": "head",
+            "style": "magic",
+            "enhancement": 5,
+            "power": 168,
+            "special_effect": null
+          },
+          {
+            "name": "古布のローブ",
+            "rank": "F",
+            "slot": "armor",
+            "style": "magic",
+            "enhancement": 6,
+            "power": 337,
+            "special_effect": null
+          },
+          {
+            "name": "薄布の魔術靴",
+            "rank": "F",
+            "slot": "feet",
+            "style": "magic",
+            "enhancement": 7,
+            "power": 550,
+            "special_effect": null
+          },
+          {
+            "name": "曇った魔石飾り",
+            "rank": "F",
+            "slot": "accessory",
+            "style": "magic",
+            "enhancement": 7,
+            "power": 481,
+            "special_effect": null
+          }
+        ],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 284,
+          "dexterity": 116,
+          "agility": 160,
+          "vitality": 149,
+          "luck": 153
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p197"
+      },
+      "tactic": "B",
+      "use_scale": 1,
+      "slots": [
+        [
+          "judgement",
+          4
+        ],
+        [
+          "healing_shield",
+          3
+        ],
+        [
+          "anti_jail",
+          3
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 6,
+        "variant": "searched-F-set",
+        "job": "priest",
+        "race": "human",
+        "reincarnations": 20,
+        "level": 98,
+        "seed": 20261116,
+        "target_power": 5000,
+        "power": 5000,
+        "stats": {
+          "max_hp": 1155,
+          "max_mp": 556,
+          "strength": 204,
+          "intelligence": 210,
+          "dexterity": 206,
+          "agility": 229,
+          "vitality": 231,
+          "luck": 215
+        },
+        "attributes": {
+          "fire": 218,
+          "water": 210,
+          "grass": 248,
+          "rock": 234,
+          "light": 228,
+          "dark": 211
+        },
+        "combat_start": {
+          "strength": 204.0,
+          "intelligence": 494.0,
+          "dexterity": 322.0,
+          "agility": 389.0,
+          "vitality": 380.0,
+          "luck": 423.2,
+          "max_hp": 1213,
+          "max_mp": 584
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [
+          {
+            "name": "ひび割れた木杖",
+            "rank": "F",
+            "slot": "weapon",
+            "style": "magic",
+            "enhancement": 5,
+            "power": 210,
+            "special_effect": null
+          },
+          {
+            "name": "色褪せた術帽",
+            "rank": "F",
+            "slot": "head",
+            "style": "magic",
+            "enhancement": 5,
+            "power": 168,
+            "special_effect": null
+          },
+          {
+            "name": "古布のローブ",
+            "rank": "F",
+            "slot": "armor",
+            "style": "magic",
+            "enhancement": 6,
+            "power": 337,
+            "special_effect": null
+          },
+          {
+            "name": "薄布の魔術靴",
+            "rank": "F",
+            "slot": "feet",
+            "style": "magic",
+            "enhancement": 7,
+            "power": 550,
+            "special_effect": null
+          },
+          {
+            "name": "曇った魔石飾り",
+            "rank": "F",
+            "slot": "accessory",
+            "style": "magic",
+            "enhancement": 7,
+            "power": 481,
+            "special_effect": null
+          }
+        ],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 284,
+          "dexterity": 116,
+          "agility": 160,
+          "vitality": 149,
+          "luck": 153
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p197"
+      },
+      "tactic": "C",
+      "use_scale": 1,
+      "slots": [
+        [
+          "anti_jail",
+          8
+        ],
+        [
+          "judgement",
+          5
+        ]
+      ]
+    }
+  ],
+  "notes": {
+    "wizard:D": "完成済みの防御・回復技がないため真の耐久戦術は成立しない。防御無視/低MPの代用比較。",
+    "grappler:D": "回復・防御技なし。STRバフ中心の補助構成という限定的比較。",
+    "hunter:D": "回復なし。状態異常/命中低下中心。",
+    "counts": "回数は比較用の有限予算。最適化済みではない。--use-scaleでアクティブ回数だけを変更可能。"
+  }
+}

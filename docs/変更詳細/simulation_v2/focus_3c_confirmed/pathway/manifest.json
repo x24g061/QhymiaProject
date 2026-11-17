@@ -1,0 +1,499 @@
+{
+  "schema": 2,
+  "source_sha256": "f50defb0ab9e6f590d56eec13a2ec61c9c0d25baf62da5917a832f9f63989b7c",
+  "commit": "f15502296590af533f7d28e412e746596ede29c2",
+  "engine": "apps.battle.services.BattleEngine",
+  "postgresql": true,
+  "profile_sha256": "582433dd6205bee13f82aedf80e307d8a4d42e80bf19e972e336b01d095327a1",
+  "trials": 100,
+  "seed_base": 30361117,
+  "detail": false,
+  "cases": [
+    {
+      "profile": {
+        "floor": 5,
+        "variant": "paired-F+3",
+        "job": "warrior",
+        "race": "human",
+        "reincarnations": 10,
+        "level": 80,
+        "seed": 20261116,
+        "target_power": null,
+        "power": 2190,
+        "stats": {
+          "max_hp": 775,
+          "max_mp": 258,
+          "strength": 133,
+          "intelligence": 112,
+          "dexterity": 115,
+          "agility": 116,
+          "vitality": 140,
+          "luck": 117
+        },
+        "attributes": {
+          "fire": 129,
+          "water": 123,
+          "grass": 135,
+          "rock": 129,
+          "light": 127,
+          "dark": 116
+        },
+        "combat_start": {
+          "strength": 173.0,
+          "intelligence": 112.0,
+          "dexterity": 135.0,
+          "agility": 135.0,
+          "vitality": 198.00000000000003,
+          "luck": 149.5,
+          "max_hp": 775,
+          "max_mp": 258
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [
+          {
+            "name": "欠けた鉄剣",
+            "rank": "F",
+            "slot": "weapon",
+            "style": "physical",
+            "enhancement": 3,
+            "power": 69,
+            "special_effect": null
+          },
+          {
+            "name": "古びた鉄兜",
+            "rank": "F",
+            "slot": "head",
+            "style": "physical",
+            "enhancement": 3,
+            "power": 55,
+            "special_effect": null
+          },
+          {
+            "name": "擦り切れた革鎧",
+            "rank": "F",
+            "slot": "armor",
+            "style": "physical",
+            "enhancement": 3,
+            "power": 62,
+            "special_effect": null
+          },
+          {
+            "name": "傷んだ革靴",
+            "rank": "F",
+            "slot": "feet",
+            "style": "physical",
+            "enhancement": 3,
+            "power": 55,
+            "special_effect": null
+          },
+          {
+            "name": "錆びた腕輪",
+            "rank": "F",
+            "slot": "accessory",
+            "style": "physical",
+            "enhancement": 3,
+            "power": 48,
+            "special_effect": null
+          }
+        ],
+        "equipment_bonuses": {
+          "strength": 40,
+          "intelligence": 0,
+          "dexterity": 20,
+          "agility": 19,
+          "vitality": 40,
+          "luck": 13
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p052-paired-F3"
+      },
+      "tactic": "C",
+      "use_scale": 1,
+      "slots": [
+        [
+          "one_hit_kill",
+          6
+        ],
+        [
+          "flare_blade",
+          8
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 5,
+        "variant": "paired-F+5",
+        "job": "warrior",
+        "race": "human",
+        "reincarnations": 10,
+        "level": 80,
+        "seed": 20261116,
+        "target_power": null,
+        "power": 2783,
+        "stats": {
+          "max_hp": 775,
+          "max_mp": 258,
+          "strength": 133,
+          "intelligence": 112,
+          "dexterity": 115,
+          "agility": 116,
+          "vitality": 140,
+          "luck": 117
+        },
+        "attributes": {
+          "fire": 129,
+          "water": 123,
+          "grass": 135,
+          "rock": 129,
+          "light": 127,
+          "dark": 116
+        },
+        "combat_start": {
+          "strength": 258.0,
+          "intelligence": 112.0,
+          "dexterity": 183.0,
+          "agility": 178.0,
+          "vitality": 293.70000000000005,
+          "luck": 188.6,
+          "max_hp": 775,
+          "max_mp": 258
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [
+          {
+            "name": "欠けた鉄剣",
+            "rank": "F",
+            "slot": "weapon",
+            "style": "physical",
+            "enhancement": 5,
+            "power": 210,
+            "special_effect": null
+          },
+          {
+            "name": "古びた鉄兜",
+            "rank": "F",
+            "slot": "head",
+            "style": "physical",
+            "enhancement": 5,
+            "power": 168,
+            "special_effect": null
+          },
+          {
+            "name": "擦り切れた革鎧",
+            "rank": "F",
+            "slot": "armor",
+            "style": "physical",
+            "enhancement": 5,
+            "power": 189,
+            "special_effect": null
+          },
+          {
+            "name": "傷んだ革靴",
+            "rank": "F",
+            "slot": "feet",
+            "style": "physical",
+            "enhancement": 5,
+            "power": 168,
+            "special_effect": null
+          },
+          {
+            "name": "錆びた腕輪",
+            "rank": "F",
+            "slot": "accessory",
+            "style": "physical",
+            "enhancement": 5,
+            "power": 147,
+            "special_effect": null
+          }
+        ],
+        "equipment_bonuses": {
+          "strength": 125,
+          "intelligence": 0,
+          "dexterity": 68,
+          "agility": 62,
+          "vitality": 127,
+          "luck": 47
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p052-paired-F5"
+      },
+      "tactic": "C",
+      "use_scale": 1,
+      "slots": [
+        [
+          "one_hit_kill",
+          6
+        ],
+        [
+          "flare_blade",
+          8
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 7,
+        "variant": "paired-F+5",
+        "job": "warrior",
+        "race": "human",
+        "reincarnations": 94,
+        "level": 77,
+        "seed": 20261116,
+        "target_power": null,
+        "power": 13382,
+        "stats": {
+          "max_hp": 4710,
+          "max_mp": 1708,
+          "strength": 841,
+          "intelligence": 874,
+          "dexterity": 852,
+          "agility": 835,
+          "vitality": 860,
+          "luck": 903
+        },
+        "attributes": {
+          "fire": 849,
+          "water": 882,
+          "grass": 917,
+          "rock": 892,
+          "light": 893,
+          "dark": 866
+        },
+        "combat_start": {
+          "strength": 966.0,
+          "intelligence": 874.0,
+          "dexterity": 920.0,
+          "agility": 897.0,
+          "vitality": 1085.7,
+          "luck": 1092.5,
+          "max_hp": 4710,
+          "max_mp": 1708
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [
+          {
+            "name": "欠けた鉄剣",
+            "rank": "F",
+            "slot": "weapon",
+            "style": "physical",
+            "enhancement": 5,
+            "power": 210,
+            "special_effect": null
+          },
+          {
+            "name": "古びた鉄兜",
+            "rank": "F",
+            "slot": "head",
+            "style": "physical",
+            "enhancement": 5,
+            "power": 168,
+            "special_effect": null
+          },
+          {
+            "name": "擦り切れた革鎧",
+            "rank": "F",
+            "slot": "armor",
+            "style": "physical",
+            "enhancement": 5,
+            "power": 189,
+            "special_effect": null
+          },
+          {
+            "name": "傷んだ革靴",
+            "rank": "F",
+            "slot": "feet",
+            "style": "physical",
+            "enhancement": 5,
+            "power": 168,
+            "special_effect": null
+          },
+          {
+            "name": "錆びた腕輪",
+            "rank": "F",
+            "slot": "accessory",
+            "style": "physical",
+            "enhancement": 5,
+            "power": 147,
+            "special_effect": null
+          }
+        ],
+        "equipment_bonuses": {
+          "strength": 125,
+          "intelligence": 0,
+          "dexterity": 68,
+          "agility": 62,
+          "vitality": 127,
+          "luck": 47
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p055-paired-F5"
+      },
+      "tactic": "C",
+      "use_scale": 1,
+      "slots": [
+        [
+          "one_hit_kill",
+          6
+        ],
+        [
+          "flare_blade",
+          8
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 7,
+        "variant": "paired-F+8",
+        "job": "warrior",
+        "race": "human",
+        "reincarnations": 94,
+        "level": 77,
+        "seed": 20261116,
+        "target_power": null,
+        "power": 17893,
+        "stats": {
+          "max_hp": 4710,
+          "max_mp": 1708,
+          "strength": 841,
+          "intelligence": 874,
+          "dexterity": 852,
+          "agility": 835,
+          "vitality": 860,
+          "luck": 903
+        },
+        "attributes": {
+          "fire": 849,
+          "water": 882,
+          "grass": 917,
+          "rock": 892,
+          "light": 893,
+          "dark": 866
+        },
+        "combat_start": {
+          "strength": 1622.0,
+          "intelligence": 874.0,
+          "dexterity": 1279.0,
+          "agility": 1227.0,
+          "vitality": 1811.7,
+          "luck": 1378.85,
+          "max_hp": 4710,
+          "max_mp": 1708
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [
+          {
+            "name": "欠けた鉄剣",
+            "rank": "F",
+            "slot": "weapon",
+            "style": "physical",
+            "enhancement": 8,
+            "power": 1284,
+            "special_effect": null
+          },
+          {
+            "name": "古びた鉄兜",
+            "rank": "F",
+            "slot": "head",
+            "style": "physical",
+            "enhancement": 8,
+            "power": 1027,
+            "special_effect": null
+          },
+          {
+            "name": "擦り切れた革鎧",
+            "rank": "F",
+            "slot": "armor",
+            "style": "physical",
+            "enhancement": 8,
+            "power": 1156,
+            "special_effect": null
+          },
+          {
+            "name": "傷んだ革靴",
+            "rank": "F",
+            "slot": "feet",
+            "style": "physical",
+            "enhancement": 8,
+            "power": 1027,
+            "special_effect": null
+          },
+          {
+            "name": "錆びた腕輪",
+            "rank": "F",
+            "slot": "accessory",
+            "style": "physical",
+            "enhancement": 8,
+            "power": 899,
+            "special_effect": null
+          }
+        ],
+        "equipment_bonuses": {
+          "strength": 781,
+          "intelligence": 0,
+          "dexterity": 427,
+          "agility": 392,
+          "vitality": 787,
+          "luck": 296
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p055-paired-F8"
+      },
+      "tactic": "C",
+      "use_scale": 1,
+      "slots": [
+        [
+          "one_hit_kill",
+          6
+        ],
+        [
+          "flare_blade",
+          8
+        ]
+      ]
+    }
+  ],
+  "notes": {
+    "wizard:D": "完成済みの防御・回復技がないため真の耐久戦術は成立しない。防御無視/低MPの代用比較。",
+    "grappler:D": "回復・防御技なし。STRバフ中心の補助構成という限定的比較。",
+    "hunter:D": "回復なし。状態異常/命中低下中心。",
+    "counts": "回数は比較用の有限予算。最適化済みではない。--use-scaleでアクティブ回数だけを変更可能。"
+  }
+}

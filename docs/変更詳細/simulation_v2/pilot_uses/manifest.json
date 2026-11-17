@@ -1,0 +1,939 @@
+{
+  "schema": 2,
+  "source_sha256": "f50defb0ab9e6f590d56eec13a2ec61c9c0d25baf62da5917a832f9f63989b7c",
+  "commit": "f15502296590af533f7d28e412e746596ede29c2",
+  "engine": "apps.battle.services.BattleEngine",
+  "postgresql": true,
+  "profile_sha256": "582433dd6205bee13f82aedf80e307d8a4d42e80bf19e972e336b01d095327a1",
+  "trials": 30,
+  "seed_base": 20261117,
+  "detail": false,
+  "cases": [
+    {
+      "profile": {
+        "floor": 7,
+        "variant": "mid-unarmed",
+        "job": "warrior",
+        "race": "human",
+        "reincarnations": 94,
+        "level": 77,
+        "seed": 20261116,
+        "target_power": 12500,
+        "power": 12500,
+        "stats": {
+          "max_hp": 4710,
+          "max_mp": 1708,
+          "strength": 841,
+          "intelligence": 874,
+          "dexterity": 852,
+          "agility": 835,
+          "vitality": 860,
+          "luck": 903
+        },
+        "attributes": {
+          "fire": 849,
+          "water": 882,
+          "grass": 917,
+          "rock": 892,
+          "light": 893,
+          "dark": 866
+        },
+        "combat_start": {
+          "strength": 841.0,
+          "intelligence": 874.0,
+          "dexterity": 852.0,
+          "agility": 835.0,
+          "vitality": 946.0000000000001,
+          "luck": 1038.4499999999998,
+          "max_hp": 4710,
+          "max_mp": 1708
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 0,
+          "dexterity": 0,
+          "agility": 0,
+          "vitality": 0,
+          "luck": 0
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p055"
+      },
+      "tactic": "B",
+      "use_scale": 3,
+      "slots": [
+        [
+          "steel_body",
+          9
+        ],
+        [
+          "flare_blade",
+          15
+        ],
+        [
+          "counter_stance",
+          9
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 7,
+        "variant": "mid-unarmed",
+        "job": "warrior",
+        "race": "human",
+        "reincarnations": 94,
+        "level": 77,
+        "seed": 20261116,
+        "target_power": 12500,
+        "power": 12500,
+        "stats": {
+          "max_hp": 4710,
+          "max_mp": 1708,
+          "strength": 841,
+          "intelligence": 874,
+          "dexterity": 852,
+          "agility": 835,
+          "vitality": 860,
+          "luck": 903
+        },
+        "attributes": {
+          "fire": 849,
+          "water": 882,
+          "grass": 917,
+          "rock": 892,
+          "light": 893,
+          "dark": 866
+        },
+        "combat_start": {
+          "strength": 841.0,
+          "intelligence": 874.0,
+          "dexterity": 852.0,
+          "agility": 835.0,
+          "vitality": 946.0000000000001,
+          "luck": 1038.4499999999998,
+          "max_hp": 4710,
+          "max_mp": 1708
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 0,
+          "dexterity": 0,
+          "agility": 0,
+          "vitality": 0,
+          "luck": 0
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p055"
+      },
+      "tactic": "C",
+      "use_scale": 3,
+      "slots": [
+        [
+          "one_hit_kill",
+          18
+        ],
+        [
+          "flare_blade",
+          24
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 7,
+        "variant": "mid-unarmed",
+        "job": "warrior",
+        "race": "human",
+        "reincarnations": 94,
+        "level": 77,
+        "seed": 20261116,
+        "target_power": 12500,
+        "power": 12500,
+        "stats": {
+          "max_hp": 4710,
+          "max_mp": 1708,
+          "strength": 841,
+          "intelligence": 874,
+          "dexterity": 852,
+          "agility": 835,
+          "vitality": 860,
+          "luck": 903
+        },
+        "attributes": {
+          "fire": 849,
+          "water": 882,
+          "grass": 917,
+          "rock": 892,
+          "light": 893,
+          "dark": 866
+        },
+        "combat_start": {
+          "strength": 841.0,
+          "intelligence": 874.0,
+          "dexterity": 852.0,
+          "agility": 835.0,
+          "vitality": 946.0000000000001,
+          "luck": 1038.4499999999998,
+          "max_hp": 4710,
+          "max_mp": 1708
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 0,
+          "dexterity": 0,
+          "agility": 0,
+          "vitality": 0,
+          "luck": 0
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p055"
+      },
+      "tactic": "D",
+      "use_scale": 3,
+      "slots": [
+        [
+          "solid_stance",
+          12
+        ],
+        [
+          "counter_stance",
+          12
+        ],
+        [
+          "steel_body",
+          12
+        ],
+        [
+          "flare_blade",
+          9
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 12,
+        "variant": "mid-unarmed",
+        "job": "warrior",
+        "race": "human",
+        "reincarnations": 654,
+        "level": 90,
+        "seed": 20261116,
+        "target_power": 82500,
+        "power": 82500,
+        "stats": {
+          "max_hp": 29520,
+          "max_mp": 11737,
+          "strength": 5843,
+          "intelligence": 5920,
+          "dexterity": 5968,
+          "agility": 5886,
+          "vitality": 5765,
+          "luck": 5922
+        },
+        "attributes": {
+          "fire": 5879,
+          "water": 5900,
+          "grass": 5939,
+          "rock": 5898,
+          "light": 5752,
+          "dark": 5893
+        },
+        "combat_start": {
+          "strength": 5843.0,
+          "intelligence": 5920.0,
+          "dexterity": 5968.0,
+          "agility": 5886.0,
+          "vitality": 6341.500000000001,
+          "luck": 6810.299999999999,
+          "max_hp": 29520,
+          "max_mp": 11737
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 0,
+          "dexterity": 0,
+          "agility": 0,
+          "vitality": 0,
+          "luck": 0
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p070"
+      },
+      "tactic": "B",
+      "use_scale": 3,
+      "slots": [
+        [
+          "steel_body",
+          9
+        ],
+        [
+          "flare_blade",
+          15
+        ],
+        [
+          "counter_stance",
+          9
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 12,
+        "variant": "mid-unarmed",
+        "job": "warrior",
+        "race": "human",
+        "reincarnations": 654,
+        "level": 90,
+        "seed": 20261116,
+        "target_power": 82500,
+        "power": 82500,
+        "stats": {
+          "max_hp": 29520,
+          "max_mp": 11737,
+          "strength": 5843,
+          "intelligence": 5920,
+          "dexterity": 5968,
+          "agility": 5886,
+          "vitality": 5765,
+          "luck": 5922
+        },
+        "attributes": {
+          "fire": 5879,
+          "water": 5900,
+          "grass": 5939,
+          "rock": 5898,
+          "light": 5752,
+          "dark": 5893
+        },
+        "combat_start": {
+          "strength": 5843.0,
+          "intelligence": 5920.0,
+          "dexterity": 5968.0,
+          "agility": 5886.0,
+          "vitality": 6341.500000000001,
+          "luck": 6810.299999999999,
+          "max_hp": 29520,
+          "max_mp": 11737
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 0,
+          "dexterity": 0,
+          "agility": 0,
+          "vitality": 0,
+          "luck": 0
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p070"
+      },
+      "tactic": "C",
+      "use_scale": 3,
+      "slots": [
+        [
+          "one_hit_kill",
+          18
+        ],
+        [
+          "flare_blade",
+          24
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 12,
+        "variant": "mid-unarmed",
+        "job": "warrior",
+        "race": "human",
+        "reincarnations": 654,
+        "level": 90,
+        "seed": 20261116,
+        "target_power": 82500,
+        "power": 82500,
+        "stats": {
+          "max_hp": 29520,
+          "max_mp": 11737,
+          "strength": 5843,
+          "intelligence": 5920,
+          "dexterity": 5968,
+          "agility": 5886,
+          "vitality": 5765,
+          "luck": 5922
+        },
+        "attributes": {
+          "fire": 5879,
+          "water": 5900,
+          "grass": 5939,
+          "rock": 5898,
+          "light": 5752,
+          "dark": 5893
+        },
+        "combat_start": {
+          "strength": 5843.0,
+          "intelligence": 5920.0,
+          "dexterity": 5968.0,
+          "agility": 5886.0,
+          "vitality": 6341.500000000001,
+          "luck": 6810.299999999999,
+          "max_hp": 29520,
+          "max_mp": 11737
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 0,
+          "dexterity": 0,
+          "agility": 0,
+          "vitality": 0,
+          "luck": 0
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p070"
+      },
+      "tactic": "D",
+      "use_scale": 3,
+      "slots": [
+        [
+          "solid_stance",
+          12
+        ],
+        [
+          "counter_stance",
+          12
+        ],
+        [
+          "steel_body",
+          12
+        ],
+        [
+          "flare_blade",
+          9
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 7,
+        "variant": "mid-unarmed",
+        "job": "wizard",
+        "race": "human",
+        "reincarnations": 94,
+        "level": 84,
+        "seed": 20261116,
+        "target_power": 12500,
+        "power": 12499,
+        "stats": {
+          "max_hp": 4625,
+          "max_mp": 1774,
+          "strength": 829,
+          "intelligence": 903,
+          "dexterity": 856,
+          "agility": 830,
+          "vitality": 856,
+          "luck": 907
+        },
+        "attributes": {
+          "fire": 856,
+          "water": 884,
+          "grass": 919,
+          "rock": 894,
+          "light": 896,
+          "dark": 871
+        },
+        "combat_start": {
+          "strength": 829.0,
+          "intelligence": 993.3000000000001,
+          "dexterity": 856.0,
+          "agility": 830.0,
+          "vitality": 856.0,
+          "luck": 1043.05,
+          "max_hp": 4625,
+          "max_mp": 1774
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 0,
+          "dexterity": 0,
+          "agility": 0,
+          "vitality": 0,
+          "luck": 0
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p151"
+      },
+      "tactic": "B",
+      "use_scale": 3,
+      "slots": [
+        [
+          "fire",
+          12
+        ],
+        [
+          "stella",
+          12
+        ],
+        [
+          "megido",
+          6
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 7,
+        "variant": "mid-unarmed",
+        "job": "wizard",
+        "race": "human",
+        "reincarnations": 94,
+        "level": 84,
+        "seed": 20261116,
+        "target_power": 12500,
+        "power": 12499,
+        "stats": {
+          "max_hp": 4625,
+          "max_mp": 1774,
+          "strength": 829,
+          "intelligence": 903,
+          "dexterity": 856,
+          "agility": 830,
+          "vitality": 856,
+          "luck": 907
+        },
+        "attributes": {
+          "fire": 856,
+          "water": 884,
+          "grass": 919,
+          "rock": 894,
+          "light": 896,
+          "dark": 871
+        },
+        "combat_start": {
+          "strength": 829.0,
+          "intelligence": 993.3000000000001,
+          "dexterity": 856.0,
+          "agility": 830.0,
+          "vitality": 856.0,
+          "luck": 1043.05,
+          "max_hp": 4625,
+          "max_mp": 1774
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 0,
+          "dexterity": 0,
+          "agility": 0,
+          "vitality": 0,
+          "luck": 0
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p151"
+      },
+      "tactic": "C",
+      "use_scale": 3,
+      "slots": [
+        [
+          "stella",
+          24
+        ],
+        [
+          "explosion",
+          12
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 7,
+        "variant": "mid-unarmed",
+        "job": "wizard",
+        "race": "human",
+        "reincarnations": 94,
+        "level": 84,
+        "seed": 20261116,
+        "target_power": 12500,
+        "power": 12499,
+        "stats": {
+          "max_hp": 4625,
+          "max_mp": 1774,
+          "strength": 829,
+          "intelligence": 903,
+          "dexterity": 856,
+          "agility": 830,
+          "vitality": 856,
+          "luck": 907
+        },
+        "attributes": {
+          "fire": 856,
+          "water": 884,
+          "grass": 919,
+          "rock": 894,
+          "light": 896,
+          "dark": 871
+        },
+        "combat_start": {
+          "strength": 829.0,
+          "intelligence": 993.3000000000001,
+          "dexterity": 856.0,
+          "agility": 830.0,
+          "vitality": 856.0,
+          "luck": 1043.05,
+          "max_hp": 4625,
+          "max_mp": 1774
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 0,
+          "dexterity": 0,
+          "agility": 0,
+          "vitality": 0,
+          "luck": 0
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p151"
+      },
+      "tactic": "D",
+      "use_scale": 3,
+      "slots": [
+        [
+          "megido",
+          12
+        ],
+        [
+          "fire",
+          12
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 12,
+        "variant": "mid-unarmed",
+        "job": "wizard",
+        "race": "human",
+        "reincarnations": 656,
+        "level": 52,
+        "seed": 20261116,
+        "target_power": 82500,
+        "power": 82500,
+        "stats": {
+          "max_hp": 29415,
+          "max_mp": 11819,
+          "strength": 5827,
+          "intelligence": 5940,
+          "dexterity": 5980,
+          "agility": 5898,
+          "vitality": 5765,
+          "luck": 5922
+        },
+        "attributes": {
+          "fire": 5879,
+          "water": 5894,
+          "grass": 5934,
+          "rock": 5886,
+          "light": 5756,
+          "dark": 5892
+        },
+        "combat_start": {
+          "strength": 5827.0,
+          "intelligence": 6534.000000000001,
+          "dexterity": 5980.0,
+          "agility": 5898.0,
+          "vitality": 5765.0,
+          "luck": 6810.299999999999,
+          "max_hp": 29415,
+          "max_mp": 11819
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 0,
+          "dexterity": 0,
+          "agility": 0,
+          "vitality": 0,
+          "luck": 0
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p166"
+      },
+      "tactic": "B",
+      "use_scale": 3,
+      "slots": [
+        [
+          "fire",
+          12
+        ],
+        [
+          "stella",
+          12
+        ],
+        [
+          "megido",
+          6
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 12,
+        "variant": "mid-unarmed",
+        "job": "wizard",
+        "race": "human",
+        "reincarnations": 656,
+        "level": 52,
+        "seed": 20261116,
+        "target_power": 82500,
+        "power": 82500,
+        "stats": {
+          "max_hp": 29415,
+          "max_mp": 11819,
+          "strength": 5827,
+          "intelligence": 5940,
+          "dexterity": 5980,
+          "agility": 5898,
+          "vitality": 5765,
+          "luck": 5922
+        },
+        "attributes": {
+          "fire": 5879,
+          "water": 5894,
+          "grass": 5934,
+          "rock": 5886,
+          "light": 5756,
+          "dark": 5892
+        },
+        "combat_start": {
+          "strength": 5827.0,
+          "intelligence": 6534.000000000001,
+          "dexterity": 5980.0,
+          "agility": 5898.0,
+          "vitality": 5765.0,
+          "luck": 6810.299999999999,
+          "max_hp": 29415,
+          "max_mp": 11819
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 0,
+          "dexterity": 0,
+          "agility": 0,
+          "vitality": 0,
+          "luck": 0
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p166"
+      },
+      "tactic": "C",
+      "use_scale": 3,
+      "slots": [
+        [
+          "stella",
+          24
+        ],
+        [
+          "explosion",
+          12
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 12,
+        "variant": "mid-unarmed",
+        "job": "wizard",
+        "race": "human",
+        "reincarnations": 656,
+        "level": 52,
+        "seed": 20261116,
+        "target_power": 82500,
+        "power": 82500,
+        "stats": {
+          "max_hp": 29415,
+          "max_mp": 11819,
+          "strength": 5827,
+          "intelligence": 5940,
+          "dexterity": 5980,
+          "agility": 5898,
+          "vitality": 5765,
+          "luck": 5922
+        },
+        "attributes": {
+          "fire": 5879,
+          "water": 5894,
+          "grass": 5934,
+          "rock": 5886,
+          "light": 5756,
+          "dark": 5892
+        },
+        "combat_start": {
+          "strength": 5827.0,
+          "intelligence": 6534.000000000001,
+          "dexterity": 5980.0,
+          "agility": 5898.0,
+          "vitality": 5765.0,
+          "luck": 6810.299999999999,
+          "max_hp": 29415,
+          "max_mp": 11819
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 0,
+          "dexterity": 0,
+          "agility": 0,
+          "vitality": 0,
+          "luck": 0
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p166"
+      },
+      "tactic": "D",
+      "use_scale": 3,
+      "slots": [
+        [
+          "megido",
+          12
+        ],
+        [
+          "fire",
+          12
+        ]
+      ]
+    }
+  ],
+  "notes": {
+    "wizard:D": "完成済みの防御・回復技がないため真の耐久戦術は成立しない。防御無視/低MPの代用比較。",
+    "grappler:D": "回復・防御技なし。STRバフ中心の補助構成という限定的比較。",
+    "hunter:D": "回復なし。状態異常/命中低下中心。",
+    "counts": "回数は比較用の有限予算。最適化済みではない。--use-scaleでアクティブ回数だけを変更可能。"
+  }
+}

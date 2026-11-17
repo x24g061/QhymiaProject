@@ -1,0 +1,10 @@
+{
+  "phase": "pathway",
+  "conditions": 4,
+  "battles": 400,
+  "estimated_battle_seconds": 55.8,
+  "setup_allowance_seconds": 10,
+  "seed_base": 30361117,
+  "trials": 100,
+  "selection_script_sha256": "906a9cf998558f185e905aec2eee6044860fef54319a1c04e7679839b3ba7ad2"
+}
