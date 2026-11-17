@@ -72,6 +72,7 @@ class Command(BaseCommand):
         parser.add_argument("--detail", action="store_true")
         parser.add_argument("--max-battles", type=int, default=20000)
         parser.add_argument("--seconds-per-battle", type=float)
+        parser.add_argument("--max-seconds", type=float, help="DB準備を含む実行時間上限。到達時はJSONLを保持して終了")
 
     def handle(self, *args, **options):
         if not options["isolated_test_db"]:
@@ -104,8 +105,12 @@ class Command(BaseCommand):
             "cases": [{"profile": row, "tactic": tactic, "use_scale": scale,
                        "permanent_skill_codes": sorted(set(row.get("permanent_skill_codes", []))),
                        "permanent_skill_count": len(set(row.get("permanent_skill_codes", []))),
-                       "slots": sim.tactic(row["job"], tactic, scale)} for row, tactic, scale in selected],
+                       "slots": sim.profile_tactic(row, tactic, scale)} for row, tactic, scale in selected],
             "notes": sim.TACTIC_NOTES}
+        if options["max_seconds"] is not None:
+            if options["max_seconds"] <= 0:
+                raise CommandError("max-secondsは正数")
+            config["max_seconds"] = options["max_seconds"]
         completed = []
         if manifest_path.exists():
             if not options["resume"]:
@@ -147,6 +152,8 @@ class Command(BaseCommand):
                     character = sim.prepare_profile(row, tactic, scale)
                     boss = Enemy.objects.get(floor=row["floor"], is_boss=True)
                     for trial in range(options["trials"]):
+                        if options["max_seconds"] and time.perf_counter()-start >= options["max_seconds"]:
+                            raise CommandError("時間上限に到達。manifest/JSONLを保持しました。未実行条件は集計しないでください")
                         seed = options["seed_base"]+trial
                         if (case, seed) in keys:
                             continue

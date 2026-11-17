@@ -1,0 +1,786 @@
+[
+  {
+    "profile_id": "v5-p148-trained",
+    "status": "proposal_unmeasured",
+    "B": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        8
+      ],
+      [
+        "judgement",
+        5
+      ],
+      [
+        "healing_shield",
+        2
+      ]
+    ],
+    "C2": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        12
+      ],
+      [
+        "judgement",
+        8
+      ]
+    ],
+    "permanent_skill_codes": [
+      "anti_jail",
+      "healing_shield",
+      "judgement",
+      "mirage",
+      "principle_of_freedom",
+      "purification",
+      "resurrection",
+      "short_rest",
+      "strike_core",
+      "walker"
+    ],
+    "reason": "C1のステラ/メギド混在を外し、単体戦で高倍率の攻撃へ寄せる。Bを弱くしない。"
+  },
+  {
+    "profile_id": "v5-p149-trained",
+    "status": "proposal_unmeasured",
+    "B": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        8
+      ],
+      [
+        "judgement",
+        5
+      ],
+      [
+        "healing_shield",
+        2
+      ]
+    ],
+    "C2": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        12
+      ],
+      [
+        "judgement",
+        8
+      ]
+    ],
+    "permanent_skill_codes": [
+      "anti_jail",
+      "healing_shield",
+      "judgement",
+      "mirage",
+      "principle_of_freedom",
+      "purification",
+      "resurrection",
+      "short_rest",
+      "strike_core",
+      "walker"
+    ],
+    "reason": "C1のステラ/メギド混在を外し、単体戦で高倍率の攻撃へ寄せる。Bを弱くしない。"
+  },
+  {
+    "profile_id": "v5-p151-trained",
+    "status": "proposal_unmeasured",
+    "B": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        8
+      ],
+      [
+        "judgement",
+        5
+      ],
+      [
+        "healing_shield",
+        2
+      ]
+    ],
+    "C2": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        12
+      ],
+      [
+        "judgement",
+        8
+      ]
+    ],
+    "permanent_skill_codes": [
+      "anti_jail",
+      "healing_shield",
+      "judgement",
+      "mirage",
+      "principle_of_freedom",
+      "purification",
+      "resurrection",
+      "short_rest",
+      "strike_core",
+      "walker"
+    ],
+    "reason": "C1のステラ/メギド混在を外し、単体戦で高倍率の攻撃へ寄せる。Bを弱くしない。"
+  },
+  {
+    "profile_id": "v5-p154-trained",
+    "status": "proposal_unmeasured",
+    "B": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        8
+      ],
+      [
+        "judgement",
+        5
+      ],
+      [
+        "healing_shield",
+        2
+      ]
+    ],
+    "C2": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        12
+      ],
+      [
+        "judgement",
+        8
+      ]
+    ],
+    "permanent_skill_codes": [
+      "anti_jail",
+      "healing_shield",
+      "judgement",
+      "mirage",
+      "principle_of_freedom",
+      "purification",
+      "resurrection",
+      "short_rest",
+      "strike_core",
+      "walker"
+    ],
+    "reason": "C1のステラ/メギド混在を外し、単体戦で高倍率の攻撃へ寄せる。Bを弱くしない。"
+  },
+  {
+    "profile_id": "v5-p157-trained",
+    "status": "proposal_unmeasured",
+    "B": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        8
+      ],
+      [
+        "judgement",
+        5
+      ],
+      [
+        "healing_shield",
+        2
+      ]
+    ],
+    "C2": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        12
+      ],
+      [
+        "judgement",
+        8
+      ]
+    ],
+    "permanent_skill_codes": [
+      "anti_jail",
+      "healing_shield",
+      "judgement",
+      "mirage",
+      "principle_of_freedom",
+      "purification",
+      "resurrection",
+      "short_rest",
+      "strike_core",
+      "walker"
+    ],
+    "reason": "C1のステラ/メギド混在を外し、単体戦で高倍率の攻撃へ寄せる。Bを弱くしない。"
+  },
+  {
+    "profile_id": "v5-p160-trained",
+    "status": "proposal_unmeasured",
+    "B": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        8
+      ],
+      [
+        "judgement",
+        5
+      ],
+      [
+        "healing_shield",
+        2
+      ]
+    ],
+    "C2": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        12
+      ],
+      [
+        "judgement",
+        8
+      ]
+    ],
+    "permanent_skill_codes": [
+      "anti_jail",
+      "healing_shield",
+      "judgement",
+      "mirage",
+      "principle_of_freedom",
+      "purification",
+      "resurrection",
+      "short_rest",
+      "strike_core",
+      "walker"
+    ],
+    "reason": "C1のステラ/メギド混在を外し、単体戦で高倍率の攻撃へ寄せる。Bを弱くしない。"
+  },
+  {
+    "profile_id": "v5-p163-trained",
+    "status": "proposal_unmeasured",
+    "B": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        8
+      ],
+      [
+        "judgement",
+        5
+      ],
+      [
+        "healing_shield",
+        2
+      ]
+    ],
+    "C2": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        12
+      ],
+      [
+        "judgement",
+        8
+      ]
+    ],
+    "permanent_skill_codes": [
+      "anti_jail",
+      "healing_shield",
+      "judgement",
+      "mirage",
+      "principle_of_freedom",
+      "purification",
+      "resurrection",
+      "short_rest",
+      "strike_core",
+      "walker"
+    ],
+    "reason": "C1のステラ/メギド混在を外し、単体戦で高倍率の攻撃へ寄せる。Bを弱くしない。"
+  },
+  {
+    "profile_id": "v5-p166-trained",
+    "status": "proposal_unmeasured",
+    "B": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        8
+      ],
+      [
+        "judgement",
+        5
+      ],
+      [
+        "healing_shield",
+        2
+      ]
+    ],
+    "C2": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        12
+      ],
+      [
+        "judgement",
+        8
+      ]
+    ],
+    "permanent_skill_codes": [
+      "anti_jail",
+      "healing_shield",
+      "judgement",
+      "mirage",
+      "principle_of_freedom",
+      "purification",
+      "resurrection",
+      "short_rest",
+      "strike_core",
+      "walker"
+    ],
+    "reason": "C1のステラ/メギド混在を外し、単体戦で高倍率の攻撃へ寄せる。Bを弱くしない。"
+  },
+  {
+    "profile_id": "v5-p196-trained",
+    "status": "proposal_unmeasured",
+    "B": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        8
+      ],
+      [
+        "judgement",
+        5
+      ],
+      [
+        "healing_shield",
+        2
+      ]
+    ],
+    "C2": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        12
+      ],
+      [
+        "judgement",
+        8
+      ]
+    ],
+    "permanent_skill_codes": [
+      "explosion",
+      "fire",
+      "frost_armor",
+      "megido",
+      "mirage",
+      "principle_of_freedom",
+      "short_rest",
+      "stella",
+      "strike_core",
+      "walker"
+    ],
+    "reason": "C1のステラ/メギド混在を外し、単体戦で高倍率の攻撃へ寄せる。Bを弱くしない。"
+  },
+  {
+    "profile_id": "v5-p197-trained",
+    "status": "proposal_unmeasured",
+    "B": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        8
+      ],
+      [
+        "judgement",
+        5
+      ],
+      [
+        "healing_shield",
+        2
+      ]
+    ],
+    "C2": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        12
+      ],
+      [
+        "judgement",
+        8
+      ]
+    ],
+    "permanent_skill_codes": [
+      "explosion",
+      "fire",
+      "frost_armor",
+      "megido",
+      "mirage",
+      "principle_of_freedom",
+      "short_rest",
+      "stella",
+      "strike_core",
+      "walker"
+    ],
+    "reason": "C1のステラ/メギド混在を外し、単体戦で高倍率の攻撃へ寄せる。Bを弱くしない。"
+  },
+  {
+    "profile_id": "v5-p199-trained",
+    "status": "proposal_unmeasured",
+    "B": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        8
+      ],
+      [
+        "judgement",
+        5
+      ],
+      [
+        "healing_shield",
+        2
+      ]
+    ],
+    "C2": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        12
+      ],
+      [
+        "judgement",
+        8
+      ]
+    ],
+    "permanent_skill_codes": [
+      "explosion",
+      "fire",
+      "frost_armor",
+      "megido",
+      "mirage",
+      "principle_of_freedom",
+      "short_rest",
+      "stella",
+      "strike_core",
+      "walker"
+    ],
+    "reason": "C1のステラ/メギド混在を外し、単体戦で高倍率の攻撃へ寄せる。Bを弱くしない。"
+  },
+  {
+    "profile_id": "v5-p202-trained",
+    "status": "proposal_unmeasured",
+    "B": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        8
+      ],
+      [
+        "judgement",
+        5
+      ],
+      [
+        "healing_shield",
+        2
+      ]
+    ],
+    "C2": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        12
+      ],
+      [
+        "judgement",
+        8
+      ]
+    ],
+    "permanent_skill_codes": [
+      "explosion",
+      "fire",
+      "frost_armor",
+      "megido",
+      "mirage",
+      "principle_of_freedom",
+      "short_rest",
+      "stella",
+      "strike_core",
+      "walker"
+    ],
+    "reason": "C1のステラ/メギド混在を外し、単体戦で高倍率の攻撃へ寄せる。Bを弱くしない。"
+  },
+  {
+    "profile_id": "v5-p205-trained",
+    "status": "proposal_unmeasured",
+    "B": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        8
+      ],
+      [
+        "judgement",
+        5
+      ],
+      [
+        "healing_shield",
+        2
+      ]
+    ],
+    "C2": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        12
+      ],
+      [
+        "judgement",
+        8
+      ]
+    ],
+    "permanent_skill_codes": [
+      "explosion",
+      "fire",
+      "frost_armor",
+      "megido",
+      "mirage",
+      "principle_of_freedom",
+      "short_rest",
+      "stella",
+      "strike_core",
+      "walker"
+    ],
+    "reason": "C1のステラ/メギド混在を外し、単体戦で高倍率の攻撃へ寄せる。Bを弱くしない。"
+  },
+  {
+    "profile_id": "v5-p208-trained",
+    "status": "proposal_unmeasured",
+    "B": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        8
+      ],
+      [
+        "judgement",
+        5
+      ],
+      [
+        "healing_shield",
+        2
+      ]
+    ],
+    "C2": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        12
+      ],
+      [
+        "judgement",
+        8
+      ]
+    ],
+    "permanent_skill_codes": [
+      "explosion",
+      "fire",
+      "frost_armor",
+      "megido",
+      "mirage",
+      "principle_of_freedom",
+      "short_rest",
+      "stella",
+      "strike_core",
+      "walker"
+    ],
+    "reason": "C1のステラ/メギド混在を外し、単体戦で高倍率の攻撃へ寄せる。Bを弱くしない。"
+  },
+  {
+    "profile_id": "v5-p211-trained",
+    "status": "proposal_unmeasured",
+    "B": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        8
+      ],
+      [
+        "judgement",
+        5
+      ],
+      [
+        "healing_shield",
+        2
+      ]
+    ],
+    "C2": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        12
+      ],
+      [
+        "judgement",
+        8
+      ]
+    ],
+    "permanent_skill_codes": [
+      "explosion",
+      "fire",
+      "frost_armor",
+      "megido",
+      "mirage",
+      "principle_of_freedom",
+      "short_rest",
+      "stella",
+      "strike_core",
+      "walker"
+    ],
+    "reason": "C1のステラ/メギド混在を外し、単体戦で高倍率の攻撃へ寄せる。Bを弱くしない。"
+  },
+  {
+    "profile_id": "v5-p214-trained",
+    "status": "proposal_unmeasured",
+    "B": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        8
+      ],
+      [
+        "judgement",
+        5
+      ],
+      [
+        "healing_shield",
+        2
+      ]
+    ],
+    "C2": [
+      [
+        "principle_of_freedom",
+        1
+      ],
+      [
+        "anti_jail",
+        12
+      ],
+      [
+        "judgement",
+        8
+      ]
+    ],
+    "permanent_skill_codes": [
+      "explosion",
+      "fire",
+      "frost_armor",
+      "megido",
+      "mirage",
+      "principle_of_freedom",
+      "short_rest",
+      "stella",
+      "strike_core",
+      "walker"
+    ],
+    "reason": "C1のステラ/メギド混在を外し、単体戦で高倍率の攻撃へ寄せる。Bを弱くしない。"
+  }
+]

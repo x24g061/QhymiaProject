@@ -1,0 +1,10 @@
+{
+  "conditions": 154,
+  "trials": 5,
+  "battles": 770,
+  "estimated_battle_seconds": 221.0,
+  "setup_allowance_seconds": 15,
+  "seed_base": 50361117,
+  "max_seconds": 270,
+  "script_sha256": "6048982839c66cdee7062385c43ce49c50bc1b5e4c267dab24823e0b5a3934d5"
+}

@@ -1,15 +1,17 @@
 """回帰・永久習得・スキル認可の回帰契約。通常DBへの書込みなし。"""
 import random
+from importlib import import_module
 from concurrent.futures import ThreadPoolExecutor
 from threading import Barrier
 from unittest.mock import patch
 
+from django.apps import apps
 from django.db import IntegrityError, close_old_connections, transaction
 from django.test import Client, TestCase, TransactionTestCase
 from django.urls import reverse
 
 from apps.accounts.models import Character, User
-from apps.battle.models import ArenaState, Enemy, Skill, SkillPreset
+from apps.battle.models import ArenaFloor, ArenaState, Enemy, Skill, SkillPreset
 from apps.battle.services import BattleEngine
 from apps.battle.skill_access import available_skills
 from config.views import calculate_reincarnation_stats
@@ -183,6 +185,12 @@ class InheritanceTests(TestCase):
 
 
 class ConcurrentReincarnationTests(TransactionTestCase):
+    def setUp(self):
+        # TransactionTestCaseのflushはデータmigrationを再実行しない。
+        # 他のテストが残したマスターに依存せず、必要な実データを毎回準備する。
+        ArenaFloor.objects.get_or_create(floor=1)
+        import_module("apps.battle.migrations.0002_add_initial_skills").add_initial_skills(apps, None)
+
     def test_two_sessions_can_only_reincarnate_once(self):
         user = User.objects.create_user(user_id="parallel-inherit", password=None)
         character = Character.objects.create(user=user, name="同時回帰", job="wizard", level=100)
@@ -206,3 +214,8 @@ class ConcurrentReincarnationTests(TransactionTestCase):
         character.refresh_from_db()
         self.assertEqual(character.reincarnation_count, 1)
         self.assertEqual(character.permanent_skills.count(), 1)
+        self.assertEqual(character.permanent_skills.get().job, "wizard")
+        self.assertEqual((character.level,character.job),(1,"wanderer"))
+        state=ArenaState.objects.get(character=character)
+        self.assertEqual(state.floor_id,1)
+        self.assertEqual((state.current_hp,state.current_mp),(character.max_hp,character.max_mp))

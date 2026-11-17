@@ -168,8 +168,9 @@ def prepare_profile(row, label, use_scale=1):
             enhancement_level=entry["enhancement"], battle_power=expected, is_equipped=True,
             special_effect=entry["special_effect"] or "")
     character.skill_presets.all().delete()
-    for slot, (code, uses) in enumerate(tactic(character.job, label, use_scale), 1):
-        skill = Skill.objects.get(code=code, job=character.job)
+    from apps.battle.skill_access import available_skills
+    for slot, (code, uses) in enumerate(profile_tactic(row, label, use_scale), 1):
+        skill = available_skills(character).get(code=code)
         SkillPreset.objects.create(character=character, skill=skill, slot=slot, use_count=uses)
     module = baseline_module()
     if module.power(character, sum(e["power"] for e in row["equipment"])) != row["power"]:
@@ -181,6 +182,18 @@ def prepare_profile(row, label, use_scale=1):
     if actual != row["combat_start"]:
         raise ValueError("戦闘開始補正値が一致しません")
     return character
+
+
+def profile_tactic(row, label, use_scale=1):
+    """旧戦術を保持し、評価profileに明示された職業横断5枠を利用する。"""
+    if "tactics" not in row:
+        return tactic(row["job"], label, use_scale)
+    slots = row["tactics"][label]
+    if len(slots) > 5 or use_scale < 1:
+        raise ValueError("戦術は最大5枠、使用回数倍率は1以上")
+    if any(not isinstance(n, int) or isinstance(n, bool) or n < 1 for _, n in slots):
+        raise ValueError("使用回数は正整数")
+    return [(code, n if code == "principle_of_freedom" else n*use_scale) for code, n in slots]
 
 
 COMBATANT_STATES = ("poison_turns", "sleep_turns", "paralysis_turns", "dex_debuff_rate", "equipment_dex_debuff_rate")
