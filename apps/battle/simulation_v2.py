@@ -151,6 +151,12 @@ def prepare_profile(row, label, use_scale=1):
     for field, value in row["attribute_weights"].items():
         setattr(character, field + "_growth_weight", value)
     character.save()
+    # シナリオ間で永久習得を持ち越さない。未指定の旧構成は0種類のまま。
+    codes = row.get("permanent_skill_codes", [])
+    learned = list(Skill.objects.filter(code__in=codes))
+    if len(learned) != len(set(codes)):
+        raise ValueError("永久習得スキルに未登録コードがあります")
+    character.permanent_skills.set(learned)
     character.owned_equipments.all().delete()
     for entry in row["equipment"]:
         equipment = Equipment.objects.get(item__name=entry["name"])
@@ -341,6 +347,8 @@ def measure(character, boss, seed, *, observe=True, detail=False):
             "logs": result["logs"], "timeline": result["timeline"]}
     digest = hashlib.sha256(json.dumps(core, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
     output = {"seed": seed, "winner": result["winner"], "loops": loops,
+        "permanent_skill_codes": sorted(character.permanent_skills.values_list("code", flat=True)),
+        "permanent_skill_count": character.permanent_skills.count(),
         "termination": "loop_limit" if result["winner"] == "draw" and loops == 1000 else "draw" if result["winner"] == "draw" else "defeat",
         "reached_1000": loops == 1000, "exception": None, "digest": digest,
         "initial": initial, "final": final, "remaining_uses": core["remaining_uses"]}

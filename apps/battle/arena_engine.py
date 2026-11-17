@@ -1,3 +1,6 @@
+from types import SimpleNamespace
+
+from apps.battle.services import BattleEngine
 from apps.battle.combatants import PlayerCombatant
 from apps.battle.timeline import arena_turn_snapshot
 from apps.battle.initiative import calculate_gauge_gain, action_priority
@@ -16,6 +19,66 @@ from apps.battle.engine.character_stats import (
     apply_character_damage_race_bonus,
     apply_character_received_damage_race_bonus,
 )
+
+class ArenaStatus:
+    """旧状態辞書APIからCombatantへの参照。二重の状態を保持しない。"""
+    fields = {"poison": "poison_turns", "paralysis": "paralysis_turns",
+              "dex_down": "equipment_dex_debuff_rate"}
+
+    def __init__(self, combatant):
+        self.combatant = combatant
+
+    def __getitem__(self, key):
+        value = getattr(self.combatant, self.fields[key])
+        return int(bool(value)) if key == "dex_down" else value
+
+    def __setitem__(self, key, value):
+        setattr(self.combatant, self.fields[key], 0.01 if key == "dex_down" and value else value)
+
+
+class ArenaSkillActor(BattleEngine):
+    """実キャラクター同士を探索のスキル実行器に接続。run/報酬/DB保存は呼ばない。"""
+    def __init__(self, arena, combatant, target):
+        self.arena = arena
+        self.character = combatant.character
+        self.player_combatant = combatant
+        self.player_max_hp, self.player_max_mp = combatant.max_hp, combatant.max_mp
+        self.enemy_combatants = [target]
+        self.current_enemy_index = 0
+        self.logs = arena.logs
+        self.initialize_presets()
+        self.initialize_skill_state()
+
+    @property
+    def enemy(self):
+        target = self.enemy_combatant.character
+        return SimpleNamespace(name=target.name, attribute=target.get_main_attribute())
+
+    def get_player_stat(self, stat_name):
+        return self.arena.get_combat_stat(self.character, self.player_combatant, stat_name)
+
+    # 既存の闘技場計算APIは共通関数への委譲を維持する。
+    @staticmethod
+    def roll_percent(rate):
+        return roll_percent(rate)
+
+    @staticmethod
+    def calculate_hit_rate(**kwargs):
+        return calculate_hit_rate(**kwargs)
+
+    @staticmethod
+    def calculate_physical_damage(**kwargs):
+        return calculate_physical_damage(**kwargs)
+
+    def apply_player_damage_race_bonus(self, damage):
+        return apply_character_damage_race_bonus(self.character, damage)
+
+    def apply_player_received_damage_race_bonus(self, damage):
+        return apply_character_received_damage_race_bonus(self.character, damage)
+
+    def get_attack_equipment_multiplier(self, code):
+        return get_equipment_special_multiplier(self.character, code)
+
 
 class ArenaBattleEngine:
     """
@@ -93,466 +156,65 @@ class ArenaBattleEngine:
         self.logs = []
         self.turn_timeline = []
 
-        # ========================================
-        # 闘技場：状態異常
-        # ========================================
-
+        self.challenger_actor = ArenaSkillActor(self, self.challenger_combatant, self.defender_combatant)
+        self.defender_actor = ArenaSkillActor(self, self.defender_combatant, self.challenger_combatant)
+        self.challenger_combatant.skill_actor = self.challenger_actor
+        self.defender_combatant.skill_actor = self.defender_actor
+        # 既存の状態参照APIもCombatantの同じ状態を参照する。
         self.status_effects = {
-            challenger.pk: {
-                "poison": 0,
-                "paralysis": 0,
-                "dex_down": 0,
-            },
-            defender.pk: {
-                "poison": 0,
-                "paralysis": 0,
-                "dex_down": 0,
-            },
+            challenger.pk: ArenaStatus(self.challenger_combatant),
+            defender.pk: ArenaStatus(self.defender_combatant),
         }
 
-    # ========================================================
-    # 戦闘中ステータス
-    # ========================================================
-
-    def get_combat_stat(
-        self,
-        character,
-        combatant,
-        stat_name,
-    ):
-        """
-        探索と同じ共通計算を使って、
-        闘技場での有効ステータスを取得する。
-        """
-
-        return get_character_combat_stat(
-            character,
-            stat_name,
-
-            current_hp=combatant.hp,
-            max_hp=combatant.max_hp,
-
-            current_stamina=combatant.stamina,
-            max_stamina=combatant.max_stamina,
-        )
-
-
-    # ========================================================
-    # 闘技場：装備特殊能力の状態異常付与
-    # ========================================================
-
-    def apply_equipment_status_effects(
-        self,
-        attacker,
-        defender,
-    ):
-        """
-        攻撃命中時に装備特殊能力を抽選する。
-
-        毒牙：2%
-        痺れ刃：0.5%
-        衰弱：2%
-
-        状態異常は防御者にのみ付与する。
-        """
-
-        from apps.inventory.models import OwnedEquipment
-
-        effects = set(
-            OwnedEquipment.objects.filter(
-                character=attacker,
-                is_equipped=True,
-                special_effect__in=[
-                    "poison",
-                    "paralysis",
-                    "dex_down",
-                ],
-            ).values_list(
-                "special_effect",
-                flat=True,
-            )
-        )
-
-        status = self.status_effects[defender.pk]
-
-        if (
-            "poison" in effects
-            and roll_percent(2)
-        ):
-            status["poison"] = max(
-                status["poison"],
-                1,
-            )
-
-            self.logs.append(
-                f"{defender.name}は毒状態になった！"
-            )
-
-        if (
-            "paralysis" in effects
-            and roll_percent(0.5)
-        ):
-            status["paralysis"] = max(
-                status["paralysis"],
-                1,
-            )
-
-            self.logs.append(
-                f"{defender.name}は麻痺状態になった！"
-            )
-
-        if (
-            "dex_down" in effects
-            and roll_percent(2)
-        ):
-            status["dex_down"] = max(
-                status["dex_down"],
-                1,
-            )
-
-            self.logs.append(
-                f"{defender.name}は衰弱状態になった！"
-            )
-
-    # ========================================================
-    # 闘技場：行動開始時の状態異常
-    # ========================================================
-
-    def process_status_before_action(
-        self,
-        character,
-        combatant,
-    ):
-        """
-        毒・麻痺を処理する。
-
-        戻り値：
-        True  = 行動可能
-        False = 行動不能
-        """
-
-        status = self.status_effects[character.pk]
-
-        # ===== 毒 =====
-
-        if status["poison"] > 0:
-
-            poison_damage = max(
-                1,
-                int(combatant.max_hp * 0.10),
-            )
-
-            combatant.take_damage(poison_damage)
-            status["poison"] -= 1
-
-            self.logs.append(
-                f"{character.name}は毒で"
-                f"{poison_damage}ダメージ！"
-            )
-
-            if not combatant.is_alive():
-                return False
-
-        # ===== 麻痺 =====
-
-        if status["paralysis"] > 0:
-
-            status["paralysis"] -= 1
-
-            self.logs.append(
-                f"{character.name}は麻痺して行動できない！"
-            )
-
-            return False
-
-        return True
-
-
-
-    # ========================================================
-    # PvP通常攻撃
-    # ========================================================
-
-    def normal_attack(
-        self,
-        attacker,
-        attacker_combatant,
-        defender,
-        defender_combatant,
-    ):
-        """
-        プレイヤー同士の通常攻撃。
-
-        探索と同じ
-
-        ・命中率
-        ・物理ダメージ
-        ・クリティカル
-        ・種族補正
-        ・ST補正
-
-        を使用する。
-        """
-
-        # ========================================
-        # 状態異常：行動開始時
-        # ========================================
-
-        if not self.process_status_before_action(
-            attacker,
-            attacker_combatant,
-        ):
-            return {
-                "hit": False,
-                "critical": False,
-                "damage": 0,
-            }
-
-        # ========================================
-        # 命中率
-        # ========================================
-
-        attacker_dex = self.get_combat_stat(
-        attacker,
-        attacker_combatant,
-        "dexterity",
-        )
-
-        # ===== 衰弱 =====
-
-        attacker_status = self.status_effects[attacker.pk]
-
-        if attacker_status["dex_down"] > 0:
-            attacker_dex *= 0.99
-            attacker_status["dex_down"] -= 1
-
-        defender_agi = self.get_combat_stat(
-            defender,
-            defender_combatant,
-            "agility",
-        )
-
-        hit_rate = calculate_hit_rate(
-            attacker_dex=attacker_dex,
-            defender_agi=defender_agi,
-        )
-
-        # ========================================
-        # 命中判定
-        # ========================================
-
-        if not roll_percent(hit_rate):
-
-            self.logs.append(
-                f"{attacker.name}の攻撃！ "
-                "しかし外れた！"
-            )
-
-            # 攻撃したのでSTは消費
-            attacker_combatant.consume_stamina(
-                5
-            )
-
-            return {
-                "hit": False,
-                "critical": False,
-                "damage": 0,
-            }
-
-        # ========================================
-        # 物理ダメージ
-        # ========================================
-
-        attacker_strength = (
-            self.get_combat_stat(
-                attacker,
-                attacker_combatant,
-                "strength",
-            )
-        )
-
-        defender_vitality = (
-            self.get_combat_stat(
-                defender,
-                defender_combatant,
-                "vitality",
-            )
-        )
-
-        damage = calculate_physical_damage(
-            strength=attacker_strength,
-            defender_vit=defender_vitality,
-        )
-
-        # ========================================
-        # クリティカル
-        # ========================================
-
-        attacker_luck = self.get_combat_stat(
-            attacker,
-            attacker_combatant,
-            "luck",
-        )
-
-        defender_luck = self.get_combat_stat(
-            defender,
-            defender_combatant,
-            "luck",
-        )
-
-        critical_rate = calculate_critical_rate(
-            attacker_luck=attacker_luck,
-            defender_luck=defender_luck,
-        )
-
-        is_critical = roll_percent(
-            critical_rate
-        )
-
-        if is_critical:
-
-            damage *= (
-                calculate_critical_multiplier(
-                    attacker_luck
-                )
-            )
-
-        # ========================================
-        # 種族による与ダメージ補正
-        # ========================================
-
-        damage = apply_character_damage_race_bonus(
-            attacker,
-            damage,
-        )
-
-        # ========================================
-        # 種族による被ダメージ補正
-        # ========================================
-
-        damage = (
-            apply_character_received_damage_race_bonus(
-                defender,
-                damage,
-            )
-        )
-
-        # ========================================
-        # 装備特殊能力：猛攻（攻撃者の物理ダメージ+1%）
-        # ========================================
-
-        damage *= get_equipment_special_multiplier(
-            attacker,
-            "physical_damage",
-        )
-
-        # ========================================
-        # 装備特殊能力：堅守（防御者の被ダメージ-1%）
-        # ========================================
-
-        damage *= get_equipment_special_multiplier(
-            defender,
-            "damage_reduction",
-        )
-
-        # ========================================
-        # 最終ダメージ
-        # ========================================
-
-        damage = max(
-            1,
-            int(damage),
-        )
-
-        defender_combatant.take_damage(
-            damage
-        )
-
-        # ========================================
-        # 攻撃命中時：装備特殊能力
-        # ========================================
-
-        if defender_combatant.is_alive():
-            self.apply_equipment_status_effects(
-                attacker,
-                defender,
-            )
-
-        # ========================================
-        # ログ
-        # ========================================
-
-        if is_critical:
-
-            self.logs.append(
-                f"{attacker.name}の攻撃！ "
-                "クリティカル！ "
-                f"{defender.name}に"
-                f"{damage}ダメージ！"
-            )
-
+    def get_combat_stat(self, character, combatant, stat_name):
+        return BattleEngine.get_player_stat(combatant.skill_actor, stat_name)
+
+    def process_status_before_action(self, character, combatant):
+        return combatant.skill_actor.process_action_status(combatant)
+
+    def take_turn(self, combatant):
+        actor = combatant.skill_actor
+        try:
+            code = actor.player_turn()
+            actor.finish_player_action(code)
+            return code
+        finally:
+            combatant.equipment_dex_debuff_rate = 0.0
+
+    def challenger_turn(self):
+        return self.take_turn(self.challenger_combatant)
+
+    def defender_turn(self):
+        return self.take_turn(self.defender_combatant)
+
+    def normal_attack(self, attacker, attacker_combatant, defender, defender_combatant):
+        """既存の単発通常攻撃API。計算は探索と共通、ゲージは消費しない。"""
+        actor = attacker_combatant.skill_actor
+        before = defender_combatant.hp
+        log_start = len(self.logs)
+        if actor.process_action_status(attacker_combatant):
+            actor.apply_player_turn_start_race_passive()
+            actor.player_normal_attack()
+            code = "normal"
         else:
-
-            self.logs.append(
-                f"{attacker.name}の攻撃！ "
-                f"{defender.name}に"
-                f"{damage}ダメージ！"
-            )
-
-        # ========================================
-        # ST消費
-        # ========================================
-
-        attacker_combatant.consume_stamina(
-            5
-        )
-
-        return {
-            "hit": True,
-            "critical": is_critical,
-            "damage": damage,
-        }
-
-
-    # ========================================================
-    # 挑戦者 → 防衛者
-    # ========================================================
+            code = "skip"
+        actor.finish_player_action(code)
+        attacker_combatant.equipment_dex_debuff_rate = 0.0
+        damage = max(0, before - defender_combatant.hp)
+        return {"hit": damage > 0, "damage": damage,
+                "critical": any("クリティカル" in log for log in self.logs[log_start:])}
 
     def challenger_normal_attack(self):
-
-        return self.normal_attack(
-            attacker=self.challenger,
-            attacker_combatant=(
-                self.challenger_combatant
-            ),
-            defender=self.defender,
-            defender_combatant=(
-                self.defender_combatant
-            ),
-        )
-
-
-    # ========================================================
-    # 防衛者 → 挑戦者
-    # ========================================================
+        return self.normal_attack(self.challenger, self.challenger_combatant,
+                                  self.defender, self.defender_combatant)
 
     def defender_normal_attack(self):
-
-        return self.normal_attack(
-            attacker=self.defender,
-            attacker_combatant=(
-                self.defender_combatant
-            ),
-            defender=self.challenger,
-            defender_combatant=(
-                self.challenger_combatant
-            ),
-        )
-
+        return self.normal_attack(self.defender, self.defender_combatant,
+                                  self.challenger, self.challenger_combatant)
 
     @property
     def challenger_hp(self):
-        return self.challenger_combatant.hp
+        return max(0, self.challenger_combatant.hp)
 
     @challenger_hp.setter
     def challenger_hp(
@@ -586,7 +248,7 @@ class ArenaBattleEngine:
 
     @property
     def defender_hp(self):
-        return self.defender_combatant.hp
+        return max(0, self.defender_combatant.hp)
 
     @defender_hp.setter
     def defender_hp(
@@ -628,7 +290,7 @@ class ArenaBattleEngine:
         闘技場の戦闘を最後まで自動実行する。
 
         ・AGIによる行動ゲージ
-        ・通常攻撃
+        ・探索共通のプリセット/通常攻撃
         ・ST消費
         ・HPによる勝敗判定
         ・最大ループ到達時は引き分け
@@ -734,7 +396,7 @@ class ArenaBattleEngine:
                 log_start = len(self.logs)
 
                 if side == "challenger":
-                    self.challenger_normal_attack()
+                    self.challenger_turn()
 
                     self.turn_timeline.append(
                         arena_turn_snapshot(
@@ -747,7 +409,7 @@ class ArenaBattleEngine:
                     )
 
                 else:
-                    self.defender_normal_attack()
+                    self.defender_turn()
 
                     self.turn_timeline.append(
                         arena_turn_snapshot(
@@ -800,13 +462,13 @@ class ArenaBattleEngine:
             "logs": list(self.logs),
             "timeline": self.turn_timeline,
 
-            "challenger_hp": self.challenger_hp,
+            "challenger_hp": max(0, self.challenger_hp),
             "challenger_mp": self.challenger_mp,
             "challenger_stamina": (
                 self.challenger_combatant.stamina
             ),
 
-            "defender_hp": self.defender_hp,
+            "defender_hp": max(0, self.defender_hp),
             "defender_mp": self.defender_mp,
             "defender_stamina": (
                 self.defender_combatant.stamina

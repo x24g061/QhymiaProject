@@ -151,9 +151,25 @@ class BattleEngine(
         # 戦闘ログ
         self.logs = []
 
+        self.initialize_presets()
+        self.initialize_skill_state()
+
+        # 敵側も同じスキル実行処理を使う（通常敵は従来どおり）。
+        from apps.battle.enemy_skills import EnemySkillActor
+
+        for combatant in self.enemy_combatants:
+            if getattr(combatant.enemy, "is_boss", False):
+                combatant.skill_actor = EnemySkillActor(self, combatant)
+
+    def initialize_presets(self):
+        """探索・闘技場共通の認可済み5枠と、戦闘ごとの使用予算。"""
+        character = self.character
+
         # プリセットスキルの情報を取得
+        from apps.battle.skill_access import available_skills
         self.presets = list(
             character.skill_presets
+            .filter(skill__in=available_skills(character), slot__range=(1, 5))
             .select_related("skill")
             .order_by("slot")
         )
@@ -168,15 +184,6 @@ class BattleEngine(
         # プリセットスキルの現在のスロット位置を管理するインデックス
         self.preset_index = 0
 
-
-        self.initialize_skill_state()
-
-        # 敵側も同じスキル実行処理を使う（通常敵は従来どおり）。
-        from apps.battle.enemy_skills import EnemySkillActor
-
-        for combatant in self.enemy_combatants:
-            if getattr(combatant.enemy, "is_boss", False):
-                combatant.skill_actor = EnemySkillActor(self, combatant)
 
     def initialize_skill_state(self):
         """プレイヤー・ボス共通の戦闘内スキル状態。"""
@@ -284,4 +291,3 @@ class BattleEngine(
         # 自分の行動終了ごとにAGI +1%
         # 最大+10%
         self.elf_agility_bonus = 0.0
-        

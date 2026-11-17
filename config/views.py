@@ -1945,7 +1945,7 @@ def calculate_reincarnation_stats(bonus_points):
 @transaction.atomic
 def again(request):
 
-    character = Character.objects.filter(user=request.user).first()
+    character = Character.objects.select_for_update().filter(user=request.user).first()
 
 
 
@@ -1960,6 +1960,11 @@ def again(request):
 
 
     if character and character.level >= 100:
+
+        # プレビューはキャラクター・回帰世代に紐付ける。古いPOSTを次の回帰に使わない。
+        preview_version = [character.pk, character.reincarnation_count]
+        if request.session.get("reincarnation_preview_version") != preview_version:
+            request.session.pop("reincarnation_bonus_points", None)
 
         can_reincarnate = True
 
@@ -2029,6 +2034,10 @@ def again(request):
 
                 # 回帰処理
 
+                from apps.battle.skill_access import inherit_skill
+                inherited = inherit_skill(character, character.job)
+                character.job = "wanderer"
+
                 character.level = 1
 
                 character.exp = 0
@@ -2075,6 +2084,12 @@ def again(request):
 
                 )
 
+                if inherited is not None:
+                    messages.success(request, f"「{inherited.name}」を永久習得しました！")
+                else:
+                    messages.info(request, "回帰前の職業のスキルはすべて永久習得済みです。")
+                request.session.pop("reincarnation_preview_version", None)
+
 
 
                 return redirect("home")
@@ -2104,6 +2119,7 @@ def again(request):
                 bonus_points
 
             )
+            request.session["reincarnation_preview_version"] = preview_version
 
 
 

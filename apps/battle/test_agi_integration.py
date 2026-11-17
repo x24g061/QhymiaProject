@@ -52,11 +52,11 @@ class ArenaAGIIntegrationTests(SimpleTestCase):
 
         actions = []
 
-        engine.challenger_normal_attack = (
+        engine.challenger_turn = (
             lambda: actions.append("challenger")
         )
 
-        engine.defender_normal_attack = (
+        engine.defender_turn = (
             lambda: actions.append("defender")
         )
 
@@ -134,7 +134,7 @@ class ArenaAGIIntegrationTests(SimpleTestCase):
             # 行動後にAGIが低下
             engine.challenger.agility = 20
 
-        engine.challenger_normal_attack = challenger_attack
+        engine.challenger_turn = challenger_attack
 
         self.run_engine(engine, 3)
 
@@ -175,7 +175,7 @@ class ArenaAGIIntegrationTests(SimpleTestCase):
                 engine.challenger_combatant.stamina - 10,
             )
 
-        engine.challenger_normal_attack = fatigued_attack
+        engine.challenger_turn = fatigued_attack
 
         self.run_engine(engine, 20)
 
@@ -191,7 +191,7 @@ class ArenaAGIIntegrationTests(SimpleTestCase):
             actions.append("challenger")
             engine.challenger.agility = 1000
 
-        engine.challenger_normal_attack = buff_attack
+        engine.challenger_turn = buff_attack
 
         self.run_engine(engine, 5)
 

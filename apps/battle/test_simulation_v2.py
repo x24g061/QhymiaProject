@@ -33,6 +33,19 @@ class IsolationAndStatisticsTests(SimpleTestCase):
 
 
 class ObservationContractTests(TestCase):
+    def test_permanent_inventory_is_explicit_and_does_not_leak_between_profiles(self):
+        with self.isolated():
+            row = self.row()
+            inherited = row | {"permanent_skill_codes": ["steel_body", "principle_of_freedom"]}
+            boss = Enemy.objects.get(floor=row["floor"], is_boss=True)
+            for label in "BC":
+                character = sim.prepare_profile(inherited, label)
+                run = sim.measure(character, boss, 123)
+                self.assertEqual(run["permanent_skill_count"], 2)
+                self.assertEqual(run["permanent_skill_codes"], ["principle_of_freedom", "steel_body"])
+            character = sim.prepare_profile(row, "B")
+            self.assertEqual(character.permanent_skills.count(), 0)
+
     @contextmanager
     def isolated(self):
         # 通常のDjangoテストDB接続を既に開いていることを検証してから、名前ガードだけをテストする。
