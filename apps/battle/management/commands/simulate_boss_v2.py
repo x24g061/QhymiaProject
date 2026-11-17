@@ -50,6 +50,13 @@ def cases(options):
                 yield row, tactic, scale
 
 
+def trial_count(row, default):
+    count = row.get("evaluation_trials", default)
+    if not isinstance(count, int) or isinstance(count, bool) or not 1 <= count <= 100000:
+        raise CommandError("条件別試行数が範囲外です")
+    return count
+
+
 class Command(BaseCommand):
     help = "隔離PostgreSQLテストDBでのみボス戦を測定する（通常DB操作なし）"
     requires_system_checks = []
@@ -84,7 +91,7 @@ class Command(BaseCommand):
         selected = list(cases(options))
         if not selected:
             raise CommandError("測定対象がありません")
-        total = len(selected)*options["trials"]
+        total = sum(trial_count(row, options["trials"]) for row, _, _ in selected)
         self.stdout.write(f"conditions={len(selected)} battles={total}")
         if options["seconds_per_battle"]:
             self.stdout.write(f"estimated_seconds={total*options['seconds_per_battle']:.1f}")
@@ -151,7 +158,10 @@ class Command(BaseCommand):
                     case = f"{row['profile_id']}-{tactic}-u{scale}"
                     character = sim.prepare_profile(row, tactic, scale)
                     boss = Enemy.objects.get(floor=row["floor"], is_boss=True)
-                    for trial in range(options["trials"]):
+                    if row.get("boss_override"):
+                        from apps.battle.balance_stage5b import evaluation_boss
+                        boss = evaluation_boss(boss, row["boss_override"])
+                    for trial in range(trial_count(row, options["trials"])):
                         if options["max_seconds"] and time.perf_counter()-start >= options["max_seconds"]:
                             raise CommandError("時間上限に到達。manifest/JSONLを保持しました。未実行条件は集計しないでください")
                         seed = options["seed_base"]+trial
@@ -165,6 +175,10 @@ class Command(BaseCommand):
                         record.update(case=case, profile_id=row["profile_id"], floor=row["floor"], job=row["job"],
                                       variant=row["variant"], tactic=tactic, use_scale=scale,
                                       elapsed_seconds=time.perf_counter()-began)
+                        if "boss_override" in row:
+                            record["evaluation_boss"] = {key:getattr(boss,key) for key in (
+                                "floor","max_hp","max_mp","strength","intelligence","dexterity",
+                                "agility","vitality","luck","max_stamina","skill_codes")}
                         destination.write(json.dumps(record, ensure_ascii=False)+"\n")
                         destination.flush()
                         completed.append(record)

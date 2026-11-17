@@ -1,0 +1,19 @@
+{
+  "tests": 531,
+  "existing_tests": 526,
+  "new_tests": 5,
+  "all_passed": true,
+  "full_seconds": 72.293,
+  "test_total_seconds": 72.963,
+  "system_check": "passed",
+  "diff_check": "passed",
+  "old_artifacts_verified": 92,
+  "measurement_source_fingerprint_verified": true,
+  "report_reaggregation": "identical results.json",
+  "simulation_battles": 1740,
+  "simulation_battle_seconds": 158.69592803295745,
+  "last_progress_seconds": 170.2,
+  "simulation_exceptions": 0,
+  "simulation_loop_limits": 0,
+  "official_boss_values_changed": false
+}
