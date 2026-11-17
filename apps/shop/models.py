@@ -143,10 +143,10 @@ class MarketSaleNotification(models.Model):
         related_name="market_sale_notifications",
     )
 
-    listing = models.OneToOneField(
+    listing = models.ForeignKey(
         MarketListing,
         on_delete=models.CASCADE,
-        related_name="sale_notification",
+        related_name="sale_notifications",
     )
 
     message = models.TextField(

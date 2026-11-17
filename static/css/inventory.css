@@ -1186,3 +1186,21 @@ main {
     }
 
 }
+
+/* =========================================================
+   装備まとめ表示
+========================================================= */
+
+.equipment-stack-summary {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 4px;
+}
+
+
+.equipment-stack-summary strong {
+    font-size: 14px;
+}
