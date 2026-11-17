@@ -69,6 +69,67 @@ def inventory(request):
         )
     )
 
+    # ========================================================
+    # 倉庫表示用に装備をまとめる
+    #
+    # ・特殊能力あり → 個別表示
+    # ・装備中 → 個別表示
+    # ・特殊能力なし / 未装備
+    #   → 同じ装備・同じ強化値・同じ戦闘力ならまとめる
+    # ========================================================
+
+    equipment_display_rows = []
+
+    grouped_equipments = {}
+
+    for owned in owned_equipments:
+
+        # 特殊能力付き、または装備中は必ず個別表示
+        if (
+            owned.special_effect
+            or owned.is_equipped
+        ):
+
+            equipment_display_rows.append(
+                {
+                    "owned": owned,
+                    "quantity": 1,
+                }
+            )
+
+            continue
+
+
+        # 通常装備をまとめるためのキー
+        group_key = (
+            owned.equipment_id,
+            owned.enhancement_level,
+            owned.battle_power,
+        )
+
+
+        if group_key not in grouped_equipments:
+
+            row = {
+                # このグループを代表する装備個体
+                "owned": owned,
+
+                # これから加算
+                "quantity": 0,
+            }
+
+            grouped_equipments[
+                group_key
+            ] = row
+
+            equipment_display_rows.append(
+                row
+            )
+
+
+        grouped_equipments[
+            group_key
+        ]["quantity"] += 1
 
     # ========================================================
     # 通常アイテム
@@ -151,9 +212,13 @@ def inventory(request):
 
             "equipment_slots":
                 equipment_slots,
+                
 
             "owned_equipments":
                 owned_equipments,
+
+            "equipment_display_rows":
+                equipment_display_rows,
 
             "inventory_items":
                 inventory_items,
@@ -741,6 +806,222 @@ def use_item(
             "inventory:inventory"
         )
 
+    # ========================================================
+    # 種族変更アイテム
+    # ========================================================
+
+    race_change_items = {
+        "ヒューマンの種族変更証":
+            "human",
+
+        "エルフの種族変更証":
+            "elf",
+
+        "ドワーフの種族変更証":
+            "dwarf",
+
+        "ドラゴニアの種族変更証":
+            "dragonia",
+
+        "ウィッチの種族変更証":
+            "witch",
+
+        "フェアリーの種族変更証":
+            "fairy",
+
+        "デモニアの種族変更証":
+            "demonia",
+    }
+
+
+    if item.name in race_change_items:
+
+        new_race = (
+            race_change_items[
+                item.name
+            ]
+        )
+
+
+        # ================================================
+        # 現在と同じ種族なら使用しない
+        # ================================================
+
+        if character.race == new_race:
+
+            messages.error(
+                request,
+                "すでにこの種族です。",
+            )
+
+            return redirect(
+                "inventory:inventory"
+            )
+
+
+        # ================================================
+        # 種族変更
+        # ================================================
+
+        character.race = new_race
+
+        character.save(
+            update_fields=[
+                "race",
+                "updated_at",
+            ]
+        )
+
+
+        # ================================================
+        # アイテムを1個消費
+        # ================================================
+
+        if inventory_item.quantity <= 1:
+
+            inventory_item.delete()
+
+        else:
+
+            inventory_item.quantity -= 1
+
+            inventory_item.save(
+                update_fields=[
+                    "quantity",
+                ]
+            )
+
+
+        messages.success(
+            request,
+            (
+                f"{item.name}を使用しました。"
+                f"種族が"
+                f"{character.get_race_display()}"
+                "に変更されました。"
+            ),
+        )
+
+
+        return redirect(
+            "inventory:inventory"
+        )
+
+
+    # ========================================================
+    # 職業変更アイテム
+    # ========================================================
+
+    job_change_items = {
+        "拳闘士の職業変更証":
+            "grappler",
+
+        "重戦士の職業変更証":
+            "warrior",
+
+        "狩人の職業変更証":
+            "hunter",
+
+        "ウィザードの職業変更証":
+            "wizard",
+
+        "プリーストの職業変更証":
+            "priest",
+
+        "放浪人の職業変更証":
+            "wanderer",
+
+        "暗殺者の職業変更証":
+            "assassin",
+    }
+
+
+    if item.name in job_change_items:
+
+        new_job = (
+            job_change_items[
+                item.name
+            ]
+        )
+
+
+        # ================================================
+        # 現在と同じ職業なら使用しない
+        # ================================================
+
+        if character.job == new_job:
+
+            messages.error(
+                request,
+                "すでにこの職業です。",
+            )
+
+            return redirect(
+                "inventory:inventory"
+            )
+
+
+        # ================================================
+        # 職業変更
+        # ================================================
+
+        character.job = new_job
+
+        character.save(
+            update_fields=[
+                "job",
+                "updated_at",
+            ]
+        )
+
+
+        # ================================================
+        # 旧職業のスキルプリセットを削除
+        # ================================================
+
+        from apps.battle.models import (
+            SkillPreset,
+        )
+
+        SkillPreset.objects.filter(
+            character=character
+        ).delete()
+
+
+        # ================================================
+        # アイテムを1個消費
+        # ================================================
+
+        if inventory_item.quantity <= 1:
+
+            inventory_item.delete()
+
+        else:
+
+            inventory_item.quantity -= 1
+
+            inventory_item.save(
+                update_fields=[
+                    "quantity",
+                ]
+            )
+
+
+        messages.success(
+            request,
+            (
+                f"{item.name}を使用しました。"
+                f"職業が"
+                f"{character.get_job_display()}"
+                "に変更されました。"
+                "スキルプリセットはリセットされました。"
+            ),
+        )
+
+
+        return redirect(
+            "inventory:inventory"
+        )
 
     # ========================================================
     # 属性成長の種

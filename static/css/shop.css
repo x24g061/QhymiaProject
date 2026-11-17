@@ -1596,3 +1596,117 @@ button:disabled {
     border-color: #dc8d88;
     color: #9e302b;
 }
+
+/* =========================================================
+   NPC SHOP
+   購入個数
+========================================================= */
+
+.npc-item-table .table-header,
+.npc-item-table .table-row {
+    grid-template-columns:
+        110px
+        160px
+        minmax(200px, 1fr)
+        75px
+        90px
+        80px
+        110px;
+}
+
+
+.npc-quantity-cell {
+    justify-content: center;
+}
+
+
+.npc-quantity-input {
+    width: 60px;
+    min-height: 34px;
+
+    padding: 6px 8px;
+
+    color: var(--text);
+
+    text-align: center;
+
+    background:
+        rgba(255, 255, 255, 0.86);
+
+    border:
+        1px solid rgba(59, 105, 115, 0.18);
+
+    border-radius: 8px;
+
+    outline: none;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+
+.npc-quantity-input:focus {
+    border-color: var(--main);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(52, 127, 145, 0.10);
+}
+
+/* =========================================================
+   MARKET LISTING
+   購入個数
+========================================================= */
+
+.market-listing-table .table-header,
+.market-listing-table .table-row {
+    grid-template-columns:
+        110px
+        160px
+        minmax(200px, 1fr)
+        75px
+        90px
+        80px
+        110px;
+}
+
+
+.market-buy-quantity-cell {
+    justify-content: center;
+}
+
+
+.market-buy-quantity-input {
+    width: 60px;
+
+    min-height: 34px;
+
+    padding: 6px 8px;
+
+    color: var(--text);
+
+    text-align: center;
+
+    background:
+        rgba(255, 255, 255, 0.86);
+
+    border:
+        1px solid rgba(59, 105, 115, 0.18);
+
+    border-radius: 8px;
+
+    outline: none;
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+
+.market-buy-quantity-input:focus {
+    border-color:
+        var(--main);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(52, 127, 145, 0.10);
+}

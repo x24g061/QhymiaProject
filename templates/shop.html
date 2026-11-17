@@ -334,36 +334,20 @@
 
                     <section class="table-wrapper">
 
-                        <div class="item-table">
+                        <div class="item-table market-listing-table">
 
 
                             <!-- テーブルヘッダー -->
 
                             <div class="table-header">
 
-                                <div>
-                                    種類
-                                </div>
-
-                                <div>
-                                    アイテム名
-                                </div>
-
-                                <div>
-                                    説明
-                                </div>
-
-                                <div>
-                                    在庫
-                                </div>
-
-                                <div>
-                                    価格
-                                </div>
-
-                                <div>
-                                    購入
-                                </div>
+                                <div>種類</div>
+                                <div>アイテム名</div>
+                                <div>説明</div>
+                                <div>在庫</div>
+                                <div>価格</div>
+                                <div>個数</div>
+                                <div>購入</div>
 
                             </div>
 
@@ -457,6 +441,27 @@
                                         Q
 
                                     </div>
+                                    <!-- 購入個数 -->
+
+                                    <div class="table-cell market-buy-quantity-cell" data-label="個数">
+
+                                        {% if character and listing.seller_id == character.id %}
+
+                                        -
+
+                                        {% elif listing.owned_equipment %}
+
+                                        <strong>1</strong>
+
+                                        {% else %}
+
+                                        <input type="number" name="quantity" value="1" min="1"
+                                            max="{{ listing.quantity }}" form="market-buy-form-{{ listing.id }}"
+                                            class="market-buy-quantity-input">
+
+                                        {% endif %}
+
+                                    </div>
 
 
                                     <!-- 購入 -->
@@ -476,9 +481,17 @@
                                         </form>
 
                                         {% else %}
-                                        <form method="post" action="{% url 'shop:buy_market_listing' listing.id %}">
+
+                                        <form id="market-buy-form-{{ listing.id }}" method="post"
+                                            action="{% url 'shop:buy_market_listing' listing.id %}">
 
                                             {% csrf_token %}
+
+                                            {% if listing.owned_equipment %}
+
+                                            <input type="hidden" name="quantity" value="1">
+
+                                            {% endif %}
 
                                             <button type="submit" class="buy-button">
                                                 購入する

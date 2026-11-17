@@ -392,7 +392,7 @@
                 <section class="table-wrapper">
 
 
-                    <div class="item-table">
+                    <div class="item-table npc-item-table">
 
 
                         <!-- ヘッダー -->
@@ -418,7 +418,9 @@
                             <div>
                                 価格
                             </div>
-
+                            <div>
+                                個数
+                            </div>
                             <div>
                                 購入
                             </div>
@@ -509,18 +511,39 @@
 
                                 </div>
 
+                                <!-- 個数 -->
+
+                                <div class="table-cell npc-quantity-cell" data-label="個数">
+
+                                    {% if stock.stock > 0 %}
+
+                                    <input type="number" name="quantity" value="1" min="1" max="{{ stock.stock }}"
+                                        form="npc-buy-form-{{ stock.id }}" class="npc-quantity-input">
+
+                                    {% else %}
+
+                                    -
+
+                                    {% endif %}
+
+                                </div>
+
+
                                 <!-- 購入 -->
 
                                 <div class="table-cell buy-cell" data-label="購入">
 
                                     {% if stock.stock > 0 %}
 
-                                    <form method="post" action="{% url 'shop:buy_item' stock.id %}">
+                                    <form id="npc-buy-form-{{ stock.id }}" method="post"
+                                        action="{% url 'shop:buy_item' stock.id %}">
+
                                         {% csrf_token %}
 
                                         <button type="submit" class="buy-button">
                                             購入する
                                         </button>
+
                                     </form>
 
                                     {% else %}

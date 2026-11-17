@@ -19,6 +19,12 @@ from .models import (
     MarketSaleNotification,
 )
 
+from django.db.models import (
+    Case,
+    When,
+    Value,
+    IntegerField,
+)
 
 # ============================================================
 # フリーマーケット画面
@@ -675,6 +681,7 @@ def buy_market_listing(
             "shop:shop"
         )
 
+
     # ========================================================
     # 購入者取得
     # ========================================================
@@ -696,8 +703,9 @@ def buy_market_listing(
             "shop:shop"
         )
 
+
     # ========================================================
-    # 購入者をロック
+    # 購入者ロック
     # ========================================================
 
     buyer = (
@@ -708,11 +716,9 @@ def buy_market_listing(
         )
     )
 
+
     # ========================================================
     # 出品取得・ロック
-    #
-    # owned_equipment は NULL の可能性があるため、
-    # select_for_update と一緒に select_related しない
     # ========================================================
 
     try:
@@ -740,8 +746,9 @@ def buy_market_listing(
             "shop:shop"
         )
 
+
     # ========================================================
-    # 出品状態チェック
+    # 出品状態確認
     # ========================================================
 
     if listing.status != MarketListing.Status.LISTED:
@@ -755,6 +762,7 @@ def buy_market_listing(
             "shop:shop"
         )
 
+
     if listing.seller_id == buyer.id:
 
         messages.error(
@@ -766,29 +774,120 @@ def buy_market_listing(
             "shop:shop"
         )
 
+
+    # ========================================================
+    # 購入個数
+    # ========================================================
+
+    try:
+
+        purchase_quantity = int(
+            request.POST.get(
+                "quantity",
+                1,
+            )
+        )
+
+    except (
+        TypeError,
+        ValueError,
+    ):
+
+        messages.error(
+            request,
+            "購入個数が正しくありません。",
+        )
+
+        return redirect(
+            "shop:shop"
+        )
+
+
+    if purchase_quantity < 1:
+
+        messages.error(
+            request,
+            "購入個数は1個以上にしてください。",
+        )
+
+        return redirect(
+            "shop:shop"
+        )
+
+
+    # ========================================================
+    # 装備か通常アイテムか
+    # ========================================================
+
+    is_equipment = (
+        listing.owned_equipment_id
+        is not None
+    )
+
+
+    # 装備品は必ず1個
+    if is_equipment:
+
+        if purchase_quantity != 1:
+
+            messages.error(
+                request,
+                "装備品は1個ずつ購入してください。",
+            )
+
+            return redirect(
+                "shop:shop"
+            )
+
+
+    # 通常アイテム
+    else:
+
+        if purchase_quantity > listing.quantity:
+
+            messages.error(
+                request,
+                (
+                    "出品されている個数を超えて"
+                    "購入することはできません。"
+                    f"現在の在庫は{listing.quantity}個です。"
+                ),
+            )
+
+            return redirect(
+                "shop:shop"
+            )
+
+
     # ========================================================
     # 合計価格
     # ========================================================
 
     total_price = (
-        listing.quantity
-        * listing.unit_price
+        listing.unit_price
+        * purchase_quantity
     )
 
+
     # ========================================================
-    # 所持Qチェック
+    # 所持Q確認
     # ========================================================
 
     if buyer.gold < total_price:
 
         messages.error(
             request,
-            "所持Qが足りません。",
+            (
+                f"{purchase_quantity}個購入するには"
+                f"{total_price}Q必要です。"
+                "所持Qが足りません。"
+            ),
         )
 
         return redirect(
             "shop:shop"
         )
+
 
     # ========================================================
     # 出品者取得・ロック
@@ -802,6 +901,7 @@ def buy_market_listing(
         )
     )
 
+
     # ========================================================
     # Q移動
     # ========================================================
@@ -814,6 +914,7 @@ def buy_market_listing(
         ]
     )
 
+
     seller.gold += total_price
 
     seller.save(
@@ -822,23 +923,29 @@ def buy_market_listing(
         ]
     )
 
+
     # ========================================================
     # 商品移動
     # ========================================================
 
+    owned_equipment = None
+
+
     # --------------------------------------------------------
-    # 装備の場合
+    # 装備
     # --------------------------------------------------------
 
-    if listing.owned_equipment:
+    if is_equipment:
 
         owned_equipment = (
             OwnedEquipment.objects
             .select_for_update()
             .get(
-                id=listing.owned_equipment_id
+                id=listing.owned_equipment_id,
+                character=seller,
             )
         )
+
 
         owned_equipment.character = buyer
         owned_equipment.is_equipped = False
@@ -850,26 +957,30 @@ def buy_market_listing(
             ]
         )
 
+
     # --------------------------------------------------------
-    # 通常アイテムの場合
+    # 通常アイテム
     # --------------------------------------------------------
 
     else:
 
         inventory_item, created = (
-            InventoryItem.objects.get_or_create(
+            InventoryItem.objects
+            .get_or_create(
                 character=buyer,
                 item=listing.item,
                 defaults={
-                    "quantity": listing.quantity,
+                    "quantity":
+                        purchase_quantity,
                 },
             )
         )
 
+
         if not created:
 
             inventory_item.quantity += (
-                listing.quantity
+                purchase_quantity
             )
 
             inventory_item.save(
@@ -878,37 +989,87 @@ def buy_market_listing(
                 ]
             )
 
-    # ========================================================
-    # 出品を売却済みに変更
-    # ========================================================
-
-    listing.buyer = buyer
-    listing.status = (
-        MarketListing.Status.SOLD
-    )
-    listing.sold_at = (
-        timezone.now()
-    )
-
-    listing.save(
-        update_fields=[
-            "buyer",
-            "status",
-            "sold_at",
-        ]
-    )
-
 
     # ========================================================
-    # 出品者への売却通知を作成
+    # 出品残数更新
     # ========================================================
 
-    # 装備の場合は強化値を含める
-    if listing.owned_equipment:
+    if is_equipment:
+
+        listing.buyer = buyer
+
+        listing.status = (
+            MarketListing.Status.SOLD
+        )
+
+        listing.sold_at = (
+            timezone.now()
+        )
+
+        listing.save(
+            update_fields=[
+                "buyer",
+                "status",
+                "sold_at",
+            ]
+        )
+
+
+    else:
+
+        listing.quantity -= (
+            purchase_quantity
+        )
+
+
+        # ================================================
+        # 全部売れた
+        # ================================================
+
+        if listing.quantity == 0:
+
+            listing.buyer = buyer
+
+            listing.status = (
+                MarketListing.Status.SOLD
+            )
+
+            listing.sold_at = (
+                timezone.now()
+            )
+
+            listing.save(
+                update_fields=[
+                    "quantity",
+                    "buyer",
+                    "status",
+                    "sold_at",
+                ]
+            )
+
+
+        # ================================================
+        # まだ残っている
+        # ================================================
+
+        else:
+
+            listing.save(
+                update_fields=[
+                    "quantity",
+                ]
+            )
+
+
+    # ========================================================
+    # 売却通知
+    # ========================================================
+
+    if is_equipment:
 
         item_name = (
             f"{listing.item.name} "
-            f"+{listing.owned_equipment.enhancement_level}"
+            f"+{owned_equipment.enhancement_level}"
         )
 
         sale_message = (
@@ -916,72 +1077,98 @@ def buy_market_listing(
             f"{total_price}Qで売れました！"
         )
 
-    # 通常アイテムの場合は個数を含める
+
     else:
 
         sale_message = (
             f"{listing.item.name}が"
-            f"{listing.quantity}個、"
+            f"{purchase_quantity}個、"
             f"{total_price}Qで売れました！"
         )
 
-    
+
+        if listing.quantity > 0:
+
+            sale_message += (
+                f" 残り{listing.quantity}個です。"
+            )
+
+
     # ========================================================
-    # 出品者への売却通知をDBに保存
+    # 通知保存
     # ========================================================
 
-    notification = MarketSaleNotification.objects.create(
-        recipient=seller,
-        listing=listing,
-        message=sale_message,
+    notification = (
+        MarketSaleNotification.objects
+        .create(
+            recipient=seller,
+            listing=listing,
+            message=sale_message,
+        )
     )
 
+
     # ========================================================
-    # 購入確定後にWebSocketで通知を送信
+    # WebSocket通知
     # ========================================================
 
-    channel_layer = get_channel_layer()
+    channel_layer = (
+        get_channel_layer()
+    )
+
 
     if channel_layer is not None:
 
-        # 出品者のユーザーIDを使った専用グループ
-        group_name = f"sale_user_{seller.user_id}"
+        group_name = (
+            f"sale_user_{seller.user_id}"
+        )
 
         event = {
-            "type": "sale.notification",
-            "notification_id": notification.id,
-            "message": notification.message,
-            "created_at": notification.created_at.isoformat(),
+            "type":
+                "sale.notification",
+
+            "notification_id":
+                notification.id,
+
+            "message":
+                notification.message,
+
+            "created_at":
+                notification.created_at.isoformat(),
         }
 
+
         def send_sale_notification():
-            async_to_sync(channel_layer.group_send)(
+
+            async_to_sync(
+                channel_layer.group_send
+            )(
                 group_name,
                 event,
             )
 
-        # DBの取引が確定した場合だけ送信
+
         transaction.on_commit(
             send_sale_notification,
             robust=True,
         )
 
 
-
     # ========================================================
     # 購入完了メッセージ
     # ========================================================
 
-    if listing.owned_equipment:
+    if is_equipment:
 
         messages.success(
             request,
             (
                 f"{listing.item.name} "
-                f"+{listing.owned_equipment.enhancement_level}を"
+                f"+{owned_equipment.enhancement_level}を"
                 f"{total_price}Qで購入しました。"
             ),
         )
+
 
     else:
 
@@ -989,15 +1176,15 @@ def buy_market_listing(
             request,
             (
                 f"{listing.item.name}を"
-                f"{listing.quantity}個、"
+                f"{purchase_quantity}個、"
                 f"{total_price}Qで購入しました。"
             ),
         )
 
+
     return redirect(
         "shop:shop"
     )
-
 
 # ============================================================
 # NPCショップ画面
@@ -1016,6 +1203,83 @@ def npc_shop(request):
         )
         .select_related(
             "item",
+        )
+        .annotate(
+            display_order=Case(
+
+                # ========================================
+                # 種族変更アイテム
+                # ========================================
+
+                When(
+                    item__name="ヒューマンの種族変更証",
+                    then=Value(100),
+                ),
+                When(
+                    item__name="エルフの種族変更証",
+                    then=Value(101),
+                ),
+                When(
+                    item__name="ドワーフの種族変更証",
+                    then=Value(102),
+                ),
+                When(
+                    item__name="ドラゴニアの種族変更証",
+                    then=Value(103),
+                ),
+                When(
+                    item__name="ウィッチの種族変更証",
+                    then=Value(104),
+                ),
+                When(
+                    item__name="フェアリーの種族変更証",
+                    then=Value(105),
+                ),
+                When(
+                    item__name="デモニアの種族変更証",
+                    then=Value(106),
+                ),
+
+                # ========================================
+                # 職業変更アイテム
+                # ========================================
+
+                When(
+                    item__name="拳闘士の職業変更証",
+                    then=Value(200),
+                ),
+                When(
+                    item__name="重戦士の職業変更証",
+                    then=Value(201),
+                ),
+                When(
+                    item__name="狩人の職業変更証",
+                    then=Value(202),
+                ),
+                When(
+                    item__name="ウィザードの職業変更証",
+                    then=Value(203),
+                ),
+                When(
+                    item__name="プリーストの職業変更証",
+                    then=Value(204),
+                ),
+                When(
+                    item__name="放浪人の職業変更証",
+                    then=Value(205),
+                ),
+                When(
+                    item__name="暗殺者の職業変更証",
+                    then=Value(206),
+                ),
+
+                default=Value(0),
+                output_field=IntegerField(),
+            )
+        )
+        .order_by(
+            "display_order",
+            "item__name",
         )
     )
 
@@ -1038,6 +1302,10 @@ def npc_shop(request):
         },
     )
 
+    character = None
+
+
+
 
 # ============================================================
 # NPCショップ購入処理
@@ -1055,6 +1323,7 @@ def buy_item(
         return redirect(
             "shop:npc_shop"
         )
+
 
     # ========================================================
     # キャラクター取得
@@ -1077,6 +1346,47 @@ def buy_item(
             "shop:npc_shop"
         )
 
+
+    # ========================================================
+    # 購入個数取得
+    # ========================================================
+
+    try:
+
+        quantity = int(
+            request.POST.get(
+                "quantity",
+                1,
+            )
+        )
+
+    except (
+        TypeError,
+        ValueError,
+    ):
+
+        messages.error(
+            request,
+            "購入個数が正しくありません。",
+        )
+
+        return redirect(
+            "shop:npc_shop"
+        )
+
+
+    if quantity < 1:
+
+        messages.error(
+            request,
+            "購入個数は1個以上にしてください。",
+        )
+
+        return redirect(
+            "shop:npc_shop"
+        )
+
+
     # ========================================================
     # 購入キャラクターをロック
     # ========================================================
@@ -1088,6 +1398,7 @@ def buy_item(
             id=character.id
         )
     )
+
 
     # ========================================================
     # NPCショップ在庫をロック
@@ -1104,8 +1415,16 @@ def buy_item(
         )
     )
 
+
     item = stock.item
-    price = stock.price
+
+    unit_price = stock.price
+
+    total_price = (
+        unit_price
+        * quantity
+    )
+
 
     # ========================================================
     # 購入可能チェック
@@ -1122,6 +1441,7 @@ def buy_item(
             "shop:npc_shop"
         )
 
+
     if not item.npc_purchasable:
 
         messages.error(
@@ -1132,6 +1452,7 @@ def buy_item(
         return redirect(
             "shop:npc_shop"
         )
+
 
     if item.category == "equipment":
 
@@ -1144,6 +1465,7 @@ def buy_item(
             "shop:npc_shop"
         )
 
+
     if stock.stock <= 0:
 
         messages.error(
@@ -1155,22 +1477,53 @@ def buy_item(
             "shop:npc_shop"
         )
 
-    if character.gold < price:
+
+    # ========================================================
+    # 在庫数チェック
+    # ========================================================
+
+    if quantity > stock.stock:
 
         messages.error(
             request,
-            "所持Qが足りません。",
+            (
+                "在庫数を超えて購入することは"
+                "できません。"
+            ),
         )
 
         return redirect(
             "shop:npc_shop"
         )
 
+
+    # ========================================================
+    # 所持Qチェック
+    # ========================================================
+
+    if character.gold < total_price:
+
+        messages.error(
+            request,
+            (
+                f"{quantity}個購入するには"
+                f"{total_price}Q必要です。"
+                "所持Qが足りません。"
+            ),
+        )
+
+        return redirect(
+            "shop:npc_shop"
+        )
+
+
     # ========================================================
     # 所持Qを減らす
     # ========================================================
 
-    character.gold -= price
+    character.gold -= (
+        total_price
+    )
 
     character.save(
         update_fields=[
@@ -1178,17 +1531,21 @@ def buy_item(
         ]
     )
 
+
     # ========================================================
     # NPCショップ在庫を減らす
     # ========================================================
 
-    stock.stock -= 1
+    stock.stock -= (
+        quantity
+    )
 
     stock.save(
         update_fields=[
             "stock",
         ]
     )
+
 
     # ========================================================
     # アイテムを所持品へ追加
@@ -1199,14 +1556,18 @@ def buy_item(
             character=character,
             item=item,
             defaults={
-                "quantity": 1,
+                "quantity":
+                    quantity,
             },
         )
     )
 
+
     if not created:
 
-        inventory_item.quantity += 1
+        inventory_item.quantity += (
+            quantity
+        )
 
         inventory_item.save(
             update_fields=[
@@ -1214,10 +1575,20 @@ def buy_item(
             ]
         )
 
+
+    # ========================================================
+    # 購入完了
+    # ========================================================
+
     messages.success(
         request,
-        f"{item.name}を1個購入しました。",
+        (
+            f"{item.name}を"
+            f"{quantity}個、"
+            f"{total_price}Qで購入しました。"
+        ),
     )
+
 
     return redirect(
         "shop:npc_shop"
