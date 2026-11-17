@@ -1,0 +1,13 @@
+case,profile_id,floor,job,variant,tactic,use_scale,trials,valid,exceptions,wins,losses,draws,win_rate,wilson95,mean_loops,median_loops,loop_limits,player_mean_actions,boss_mean_actions,mean_action_difference
+p010-A-u1,p010,8,grappler,mid-unarmed,A,1,1,1,0,0,1,0,0.0,"[0, 0.7934506856227626]",101,101,0,51,9,42
+p010-B-u1,p010,8,grappler,mid-unarmed,B,1,1,1,0,1,0,0,1.0,"[0.20654931437723745, 1]",10,10,0,8,0,8
+p010-C-u1,p010,8,grappler,mid-unarmed,C,1,1,1,0,1,0,0,1.0,"[0.20654931437723745, 1]",10,10,0,8,0,8
+p053-B-u1,p053,6,warrior,searched-F-set,B,1,1,1,0,0,1,0,0.0,"[0, 0.7934506856227626]",19,19,0,13,6,7
+p053-C-u1,p053,6,warrior,searched-F-set,C,1,1,1,0,1,0,0,1.0,"[0.20654931437723745, 1]",9,9,0,7,2,5
+p058-A-u1,p058,8,warrior,mid-unarmed,A,1,1,1,0,0,1,0,0.0,"[0, 0.7934506856227626]",100,100,0,51,9,42
+p058-B-u1,p058,8,warrior,mid-unarmed,B,1,1,1,0,0,1,0,0.0,"[0, 0.7934506856227626]",147,147,0,72,13,59
+p058-C-u1,p058,8,warrior,mid-unarmed,C,1,1,1,0,1,0,0,1.0,"[0.20654931437723745, 1]",9,9,0,7,0,7
+p149-B-u1,p149,6,wizard,searched-F-set,B,1,1,1,0,0,1,0,0.0,"[0, 0.7934506856227626]",16,16,0,11,5,6
+p149-C-u1,p149,6,wizard,searched-F-set,C,1,1,1,0,0,1,0,0.0,"[0, 0.7934506856227626]",19,19,0,13,6,7
+p197-B-u1,p197,6,priest,searched-F-set,B,1,1,1,0,0,1,0,0.0,"[0, 0.7934506856227626]",44,44,0,25,14,11
+p197-C-u1,p197,6,priest,searched-F-set,C,1,1,1,0,1,0,0,1.0,"[0.20654931437723745, 1]",21,21,0,15,6,9

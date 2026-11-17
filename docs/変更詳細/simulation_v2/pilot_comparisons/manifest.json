@@ -1,0 +1,835 @@
+{
+  "schema": 2,
+  "source_sha256": "f50defb0ab9e6f590d56eec13a2ec61c9c0d25baf62da5917a832f9f63989b7c",
+  "commit": "f15502296590af533f7d28e412e746596ede29c2",
+  "engine": "apps.battle.services.BattleEngine",
+  "postgresql": true,
+  "profile_sha256": "582433dd6205bee13f82aedf80e307d8a4d42e80bf19e972e336b01d095327a1",
+  "trials": 30,
+  "seed_base": 20261117,
+  "detail": false,
+  "cases": [
+    {
+      "profile": {
+        "floor": 1,
+        "variant": "comparison-weaker",
+        "job": "warrior",
+        "race": "human",
+        "reincarnations": 0,
+        "level": 10,
+        "seed": 20261116,
+        "target_power": null,
+        "power": 140,
+        "stats": {
+          "max_hp": 55,
+          "max_mp": 34,
+          "strength": 8,
+          "intelligence": 8,
+          "dexterity": 7,
+          "agility": 7,
+          "vitality": 7,
+          "luck": 7
+        },
+        "attributes": {
+          "fire": 4,
+          "water": 3,
+          "grass": 7,
+          "rock": 7,
+          "light": 3,
+          "dark": 3
+        },
+        "combat_start": {
+          "strength": 8.0,
+          "intelligence": 8.0,
+          "dexterity": 7.0,
+          "agility": 7.0,
+          "vitality": 7.700000000000001,
+          "luck": 8.049999999999999,
+          "max_hp": 55,
+          "max_mp": 34
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 0,
+          "dexterity": 0,
+          "agility": 0,
+          "vitality": 0,
+          "luck": 0
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "s048-weaker",
+        "comparison_only": true
+      },
+      "tactic": "B",
+      "use_scale": 1,
+      "slots": [
+        [
+          "steel_body",
+          3
+        ],
+        [
+          "flare_blade",
+          5
+        ],
+        [
+          "counter_stance",
+          3
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 1,
+        "variant": "comparison-stronger",
+        "job": "warrior",
+        "race": "human",
+        "reincarnations": 0,
+        "level": 30,
+        "seed": 20261116,
+        "target_power": null,
+        "power": 433,
+        "stats": {
+          "max_hp": 120,
+          "max_mp": 46,
+          "strength": 21,
+          "intelligence": 12,
+          "dexterity": 11,
+          "agility": 16,
+          "vitality": 12,
+          "luck": 15
+        },
+        "attributes": {
+          "fire": 15,
+          "water": 14,
+          "grass": 16,
+          "rock": 17,
+          "light": 12,
+          "dark": 13
+        },
+        "combat_start": {
+          "strength": 43.0,
+          "intelligence": 12.0,
+          "dexterity": 21.0,
+          "agility": 24.0,
+          "vitality": 36.300000000000004,
+          "luck": 24.15,
+          "max_hp": 120,
+          "max_mp": 46
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [
+          {
+            "name": "欠けた鉄剣",
+            "rank": "F",
+            "slot": "weapon",
+            "style": "physical",
+            "enhancement": 2,
+            "power": 39,
+            "special_effect": null
+          },
+          {
+            "name": "古びた鉄兜",
+            "rank": "F",
+            "slot": "head",
+            "style": "physical",
+            "enhancement": 2,
+            "power": 31,
+            "special_effect": null
+          },
+          {
+            "name": "擦り切れた革鎧",
+            "rank": "F",
+            "slot": "armor",
+            "style": "physical",
+            "enhancement": 2,
+            "power": 35,
+            "special_effect": null
+          },
+          {
+            "name": "傷んだ革靴",
+            "rank": "F",
+            "slot": "feet",
+            "style": "physical",
+            "enhancement": 2,
+            "power": 31,
+            "special_effect": null
+          },
+          {
+            "name": "錆びた腕輪",
+            "rank": "F",
+            "slot": "accessory",
+            "style": "physical",
+            "enhancement": 2,
+            "power": 27,
+            "special_effect": null
+          }
+        ],
+        "equipment_bonuses": {
+          "strength": 22,
+          "intelligence": 0,
+          "dexterity": 10,
+          "agility": 8,
+          "vitality": 21,
+          "luck": 6
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "s048-stronger",
+        "comparison_only": true
+      },
+      "tactic": "B",
+      "use_scale": 1,
+      "slots": [
+        [
+          "steel_body",
+          3
+        ],
+        [
+          "flare_blade",
+          5
+        ],
+        [
+          "counter_stance",
+          3
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 6,
+        "variant": "comparison-weaker",
+        "job": "warrior",
+        "race": "human",
+        "reincarnations": 20,
+        "level": 79,
+        "seed": 20261116,
+        "target_power": null,
+        "power": 3185,
+        "stats": {
+          "max_hp": 1210,
+          "max_mp": 487,
+          "strength": 214,
+          "intelligence": 188,
+          "dexterity": 199,
+          "agility": 216,
+          "vitality": 232,
+          "luck": 201
+        },
+        "attributes": {
+          "fire": 209,
+          "water": 201,
+          "grass": 238,
+          "rock": 220,
+          "light": 219,
+          "dark": 205
+        },
+        "combat_start": {
+          "strength": 214.0,
+          "intelligence": 188.0,
+          "dexterity": 199.0,
+          "agility": 216.0,
+          "vitality": 255.20000000000002,
+          "luck": 231.14999999999998,
+          "max_hp": 1210,
+          "max_mp": 487
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 0,
+          "dexterity": 0,
+          "agility": 0,
+          "vitality": 0,
+          "luck": 0
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "s053-weaker",
+        "comparison_only": true
+      },
+      "tactic": "B",
+      "use_scale": 1,
+      "slots": [
+        [
+          "steel_body",
+          3
+        ],
+        [
+          "flare_blade",
+          5
+        ],
+        [
+          "counter_stance",
+          3
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 6,
+        "variant": "comparison-stronger",
+        "job": "warrior",
+        "race": "human",
+        "reincarnations": 20,
+        "level": 99,
+        "seed": 20261116,
+        "target_power": null,
+        "power": 8716,
+        "stats": {
+          "max_hp": 1290,
+          "max_mp": 493,
+          "strength": 224,
+          "intelligence": 190,
+          "dexterity": 208,
+          "agility": 220,
+          "vitality": 242,
+          "luck": 208
+        },
+        "attributes": {
+          "fire": 218,
+          "water": 212,
+          "grass": 248,
+          "rock": 234,
+          "light": 228,
+          "dark": 212
+        },
+        "combat_start": {
+          "strength": 1005.0,
+          "intelligence": 190.0,
+          "dexterity": 635.0,
+          "agility": 612.0,
+          "vitality": 1131.9,
+          "luck": 579.5999999999999,
+          "max_hp": 1290,
+          "max_mp": 493
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [
+          {
+            "name": "欠けた鉄剣",
+            "rank": "F",
+            "slot": "weapon",
+            "style": "physical",
+            "enhancement": 8,
+            "power": 1284,
+            "special_effect": null
+          },
+          {
+            "name": "古びた鉄兜",
+            "rank": "F",
+            "slot": "head",
+            "style": "physical",
+            "enhancement": 8,
+            "power": 1027,
+            "special_effect": null
+          },
+          {
+            "name": "擦り切れた革鎧",
+            "rank": "F",
+            "slot": "armor",
+            "style": "physical",
+            "enhancement": 8,
+            "power": 1156,
+            "special_effect": null
+          },
+          {
+            "name": "傷んだ革靴",
+            "rank": "F",
+            "slot": "feet",
+            "style": "physical",
+            "enhancement": 8,
+            "power": 1027,
+            "special_effect": null
+          },
+          {
+            "name": "錆びた腕輪",
+            "rank": "F",
+            "slot": "accessory",
+            "style": "physical",
+            "enhancement": 8,
+            "power": 899,
+            "special_effect": null
+          }
+        ],
+        "equipment_bonuses": {
+          "strength": 781,
+          "intelligence": 0,
+          "dexterity": 427,
+          "agility": 392,
+          "vitality": 787,
+          "luck": 296
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "s053-stronger",
+        "comparison_only": true
+      },
+      "tactic": "B",
+      "use_scale": 1,
+      "slots": [
+        [
+          "steel_body",
+          3
+        ],
+        [
+          "flare_blade",
+          5
+        ],
+        [
+          "counter_stance",
+          3
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 1,
+        "variant": "comparison-weaker",
+        "job": "wizard",
+        "race": "human",
+        "reincarnations": 0,
+        "level": 10,
+        "seed": 20261116,
+        "target_power": null,
+        "power": 136,
+        "stats": {
+          "max_hp": 45,
+          "max_mp": 40,
+          "strength": 6,
+          "intelligence": 11,
+          "dexterity": 7,
+          "agility": 8,
+          "vitality": 5,
+          "luck": 7
+        },
+        "attributes": {
+          "fire": 4,
+          "water": 3,
+          "grass": 7,
+          "rock": 7,
+          "light": 3,
+          "dark": 3
+        },
+        "combat_start": {
+          "strength": 6.0,
+          "intelligence": 12.100000000000001,
+          "dexterity": 7.0,
+          "agility": 8.0,
+          "vitality": 5.0,
+          "luck": 8.049999999999999,
+          "max_hp": 45,
+          "max_mp": 40
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 0,
+          "dexterity": 0,
+          "agility": 0,
+          "vitality": 0,
+          "luck": 0
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "s144-weaker",
+        "comparison_only": true
+      },
+      "tactic": "B",
+      "use_scale": 1,
+      "slots": [
+        [
+          "fire",
+          4
+        ],
+        [
+          "stella",
+          4
+        ],
+        [
+          "megido",
+          2
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 1,
+        "variant": "comparison-stronger",
+        "job": "wizard",
+        "race": "human",
+        "reincarnations": 0,
+        "level": 30,
+        "seed": 20261116,
+        "target_power": null,
+        "power": 425,
+        "stats": {
+          "max_hp": 100,
+          "max_mp": 58,
+          "strength": 13,
+          "intelligence": 24,
+          "dexterity": 13,
+          "agility": 16,
+          "vitality": 6,
+          "luck": 15
+        },
+        "attributes": {
+          "fire": 15,
+          "water": 14,
+          "grass": 16,
+          "rock": 17,
+          "light": 12,
+          "dark": 13
+        },
+        "combat_start": {
+          "strength": 13.0,
+          "intelligence": 57.2,
+          "dexterity": 21.0,
+          "agility": 25.0,
+          "vitality": 19.0,
+          "luck": 28.749999999999996,
+          "max_hp": 100,
+          "max_mp": 58
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [
+          {
+            "name": "ひび割れた木杖",
+            "rank": "F",
+            "slot": "weapon",
+            "style": "magic",
+            "enhancement": 2,
+            "power": 39,
+            "special_effect": null
+          },
+          {
+            "name": "色褪せた術帽",
+            "rank": "F",
+            "slot": "head",
+            "style": "magic",
+            "enhancement": 2,
+            "power": 31,
+            "special_effect": null
+          },
+          {
+            "name": "古布のローブ",
+            "rank": "F",
+            "slot": "armor",
+            "style": "magic",
+            "enhancement": 2,
+            "power": 35,
+            "special_effect": null
+          },
+          {
+            "name": "薄布の魔術靴",
+            "rank": "F",
+            "slot": "feet",
+            "style": "magic",
+            "enhancement": 2,
+            "power": 31,
+            "special_effect": null
+          },
+          {
+            "name": "曇った魔石飾り",
+            "rank": "F",
+            "slot": "accessory",
+            "style": "magic",
+            "enhancement": 2,
+            "power": 27,
+            "special_effect": null
+          }
+        ],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 28,
+          "dexterity": 8,
+          "agility": 9,
+          "vitality": 13,
+          "luck": 10
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "s144-stronger",
+        "comparison_only": true
+      },
+      "tactic": "B",
+      "use_scale": 1,
+      "slots": [
+        [
+          "fire",
+          4
+        ],
+        [
+          "stella",
+          4
+        ],
+        [
+          "megido",
+          2
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 6,
+        "variant": "comparison-weaker",
+        "job": "wizard",
+        "race": "human",
+        "reincarnations": 20,
+        "level": 87,
+        "seed": 20261116,
+        "target_power": null,
+        "power": 3204,
+        "stats": {
+          "max_hp": 1135,
+          "max_mp": 568,
+          "strength": 199,
+          "intelligence": 212,
+          "dexterity": 207,
+          "agility": 222,
+          "vitality": 217,
+          "luck": 205
+        },
+        "attributes": {
+          "fire": 214,
+          "water": 206,
+          "grass": 239,
+          "rock": 226,
+          "light": 224,
+          "dark": 207
+        },
+        "combat_start": {
+          "strength": 199.0,
+          "intelligence": 233.20000000000002,
+          "dexterity": 207.0,
+          "agility": 222.0,
+          "vitality": 217.0,
+          "luck": 235.74999999999997,
+          "max_hp": 1135,
+          "max_mp": 568
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 0,
+          "dexterity": 0,
+          "agility": 0,
+          "vitality": 0,
+          "luck": 0
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "s149-weaker",
+        "comparison_only": true
+      },
+      "tactic": "B",
+      "use_scale": 1,
+      "slots": [
+        [
+          "fire",
+          4
+        ],
+        [
+          "stella",
+          4
+        ],
+        [
+          "megido",
+          2
+        ]
+      ]
+    },
+    {
+      "profile": {
+        "floor": 6,
+        "variant": "comparison-stronger",
+        "job": "wizard",
+        "race": "human",
+        "reincarnations": 20,
+        "level": 100,
+        "seed": 20261116,
+        "target_power": null,
+        "power": 8679,
+        "stats": {
+          "max_hp": 1165,
+          "max_mp": 583,
+          "strength": 205,
+          "intelligence": 219,
+          "dexterity": 212,
+          "agility": 225,
+          "vitality": 221,
+          "luck": 208
+        },
+        "attributes": {
+          "fire": 219,
+          "water": 214,
+          "grass": 248,
+          "rock": 234,
+          "light": 228,
+          "dark": 212
+        },
+        "combat_start": {
+          "strength": 205.0,
+          "intelligence": 1336.5,
+          "dexterity": 560.0,
+          "agility": 617.0,
+          "vitality": 739.0,
+          "luck": 734.8499999999999,
+          "max_hp": 1165,
+          "max_mp": 583
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [
+          {
+            "name": "ひび割れた木杖",
+            "rank": "F",
+            "slot": "weapon",
+            "style": "magic",
+            "enhancement": 8,
+            "power": 1284,
+            "special_effect": null
+          },
+          {
+            "name": "色褪せた術帽",
+            "rank": "F",
+            "slot": "head",
+            "style": "magic",
+            "enhancement": 8,
+            "power": 1027,
+            "special_effect": null
+          },
+          {
+            "name": "古布のローブ",
+            "rank": "F",
+            "slot": "armor",
+            "style": "magic",
+            "enhancement": 8,
+            "power": 1156,
+            "special_effect": null
+          },
+          {
+            "name": "薄布の魔術靴",
+            "rank": "F",
+            "slot": "feet",
+            "style": "magic",
+            "enhancement": 8,
+            "power": 1027,
+            "special_effect": null
+          },
+          {
+            "name": "曇った魔石飾り",
+            "rank": "F",
+            "slot": "accessory",
+            "style": "magic",
+            "enhancement": 8,
+            "power": 899,
+            "special_effect": null
+          }
+        ],
+        "equipment_bonuses": {
+          "strength": 0,
+          "intelligence": 996,
+          "dexterity": 348,
+          "agility": 392,
+          "vitality": 518,
+          "luck": 431
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "s149-stronger",
+        "comparison_only": true
+      },
+      "tactic": "B",
+      "use_scale": 1,
+      "slots": [
+        [
+          "fire",
+          4
+        ],
+        [
+          "stella",
+          4
+        ],
+        [
+          "megido",
+          2
+        ]
+      ]
+    }
+  ],
+  "notes": {
+    "wizard:D": "完成済みの防御・回復技がないため真の耐久戦術は成立しない。防御無視/低MPの代用比較。",
+    "grappler:D": "回復・防御技なし。STRバフ中心の補助構成という限定的比較。",
+    "hunter:D": "回復なし。状態異常/命中低下中心。",
+    "counts": "回数は比較用の有限予算。最適化済みではない。--use-scaleでアクティブ回数だけを変更可能。"
+  }
+}

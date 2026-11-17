@@ -1,0 +1,5 @@
+case,profile_id,floor,job,variant,tactic,use_scale,trials,valid,exceptions,wins,losses,draws,win_rate,wilson95,mean_loops,median_loops,loop_limits,player_mean_actions,boss_mean_actions,mean_action_difference
+p070-D-u1,p070,12,warrior,mid-unarmed,D,1,5,5,0,0,5,0,0.0,"[0, 0.43448246478317476]",12.2,14,0,8.8,6.2,2.6
+p103-D-u1,p103,7,hunter,mid-unarmed,D,1,5,5,0,0,5,0,0.0,"[0, 0.43448246478317476]",10.6,8,0,7.6,5,2.6
+p149-D-u1,p149,6,wizard,searched-F-set,D,1,5,5,0,0,5,0,0.0,"[0, 0.43448246478317476]",22,22,0,15,7,8
+p310-D-u1,p310,12,assassin,mid-unarmed,D,1,5,5,0,1,4,0,0.2,"[0.03622410863243014, 0.6244653702374747]",15.4,13,0,10.8,7,3.8

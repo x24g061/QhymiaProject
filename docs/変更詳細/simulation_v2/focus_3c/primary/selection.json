@@ -1,0 +1,10 @@
+{
+  "phase": "primary",
+  "conditions": 16,
+  "battles": 1600,
+  "estimated_battle_seconds": 237.2,
+  "setup_allowance_seconds": 10,
+  "seed_base": 30361117,
+  "trials": 100,
+  "selection_script_sha256": "67675c83145eb310dc8d7f5b42c1e3b68cc25686fbae1fc24bb37c4351dd790c"
+}

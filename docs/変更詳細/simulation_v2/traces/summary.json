@@ -1,0 +1,569 @@
+{
+  "conditions": [
+    {
+      "case": "p070-D-u1",
+      "profile_id": "p070",
+      "floor": 12,
+      "job": "warrior",
+      "variant": "mid-unarmed",
+      "tactic": "D",
+      "use_scale": 1,
+      "trials": 5,
+      "valid": 5,
+      "exceptions": 0,
+      "wins": 0,
+      "losses": 5,
+      "draws": 0,
+      "win_rate": 0.0,
+      "wilson95": [
+        0,
+        0.43448246478317476
+      ],
+      "mean_loops": 12.2,
+      "median_loops": 14,
+      "loop_limits": 0,
+      "player_mean_actions": 8.8,
+      "boss_mean_actions": 6.2,
+      "mean_action_difference": 2.6
+    },
+    {
+      "case": "p103-D-u1",
+      "profile_id": "p103",
+      "floor": 7,
+      "job": "hunter",
+      "variant": "mid-unarmed",
+      "tactic": "D",
+      "use_scale": 1,
+      "trials": 5,
+      "valid": 5,
+      "exceptions": 0,
+      "wins": 0,
+      "losses": 5,
+      "draws": 0,
+      "win_rate": 0.0,
+      "wilson95": [
+        0,
+        0.43448246478317476
+      ],
+      "mean_loops": 10.6,
+      "median_loops": 8,
+      "loop_limits": 0,
+      "player_mean_actions": 7.6,
+      "boss_mean_actions": 5,
+      "mean_action_difference": 2.6
+    },
+    {
+      "case": "p149-D-u1",
+      "profile_id": "p149",
+      "floor": 6,
+      "job": "wizard",
+      "variant": "searched-F-set",
+      "tactic": "D",
+      "use_scale": 1,
+      "trials": 5,
+      "valid": 5,
+      "exceptions": 0,
+      "wins": 0,
+      "losses": 5,
+      "draws": 0,
+      "win_rate": 0.0,
+      "wilson95": [
+        0,
+        0.43448246478317476
+      ],
+      "mean_loops": 22,
+      "median_loops": 22,
+      "loop_limits": 0,
+      "player_mean_actions": 15,
+      "boss_mean_actions": 7,
+      "mean_action_difference": 8
+    },
+    {
+      "case": "p310-D-u1",
+      "profile_id": "p310",
+      "floor": 12,
+      "job": "assassin",
+      "variant": "mid-unarmed",
+      "tactic": "D",
+      "use_scale": 1,
+      "trials": 5,
+      "valid": 5,
+      "exceptions": 0,
+      "wins": 1,
+      "losses": 4,
+      "draws": 0,
+      "win_rate": 0.2,
+      "wilson95": [
+        0.03622410863243014,
+        0.6244653702374747
+      ],
+      "mean_loops": 15.4,
+      "median_loops": 13,
+      "loop_limits": 0,
+      "player_mean_actions": 10.8,
+      "boss_mean_actions": 7,
+      "mean_action_difference": 3.8
+    }
+  ],
+  "aggregates": {
+    "floor": {
+      "12": {
+        "trials": 10,
+        "valid": 10,
+        "exceptions": 0,
+        "wins": 1,
+        "losses": 9,
+        "draws": 0,
+        "win_rate": 0.1,
+        "wilson95": [
+          0.017876213095072896,
+          0.4041500267952385
+        ],
+        "mean_loops": 13.8,
+        "median_loops": 13.5,
+        "loop_limits": 0,
+        "player_mean_actions": 9.8,
+        "boss_mean_actions": 6.6,
+        "mean_action_difference": 3.2
+      },
+      "7": {
+        "trials": 5,
+        "valid": 5,
+        "exceptions": 0,
+        "wins": 0,
+        "losses": 5,
+        "draws": 0,
+        "win_rate": 0.0,
+        "wilson95": [
+          0,
+          0.43448246478317476
+        ],
+        "mean_loops": 10.6,
+        "median_loops": 8,
+        "loop_limits": 0,
+        "player_mean_actions": 7.6,
+        "boss_mean_actions": 5,
+        "mean_action_difference": 2.6
+      },
+      "6": {
+        "trials": 5,
+        "valid": 5,
+        "exceptions": 0,
+        "wins": 0,
+        "losses": 5,
+        "draws": 0,
+        "win_rate": 0.0,
+        "wilson95": [
+          0,
+          0.43448246478317476
+        ],
+        "mean_loops": 22,
+        "median_loops": 22,
+        "loop_limits": 0,
+        "player_mean_actions": 15,
+        "boss_mean_actions": 7,
+        "mean_action_difference": 8
+      }
+    },
+    "job": {
+      "warrior": {
+        "trials": 5,
+        "valid": 5,
+        "exceptions": 0,
+        "wins": 0,
+        "losses": 5,
+        "draws": 0,
+        "win_rate": 0.0,
+        "wilson95": [
+          0,
+          0.43448246478317476
+        ],
+        "mean_loops": 12.2,
+        "median_loops": 14,
+        "loop_limits": 0,
+        "player_mean_actions": 8.8,
+        "boss_mean_actions": 6.2,
+        "mean_action_difference": 2.6
+      },
+      "hunter": {
+        "trials": 5,
+        "valid": 5,
+        "exceptions": 0,
+        "wins": 0,
+        "losses": 5,
+        "draws": 0,
+        "win_rate": 0.0,
+        "wilson95": [
+          0,
+          0.43448246478317476
+        ],
+        "mean_loops": 10.6,
+        "median_loops": 8,
+        "loop_limits": 0,
+        "player_mean_actions": 7.6,
+        "boss_mean_actions": 5,
+        "mean_action_difference": 2.6
+      },
+      "wizard": {
+        "trials": 5,
+        "valid": 5,
+        "exceptions": 0,
+        "wins": 0,
+        "losses": 5,
+        "draws": 0,
+        "win_rate": 0.0,
+        "wilson95": [
+          0,
+          0.43448246478317476
+        ],
+        "mean_loops": 22,
+        "median_loops": 22,
+        "loop_limits": 0,
+        "player_mean_actions": 15,
+        "boss_mean_actions": 7,
+        "mean_action_difference": 8
+      },
+      "assassin": {
+        "trials": 5,
+        "valid": 5,
+        "exceptions": 0,
+        "wins": 1,
+        "losses": 4,
+        "draws": 0,
+        "win_rate": 0.2,
+        "wilson95": [
+          0.03622410863243014,
+          0.6244653702374747
+        ],
+        "mean_loops": 15.4,
+        "median_loops": 13,
+        "loop_limits": 0,
+        "player_mean_actions": 10.8,
+        "boss_mean_actions": 7,
+        "mean_action_difference": 3.8
+      }
+    },
+    "tactic": {
+      "D": {
+        "trials": 20,
+        "valid": 20,
+        "exceptions": 0,
+        "wins": 1,
+        "losses": 19,
+        "draws": 0,
+        "win_rate": 0.05,
+        "wilson95": [
+          0.008881448800795402,
+          0.23613119344674205
+        ],
+        "mean_loops": 15.05,
+        "median_loops": 14.0,
+        "loop_limits": 0,
+        "player_mean_actions": 10.55,
+        "boss_mean_actions": 6.3,
+        "mean_action_difference": 4.25
+      }
+    },
+    "variant": {
+      "mid-unarmed": {
+        "trials": 15,
+        "valid": 15,
+        "exceptions": 0,
+        "wins": 1,
+        "losses": 14,
+        "draws": 0,
+        "win_rate": 0.06666666666666667,
+        "wilson95": [
+          0.011866895493268553,
+          0.2981652987378003
+        ],
+        "mean_loops": 12.733333333333333,
+        "median_loops": 13,
+        "loop_limits": 0,
+        "player_mean_actions": 9.066666666666666,
+        "boss_mean_actions": 6.066666666666666,
+        "mean_action_difference": 3
+      },
+      "searched-F-set": {
+        "trials": 5,
+        "valid": 5,
+        "exceptions": 0,
+        "wins": 0,
+        "losses": 5,
+        "draws": 0,
+        "win_rate": 0.0,
+        "wilson95": [
+          0,
+          0.43448246478317476
+        ],
+        "mean_loops": 22,
+        "median_loops": 22,
+        "loop_limits": 0,
+        "player_mean_actions": 15,
+        "boss_mean_actions": 7,
+        "mean_action_difference": 8
+      }
+    },
+    "use_scale": {
+      "1": {
+        "trials": 20,
+        "valid": 20,
+        "exceptions": 0,
+        "wins": 1,
+        "losses": 19,
+        "draws": 0,
+        "win_rate": 0.05,
+        "wilson95": [
+          0.008881448800795402,
+          0.23613119344674205
+        ],
+        "mean_loops": 15.05,
+        "median_loops": 14.0,
+        "loop_limits": 0,
+        "player_mean_actions": 10.55,
+        "boss_mean_actions": 6.3,
+        "mean_action_difference": 4.25
+      }
+    }
+  },
+  "bosses": [
+    {
+      "name": "キングスライム",
+      "floor": 1,
+      "attribute": "water",
+      "max_hp": 64,
+      "max_mp": 10,
+      "strength": 11,
+      "intelligence": 8,
+      "dexterity": 12,
+      "agility": 12,
+      "vitality": 7,
+      "luck": 6,
+      "max_stamina": 100,
+      "skill_codes": []
+    },
+    {
+      "name": "グレートウルフ",
+      "floor": 2,
+      "attribute": "neutral",
+      "max_hp": 356,
+      "max_mp": 0,
+      "strength": 29,
+      "intelligence": 8,
+      "dexterity": 55,
+      "agility": 68,
+      "vitality": 10,
+      "luck": 21,
+      "max_stamina": 130,
+      "skill_codes": []
+    },
+    {
+      "name": "グランドゴーレム",
+      "floor": 3,
+      "attribute": "rock",
+      "max_hp": 1060,
+      "max_mp": 0,
+      "strength": 90,
+      "intelligence": 15,
+      "dexterity": 30,
+      "agility": 17,
+      "vitality": 115,
+      "luck": 13,
+      "max_stamina": 160,
+      "skill_codes": []
+    },
+    {
+      "name": "ケイブドラゴン",
+      "floor": 4,
+      "attribute": "dark",
+      "max_hp": 2000,
+      "max_mp": 150,
+      "strength": 135,
+      "intelligence": 85,
+      "dexterity": 82,
+      "agility": 65,
+      "vitality": 110,
+      "luck": 65,
+      "max_stamina": 180,
+      "skill_codes": []
+    },
+    {
+      "name": "イフリート",
+      "floor": 5,
+      "attribute": "fire",
+      "max_hp": 3600,
+      "max_mp": 220,
+      "strength": 240,
+      "intelligence": 145,
+      "dexterity": 130,
+      "agility": 88,
+      "vitality": 170,
+      "luck": 90,
+      "max_stamina": 200,
+      "skill_codes": []
+    },
+    {
+      "name": "リヴァイアサン",
+      "floor": 6,
+      "attribute": "water",
+      "max_hp": 9600,
+      "max_mp": 2400,
+      "strength": 350,
+      "intelligence": 900,
+      "dexterity": 420,
+      "agility": 145,
+      "vitality": 480,
+      "luck": 260,
+      "max_stamina": 240,
+      "skill_codes": []
+    },
+    {
+      "name": "アルラウネ",
+      "floor": 7,
+      "attribute": "grass",
+      "max_hp": 29000,
+      "max_mp": 7000,
+      "strength": 580,
+      "intelligence": 1600,
+      "dexterity": 630,
+      "agility": 500,
+      "vitality": 1300,
+      "luck": 470,
+      "max_stamina": 270,
+      "skill_codes": [
+        "stella",
+        "poison_arrow",
+        "healing_shield",
+        "sleep_arrow",
+        "frost_armor"
+      ]
+    },
+    {
+      "name": "タイタン",
+      "floor": 8,
+      "attribute": "rock",
+      "max_hp": 50000,
+      "max_mp": 4600,
+      "strength": 950,
+      "intelligence": 470,
+      "dexterity": 600,
+      "agility": 180,
+      "vitality": 3100,
+      "luck": 380,
+      "max_stamina": 310,
+      "skill_codes": [
+        "steel_body",
+        "solid_stance",
+        "counter_stance",
+        "shock_wave",
+        "true_fist"
+      ]
+    },
+    {
+      "name": "イグニス",
+      "floor": 9,
+      "attribute": "fire",
+      "max_hp": 67777,
+      "max_mp": 15000,
+      "strength": 2600,
+      "intelligence": 1800,
+      "dexterity": 1850,
+      "agility": 2150,
+      "vitality": 1650,
+      "luck": 1280,
+      "max_stamina": 320,
+      "skill_codes": [
+        "flare_blade",
+        "fire",
+        "rapid_barrage",
+        "fighting_spirit",
+        "hunter_eye"
+      ]
+    },
+    {
+      "name": "アビスデーモン",
+      "floor": 10,
+      "attribute": "dark",
+      "max_hp": 114514,
+      "max_mp": 28000,
+      "strength": 3900,
+      "intelligence": 4100,
+      "dexterity": 2400,
+      "agility": 1800,
+      "vitality": 2200,
+      "luck": 1750,
+      "max_stamina": 340,
+      "skill_codes": [
+        "megido",
+        "one_hit_kill",
+        "shadow_step",
+        "strike_core",
+        "stealth"
+      ]
+    },
+    {
+      "name": "セレスティア",
+      "floor": 11,
+      "attribute": "light",
+      "max_hp": 135672,
+      "max_mp": 41000,
+      "strength": 3200,
+      "intelligence": 5400,
+      "dexterity": 2950,
+      "agility": 1950,
+      "vitality": 2800,
+      "luck": 2300,
+      "max_stamina": 370,
+      "skill_codes": [
+        "judgement",
+        "stella",
+        "healing_shield",
+        "purification",
+        "anti_jail"
+      ]
+    },
+    {
+      "name": "アポカリプス",
+      "floor": 12,
+      "attribute": "neutral",
+      "max_hp": 156924,
+      "max_mp": 56000,
+      "strength": 5600,
+      "intelligence": 5600,
+      "dexterity": 4150,
+      "agility": 3400,
+      "vitality": 4500,
+      "luck": 3450,
+      "max_stamina": 400,
+      "skill_codes": [
+        "flare_blade",
+        "megido",
+        "steel_body",
+        "rapid_shot",
+        "principle_of_freedom"
+      ]
+    }
+  ],
+  "pooled": {
+    "trials": 20,
+    "valid": 20,
+    "exceptions": 0,
+    "wins": 1,
+    "losses": 19,
+    "draws": 0,
+    "win_rate": 0.05,
+    "wilson95": [
+      0.008881448800795402,
+      0.23613119344674205
+    ],
+    "mean_loops": 15.05,
+    "median_loops": 14.0,
+    "loop_limits": 0,
+    "player_mean_actions": 10.55,
+    "boss_mean_actions": 6.3,
+    "mean_action_difference": 4.25
+  },
+  "equal_job_mean": null,
+  "seconds": 2.134988205999889,
+  "battles_per_second": 9.367733247328786
+}

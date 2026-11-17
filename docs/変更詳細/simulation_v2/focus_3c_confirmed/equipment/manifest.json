@@ -1,0 +1,139 @@
+{
+  "schema": 2,
+  "source_sha256": "f50defb0ab9e6f590d56eec13a2ec61c9c0d25baf62da5917a832f9f63989b7c",
+  "commit": "f15502296590af533f7d28e412e746596ede29c2",
+  "engine": "apps.battle.services.BattleEngine",
+  "postgresql": true,
+  "profile_sha256": "582433dd6205bee13f82aedf80e307d8a4d42e80bf19e972e336b01d095327a1",
+  "trials": 100,
+  "seed_base": 30361117,
+  "detail": false,
+  "cases": [
+    {
+      "profile": {
+        "floor": 5,
+        "variant": "paired-F+8",
+        "job": "warrior",
+        "race": "human",
+        "reincarnations": 10,
+        "level": 80,
+        "seed": 20261116,
+        "target_power": null,
+        "power": 7294,
+        "stats": {
+          "max_hp": 775,
+          "max_mp": 258,
+          "strength": 133,
+          "intelligence": 112,
+          "dexterity": 115,
+          "agility": 116,
+          "vitality": 140,
+          "luck": 117
+        },
+        "attributes": {
+          "fire": 129,
+          "water": 123,
+          "grass": 135,
+          "rock": 129,
+          "light": 127,
+          "dark": 116
+        },
+        "combat_start": {
+          "strength": 914.0,
+          "intelligence": 112.0,
+          "dexterity": 542.0,
+          "agility": 508.0,
+          "vitality": 1019.7,
+          "luck": 474.95,
+          "max_hp": 775,
+          "max_mp": 258
+        },
+        "max_st": 100,
+        "start_st": 100,
+        "equipment": [
+          {
+            "name": "欠けた鉄剣",
+            "rank": "F",
+            "slot": "weapon",
+            "style": "physical",
+            "enhancement": 8,
+            "power": 1284,
+            "special_effect": null
+          },
+          {
+            "name": "古びた鉄兜",
+            "rank": "F",
+            "slot": "head",
+            "style": "physical",
+            "enhancement": 8,
+            "power": 1027,
+            "special_effect": null
+          },
+          {
+            "name": "擦り切れた革鎧",
+            "rank": "F",
+            "slot": "armor",
+            "style": "physical",
+            "enhancement": 8,
+            "power": 1156,
+            "special_effect": null
+          },
+          {
+            "name": "傷んだ革靴",
+            "rank": "F",
+            "slot": "feet",
+            "style": "physical",
+            "enhancement": 8,
+            "power": 1027,
+            "special_effect": null
+          },
+          {
+            "name": "錆びた腕輪",
+            "rank": "F",
+            "slot": "accessory",
+            "style": "physical",
+            "enhancement": 8,
+            "power": 899,
+            "special_effect": null
+          }
+        ],
+        "equipment_bonuses": {
+          "strength": 781,
+          "intelligence": 0,
+          "dexterity": 427,
+          "agility": 392,
+          "vitality": 787,
+          "luck": 296
+        },
+        "attribute_weights": {
+          "fire": 1,
+          "water": 1,
+          "grass": 1,
+          "rock": 1,
+          "light": 1,
+          "dark": 1
+        },
+        "skills": "not_selected_stage1",
+        "profile_id": "p052-paired-F8"
+      },
+      "tactic": "C",
+      "use_scale": 1,
+      "slots": [
+        [
+          "one_hit_kill",
+          6
+        ],
+        [
+          "flare_blade",
+          8
+        ]
+      ]
+    }
+  ],
+  "notes": {
+    "wizard:D": "完成済みの防御・回復技がないため真の耐久戦術は成立しない。防御無視/低MPの代用比較。",
+    "grappler:D": "回復・防御技なし。STRバフ中心の補助構成という限定的比較。",
+    "hunter:D": "回復なし。状態異常/命中低下中心。",
+    "counts": "回数は比較用の有限予算。最適化済みではない。--use-scaleでアクティブ回数だけを変更可能。"
+  }
+}
