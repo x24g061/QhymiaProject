@@ -1,0 +1,40 @@
+{
+  "full": {
+    "tests": 526,
+    "successes": 523,
+    "failures": 3,
+    "errors": 0,
+    "seconds": 74.966
+  },
+  "battle_accounts_config_subset": {
+    "tests": 443,
+    "successes": 442,
+    "failures": 0,
+    "errors": 1,
+    "seconds": 71.083
+  },
+  "focused_conditions_contracts_concurrency": {
+    "tests": 15,
+    "successes": 15,
+    "seconds": 2.28
+  },
+  "shop_three_standalone": {
+    "tests": 3,
+    "failures": 3,
+    "seconds": 0.122
+  },
+  "check": "passed",
+  "diff_check": "passed",
+  "old_data_diff": "none",
+  "source_hash_files_verified": 206,
+  "old_artifact_hash_files_verified": 72,
+  "simulation_battles": 770,
+  "simulation_seconds": 75.70721063401652,
+  "simulation_exceptions": 0,
+  "simulation_loop_limits": 0,
+  "unresolved": [
+    "既存ショップ3件：quantity未指定時の1個購入と旧全量購入期待の不一致",
+    "部分実行の並行回帰テスト：flush後のArenaFloor初期データ順序依存",
+    "C2・経済的到達性・最終調整値は未確認"
+  ]
+}

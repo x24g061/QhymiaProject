@@ -31,9 +31,10 @@ class TransactionRegressionTests(TestCase):
         self.assertEqual(response.status_code,302)
         return MarketListing.objects.get(seller=self.seller)
 
-    def purchase(self,listing):
+    def purchase(self,listing,quantity=None):
         self.client.force_login(self.buyer_user)
-        return self.client.post(reverse("shop:buy_market_listing",args=[listing.pk]))
+        data={} if quantity is None else {"quantity":quantity}
+        return self.client.post(reverse("shop:buy_market_listing",args=[listing.pk]),data)
 
     def assert_balances(self,buyer=1000,seller=100):
         self.buyer.refresh_from_db();self.seller.refresh_from_db()
@@ -41,20 +42,35 @@ class TransactionRegressionTests(TestCase):
 
     def test_material_sale_conserves_quantity_and_money(self):
         listing=self.listing()
+        # 数量未指定は1個購入。残り2個を明示購入し、総数量/Qの保存も確認する。
         self.purchase(listing)
+        self.assert_balances(980,120)
+        listing.refresh_from_db()
+        self.inventory.refresh_from_db()
+        self.assertEqual((self.inventory.quantity,listing.quantity),(7,2))
+        self.assertEqual(InventoryItem.objects.get(character=self.buyer,item=self.item).quantity,1)
+        self.assertEqual(listing.status,MarketListing.Status.LISTED)
+        self.assertIsNone(listing.buyer_id)
+        self.assertEqual(MarketSaleNotification.objects.filter(recipient=self.seller,listing=listing).count(),1)
+        self.purchase(listing,quantity=2)
         self.assert_balances(940,160)
         self.inventory.refresh_from_db();listing.refresh_from_db()
         self.assertEqual(self.inventory.quantity,7)
+        self.assertEqual(listing.quantity,0)
         self.assertEqual(InventoryItem.objects.get(character=self.buyer,item=self.item).quantity,3)
         self.assertEqual(listing.status,MarketListing.Status.SOLD)
         self.assertEqual(listing.buyer_id,self.buyer.pk)
-        self.assertEqual(MarketSaleNotification.objects.filter(recipient=self.seller,listing=listing).count(),1)
+        self.assertEqual(MarketSaleNotification.objects.filter(recipient=self.seller,listing=listing).count(),2)
 
     def test_repeat_purchase_is_not_charged_or_granted_twice(self):
-        listing=self.listing();self.purchase(listing);self.purchase(listing)
+        listing=self.listing();self.purchase(listing,quantity=3);self.purchase(listing,quantity=3)
         self.assert_balances(940,160)
         self.assertEqual(InventoryItem.objects.get(character=self.buyer,item=self.item).quantity,3)
         self.assertEqual(MarketSaleNotification.objects.count(),1)
+        listing.refresh_from_db();self.inventory.refresh_from_db()
+        self.assertEqual((listing.quantity,self.inventory.quantity),(0,7))
+        self.assertEqual(listing.status,MarketListing.Status.SOLD)
+        self.assertEqual(listing.buyer_id,self.buyer.pk)
 
     def test_self_purchase_is_rejected(self):
         listing=self.listing()
@@ -65,9 +81,13 @@ class TransactionRegressionTests(TestCase):
     def test_insufficient_money_does_not_mutate_listing(self):
         listing=self.listing()
         Character.objects.filter(pk=self.buyer.pk).update(gold=59)
-        self.purchase(listing);self.assert_balances(59,100)
+        self.purchase(listing,quantity=3);self.assert_balances(59,100)
         self.assertFalse(InventoryItem.objects.filter(character=self.buyer).exists())
         listing.refresh_from_db();self.assertEqual(listing.status,MarketListing.Status.LISTED)
+        self.inventory.refresh_from_db()
+        self.assertEqual((listing.quantity,self.inventory.quantity),(3,7))
+        self.assertIsNone(listing.buyer_id)
+        self.assertFalse(MarketSaleNotification.objects.exists())
 
     def test_cancel_returns_stock_once(self):
         listing=self.listing()
