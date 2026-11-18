@@ -6,6 +6,7 @@ from django.utils import timezone
 
 from apps.accounts.models import Character
 from apps.inventory.models import (
+    Item,
     InventoryItem,
     OwnedEquipment,
 )
@@ -612,7 +613,7 @@ def cancel_market_listing(
     # LISTEDではなくなることで再び手持ち一覧へ戻る
     # ========================================================
 
-    if listing.owned_equipment is None:
+    if listing.item.category != Item.Category.EQUIPMENT:
 
         inventory_item, created = (
             InventoryItem.objects.get_or_create(
