@@ -1,0 +1,15 @@
+{
+  "protected_files_unchanged": 352,
+  "analysis_reproduced_identically": true,
+  "tests": 531,
+  "tests_seconds": 75.978,
+  "test_result": "OK",
+  "new_battles": 980,
+  "battle_seconds": 142.83188962300005,
+  "final_progress_seconds": 153.0,
+  "exceptions": 0,
+  "loop_limits": 0,
+  "normal_db_writes": false,
+  "new_migrations": false,
+  "source_changes": false
+}
