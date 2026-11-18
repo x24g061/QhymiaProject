@@ -528,9 +528,9 @@ def synthesis(request):
             character=character,
             is_equipped=False,
         )
-       .exclude(
-         market_listings__isnull=False,
-        )
+        .exclude(
+            market_listings__status=MarketListing.Status.LISTED,
+        )        
         .select_related(
             "equipment",
             "equipment__item",

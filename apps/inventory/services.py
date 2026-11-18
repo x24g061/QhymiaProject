@@ -290,11 +290,11 @@ def validate_synthesis_equipments(equipments):
     # フリーマーケット出品履歴チェック
     # ========================================
 
-    is_protected = MarketListing.objects.filter(
+    is_listed = MarketListing.objects.filter(
         owned_equipment_id__in=equipment_instance_ids,
     ).exists()
 
-    if is_protected:
+    if is_listed:
         return (
             False,
             "フリーマーケットの出品履歴がある装備は合成できません。",
