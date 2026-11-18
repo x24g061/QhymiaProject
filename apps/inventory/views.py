@@ -528,8 +528,8 @@ def synthesis(request):
             character=character,
             is_equipped=False,
         )
-        .exclude(
-            market_listings__status=MarketListing.Status.LISTED,
+       .exclude(
+         market_listings__isnull=False,
         )
         .select_related(
             "equipment",
