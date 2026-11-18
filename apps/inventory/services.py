@@ -287,17 +287,18 @@ def validate_synthesis_equipments(equipments):
         return False, "同じ+値の装備を3つ選んでください。"
 
     # ========================================
-    # フリーマーケット出品履歴チェック
+    # フリーマーケット出品中チェック
     # ========================================
 
     is_listed = MarketListing.objects.filter(
         owned_equipment_id__in=equipment_instance_ids,
+        status=MarketListing.Status.LISTED,
     ).exists()
 
     if is_listed:
         return (
             False,
-            "フリーマーケットの出品履歴がある装備は合成できません。",
+            "フリーマーケットに出品中の装備は合成できません。",
         )
 
     # ========================================
