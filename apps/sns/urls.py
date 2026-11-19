@@ -6,6 +6,7 @@ from .views import (
     mini_create_post,
     mini_sns_feed,
     sns_page,
+    sns_terms,
     toggle_favorite,
     toggle_like,
 )
@@ -52,5 +53,11 @@ urlpatterns = [
         "favorite/<int:post_id>/",
         toggle_favorite,
         name="toggle_favorite",
+    ),
+
+    path(
+        "terms/",
+        sns_terms,
+        name="sns_terms",
     ),
 ]

@@ -40,6 +40,10 @@ from apps.inventory.models import (
     InventoryItem,
 )
 
+from apps.inventory.boosts import (
+    get_active_boosts,
+)
+
 # ========================================
 # ADMIN MODE 権限確認
 # ========================================
@@ -1611,6 +1615,8 @@ def home(request):
 
     exploration_cooldown_reduced = False
 
+    active_boosts = []
+
 
 
     arena_max_floor = 100
@@ -1779,6 +1785,16 @@ def home(request):
 
         )
 
+        # ========================================
+        # 有効中ブースト
+        # ========================================
+
+        active_boosts = (
+            get_active_boosts(
+            character
+            )
+        )
+
 
 
 
@@ -1806,6 +1822,9 @@ def home(request):
         "exploration_cooldown_reduced":
 
             exploration_cooldown_reduced,
+
+        "active_boosts":
+            active_boosts,
 
         "arena_max_floor":
 

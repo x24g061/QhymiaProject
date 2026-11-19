@@ -2028,3 +2028,49 @@
     }
 
 }
+
+/* =========================================================
+   画像添付ボタン無効
+========================================================= */
+
+.mini-sns-image-button.disabled {
+    opacity: 0.45;
+
+    cursor: not-allowed;
+
+    pointer-events: none;
+
+    transform: none;
+}
+
+
+.mini-sns-image-button.disabled:hover {
+    transform: none;
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.78
+        );
+}
+
+.mini-sns-profile-link {
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+
+
+.mini-sns-profile-link:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 12px
+        rgba(30, 80, 90, 0.20);
+}

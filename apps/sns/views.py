@@ -587,3 +587,26 @@ def delete_post(request, post_id):
     return redirect(
         "sns"
     )
+#SNS利用規約
+@login_required
+def sns_terms(request):
+
+    view_mode = request.GET.get(
+        "view",
+        "recommended",
+    )
+
+    if view_mode not in {
+        "recommended",
+        "latest",
+        "favorites",
+    }:
+        view_mode = "recommended"
+
+    return render(
+        request,
+        "sns_terms.html",
+        {
+            "view_mode": view_mode,
+        },
+    )
