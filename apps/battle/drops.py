@@ -16,8 +16,8 @@ from .models import FloorDropItem
 # 探索ドロップ率
 # ============================================================
 
-# 通常探索では1%
-EXPLORATION_DROP_RATE = 0.01
+# 通常探索では2.5%
+EXPLORATION_DROP_RATE = 0.025
 
 
 def grant_exploration_drop(
@@ -29,7 +29,7 @@ def grant_exploration_drop(
     探索勝利時のドロップ抽選。
 
     通常:
-        1%でドロップ
+        2.5%でドロップ
 
     guaranteed=True:
         抽選を省略して必ずドロップ
@@ -173,10 +173,9 @@ def grant_exploration_drop(
 # 闘技場ドロップ
 # ============================================================
 
-ARENA_BASE_DROP_RATE = 0.01
-ARENA_STREAK_BONUS_RATE = 0.01
+ARENA_BASE_DROP_RATE = 0.025
+ARENA_STREAK_BONUS_RATE = 0.0075
 ARENA_MAX_DROP_RATE = 0.10
-
 
 def grant_arena_drop(
     character,
@@ -186,8 +185,8 @@ def grant_arena_drop(
     """
     闘技場勝利時の素材ドロップ。
 
-    基本1%。
-    戦闘開始前の連勝数1回につき+1%。
+    基本2.5%。
+    戦闘開始前の連勝数1回につき+0.75%。
     最大10%。
 
     guaranteed=True の場合は抽選を省略する。
