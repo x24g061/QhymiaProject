@@ -1,0 +1,19 @@
+{
+  "conditions": 106,
+  "battles": 980,
+  "estimated_battle_seconds": 263.644,
+  "setup_allowance_seconds": 15,
+  "max_seconds": 270,
+  "seed_base": 80361118,
+  "max_trials_per_condition": 30,
+  "cost_factors": {
+    "base": 1,
+    "hp100000": 4,
+    "hp200000": 12,
+    "str6000": 1,
+    "str12000": 1,
+    "agi900": 1.5
+  },
+  "detail": "全戦からdiagnosticsを抽出、先頭seedのみ完全詳細を保存",
+  "script_sha256": "734873a660a3069c644e87bd3ce40beb0ce8d41a8d9b94da6cb14859c6264f24"
+}
