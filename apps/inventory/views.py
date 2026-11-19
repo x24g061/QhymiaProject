@@ -806,6 +806,38 @@ def use_item(
             "inventory:inventory"
         )
 
+    # ========================================
+    # ボス挑戦チケット
+    # ========================================
+
+    if item.name == "ボス挑戦チケット":
+
+        if character.next_exploration_boss_guaranteed:
+            messages.warning(
+                request,
+                "すでに次回のボス遭遇が確定しています。",
+            )
+            return redirect("inventory:inventory")
+
+        character.next_exploration_boss_guaranteed = True
+        character.save(
+            update_fields=["next_exploration_boss_guaranteed"]
+        )
+
+        if inventory_item.quantity == 1:
+            inventory_item.delete()
+        else:
+            inventory_item.quantity -= 1
+            inventory_item.save(update_fields=["quantity"])
+
+        messages.success(
+            request,
+            "ボス挑戦チケットを使用しました！"
+            "次の探索でボスが確定出現します。",
+        )
+
+        return redirect("inventory:inventory")
+
     # ========================================================
     # 種族変更アイテム
     # ========================================================

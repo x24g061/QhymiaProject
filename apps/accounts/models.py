@@ -340,6 +340,13 @@ class Character(models.Model):
         help_text="探索クールタイム短縮効果の終了日時"
     )
 
+    # ===== 管理者用ボス挑戦チケット =====
+
+    next_exploration_boss_guaranteed = models.BooleanField(
+        default=False,
+        help_text="次の有効な探索でボスと確定遭遇する",
+    )
+
     # ===== システム情報 =====
 
     created_at = models.DateTimeField(

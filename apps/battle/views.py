@@ -177,15 +177,17 @@ def battle(request):
 
 
     # ========================================================
-    # ボス出現判定
+    # ボス出現判定（チケット対応）
     # ========================================================
 
-    boss_encounter = (
-        should_encounter_boss(
-            floor_progress
-        )
-    )
+    # チケットの効果が有効か確認
+    ticket_active = character.next_exploration_boss_guaranteed
 
+    # チケット使用中は確定、それ以外は通常のボス出現判定
+    boss_encounter = (
+        ticket_active
+        or should_encounter_boss(floor_progress)
+    )
 
     # ========================================================
     # 出現する敵を決定
@@ -214,6 +216,13 @@ def battle(request):
         enemies = [
             boss
         ]
+
+        # チケットの効果を消費
+        if ticket_active:
+            character.next_exploration_boss_guaranteed = False
+            character.save(
+                update_fields=["next_exploration_boss_guaranteed"]
+            )
 
     else:
 
