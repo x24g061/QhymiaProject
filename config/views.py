@@ -14,6 +14,7 @@ from apps.accounts.models import (
     AdminChangeLog,
     AdminModeAuthorizedUser,
 )
+from apps.accounts.growth import next_reincarnation_points
 
 from apps.sns.models import Post
 
@@ -1847,7 +1848,7 @@ def home(request):
 
 def generate_reincarnation_bonus(character):
 
-    total_points = (character.reincarnation_count + 1) * 125
+    total_points = next_reincarnation_points(character)
 
 
 
@@ -1962,13 +1963,16 @@ def again(request):
     if character and character.level >= 100:
 
         # プレビューはキャラクター・回帰世代に紐付ける。古いPOSTを次の回帰に使わない。
-        preview_version = [character.pk, character.reincarnation_count]
+        preview_version = [
+            "growth-v2", character.pk, character.reincarnation_count,
+            character.legacy_reincarnation_points,
+        ]
         if request.session.get("reincarnation_preview_version") != preview_version:
             request.session.pop("reincarnation_bonus_points", None)
 
         can_reincarnate = True
 
-        total_points = (character.reincarnation_count + 1) * 125
+        total_points = next_reincarnation_points(character)
 
 
 

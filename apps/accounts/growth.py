@@ -8,6 +8,27 @@ import random
 EXP_PER_LEVEL = 100
 MAX_LEVEL = 100
 
+
+def calculate_initial_points(reincarnations):
+    """新方式で最初から育成した場合の累積初期配分。"""
+    return 125 * min(reincarnations, 150) + 100 * max(reincarnations - 150, 0)
+
+
+def next_reincarnation_points(character):
+    """旧方式の配分資産を保護した、次回回帰の再配分総数。"""
+    return (
+        calculate_initial_points(character.reincarnation_count + 1)
+        + character.legacy_reincarnation_points
+    )
+
+
+def calculate_growth_count(reincarnations, level_up_number):
+    """Lv1→2を1として、追加抽選を99回へ整数で均等分散する。"""
+    if not 1 <= level_up_number <= 99:
+        raise ValueError("レベルアップ番号は1〜99で指定してください。")
+    extra = 25 * max(reincarnations - 150, 0)
+    return 5 + extra * level_up_number // 99 - extra * (level_up_number - 1) // 99
+
 # ============================================================
 # 職業ごとの成長ウェイト
 # ============================================================
@@ -15,7 +36,7 @@ MAX_LEVEL = 100
 # 数字が大きい能力ほど
 # レベルアップ時に選ばれやすくなる。
 #
-# 1レベルにつき3回抽選。
+# 1レベルにつき5回＋151回帰以降の追加分を抽選。
 # 同じ能力が複数回選ばれることもある。
 # ============================================================
 
@@ -335,8 +356,8 @@ def apply_stat_growth(character, stat_name):
     抽選された能力を1回成長させる。
 
     HP:
-        最大HP +5
-        現在HP +5
+        最大HP +8
+        現在HP +8
 
     MP:
         最大MP +3
@@ -349,10 +370,10 @@ def apply_stat_growth(character, stat_name):
 
     if stat_name == "hp":
 
-        character.max_hp += 5
-        character.current_hp += 5
+        character.max_hp += 8
+        character.current_hp += 8
 
-        return "HP +5"
+        return "HP +8"
 
     # ===== MP =====
 
@@ -400,11 +421,14 @@ def level_up_once(character):
 
     1レベルにつき、
 
-    ・基礎能力を3回抽選
+    ・基礎能力を5回＋高回帰の追加分抽選
     ・属性を3回抽選
 
     どちらも重複抽選あり。
     """
+
+    # 増加前のLvがレベルアップ番号（Lv50→51は50回目）。
+    growth_count = calculate_growth_count(character.reincarnation_count, character.level)
 
     # ===== レベル +1 =====
 
@@ -427,11 +451,11 @@ def level_up_once(character):
         growth_weights.values()
     )
 
-    # 3回・重複あり
+    # 基本5回＋追加分・重複あり。属性の3回抽選とは別枠。
     selected_stats = random.choices(
         population=stat_names,
         weights=weights,
-        k=3,
+        k=growth_count,
     )
 
     stat_growth_logs = []

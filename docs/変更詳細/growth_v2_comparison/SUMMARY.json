@@ -1,0 +1,1922 @@
+[
+  {
+    "reincarnations": 0,
+    "level": 1,
+    "pairs": 49,
+    "max_hp": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "max_mp": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "strength": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "intelligence": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "dexterity": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "agility": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "vitality": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "luck": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "fire": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "water": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "grass": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "rock": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "light": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "dark": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "battle_power": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    }
+  },
+  {
+    "reincarnations": 0,
+    "level": 50,
+    "pairs": 49,
+    "max_hp": {
+      "delta_min": 71,
+      "delta_max": 207,
+      "decreased_pairs": 0
+    },
+    "max_mp": {
+      "delta_min": 15,
+      "delta_max": 57,
+      "decreased_pairs": 0
+    },
+    "strength": {
+      "delta_min": 5,
+      "delta_max": 26,
+      "decreased_pairs": 0
+    },
+    "intelligence": {
+      "delta_min": 5,
+      "delta_max": 34,
+      "decreased_pairs": 0
+    },
+    "dexterity": {
+      "delta_min": 6,
+      "delta_max": 27,
+      "decreased_pairs": 0
+    },
+    "agility": {
+      "delta_min": 2,
+      "delta_max": 23,
+      "decreased_pairs": 0
+    },
+    "vitality": {
+      "delta_min": 2,
+      "delta_max": 18,
+      "decreased_pairs": 0
+    },
+    "luck": {
+      "delta_min": 5,
+      "delta_max": 19,
+      "decreased_pairs": 0
+    },
+    "fire": {
+      "delta_min": 1,
+      "delta_max": 1,
+      "decreased_pairs": 0
+    },
+    "water": {
+      "delta_min": -1,
+      "delta_max": -1,
+      "decreased_pairs": 49
+    },
+    "grass": {
+      "delta_min": 8,
+      "delta_max": 8,
+      "decreased_pairs": 0
+    },
+    "rock": {
+      "delta_min": -13,
+      "delta_max": -13,
+      "decreased_pairs": 49
+    },
+    "light": {
+      "delta_min": 1,
+      "delta_max": 1,
+      "decreased_pairs": 0
+    },
+    "dark": {
+      "delta_min": 4,
+      "delta_max": 4,
+      "decreased_pairs": 0
+    },
+    "battle_power": {
+      "delta_min": 191,
+      "delta_max": 310,
+      "decreased_pairs": 0
+    }
+  },
+  {
+    "reincarnations": 0,
+    "level": 100,
+    "pairs": 49,
+    "max_hp": {
+      "delta_min": 138,
+      "delta_max": 514,
+      "decreased_pairs": 0
+    },
+    "max_mp": {
+      "delta_min": 36,
+      "delta_max": 159,
+      "decreased_pairs": 0
+    },
+    "strength": {
+      "delta_min": 10,
+      "delta_max": 46,
+      "decreased_pairs": 0
+    },
+    "intelligence": {
+      "delta_min": 10,
+      "delta_max": 51,
+      "decreased_pairs": 0
+    },
+    "dexterity": {
+      "delta_min": 8,
+      "delta_max": 45,
+      "decreased_pairs": 0
+    },
+    "agility": {
+      "delta_min": 8,
+      "delta_max": 37,
+      "decreased_pairs": 0
+    },
+    "vitality": {
+      "delta_min": 8,
+      "delta_max": 40,
+      "decreased_pairs": 0
+    },
+    "luck": {
+      "delta_min": 5,
+      "delta_max": 34,
+      "decreased_pairs": 0
+    },
+    "fire": {
+      "delta_min": 3,
+      "delta_max": 3,
+      "decreased_pairs": 0
+    },
+    "water": {
+      "delta_min": 3,
+      "delta_max": 3,
+      "decreased_pairs": 0
+    },
+    "grass": {
+      "delta_min": 5,
+      "delta_max": 5,
+      "decreased_pairs": 0
+    },
+    "rock": {
+      "delta_min": -4,
+      "delta_max": -4,
+      "decreased_pairs": 49
+    },
+    "light": {
+      "delta_min": 1,
+      "delta_max": 1,
+      "decreased_pairs": 0
+    },
+    "dark": {
+      "delta_min": -8,
+      "delta_max": -8,
+      "decreased_pairs": 49
+    },
+    "battle_power": {
+      "delta_min": 399,
+      "delta_max": 706,
+      "decreased_pairs": 0
+    }
+  },
+  {
+    "reincarnations": 50,
+    "level": 1,
+    "pairs": 49,
+    "max_hp": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "max_mp": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "strength": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "intelligence": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "dexterity": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "agility": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "vitality": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "luck": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "fire": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "water": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "grass": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "rock": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "light": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "dark": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "battle_power": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    }
+  },
+  {
+    "reincarnations": 50,
+    "level": 50,
+    "pairs": 49,
+    "max_hp": {
+      "delta_min": 79,
+      "delta_max": 247,
+      "decreased_pairs": 0
+    },
+    "max_mp": {
+      "delta_min": 6,
+      "delta_max": 57,
+      "decreased_pairs": 0
+    },
+    "strength": {
+      "delta_min": 5,
+      "delta_max": 21,
+      "decreased_pairs": 0
+    },
+    "intelligence": {
+      "delta_min": 5,
+      "delta_max": 30,
+      "decreased_pairs": 0
+    },
+    "dexterity": {
+      "delta_min": 3,
+      "delta_max": 24,
+      "decreased_pairs": 0
+    },
+    "agility": {
+      "delta_min": 4,
+      "delta_max": 20,
+      "decreased_pairs": 0
+    },
+    "vitality": {
+      "delta_min": 4,
+      "delta_max": 22,
+      "decreased_pairs": 0
+    },
+    "luck": {
+      "delta_min": 5,
+      "delta_max": 24,
+      "decreased_pairs": 0
+    },
+    "fire": {
+      "delta_min": 7,
+      "delta_max": 7,
+      "decreased_pairs": 0
+    },
+    "water": {
+      "delta_min": -4,
+      "delta_max": -4,
+      "decreased_pairs": 49
+    },
+    "grass": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "rock": {
+      "delta_min": 2,
+      "delta_max": 2,
+      "decreased_pairs": 0
+    },
+    "light": {
+      "delta_min": -3,
+      "delta_max": -3,
+      "decreased_pairs": 49
+    },
+    "dark": {
+      "delta_min": -2,
+      "delta_max": -2,
+      "decreased_pairs": 49
+    },
+    "battle_power": {
+      "delta_min": 198,
+      "delta_max": 342,
+      "decreased_pairs": 0
+    }
+  },
+  {
+    "reincarnations": 50,
+    "level": 100,
+    "pairs": 49,
+    "max_hp": {
+      "delta_min": 192,
+      "delta_max": 561,
+      "decreased_pairs": 0
+    },
+    "max_mp": {
+      "delta_min": 45,
+      "delta_max": 141,
+      "decreased_pairs": 0
+    },
+    "strength": {
+      "delta_min": 12,
+      "delta_max": 50,
+      "decreased_pairs": 0
+    },
+    "intelligence": {
+      "delta_min": 15,
+      "delta_max": 63,
+      "decreased_pairs": 0
+    },
+    "dexterity": {
+      "delta_min": 7,
+      "delta_max": 52,
+      "decreased_pairs": 0
+    },
+    "agility": {
+      "delta_min": 9,
+      "delta_max": 35,
+      "decreased_pairs": 0
+    },
+    "vitality": {
+      "delta_min": 5,
+      "delta_max": 33,
+      "decreased_pairs": 0
+    },
+    "luck": {
+      "delta_min": 9,
+      "delta_max": 33,
+      "decreased_pairs": 0
+    },
+    "fire": {
+      "delta_min": -4,
+      "delta_max": -4,
+      "decreased_pairs": 49
+    },
+    "water": {
+      "delta_min": -7,
+      "delta_max": -7,
+      "decreased_pairs": 49
+    },
+    "grass": {
+      "delta_min": 6,
+      "delta_max": 6,
+      "decreased_pairs": 0
+    },
+    "rock": {
+      "delta_min": -5,
+      "delta_max": -5,
+      "decreased_pairs": 49
+    },
+    "light": {
+      "delta_min": 5,
+      "delta_max": 5,
+      "decreased_pairs": 0
+    },
+    "dark": {
+      "delta_min": 5,
+      "delta_max": 5,
+      "decreased_pairs": 0
+    },
+    "battle_power": {
+      "delta_min": 448,
+      "delta_max": 753,
+      "decreased_pairs": 0
+    }
+  },
+  {
+    "reincarnations": 100,
+    "level": 1,
+    "pairs": 49,
+    "max_hp": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "max_mp": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "strength": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "intelligence": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "dexterity": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "agility": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "vitality": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "luck": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "fire": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "water": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "grass": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "rock": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "light": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "dark": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "battle_power": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    }
+  },
+  {
+    "reincarnations": 100,
+    "level": 50,
+    "pairs": 49,
+    "max_hp": {
+      "delta_min": 58,
+      "delta_max": 205,
+      "decreased_pairs": 0
+    },
+    "max_mp": {
+      "delta_min": 0,
+      "delta_max": 39,
+      "decreased_pairs": 0
+    },
+    "strength": {
+      "delta_min": 4,
+      "delta_max": 22,
+      "decreased_pairs": 0
+    },
+    "intelligence": {
+      "delta_min": 4,
+      "delta_max": 27,
+      "decreased_pairs": 0
+    },
+    "dexterity": {
+      "delta_min": 3,
+      "delta_max": 25,
+      "decreased_pairs": 0
+    },
+    "agility": {
+      "delta_min": 2,
+      "delta_max": 18,
+      "decreased_pairs": 0
+    },
+    "vitality": {
+      "delta_min": 5,
+      "delta_max": 28,
+      "decreased_pairs": 0
+    },
+    "luck": {
+      "delta_min": 6,
+      "delta_max": 29,
+      "decreased_pairs": 0
+    },
+    "fire": {
+      "delta_min": 2,
+      "delta_max": 2,
+      "decreased_pairs": 0
+    },
+    "water": {
+      "delta_min": 9,
+      "delta_max": 9,
+      "decreased_pairs": 0
+    },
+    "grass": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "rock": {
+      "delta_min": -1,
+      "delta_max": -1,
+      "decreased_pairs": 49
+    },
+    "light": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "dark": {
+      "delta_min": -10,
+      "delta_max": -10,
+      "decreased_pairs": 49
+    },
+    "battle_power": {
+      "delta_min": 159,
+      "delta_max": 287,
+      "decreased_pairs": 0
+    }
+  },
+  {
+    "reincarnations": 100,
+    "level": 100,
+    "pairs": 49,
+    "max_hp": {
+      "delta_min": 176,
+      "delta_max": 532,
+      "decreased_pairs": 0
+    },
+    "max_mp": {
+      "delta_min": 39,
+      "delta_max": 123,
+      "decreased_pairs": 0
+    },
+    "strength": {
+      "delta_min": 12,
+      "delta_max": 37,
+      "decreased_pairs": 0
+    },
+    "intelligence": {
+      "delta_min": 7,
+      "delta_max": 42,
+      "decreased_pairs": 0
+    },
+    "dexterity": {
+      "delta_min": 7,
+      "delta_max": 37,
+      "decreased_pairs": 0
+    },
+    "agility": {
+      "delta_min": 3,
+      "delta_max": 31,
+      "decreased_pairs": 0
+    },
+    "vitality": {
+      "delta_min": 7,
+      "delta_max": 45,
+      "decreased_pairs": 0
+    },
+    "luck": {
+      "delta_min": 19,
+      "delta_max": 55,
+      "decreased_pairs": 0
+    },
+    "fire": {
+      "delta_min": 1,
+      "delta_max": 1,
+      "decreased_pairs": 0
+    },
+    "water": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "grass": {
+      "delta_min": 4,
+      "delta_max": 4,
+      "decreased_pairs": 0
+    },
+    "rock": {
+      "delta_min": 5,
+      "delta_max": 5,
+      "decreased_pairs": 0
+    },
+    "light": {
+      "delta_min": -1,
+      "delta_max": -1,
+      "decreased_pairs": 49
+    },
+    "dark": {
+      "delta_min": -9,
+      "delta_max": -9,
+      "decreased_pairs": 49
+    },
+    "battle_power": {
+      "delta_min": 413,
+      "delta_max": 703,
+      "decreased_pairs": 0
+    }
+  },
+  {
+    "reincarnations": 150,
+    "level": 1,
+    "pairs": 49,
+    "max_hp": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "max_mp": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "strength": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "intelligence": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "dexterity": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "agility": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "vitality": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "luck": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "fire": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "water": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "grass": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "rock": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "light": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "dark": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "battle_power": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    }
+  },
+  {
+    "reincarnations": 150,
+    "level": 50,
+    "pairs": 49,
+    "max_hp": {
+      "delta_min": 109,
+      "delta_max": 279,
+      "decreased_pairs": 0
+    },
+    "max_mp": {
+      "delta_min": 9,
+      "delta_max": 60,
+      "decreased_pairs": 0
+    },
+    "strength": {
+      "delta_min": 5,
+      "delta_max": 26,
+      "decreased_pairs": 0
+    },
+    "intelligence": {
+      "delta_min": 3,
+      "delta_max": 30,
+      "decreased_pairs": 0
+    },
+    "dexterity": {
+      "delta_min": 1,
+      "delta_max": 23,
+      "decreased_pairs": 0
+    },
+    "agility": {
+      "delta_min": 4,
+      "delta_max": 22,
+      "decreased_pairs": 0
+    },
+    "vitality": {
+      "delta_min": 2,
+      "delta_max": 19,
+      "decreased_pairs": 0
+    },
+    "luck": {
+      "delta_min": 3,
+      "delta_max": 15,
+      "decreased_pairs": 0
+    },
+    "fire": {
+      "delta_min": 5,
+      "delta_max": 5,
+      "decreased_pairs": 0
+    },
+    "water": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "grass": {
+      "delta_min": -4,
+      "delta_max": -4,
+      "decreased_pairs": 49
+    },
+    "rock": {
+      "delta_min": 3,
+      "delta_max": 3,
+      "decreased_pairs": 0
+    },
+    "light": {
+      "delta_min": -5,
+      "delta_max": -5,
+      "decreased_pairs": 49
+    },
+    "dark": {
+      "delta_min": 1,
+      "delta_max": 1,
+      "decreased_pairs": 0
+    },
+    "battle_power": {
+      "delta_min": 226,
+      "delta_max": 367,
+      "decreased_pairs": 0
+    }
+  },
+  {
+    "reincarnations": 150,
+    "level": 100,
+    "pairs": 49,
+    "max_hp": {
+      "delta_min": 197,
+      "delta_max": 573,
+      "decreased_pairs": 0
+    },
+    "max_mp": {
+      "delta_min": 12,
+      "delta_max": 114,
+      "decreased_pairs": 0
+    },
+    "strength": {
+      "delta_min": 5,
+      "delta_max": 51,
+      "decreased_pairs": 0
+    },
+    "intelligence": {
+      "delta_min": 10,
+      "delta_max": 46,
+      "decreased_pairs": 0
+    },
+    "dexterity": {
+      "delta_min": 9,
+      "delta_max": 43,
+      "decreased_pairs": 0
+    },
+    "agility": {
+      "delta_min": 6,
+      "delta_max": 42,
+      "decreased_pairs": 0
+    },
+    "vitality": {
+      "delta_min": 6,
+      "delta_max": 31,
+      "decreased_pairs": 0
+    },
+    "luck": {
+      "delta_min": 23,
+      "delta_max": 48,
+      "decreased_pairs": 0
+    },
+    "fire": {
+      "delta_min": 2,
+      "delta_max": 2,
+      "decreased_pairs": 0
+    },
+    "water": {
+      "delta_min": 2,
+      "delta_max": 2,
+      "decreased_pairs": 0
+    },
+    "grass": {
+      "delta_min": -8,
+      "delta_max": -8,
+      "decreased_pairs": 49
+    },
+    "rock": {
+      "delta_min": 4,
+      "delta_max": 4,
+      "decreased_pairs": 0
+    },
+    "light": {
+      "delta_min": -3,
+      "delta_max": -3,
+      "decreased_pairs": 49
+    },
+    "dark": {
+      "delta_min": 3,
+      "delta_max": 3,
+      "decreased_pairs": 0
+    },
+    "battle_power": {
+      "delta_min": 443,
+      "delta_max": 742,
+      "decreased_pairs": 0
+    }
+  },
+  {
+    "reincarnations": 151,
+    "level": 1,
+    "pairs": 49,
+    "max_hp": {
+      "delta_min": -25,
+      "delta_max": -25,
+      "decreased_pairs": 49
+    },
+    "max_mp": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "strength": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "intelligence": {
+      "delta_min": -1,
+      "delta_max": -1,
+      "decreased_pairs": 49
+    },
+    "dexterity": {
+      "delta_min": -1,
+      "delta_max": -1,
+      "decreased_pairs": 49
+    },
+    "agility": {
+      "delta_min": 0,
+      "delta_max": 0,
+      "decreased_pairs": 0
+    },
+    "vitality": {
+      "delta_min": -2,
+      "delta_max": -2,
+      "decreased_pairs": 49
+    },
+    "luck": {
+      "delta_min": -5,
+      "delta_max": -5,
+      "decreased_pairs": 49
+    },
+    "fire": {
+      "delta_min": -1,
+      "delta_max": -1,
+      "decreased_pairs": 49
+    },
+    "water": {
+      "delta_min": -4,
+      "delta_max": -4,
+      "decreased_pairs": 49
+    },
+    "grass": {
+      "delta_min": -2,
+      "delta_max": -2,
+      "decreased_pairs": 49
+    },
+    "rock": {
+      "delta_min": -2,
+      "delta_max": -2,
+      "decreased_pairs": 49
+    },
+    "light": {
+      "delta_min": -1,
+      "delta_max": -1,
+      "decreased_pairs": 49
+    },
+    "dark": {
+      "delta_min": -1,
+      "delta_max": -1,
+      "decreased_pairs": 49
+    },
+    "battle_power": {
+      "delta_min": -35,
+      "delta_max": -35,
+      "decreased_pairs": 49
+    }
+  },
+  {
+    "reincarnations": 151,
+    "level": 50,
+    "pairs": 49,
+    "max_hp": {
+      "delta_min": 86,
+      "delta_max": 224,
+      "decreased_pairs": 0
+    },
+    "max_mp": {
+      "delta_min": 18,
+      "delta_max": 60,
+      "decreased_pairs": 0
+    },
+    "strength": {
+      "delta_min": 3,
+      "delta_max": 27,
+      "decreased_pairs": 0
+    },
+    "intelligence": {
+      "delta_min": -1,
+      "delta_max": 39,
+      "decreased_pairs": 2
+    },
+    "dexterity": {
+      "delta_min": -2,
+      "delta_max": 34,
+      "decreased_pairs": 1
+    },
+    "agility": {
+      "delta_min": 1,
+      "delta_max": 21,
+      "decreased_pairs": 0
+    },
+    "vitality": {
+      "delta_min": 3,
+      "delta_max": 26,
+      "decreased_pairs": 0
+    },
+    "luck": {
+      "delta_min": 1,
+      "delta_max": 20,
+      "decreased_pairs": 0
+    },
+    "fire": {
+      "delta_min": 2,
+      "delta_max": 2,
+      "decreased_pairs": 0
+    },
+    "water": {
+      "delta_min": -11,
+      "delta_max": -11,
+      "decreased_pairs": 49
+    },
+    "grass": {
+      "delta_min": -7,
+      "delta_max": -7,
+      "decreased_pairs": 49
+    },
+    "rock": {
+      "delta_min": 2,
+      "delta_max": 2,
+      "decreased_pairs": 0
+    },
+    "light": {
+      "delta_min": 1,
+      "delta_max": 1,
+      "decreased_pairs": 0
+    },
+    "dark": {
+      "delta_min": 2,
+      "delta_max": 2,
+      "decreased_pairs": 0
+    },
+    "battle_power": {
+      "delta_min": 203,
+      "delta_max": 329,
+      "decreased_pairs": 0
+    }
+  },
+  {
+    "reincarnations": 151,
+    "level": 100,
+    "pairs": 49,
+    "max_hp": {
+      "delta_min": 196,
+      "delta_max": 540,
+      "decreased_pairs": 0
+    },
+    "max_mp": {
+      "delta_min": 48,
+      "delta_max": 141,
+      "decreased_pairs": 0
+    },
+    "strength": {
+      "delta_min": 7,
+      "delta_max": 49,
+      "decreased_pairs": 0
+    },
+    "intelligence": {
+      "delta_min": -2,
+      "delta_max": 67,
+      "decreased_pairs": 2
+    },
+    "dexterity": {
+      "delta_min": 2,
+      "delta_max": 57,
+      "decreased_pairs": 0
+    },
+    "agility": {
+      "delta_min": 8,
+      "delta_max": 47,
+      "decreased_pairs": 0
+    },
+    "vitality": {
+      "delta_min": 6,
+      "delta_max": 40,
+      "decreased_pairs": 0
+    },
+    "luck": {
+      "delta_min": 13,
+      "delta_max": 40,
+      "decreased_pairs": 0
+    },
+    "fire": {
+      "delta_min": 9,
+      "delta_max": 9,
+      "decreased_pairs": 0
+    },
+    "water": {
+      "delta_min": -15,
+      "delta_max": -15,
+      "decreased_pairs": 49
+    },
+    "grass": {
+      "delta_min": -2,
+      "delta_max": -2,
+      "decreased_pairs": 49
+    },
+    "rock": {
+      "delta_min": -9,
+      "delta_max": -9,
+      "decreased_pairs": 49
+    },
+    "light": {
+      "delta_min": -2,
+      "delta_max": -2,
+      "decreased_pairs": 49
+    },
+    "dark": {
+      "delta_min": 8,
+      "delta_max": 8,
+      "decreased_pairs": 0
+    },
+    "battle_power": {
+      "delta_min": 465,
+      "delta_max": 750,
+      "decreased_pairs": 0
+    }
+  },
+  {
+    "reincarnations": 154,
+    "level": 1,
+    "pairs": 49,
+    "max_hp": {
+      "delta_min": -30,
+      "delta_max": -30,
+      "decreased_pairs": 49
+    },
+    "max_mp": {
+      "delta_min": -28,
+      "delta_max": -28,
+      "decreased_pairs": 49
+    },
+    "strength": {
+      "delta_min": -5,
+      "delta_max": -5,
+      "decreased_pairs": 49
+    },
+    "intelligence": {
+      "delta_min": -8,
+      "delta_max": -8,
+      "decreased_pairs": 49
+    },
+    "dexterity": {
+      "delta_min": -8,
+      "delta_max": -8,
+      "decreased_pairs": 49
+    },
+    "agility": {
+      "delta_min": -8,
+      "delta_max": -8,
+      "decreased_pairs": 49
+    },
+    "vitality": {
+      "delta_min": -6,
+      "delta_max": -6,
+      "decreased_pairs": 49
+    },
+    "luck": {
+      "delta_min": -4,
+      "delta_max": -4,
+      "decreased_pairs": 49
+    },
+    "fire": {
+      "delta_min": -6,
+      "delta_max": -6,
+      "decreased_pairs": 49
+    },
+    "water": {
+      "delta_min": -8,
+      "delta_max": -8,
+      "decreased_pairs": 49
+    },
+    "grass": {
+      "delta_min": -9,
+      "delta_max": -9,
+      "decreased_pairs": 49
+    },
+    "rock": {
+      "delta_min": -4,
+      "delta_max": -4,
+      "decreased_pairs": 49
+    },
+    "light": {
+      "delta_min": -7,
+      "delta_max": -7,
+      "decreased_pairs": 49
+    },
+    "dark": {
+      "delta_min": -7,
+      "delta_max": -7,
+      "decreased_pairs": 49
+    },
+    "battle_power": {
+      "delta_min": -104,
+      "delta_max": -104,
+      "decreased_pairs": 49
+    }
+  },
+  {
+    "reincarnations": 154,
+    "level": 50,
+    "pairs": 49,
+    "max_hp": {
+      "delta_min": 71,
+      "delta_max": 351,
+      "decreased_pairs": 0
+    },
+    "max_mp": {
+      "delta_min": -22,
+      "delta_max": 59,
+      "decreased_pairs": 9
+    },
+    "strength": {
+      "delta_min": -2,
+      "delta_max": 34,
+      "decreased_pairs": 2
+    },
+    "intelligence": {
+      "delta_min": -1,
+      "delta_max": 39,
+      "decreased_pairs": 1
+    },
+    "dexterity": {
+      "delta_min": 1,
+      "delta_max": 31,
+      "decreased_pairs": 0
+    },
+    "agility": {
+      "delta_min": -4,
+      "delta_max": 25,
+      "decreased_pairs": 2
+    },
+    "vitality": {
+      "delta_min": -2,
+      "delta_max": 17,
+      "decreased_pairs": 3
+    },
+    "luck": {
+      "delta_min": 5,
+      "delta_max": 24,
+      "decreased_pairs": 0
+    },
+    "fire": {
+      "delta_min": -2,
+      "delta_max": -2,
+      "decreased_pairs": 49
+    },
+    "water": {
+      "delta_min": -2,
+      "delta_max": -2,
+      "decreased_pairs": 49
+    },
+    "grass": {
+      "delta_min": -16,
+      "delta_max": -16,
+      "decreased_pairs": 49
+    },
+    "rock": {
+      "delta_min": -9,
+      "delta_max": -9,
+      "decreased_pairs": 49
+    },
+    "light": {
+      "delta_min": -8,
+      "delta_max": -8,
+      "decreased_pairs": 49
+    },
+    "dark": {
+      "delta_min": -4,
+      "delta_max": -4,
+      "decreased_pairs": 49
+    },
+    "battle_power": {
+      "delta_min": 192,
+      "delta_max": 400,
+      "decreased_pairs": 0
+    }
+  },
+  {
+    "reincarnations": 154,
+    "level": 100,
+    "pairs": 49,
+    "max_hp": {
+      "delta_min": 180,
+      "delta_max": 698,
+      "decreased_pairs": 0
+    },
+    "max_mp": {
+      "delta_min": 17,
+      "delta_max": 164,
+      "decreased_pairs": 0
+    },
+    "strength": {
+      "delta_min": 5,
+      "delta_max": 56,
+      "decreased_pairs": 0
+    },
+    "intelligence": {
+      "delta_min": 9,
+      "delta_max": 84,
+      "decreased_pairs": 0
+    },
+    "dexterity": {
+      "delta_min": 10,
+      "delta_max": 73,
+      "decreased_pairs": 0
+    },
+    "agility": {
+      "delta_min": 6,
+      "delta_max": 54,
+      "decreased_pairs": 0
+    },
+    "vitality": {
+      "delta_min": 10,
+      "delta_max": 55,
+      "decreased_pairs": 0
+    },
+    "luck": {
+      "delta_min": 14,
+      "delta_max": 59,
+      "decreased_pairs": 0
+    },
+    "fire": {
+      "delta_min": -10,
+      "delta_max": -10,
+      "decreased_pairs": 49
+    },
+    "water": {
+      "delta_min": 1,
+      "delta_max": 1,
+      "decreased_pairs": 0
+    },
+    "grass": {
+      "delta_min": -13,
+      "delta_max": -13,
+      "decreased_pairs": 49
+    },
+    "rock": {
+      "delta_min": -8,
+      "delta_max": -8,
+      "decreased_pairs": 49
+    },
+    "light": {
+      "delta_min": -4,
+      "delta_max": -4,
+      "decreased_pairs": 49
+    },
+    "dark": {
+      "delta_min": -7,
+      "delta_max": -7,
+      "decreased_pairs": 49
+    },
+    "battle_power": {
+      "delta_min": 500,
+      "delta_max": 888,
+      "decreased_pairs": 0
+    }
+  },
+  {
+    "reincarnations": 200,
+    "level": 1,
+    "pairs": 49,
+    "max_hp": {
+      "delta_min": -400,
+      "delta_max": -400,
+      "decreased_pairs": 49
+    },
+    "max_mp": {
+      "delta_min": -180,
+      "delta_max": -180,
+      "decreased_pairs": 49
+    },
+    "strength": {
+      "delta_min": -91,
+      "delta_max": -91,
+      "decreased_pairs": 49
+    },
+    "intelligence": {
+      "delta_min": -90,
+      "delta_max": -90,
+      "decreased_pairs": 49
+    },
+    "dexterity": {
+      "delta_min": -90,
+      "delta_max": -90,
+      "decreased_pairs": 49
+    },
+    "agility": {
+      "delta_min": -80,
+      "delta_max": -80,
+      "decreased_pairs": 49
+    },
+    "vitality": {
+      "delta_min": -86,
+      "delta_max": -86,
+      "decreased_pairs": 49
+    },
+    "luck": {
+      "delta_min": -95,
+      "delta_max": -95,
+      "decreased_pairs": 49
+    },
+    "fire": {
+      "delta_min": -87,
+      "delta_max": -87,
+      "decreased_pairs": 49
+    },
+    "water": {
+      "delta_min": -100,
+      "delta_max": -100,
+      "decreased_pairs": 49
+    },
+    "grass": {
+      "delta_min": -90,
+      "delta_max": -90,
+      "decreased_pairs": 49
+    },
+    "rock": {
+      "delta_min": -94,
+      "delta_max": -94,
+      "decreased_pairs": 49
+    },
+    "light": {
+      "delta_min": -91,
+      "delta_max": -91,
+      "decreased_pairs": 49
+    },
+    "dark": {
+      "delta_min": -86,
+      "delta_max": -86,
+      "decreased_pairs": 49
+    },
+    "battle_power": {
+      "delta_min": -1198,
+      "delta_max": -1198,
+      "decreased_pairs": 49
+    }
+  },
+  {
+    "reincarnations": 200,
+    "level": 50,
+    "pairs": 49,
+    "max_hp": {
+      "delta_min": -24,
+      "delta_max": 870,
+      "decreased_pairs": 6
+    },
+    "max_mp": {
+      "delta_min": -24,
+      "delta_max": 303,
+      "decreased_pairs": 6
+    },
+    "strength": {
+      "delta_min": -48,
+      "delta_max": 30,
+      "decreased_pairs": 36
+    },
+    "intelligence": {
+      "delta_min": -59,
+      "delta_max": 94,
+      "decreased_pairs": 30
+    },
+    "dexterity": {
+      "delta_min": -44,
+      "delta_max": 70,
+      "decreased_pairs": 19
+    },
+    "agility": {
+      "delta_min": -26,
+      "delta_max": 91,
+      "decreased_pairs": 6
+    },
+    "vitality": {
+      "delta_min": -37,
+      "delta_max": 82,
+      "decreased_pairs": 29
+    },
+    "luck": {
+      "delta_min": -49,
+      "delta_max": 58,
+      "decreased_pairs": 34
+    },
+    "fire": {
+      "delta_min": -89,
+      "delta_max": -89,
+      "decreased_pairs": 49
+    },
+    "water": {
+      "delta_min": -95,
+      "delta_max": -95,
+      "decreased_pairs": 49
+    },
+    "grass": {
+      "delta_min": -96,
+      "delta_max": -96,
+      "decreased_pairs": 49
+    },
+    "rock": {
+      "delta_min": -91,
+      "delta_max": -91,
+      "decreased_pairs": 49
+    },
+    "light": {
+      "delta_min": -86,
+      "delta_max": -86,
+      "decreased_pairs": 49
+    },
+    "dark": {
+      "delta_min": -91,
+      "delta_max": -91,
+      "decreased_pairs": 49
+    },
+    "battle_power": {
+      "delta_min": 60,
+      "delta_max": 738,
+      "decreased_pairs": 0
+    }
+  },
+  {
+    "reincarnations": 200,
+    "level": 100,
+    "pairs": 49,
+    "max_hp": {
+      "delta_min": 393,
+      "delta_max": 2132,
+      "decreased_pairs": 0
+    },
+    "max_mp": {
+      "delta_min": 111,
+      "delta_max": 777,
+      "decreased_pairs": 0
+    },
+    "strength": {
+      "delta_min": 8,
+      "delta_max": 186,
+      "decreased_pairs": 0
+    },
+    "intelligence": {
+      "delta_min": -24,
+      "delta_max": 292,
+      "decreased_pairs": 3
+    },
+    "dexterity": {
+      "delta_min": 7,
+      "delta_max": 253,
+      "decreased_pairs": 0
+    },
+    "agility": {
+      "delta_min": 25,
+      "delta_max": 236,
+      "decreased_pairs": 0
+    },
+    "vitality": {
+      "delta_min": 15,
+      "delta_max": 224,
+      "decreased_pairs": 0
+    },
+    "luck": {
+      "delta_min": 10,
+      "delta_max": 218,
+      "decreased_pairs": 0
+    },
+    "fire": {
+      "delta_min": -93,
+      "delta_max": -93,
+      "decreased_pairs": 49
+    },
+    "water": {
+      "delta_min": -86,
+      "delta_max": -86,
+      "decreased_pairs": 49
+    },
+    "grass": {
+      "delta_min": -99,
+      "delta_max": -99,
+      "decreased_pairs": 49
+    },
+    "rock": {
+      "delta_min": -89,
+      "delta_max": -89,
+      "decreased_pairs": 49
+    },
+    "light": {
+      "delta_min": -87,
+      "delta_max": -87,
+      "decreased_pairs": 49
+    },
+    "dark": {
+      "delta_min": -94,
+      "delta_max": -94,
+      "decreased_pairs": 49
+    },
+    "battle_power": {
+      "delta_min": 1363,
+      "delta_max": 2675,
+      "decreased_pairs": 0
+    }
+  },
+  {
+    "reincarnations": 500,
+    "level": 1,
+    "pairs": 49,
+    "max_hp": {
+      "delta_min": -3130,
+      "delta_max": -3130,
+      "decreased_pairs": 49
+    },
+    "max_mp": {
+      "delta_min": -1228,
+      "delta_max": -1228,
+      "decreased_pairs": 49
+    },
+    "strength": {
+      "delta_min": -646,
+      "delta_max": -646,
+      "decreased_pairs": 49
+    },
+    "intelligence": {
+      "delta_min": -634,
+      "delta_max": -634,
+      "decreased_pairs": 49
+    },
+    "dexterity": {
+      "delta_min": -620,
+      "delta_max": -620,
+      "decreased_pairs": 49
+    },
+    "agility": {
+      "delta_min": -642,
+      "delta_max": -642,
+      "decreased_pairs": 49
+    },
+    "vitality": {
+      "delta_min": -698,
+      "delta_max": -698,
+      "decreased_pairs": 49
+    },
+    "luck": {
+      "delta_min": -587,
+      "delta_max": -587,
+      "decreased_pairs": 49
+    },
+    "fire": {
+      "delta_min": -574,
+      "delta_max": -574,
+      "decreased_pairs": 49
+    },
+    "water": {
+      "delta_min": -693,
+      "delta_max": -693,
+      "decreased_pairs": 49
+    },
+    "grass": {
+      "delta_min": -590,
+      "delta_max": -590,
+      "decreased_pairs": 49
+    },
+    "rock": {
+      "delta_min": -602,
+      "delta_max": -602,
+      "decreased_pairs": 49
+    },
+    "light": {
+      "delta_min": -624,
+      "delta_max": -624,
+      "decreased_pairs": 49
+    },
+    "dark": {
+      "delta_min": -600,
+      "delta_max": -600,
+      "decreased_pairs": 49
+    },
+    "battle_power": {
+      "delta_min": -8809,
+      "delta_max": -8809,
+      "decreased_pairs": 49
+    }
+  },
+  {
+    "reincarnations": 500,
+    "level": 50,
+    "pairs": 49,
+    "max_hp": {
+      "delta_min": -673,
+      "delta_max": 4657,
+      "decreased_pairs": 8
+    },
+    "max_mp": {
+      "delta_min": -373,
+      "delta_max": 1685,
+      "decreased_pairs": 6
+    },
+    "strength": {
+      "delta_min": -350,
+      "delta_max": 307,
+      "decreased_pairs": 36
+    },
+    "intelligence": {
+      "delta_min": -325,
+      "delta_max": 671,
+      "decreased_pairs": 26
+    },
+    "dexterity": {
+      "delta_min": -346,
+      "delta_max": 489,
+      "decreased_pairs": 28
+    },
+    "agility": {
+      "delta_min": -365,
+      "delta_max": 230,
+      "decreased_pairs": 40
+    },
+    "vitality": {
+      "delta_min": -424,
+      "delta_max": 183,
+      "decreased_pairs": 43
+    },
+    "luck": {
+      "delta_min": -310,
+      "delta_max": 299,
+      "decreased_pairs": 36
+    },
+    "fire": {
+      "delta_min": -576,
+      "delta_max": -576,
+      "decreased_pairs": 49
+    },
+    "water": {
+      "delta_min": -689,
+      "delta_max": -689,
+      "decreased_pairs": 49
+    },
+    "grass": {
+      "delta_min": -602,
+      "delta_max": -602,
+      "decreased_pairs": 49
+    },
+    "rock": {
+      "delta_min": -603,
+      "delta_max": -603,
+      "decreased_pairs": 49
+    },
+    "light": {
+      "delta_min": -615,
+      "delta_max": -615,
+      "decreased_pairs": 49
+    },
+    "dark": {
+      "delta_min": -598,
+      "delta_max": -598,
+      "decreased_pairs": 49
+    },
+    "battle_power": {
+      "delta_min": -821,
+      "delta_max": 3049,
+      "decreased_pairs": 10
+    }
+  },
+  {
+    "reincarnations": 500,
+    "level": 100,
+    "pairs": 49,
+    "max_hp": {
+      "delta_min": 2063,
+      "delta_max": 12806,
+      "decreased_pairs": 0
+    },
+    "max_mp": {
+      "delta_min": 473,
+      "delta_max": 4589,
+      "decreased_pairs": 0
+    },
+    "strength": {
+      "delta_min": -83,
+      "delta_max": 1204,
+      "decreased_pairs": 7
+    },
+    "intelligence": {
+      "delta_min": -23,
+      "delta_max": 1951,
+      "decreased_pairs": 5
+    },
+    "dexterity": {
+      "delta_min": -58,
+      "delta_max": 1589,
+      "decreased_pairs": 5
+    },
+    "agility": {
+      "delta_min": -74,
+      "delta_max": 1136,
+      "decreased_pairs": 4
+    },
+    "vitality": {
+      "delta_min": -130,
+      "delta_max": 1073,
+      "decreased_pairs": 15
+    },
+    "luck": {
+      "delta_min": 4,
+      "delta_max": 1233,
+      "decreased_pairs": 0
+    },
+    "fire": {
+      "delta_min": -585,
+      "delta_max": -585,
+      "decreased_pairs": 49
+    },
+    "water": {
+      "delta_min": -689,
+      "delta_max": -689,
+      "decreased_pairs": 49
+    },
+    "grass": {
+      "delta_min": -608,
+      "delta_max": -608,
+      "decreased_pairs": 49
+    },
+    "rock": {
+      "delta_min": -590,
+      "delta_max": -590,
+      "decreased_pairs": 49
+    },
+    "light": {
+      "delta_min": -619,
+      "delta_max": -619,
+      "decreased_pairs": 49
+    },
+    "dark": {
+      "delta_min": -592,
+      "delta_max": -592,
+      "decreased_pairs": 49
+    },
+    "battle_power": {
+      "delta_min": 7492,
+      "delta_max": 15266,
+      "decreased_pairs": 0
+    }
+  }
+]
