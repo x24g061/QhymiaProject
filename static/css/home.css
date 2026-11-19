@@ -1503,7 +1503,131 @@ main {
 
     font-size: 9px;
 }
+/* =========================================================
+   ACTIVE BOOSTS
+========================================================= */
 
+.active-boosts {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    margin: 0;
+}
+
+
+.active-boost-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    min-width: 210px;
+
+    padding:
+        8px
+        12px;
+
+    background:
+        rgba(
+            52,
+            127,
+            145,
+            0.08
+        );
+
+    border:
+        1px solid
+        rgba(
+            52,
+            127,
+            145,
+            0.20
+        );
+
+    border-radius: 12px;
+}
+
+
+.active-boost-icon {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 30px;
+    height: 30px;
+
+    flex-shrink: 0;
+
+    color:
+        var(--main-dark);
+
+    background:
+        rgba(
+            255,
+            255,
+            255,
+            0.80
+        );
+
+    border-radius: 9px;
+
+    font-size: 15px;
+}
+
+
+.active-boost-content {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 2px;
+}
+
+
+.active-boost-name {
+    color:
+        var(--main-deep);
+
+    font-size: 10px;
+}
+
+
+.active-boost-expiry {
+    color:
+        var(--muted);
+
+    font-size: 8px;
+}
+
+@media (max-width: 700px) {
+
+    .exploration-card .card-heading {
+        align-items: flex-start;
+    }
+
+
+    .active-boosts {
+        justify-content: flex-end;
+    }
+
+
+    .active-boost-item {
+        min-width: 0;
+
+        padding:
+            7px
+            9px;
+    }
+
+}
 
 /* =========================================================
    ARENA
@@ -3118,6 +3242,71 @@ main {
         flex-basis: 245px;
 
         min-width: 245px;
+    }
+
+}
+
+/* =========================================================
+   OPEN CHAT TERMS NOTICE
+========================================================= */
+
+.chat-heading-right {
+    display: flex;
+
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 14px;
+}
+
+
+.chat-terms-notice {
+    margin: 0;
+
+    color:
+        var(--muted);
+
+    font-size: 9px;
+
+    line-height: 1.5;
+
+    text-align: right;
+}
+
+
+.chat-terms-notice a {
+    color:
+        var(--main);
+
+    font-weight: 800;
+
+    text-decoration: underline;
+
+    text-underline-offset: 2px;
+}
+
+
+.chat-terms-notice a:hover {
+    color:
+        var(--main-dark);
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .chat-heading-right {
+        gap: 8px;
+    }
+
+
+    .chat-terms-notice {
+        max-width: 200px;
+
+        font-size: 8px;
     }
 
 }

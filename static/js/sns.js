@@ -551,6 +551,11 @@ document.addEventListener("DOMContentLoaded", function () {
             "mini-sns-image-input"
         );
 
+    const miniImageButton =
+        document.getElementById(
+            "mini-sns-image-button"
+        );
+
     const imagePreview =
         document.getElementById(
             "mini-sns-image-preview"
@@ -589,6 +594,34 @@ document.addEventListener("DOMContentLoaded", function () {
     let selectedMiniSnsImages = [];
 
     let previewIndex = 0;
+
+    // =====================
+    // 画像添付ボタン状態
+    // =====================
+
+    function updateMiniImageButtonState() {
+
+        const limitReached =
+            selectedMiniSnsImages.length >= 2;
+
+
+        imageInput.disabled =
+            limitReached;
+
+
+        miniImageButton.classList.toggle(
+            "disabled",
+            limitReached
+        );
+
+
+        miniImageButton.setAttribute(
+            "aria-disabled",
+            limitReached
+                ? "true"
+                : "false"
+        );
+    }
 
     const postError =
         document.getElementById(
@@ -655,26 +688,44 @@ document.addEventListener("DOMContentLoaded", function () {
                     );
 
 
-                newImages.forEach(
-                    function (file) {
+                const attemptedTotal =
+                    selectedMiniSnsImages.length
+                    + newImages.length;
 
-                        if (
-                            selectedMiniSnsImages.length < 2
-                        ) {
 
-                            selectedMiniSnsImages.push(
-                                file
-                            );
-                        }
+                if (
+                    attemptedTotal > 2
+                ) {
 
-                    }
+                    alert(
+                        `画像が${attemptedTotal}枚選択されています。\n`
+                        + "画像は2枚まで添付できます。"
+                    );
+                }
+
+
+                const remainingSlots =
+                    2
+                    - selectedMiniSnsImages.length;
+
+
+                selectedMiniSnsImages.push(
+                    ...newImages.slice(
+                        0,
+                        remainingSlots
+                    )
                 );
+
+
+
 
 
                 previewIndex = 0;
 
 
                 updateMiniSnsPreview();
+
+                updateMiniImageButtonState();
 
 
                 // 同じ画像をもう一度選べるようにする
@@ -771,11 +822,15 @@ document.addEventListener("DOMContentLoaded", function () {
                         "src"
                     );
 
+                    updateMiniImageButtonState();
+
                     return;
                 }
 
 
                 updateMiniSnsPreview();
+
+                updateMiniImageButtonState();
 
             }
         );
@@ -889,6 +944,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     previewIndex = 0;
 
                     imagePreview.hidden = true;
+
+                    updateMiniImageButtonState();
 
 
                     localStorage.setItem(
@@ -1485,7 +1542,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     );
 
-        // =====================
+    // =====================
     // サイズ変更
     // PC / スマホ共通
     // =====================
