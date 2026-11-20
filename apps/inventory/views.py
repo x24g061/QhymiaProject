@@ -323,6 +323,9 @@ def synthesis(request):
             result = synthesize_equipments(
                 character,
                 equipments,
+                use_guarantee=(
+                    request.POST.get("use_guarantee") == "on"
+                ),
             )
 
         except ValueError as error:
@@ -606,6 +609,22 @@ def synthesis(request):
     #     synthesis_sns_share,
     # )
 
+    # 合成成功保証書の所持数
+    guarantee_inventory = (
+        InventoryItem.objects
+        .filter(
+            character=character,
+            item__name="合成成功保証書",
+        )
+        .first()
+    )
+
+    guarantee_quantity = (
+        guarantee_inventory.quantity
+        if guarantee_inventory
+        else 0
+    )
+
     return render(
         request,
         "synthesis.html",
@@ -621,6 +640,9 @@ def synthesis(request):
 
             "synthesis_cost":
                 synthesis_cost,
+
+            "guarantee_quantity":
+                guarantee_quantity,
 
             "synthesis_sns_share":
                 synthesis_sns_share,

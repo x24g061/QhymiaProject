@@ -174,7 +174,50 @@
      合成可能な装備一覧
 ======================================== -->
 
-                <div class="synthesis-equipment-list">
+
+<div class="synthesis-guarantee">
+
+    <div class="synthesis-guarantee-header">
+        <strong>合成補助アイテム</strong>
+        <span>SUCCESS GUARANTEE</span>
+    </div>
+
+    <label class="synthesis-guarantee-option">
+
+        <div class="synthesis-guarantee-info">
+            <strong>合成成功保証書</strong>
+
+            <p>
+                使用すると必ず通常成功（+1）になります。
+            </p>
+
+            <span>
+                所持数：{{ guarantee_quantity }}個
+            </span>
+        </div>
+
+        <div class="synthesis-guarantee-control">
+
+            <input
+                type="checkbox"
+                name="use_guarantee"
+                id="use-guarantee"
+                {% if guarantee_quantity == 0 %}disabled{% endif %}
+            >
+
+            <span>使用する</span>
+
+        </div>
+
+    </label>
+
+    <p id="guarantee-status" class="synthesis-guarantee-status">
+        通常合成：従来の確率で抽選します。
+    </p>
+
+</div>
+
+<div class="synthesis-equipment-list">
 
                     {% if synthesis_groups %}
 
@@ -391,6 +434,26 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
 
+        const guaranteeCheckbox =
+            document.getElementById("use-guarantee");
+
+        const guaranteeStatus =
+            document.getElementById("guarantee-status");
+
+        if (guaranteeCheckbox && guaranteeStatus) {
+            guaranteeCheckbox.addEventListener("change", function () {
+
+                if (this.checked) {
+                    guaranteeStatus.textContent =
+                        "成功確定：保証書を1個消費し、必ず+1になります。";
+                } else {
+                    guaranteeStatus.textContent =
+                        "通常合成：従来の確率で抽選します。";
+                }
+
+            });
+        }
+
         const radios = document.querySelectorAll(
             ".synthesis-group-radio"
         );
@@ -402,6 +465,27 @@
         const submitButton = document.getElementById(
             "synthesis-submit"
         );
+
+        // 合成ボタンの二重送信防止
+        const synthesisForm = document.querySelector(
+            ".synthesis-form"
+        );
+
+        let synthesisSubmitting = false;
+
+        if (synthesisForm && submitButton) {
+            synthesisForm.addEventListener("submit", function (event) {
+
+                if (synthesisSubmitting) {
+                    event.preventDefault();
+                    return;
+                }
+
+                synthesisSubmitting = true;
+                submitButton.disabled = true;
+                submitButton.textContent = "合成中...";
+            });
+        }
 
         function updateSelection() {
             const selected = document.querySelector(
@@ -514,7 +598,7 @@
 
 
         updateSelection();
-        
+
     });
 </script>
 
