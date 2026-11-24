@@ -1000,3 +1000,87 @@ main {
 .synthesis-share-no:hover {
     opacity: 0.82;
 }
+/* ========================================
+   合成成功保証書
+======================================== */
+
+.synthesis-guarantee {
+    margin: 22px 0;
+    padding: 20px;
+    background: #f4f8fa;
+    border: 1px solid #cadde4;
+    border-radius: 12px;
+}
+
+.synthesis-guarantee-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.synthesis-guarantee-header strong {
+    color: #183e4d;
+}
+
+.synthesis-guarantee-header span {
+    color: #7193a0;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.synthesis-guarantee-option {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 16px;
+    background: #fff;
+    border: 1px solid #dce7eb;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.synthesis-guarantee-info strong {
+    color: #173e4e;
+}
+
+.synthesis-guarantee-info p {
+    margin: 8px 0;
+    color: #5d7581;
+    font-size: 13px;
+}
+
+.synthesis-guarantee-info span {
+    font-size: 12px;
+    color: #497889;
+}
+
+.synthesis-guarantee-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    font-weight: bold;
+    color: #245c70;
+}
+
+.synthesis-guarantee-control input {
+    width: 18px;
+    height: 18px;
+    accent-color: #246b84;
+}
+
+.synthesis-guarantee-status {
+    margin-top: 12px;
+    color: #37677a;
+    font-size: 13px;
+}
+
+@media (max-width: 600px) {
+    .synthesis-guarantee-option {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
