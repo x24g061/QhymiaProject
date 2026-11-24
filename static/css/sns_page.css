@@ -596,7 +596,27 @@ main {
     display: none;
 }
 
+/* =========================================================
+   IMAGE BUTTON DISABLED
+========================================================= */
 
+.sns-page-image-button.disabled {
+    opacity: 0.45;
+
+    cursor: not-allowed;
+
+    pointer-events: none;
+
+    transform: none;
+}
+
+
+.sns-page-image-button.disabled:hover {
+    color: var(--main-dark);
+
+    background:
+        rgba(255, 255, 255, 0.70);
+}
 /* =========================================================
    SUBMIT
 ========================================================= */
@@ -1706,4 +1726,55 @@ main {
         right: 5px;
     }
 
+}
+
+.sns-profile-link {
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+
+
+.sns-profile-link:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 5px 12px
+        rgba(30, 80, 90, 0.20);
+}
+
+.sns-terms-notice {
+    align-self: flex-end;
+
+    margin:
+        7px
+        0
+        0;
+
+    color:
+        var(--muted);
+
+    font-size: 9px;
+
+    text-align: right;
+}
+
+
+.sns-terms-notice a {
+    color:
+        var(--main);
+
+    font-weight: 800;
+
+    text-decoration: underline;
+}
+
+
+.sns-terms-notice a:hover {
+    color:
+        var(--main-dark);
 }

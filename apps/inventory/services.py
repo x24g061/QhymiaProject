@@ -1,7 +1,7 @@
 
 from django.db import transaction
 from apps.shop.models import MarketListing
-from .models import OwnedEquipment
+from .models import InventoryItem, OwnedEquipment
 import random
 
 
@@ -423,6 +423,7 @@ def determine_synthesis_result(
 def synthesize_equipments(
     character,
     equipments,
+    use_guarantee=False,
 ):
     """
     3つの同一装備を合成する。
@@ -447,6 +448,49 @@ def synthesize_equipments(
     """
 
     # ========================================
+    # 二重実行防止
+    # キャラクターをロックし、素材を最新のDBから再取得
+    # ========================================
+
+    character = (
+        type(character).objects
+        .select_for_update()
+        .get(pk=character.pk)
+    )
+
+    requested_ids = [
+        equipment.pk
+        for equipment in equipments
+    ]
+
+    if (
+        len(requested_ids) != 3
+        or len(set(requested_ids)) != 3
+    ):
+        raise ValueError(
+            "異なる所持装備を3つ選んでください。"
+        )
+
+    equipments = list(
+        OwnedEquipment.objects
+        .select_for_update()
+        .select_related(
+            "equipment",
+            "equipment__item",
+        )
+        .filter(
+            pk__in=requested_ids,
+            character=character,
+        )
+    )
+
+    if len(equipments) != 3:
+        raise ValueError(
+            "選択した装備はすでに消費されたか、"
+            "所持していません。"
+        )
+
+    # ========================================
     # 合成条件の確認
     # ========================================
 
@@ -468,6 +512,29 @@ def synthesize_equipments(
         raise ValueError(
             "この装備は所持していません。"
         )
+
+    # ========================================
+    # 合成成功保証書の所持確認
+    # ========================================
+
+    guarantee_inventory = None
+
+    if use_guarantee:
+        guarantee_inventory = (
+            InventoryItem.objects
+            .select_for_update()
+            .filter(
+                character=character,
+                item__name="合成成功保証書",
+                quantity__gte=1,
+            )
+            .first()
+        )
+
+        if guarantee_inventory is None:
+            raise ValueError(
+                "合成成功保証書を所持していません。"
+            )
 
     # ========================================
     # 合成料金の確認
@@ -502,10 +569,13 @@ def synthesize_equipments(
     # 合成結果を抽選
     # ========================================
 
-    result = determine_synthesis_result(
-        rank,
-        current_level,
-    )
+    if use_guarantee:
+        result = "success"
+    else:
+        result = determine_synthesis_result(
+            rank,
+            current_level,
+        )
 
     enhancement_increase = {
         "success": 1,
@@ -555,6 +625,19 @@ def synthesize_equipments(
                 "gold",
             ]
         )
+
+    # ========================================
+    # 保証書を1個消費
+    # ========================================
+
+    if guarantee_inventory is not None:
+        if guarantee_inventory.quantity == 1:
+            guarantee_inventory.delete()
+        else:
+            guarantee_inventory.quantity -= 1
+            guarantee_inventory.save(
+                update_fields=["quantity"]
+            )
 
     # ========================================
     # 素材3つを消費

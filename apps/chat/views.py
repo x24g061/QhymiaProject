@@ -2,6 +2,7 @@ import json
 
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
+from django.shortcuts import render
 from django.templatetags.static import static
 from django.views.decorators.http import require_GET, require_POST
 
@@ -123,3 +124,15 @@ def send_message(request):
                 chat.created_at.strftime("%H:%M"),
         }
     })
+
+# ========================================
+# オープンチャット利用規約
+# ========================================
+
+@login_required
+def chat_terms(request):
+
+    return render(
+        request,
+        "chat_terms.html",
+    )

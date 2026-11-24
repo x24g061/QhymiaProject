@@ -10,7 +10,9 @@ from django.test import SimpleTestCase, TestCase
 from django.urls import reverse
 
 from apps.accounts.models import Character, User
-from apps.accounts.growth import level_up_once, get_growth_weights
+from apps.accounts.growth import (
+    level_up_once, get_growth_weights, roll_attribute_growth, calculate_initial_points,
+)
 from apps.inventory.models import Equipment, OwnedEquipment
 from config.views import generate_reincarnation_bonus, calculate_reincarnation_stats
 
@@ -56,16 +58,16 @@ def growth_case(self, pair):
     expected = dict(zip(NAMES, [a+b for a,b in zip(JOBS[job], RACES[race])]))
     self.assertEqual(get_growth_weights(character), expected)
     with patch("apps.accounts.growth.random.choices", side_effect=[
-        ["hp", "mp", "strength"], ["fire", "fire", "water"],
+        ["hp", "mp", "strength", "strength", "agility"], ["fire", "fire", "water"],
     ]) as draws:
         level_up_once(character)
     self.assertEqual(draws.call_count, 2)
     self.assertEqual(draws.call_args_list[0].kwargs["weights"], list(expected.values()))
-    self.assertEqual(draws.call_args_list[0].kwargs["k"], 3)
+    self.assertEqual(draws.call_args_list[0].kwargs["k"], 5)
     self.assertEqual(draws.call_args_list[1].kwargs["k"], 3)
-    self.assertEqual((character.level,character.max_hp,character.max_mp,character.strength), (2,35,13,6))
+    self.assertEqual((character.level,character.max_hp,character.max_mp,character.strength), (2,38,13,7))
     self.assertEqual((character.fire,character.water,character.grass), (2,1,0))
-    self.assertEqual((character.agility,character.dexterity,character.vitality,character.luck), (5,5,5,5))
+    self.assertEqual((character.agility,character.dexterity,character.vitality,character.luck), (6,5,5,5))
 
 
 def job_growth_case(self, job):
@@ -97,13 +99,31 @@ def replay_case(self, pair):
     import random
     before = random.getstate()
     for row in selected:
-        first = baseline.path(job,row["race"],row["reincarnations"],seed)[row["level"]-1]
-        second = baseline.path(job,row["race"],row["reincarnations"],seed)[row["level"]-1]
+        # 旧測定成果物は旧成長式で再現する。現行Ver.2はtest_growth_v2で別途検証。
+        with patch.object(baseline, "level_up_once", side_effect=legacy_level_up_once):
+            first = baseline.path(job,row["race"],row["reincarnations"],seed)[row["level"]-1]
+            second = baseline.path(job,row["race"],row["reincarnations"],seed)[row["level"]-1]
         for field in baseline.STATS + baseline.ATTRS:
             value = (row["stats"] | row["attributes"])[field]
             self.assertEqual(getattr(first,field), value)
             self.assertEqual(getattr(first,field),getattr(second,field))
     self.assertEqual(random.getstate(), before)
+
+
+def legacy_level_up_once(character):
+    """保存済み2026-11-16データ専用の旧3抽選・HP+5再生。"""
+    import random
+    character.level += 1
+    weights = get_growth_weights(character)
+    for stat in random.choices(list(weights), weights=list(weights.values()), k=3):
+        if stat == "hp":
+            character.max_hp += 5
+            character.current_hp += 5
+        elif stat == "mp":
+            character.max_mp += 3
+        else:
+            setattr(character, stat, getattr(character, stat) + 1)
+    roll_attribute_growth(character)
 
 
 named_cases(GrowthReplayTests, [(j+"_seed"+str(s),(j,s)) for j in JOBS for s in [20261116,20261117]], replay_case)
@@ -118,8 +138,8 @@ def reincarnation_case(self, previous):
     names = baseline.STATS + baseline.ATTRS
     with patch("config.views.random.choice", side_effect=itertools.cycle(names)) as draw:
         points = generate_reincarnation_bonus(character)
-    self.assertEqual(draw.call_count, (previous+1)*125)
-    self.assertEqual(sum(points.values()), (previous+1)*125)
+    self.assertEqual(draw.call_count, calculate_initial_points(previous+1))
+    self.assertEqual(sum(points.values()), calculate_initial_points(previous+1))
     stats = calculate_reincarnation_stats(points)
     self.assertEqual(stats["max_hp"],30+5*points["max_hp"])
     self.assertEqual(stats["max_mp"],10+2*points["max_mp"])

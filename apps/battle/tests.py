@@ -4313,11 +4313,11 @@ class ArenaExpGrowthTests(TestCase):
             current_mp=5,
         )
 
-        # HP成長を3回発生させる
+        # HP成長を5回発生させる
         with patch(
             "apps.accounts.growth.random.choices",
             side_effect=[
-                ["hp", "hp", "hp"],
+                ["hp"] * 5,
                 ["fire", "water", "grass"],
             ],
         ):
@@ -4336,7 +4336,7 @@ class ArenaExpGrowthTests(TestCase):
         self.assertEqual(character.current_hp, 10)
         self.assertEqual(character.current_mp, 5)
         # 最大HPは正常に成長している
-        self.assertEqual(character.max_hp, 45)
+        self.assertEqual(character.max_hp, 70)
 
         self.assertEqual(result["gained_exp"], 8)
         self.assertEqual(result["level_up_count"], 1)

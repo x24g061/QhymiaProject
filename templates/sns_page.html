@@ -21,6 +21,15 @@
             <p class="sns-hero-description">
                 冒険者たちの今を共有する交流広場
             </p>
+            <p class="sns-terms-notice">
+
+                <a href="{% url 'sns_terms' %}?view={{ view_mode }}">
+                    SNS利用規約
+                </a>
+
+                を必ず読んでからご利用ください。
+
+            </p>
         </div>
 
         <div class="sns-hero-actions">
@@ -174,7 +183,7 @@
                     </label>
 
 
-                    <label class="sns-page-image-button">
+                    <label id="sns-page-image-button" class="sns-page-image-button">
 
                         画像をつける
 
@@ -230,7 +239,9 @@
 
                 <div class="sns-user-area">
 
-                    <div class="sns-character-placeholder">
+                    <a href="{% url 'player_detail' post.user.character.pk %}"
+                        class="sns-character-placeholder sns-profile-link"
+                        title="{{ post.user.character.name }}のプロフィールを見る">
 
                         {% if post.user.character.character_image_path %}
 
@@ -243,7 +254,7 @@
 
                         {% endif %}
 
-                    </div>
+                    </a>
 
 
                     <div class="sns-user-information">
@@ -533,6 +544,11 @@
                     "sns-page-image-input"
                 );
 
+            const imageButton =
+                document.getElementById(
+                    "sns-page-image-button"
+                );
+
             const imagePreview =
                 document.getElementById(
                     "sns-page-image-preview"
@@ -572,7 +588,33 @@
             let selectedImages = [];
 
             let previewIndex = 0;
+            // ========================================
+            // 画像添付ボタン状態更新
+            // ========================================
 
+            function updateImageButtonState() {
+
+                const limitReached =
+                    selectedImages.length >= 2;
+
+
+                imageInput.disabled =
+                    limitReached;
+
+
+                imageButton.classList.toggle(
+                    "disabled",
+                    limitReached
+                );
+
+
+                imageButton.setAttribute(
+                    "aria-disabled",
+                    limitReached
+                        ? "true"
+                        : "false"
+                );
+            }
 
             // ========================================
             // 投稿前プレビュー更新
@@ -643,26 +685,49 @@
                             );
 
 
-                        newImages.forEach(
-                            function (file) {
+                        // ========================================
+                        // 2枚を超える選択を検知
+                        // ========================================
 
-                                if (
-                                    selectedImages.length
-                                    < 2
-                                ) {
+                        const attemptedTotal =
+                            selectedImages.length
+                            + newImages.length;
 
-                                    selectedImages.push(
-                                        file
-                                    );
-                                }
 
-                            }
+                        if (
+                            attemptedTotal > 2
+                        ) {
+
+                            alert(
+                                `画像が${attemptedTotal}枚選択されています。\n`
+                                + "画像は2枚まで添付できます。"
+                            );
+                        }
+
+
+                        // ========================================
+                        // 空いている枚数分だけ追加
+                        // ========================================
+
+                        const remainingSlots =
+                            2
+                            - selectedImages.length;
+
+
+                        selectedImages.push(
+                            ...newImages.slice(
+                                0,
+                                remainingSlots
+                            )
                         );
 
 
                         previewIndex = 0;
 
+
                         updatePreview();
+
+                        updateImageButtonState();
 
 
                         // 同じ画像を再選択できるようにする
@@ -759,7 +824,7 @@
 
 
                         updatePreview();
-
+                        updateImageButtonState();
                     }
                 );
             }

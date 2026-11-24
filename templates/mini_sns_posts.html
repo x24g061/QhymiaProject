@@ -13,7 +13,8 @@
     <!-- 投稿者 -->
     <div class="mini-sns-user-area">
 
-        <div class="mini-sns-avatar">
+        <a href="{% url 'player_detail' post.user.character.pk %}" class="mini-sns-avatar mini-sns-profile-link"
+            title="{{ post.user.character.name }}のプロフィールを見る">
 
             {% if post.user.character.character_image_path %}
 
@@ -27,7 +28,7 @@
 
             {% endif %}
 
-        </div>
+        </a>
 
 
         <div class="mini-sns-user-info">

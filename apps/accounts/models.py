@@ -184,6 +184,12 @@ class Character(models.Model):
         help_text="転生した回数"
     )
 
+    legacy_reincarnation_points = models.PositiveBigIntegerField(
+        default=0,
+        editable=False,
+        help_text="成長Ver.2移行前に取得済みの初期配分差分。以後の回帰でも保持する。",
+    )
+
     # ===== HP・MP =====
 
     max_hp = models.PositiveIntegerField(

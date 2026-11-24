@@ -750,6 +750,40 @@
 
                     </div>
 
+
+                    {% if active_boosts %}
+
+                    <div class="active-boosts">
+
+                        {% for boost in active_boosts %}
+
+                        <div class="active-boost-item">
+
+                            <span class="active-boost-icon">
+                                {{ boost.icon }}
+                            </span>
+
+                            <div class="active-boost-content">
+
+                                <strong class="active-boost-name">
+                                    {{ boost.name }}
+                                </strong>
+
+                                <span class="active-boost-expiry">
+                                    有効期限
+                                    {{ boost.expires_at|date:"Y/m/d H:i" }}
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                    {% endif %}
+
                 </div>
 
 
@@ -949,7 +983,7 @@
                  オープンチャット
             ============================== -->
 
-            <section class="home-card chat-card collapsible-section" data-collapse-id="chat">
+            <section id="open-chat" class="home-card chat-card collapsible-section" data-collapse-id="chat">
 
                 <div class="card-heading">
 
@@ -966,13 +1000,30 @@
                     </div>
 
 
-                    <button type="button" class="collapse-toggle" aria-expanded="true">
+                    <div class="chat-heading-right">
 
-                        <span class="collapse-toggle-icon">
-                            ▼
-                        </span>
 
-                    </button>
+                        <p class="chat-terms-notice">
+
+                            <a href="{% url 'chat:terms' %}">
+                                オープンチャット利用規約
+                            </a>
+
+                            を必ず読んでからご利用ください。
+
+                        </p>
+
+
+                        <button type="button" class="collapse-toggle" aria-expanded="true">
+
+                            <span class="collapse-toggle-icon">
+                                ▼
+                            </span>
+
+                        </button>
+
+
+                    </div>
 
                 </div>
 
