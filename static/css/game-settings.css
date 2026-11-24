@@ -2786,3 +2786,334 @@ html[data-game-theme="dark"] .terms-page .terms-footer {
     border-top-color: #40586a !important;
     color: #b4c3d1 !important;
 }
+
+/* ============================================
+   USER CUSTOM BACKGROUND
+============================================ */
+
+html body.user-custom-background {
+    background-image:
+        linear-gradient(
+            rgba(
+                255,
+                255,
+                255,
+                0.34
+            ),
+            rgba(
+                255,
+                255,
+                255,
+                0.34
+            )
+        ),
+        var(
+            --user-background-image
+        )
+        !important;
+
+    background-size:
+        cover
+        !important;
+
+    background-position:
+        center center
+        !important;
+
+    background-repeat:
+        no-repeat
+        !important;
+
+    background-attachment:
+        fixed
+        !important;
+}
+
+
+/* ========================================
+   CUSTOM BACKGROUND + DARK MODE
+======================================== */
+
+html[data-game-theme="dark"]
+body.user-custom-background {
+
+    background-image:
+        linear-gradient(
+            rgba(
+                5,
+                12,
+                26,
+                0.42
+            ),
+            rgba(
+                5,
+                12,
+                26,
+                0.58
+            )
+        ),
+        var(
+            --user-background-image
+        )
+        !important;
+
+    background-color:
+        #0b1423
+        !important;
+
+    background-blend-mode:
+        normal
+        !important;
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 700px) {
+
+    html body.user-custom-background {
+        background-attachment:
+            scroll
+            !important;
+    }
+
+}
+
+/* ============================================
+   USER CUSTOM BACKGROUND
+   指定ゲーム画面への適用
+============================================ */
+
+/* ユーザー背景本体 */
+html body.user-custom-background {
+    background-image:
+        linear-gradient(
+            rgba(255, 255, 255, 0.34),
+            rgba(255, 255, 255, 0.34)
+        ),
+        var(--user-background-image)
+        !important;
+
+    background-color:
+        #e7edf0
+        !important;
+
+    background-size:
+        cover
+        !important;
+
+    background-position:
+        center center
+        !important;
+
+    background-repeat:
+        no-repeat
+        !important;
+
+    background-attachment:
+        fixed
+        !important;
+}
+
+
+/* ========================================
+   合成画面
+   synthesis-page自身の背景を解除
+======================================== */
+
+html body.user-custom-background
+.synthesis-page {
+
+    background-image:
+        none
+        !important;
+
+    background-color:
+        transparent
+        !important;
+}
+
+
+/* ========================================
+   探索戦闘画面
+   qh-battle-page自身の背景を解除
+======================================== */
+
+html body.user-custom-background
+.qh-battle-page {
+
+    background:
+        transparent
+        !important;
+}
+
+
+/* ========================================
+   ダークモード
+======================================== */
+
+html[data-game-theme="dark"]
+body.user-custom-background {
+
+    background-image:
+        linear-gradient(
+            rgba(5, 12, 26, 0.42),
+            rgba(5, 12, 26, 0.58)
+        ),
+        var(--user-background-image)
+        !important;
+
+    background-color:
+        #0b1423
+        !important;
+
+    background-blend-mode:
+        normal
+        !important;
+}
+
+
+/* ========================================
+   スマートフォン
+======================================== */
+
+@media (max-width: 700px) {
+
+    html body.user-custom-background {
+
+        background-attachment:
+            scroll
+            !important;
+    }
+
+}
+
+/* ============================================
+   USER CUSTOM BACKGROUND
+   HOME / PALM 最終上書き
+============================================ */
+
+
+/* ========================================
+   ホーム画面：ライトモード
+======================================== */
+
+html:not([data-game-theme="dark"])
+body.home-page.user-custom-background {
+
+    background-image:
+        linear-gradient(
+            rgba(255, 255, 255, 0.34),
+            rgba(255, 255, 255, 0.34)
+        ),
+        var(--user-background-image)
+        !important;
+
+    background-color:
+        #e7edf0
+        !important;
+
+    background-size:
+        cover
+        !important;
+
+    background-position:
+        center center
+        !important;
+
+    background-repeat:
+        no-repeat
+        !important;
+
+    background-attachment:
+        fixed
+        !important;
+}
+
+
+/* ========================================
+   ホーム画面：ダークモード
+======================================== */
+
+html[data-game-theme="dark"]
+body.home-page.user-custom-background {
+
+    background-image:
+        linear-gradient(
+            rgba(5, 12, 26, 0.42),
+            rgba(5, 12, 26, 0.58)
+        ),
+        var(--user-background-image)
+        !important;
+
+    background-color:
+        #0b1423
+        !important;
+
+    background-size:
+        cover
+        !important;
+
+    background-position:
+        center center
+        !important;
+
+    background-repeat:
+        no-repeat
+        !important;
+
+    background-attachment:
+        fixed
+        !important;
+
+    background-blend-mode:
+        normal
+        !important;
+}
+
+
+/* ========================================
+   手相占い画面
+======================================== */
+
+/*
+.palm-page 自体に palm-bg.jpg が設定されているため、
+ユーザー背景設定時だけ透明化する。
+*/
+
+html body.user-custom-background
+.palm-page {
+
+    background:
+        transparent
+        !important;
+}
+
+
+/* ========================================
+   スマートフォン
+======================================== */
+
+@media (max-width: 700px) {
+
+    html
+    body.home-page.user-custom-background {
+
+        background-attachment:
+            scroll
+            !important;
+    }
+
+
+    html
+    body.user-custom-background
+    .palm-page {
+
+        background-attachment:
+            scroll
+            !important;
+    }
+
+}

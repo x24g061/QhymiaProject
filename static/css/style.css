@@ -586,17 +586,18 @@ main {
 @media (max-width: 700px) {
 
     .site-header {
-        min-height: 60px;
+        min-height: 68px;
 
         grid-template-columns:
-            1fr
+            minmax(0, 1fr)
             auto;
 
-        gap: 8px;
+        align-items: center;
+
+        gap: 10px;
 
         padding:
-            0
-            13px;
+            0 16px;
     }
 
 
@@ -606,26 +607,30 @@ main {
 
 
     .site-header h1 {
-        font-size: 19px;
+        font-size: 22px;
 
         letter-spacing: 0.08em;
+
+        white-space: nowrap;
     }
 
 
     .site-header .header-left {
         min-width: 0;
 
-        gap: 10px;
+        gap: 12px;
     }
 
 
     .site-header .header-right {
-        gap: 7px;
+        gap: 8px;
+
+        white-space: nowrap;
     }
 
 
     .site-header a {
-        font-size: 9px;
+        font-size: 10px;
     }
 
 
@@ -645,5 +650,5 @@ main {
 
         border-radius: 8px;
     }
-}
 
+}

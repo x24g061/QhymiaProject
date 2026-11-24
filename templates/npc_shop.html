@@ -23,7 +23,16 @@
 </head>
 
 
-<body>
+<body
+    class="{% if user.is_authenticated and user.game_settings.background_image %}user-custom-background{% endif %}"
+
+    {% if user.is_authenticated and user.game_settings.background_image %}
+    style="
+        --user-background-image:
+        url('{{ user.game_settings.background_image.url }}');
+    "
+    {% endif %}
+>
 
     <div class="shop-page">
 

@@ -90,6 +90,16 @@ class UserSettings(models.Model):
         ),
     )
 
+    # ========================================
+    # 背景設定
+    # ========================================
+
+    background_image = models.ImageField(
+        upload_to="user_backgrounds/",
+        blank=True,
+        help_text="ユーザーが設定したゲーム背景画像",
+    )
+
     updated_at = models.DateTimeField(
         auto_now=True,
     )

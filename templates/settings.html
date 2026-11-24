@@ -48,7 +48,7 @@
     </div>
 
 
-    <form method="post" class="settings-form">
+    <form method="post" enctype="multipart/form-data" class="settings-form">
 
         {% csrf_token %}
 
@@ -112,7 +112,65 @@
                 </select>
 
             </div>
+            <!-- 背景画像 -->
+            <div class="settings-item">
 
+                <div class="settings-item-text">
+
+                    <strong>
+                        背景画像
+                    </strong>
+
+                    <p>
+                        ゲーム画面で使用する背景を自由に設定できます。
+                        PNG・JPG・WebP形式、5MB以下の画像を使用できます。
+                    </p>
+
+                </div>
+
+
+                <div class="background-setting-control">
+
+
+                    {% if game_settings.background_image %}
+
+                    <img src="{{ game_settings.background_image.url }}" alt="現在の背景" class="background-setting-preview">
+
+                    {% else %}
+
+                    <div class="background-setting-empty">
+
+                        <span>
+                            DEFAULT
+                        </span>
+
+                        <small>
+                            標準背景
+                        </small>
+
+                    </div>
+
+                    {% endif %}
+
+
+                    <input type="file" id="background-image" name="background_image" class="background-file-input"
+                        accept="image/png,image/jpeg,image/webp">
+
+
+                    {% if game_settings.background_image %}
+
+                    <button type="submit" name="action" value="remove_background" class="background-remove-button">
+
+                        デフォルト背景に戻す
+
+                    </button>
+
+                    {% endif %}
+
+
+                </div>
+
+            </div>
             <!-- 初期化 -->
             <div class="settings-item">
 
@@ -204,8 +262,10 @@
 
         <div class="settings-actions">
 
-            <button type="submit">
+            <button type="submit" name="action" value="save">
+
                 設定を保存
+
             </button>
 
         </div>

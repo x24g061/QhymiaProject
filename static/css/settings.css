@@ -361,3 +361,141 @@ input:checked
     }
 
 }
+
+/* =========================================================
+   BACKGROUND SETTING
+========================================================= */
+
+.background-setting-control {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 9px;
+
+    width: 190px;
+}
+
+
+.background-setting-preview {
+    width: 190px;
+
+    aspect-ratio: 16 / 9;
+
+    object-fit: cover;
+
+    border:
+        1px solid #cbdadd;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 4px 12px
+        rgba(
+            20,
+            52,
+            60,
+            0.10
+        );
+}
+
+
+.background-setting-empty {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 190px;
+
+    aspect-ratio: 16 / 9;
+
+    background:
+        #edf3f4;
+
+    border:
+        1px dashed
+        #b7c9ce;
+
+    border-radius: 10px;
+
+    color:
+        #607b84;
+}
+
+
+.background-setting-empty span {
+    font-size: 11px;
+
+    font-weight: 800;
+}
+
+
+.background-setting-empty small {
+    margin-top: 3px;
+
+    font-size: 9px;
+}
+
+
+.background-file-input {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    font-size: 10px;
+}
+
+
+.background-remove-button {
+    width: 100%;
+
+    padding:
+        9px
+        10px;
+
+    background:
+        transparent;
+
+    border:
+        1px solid
+        #c5d4d8;
+
+    border-radius: 8px;
+
+    color:
+        #55747d;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+}
+
+
+.background-remove-button:hover {
+    background:
+        #edf3f4;
+}
+
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 600px) {
+
+    .background-setting-control {
+        width: 100%;
+    }
+
+
+    .background-setting-preview,
+    .background-setting-empty {
+        width: 100%;
+    }
+
+}
