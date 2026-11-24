@@ -64,17 +64,20 @@ main {
 ======================================== */
 
 .signup-brand {
-    width: 320px;
-    height: 105px;
+    width: 100%;
+    height: 115px;
 
     display: flex;
+
     justify-content: center;
     align-items: center;
 
-    margin-left: -120px;
+    margin:
+        0
+        auto;
 
-    /* 背景を完全に透明にする */
-    background: transparent;
+    background:
+        transparent;
 }
 
 .signup-logo {
@@ -566,4 +569,52 @@ main {
 .signup-logo {
     background: none !important;
     background-color: transparent !important;
+}
+
+/* ========================================
+   新規登録画面 中央揃え
+======================================== */
+
+.signup-content {
+    text-align: center;
+}
+
+
+.signup-title,
+.signup-description,
+.signup-form-title,
+.signup-notes,
+.signup-warning,
+.signup-error {
+    text-align: center;
+}
+
+
+/* 入力欄も中央配置 */
+.signup-form-group {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* 入力文字・プレースホルダー */
+.signup-form-group input {
+    text-align: center;
+}
+
+
+/* エラーリスト */
+.signup-error ul {
+    padding-left: 0;
+
+    list-style-position: inside;
+
+    text-align: center;
+}
+
+
+/* 注意事項 */
+.signup-warning strong,
+.signup-warning p {
+    text-align: center;
 }

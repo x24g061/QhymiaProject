@@ -90,34 +90,27 @@ main {
 .site-header {
     position: sticky;
     top: 0;
-
     z-index: 200;
 
+    width: 100%;
     min-height: 68px;
 
     grid-template-columns:
-        1fr 1fr 1fr;
+        minmax(0, 1fr)
+        auto
+        minmax(0, 1fr);
 
-    padding:
-        0 30px;
+    padding: 0 24px;
+    gap: 16px;
 
     background:
-        rgba(20,
-            49,
-            58,
-            0.91);
+        rgba(20, 49, 58, 0.91);
 
     border-bottom:
-        1px solid rgba(255,
-            255,
-            255,
-            0.16);
+        1px solid rgba(255, 255, 255, 0.16);
 
     box-shadow:
-        0 8px 30px rgba(13,
-            36,
-            43,
-            0.22);
+        0 8px 30px rgba(13, 36, 43, 0.22);
 
     backdrop-filter:
         blur(16px);
@@ -125,11 +118,15 @@ main {
 
 
 .site-header h1 {
+    margin: 0;
+
     color: #ffffff;
 
-    font-size: 25px;
+    font-size: clamp(19px, 1.8vw, 25px);
 
     letter-spacing: 0.10em;
+
+    white-space: nowrap;
 }
 
 
@@ -3170,7 +3167,7 @@ main {
    スマホのみミニゲームをオープンチャットの上へ
 ========================================================= */
 
-@media (max-width: 700px) {
+@media (max-width: 1050px) {
 
     /*
        左右カラムの箱だけ解除して、

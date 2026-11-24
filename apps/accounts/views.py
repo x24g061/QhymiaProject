@@ -22,7 +22,7 @@ from .models import (
     UserSettings,
 )
 
-
+from PIL import Image, UnidentifiedImageError
 
 
 
@@ -51,6 +51,11 @@ def settings_view(request):
 
     if request.method == "POST":
 
+        action = request.POST.get(
+            "action",
+            "save",
+        )
+
         synthesis_sns_prompt_enabled = (
             request.POST.get(
                 "synthesis_sns_prompt_enabled"
@@ -59,16 +64,205 @@ def settings_view(request):
         )
 
 
+        # ========================================
+        # 背景をデフォルトに戻す
+        # ========================================
+
+        if action == "remove_background":
+
+            old_background = (
+                user_settings.background_image
+                if user_settings.background_image
+                else None
+            )
+
+            user_settings.background_image = ""
+
+            user_settings.synthesis_sns_prompt_enabled = (
+                synthesis_sns_prompt_enabled
+            )
+
+            user_settings.save(
+                update_fields=[
+                    "background_image",
+                    "synthesis_sns_prompt_enabled",
+                    "updated_at",
+                ]
+            )
+
+            # 古い画像ファイルを削除
+            if old_background:
+
+                old_background.delete(
+                    save=False
+                )
+
+            messages.success(
+                request,
+                "背景をデフォルトに戻しました。",
+            )
+
+            return redirect(
+                "accounts:settings"
+            )
+
+
+        # ========================================
+        # 背景画像アップロード
+        # ========================================
+
+        background_image = (
+            request.FILES.get(
+                "background_image"
+            )
+        )
+
+        old_background_name = None
+
+
+        if background_image:
+
+            # ====================================
+            # 最大5MB
+            # ====================================
+
+            if (
+                background_image.size
+                > 5 * 1024 * 1024
+            ):
+
+                messages.error(
+                    request,
+                    "背景画像は5MB以下にしてください。",
+                )
+
+                return redirect(
+                    "accounts:settings"
+                )
+
+
+            # ====================================
+            # 使用可能な画像形式
+            # ====================================
+
+            allowed_types = {
+                "image/jpeg",
+                "image/png",
+                "image/webp",
+            }
+
+            if (
+                background_image.content_type
+                not in allowed_types
+            ):
+
+                messages.error(
+                    request,
+                    (
+                        "背景画像はPNG・JPG・"
+                        "WebP形式を使用してください。"
+                    ),
+                )
+
+                return redirect(
+                    "accounts:settings"
+                )
+
+
+            # ====================================
+            # 本当に画像か確認
+            # ====================================
+
+            try:
+
+                image = Image.open(
+                    background_image
+                )
+
+                image.verify()
+
+                background_image.seek(0)
+
+            except (
+                UnidentifiedImageError,
+                OSError,
+            ):
+
+                messages.error(
+                    request,
+                    "正しい画像ファイルを選択してください。",
+                )
+
+                return redirect(
+                    "accounts:settings"
+                )
+
+
+            # ====================================
+            # 古い背景を記録
+            # ====================================
+
+            if user_settings.background_image:
+
+                old_background_name = (
+                    user_settings
+                    .background_image
+                    .name
+                )
+
+
+            # ====================================
+            # 新しい背景を設定
+            # ====================================
+
+            user_settings.background_image = (
+                background_image
+            )
+
+
+        # ========================================
+        # SNS設定
+        # ========================================
+
         user_settings.synthesis_sns_prompt_enabled = (
             synthesis_sns_prompt_enabled
         )
 
+
+        update_fields = [
+            "synthesis_sns_prompt_enabled",
+            "updated_at",
+        ]
+
+
+        if background_image:
+
+            update_fields.append(
+                "background_image"
+            )
+
+
         user_settings.save(
-            update_fields=[
-                "synthesis_sns_prompt_enabled",
-                "updated_at",
-            ]
+            update_fields=update_fields
         )
+
+
+        # ========================================
+        # 古い背景画像を削除
+        # ========================================
+
+        if (
+            background_image
+            and
+            old_background_name
+            and
+            old_background_name
+            != user_settings.background_image.name
+        ):
+
+            user_settings.background_image.storage.delete(
+                old_background_name
+            )
 
 
         if not synthesis_sns_prompt_enabled:
@@ -83,6 +277,7 @@ def settings_view(request):
             request,
             "設定を保存しました。",
         )
+
 
         return redirect(
             "accounts:settings"

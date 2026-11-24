@@ -26,7 +26,12 @@
 
 </head>
 
-<body class="{% block body_class %}{% endblock %}">
+<body
+    class="{% block body_class %}{% endblock %}{% if user.is_authenticated and user.game_settings.background_image %} user-custom-background{% endif %}"
+    {% if user.is_authenticated and user.game_settings.background_image %} style="
+        --user-background-image:
+        url('{{ user.game_settings.background_image.url }}');
+    " {% endif %}>
 
     <!-- 共通ヘッダー -->
     <header class="site-header">
