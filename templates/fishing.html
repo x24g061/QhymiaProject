@@ -59,7 +59,8 @@
                 <span>残り <strong id="time-value">—</strong></span>
             </div>
 
-            <button type="button" id="fishing-start" class="fishing-start">
+            <button type="button" id="fishing-start" class="fishing-start"
+                data-start-url="{% url 'game:fishing_start' %}" data-finish-url="{% url 'game:fishing_finish' %}">
                 釣りを始める
             </button>
 

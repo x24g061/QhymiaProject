@@ -4,6 +4,81 @@
     const startButton = document.getElementById("fishing-start");
     const holdButton = document.getElementById("fishing-hold");
 
+    // ========================================
+    // Djangoとの通信
+    // ========================================
+
+    let fishingSessionId = null;
+
+    function getCookie(name) {
+        const cookies = document.cookie.split(";");
+
+        for (const cookie of cookies) {
+            const [key, ...value] = cookie.trim().split("=");
+
+            if (key === name) {
+                return decodeURIComponent(value.join("="));
+            }
+        }
+
+        return null;
+    }
+
+    async function createFishingSession() {
+        const response = await fetch(startButton.dataset.startUrl, {
+            method: "POST",
+            credentials: "same-origin",
+            headers: {
+                "X-CSRFToken": getCookie("csrftoken") || "",
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error("釣りの開始に失敗しました。");
+        }
+
+        return await response.json();
+    }
+
+    // ========================================
+    // 釣り終了結果をDjangoへ送信
+    // ========================================
+
+    async function sendFishingResult(success) {
+        if (fishingSessionId === null) {
+            throw new Error("釣りセッションがありません。");
+        }
+
+        const body = new URLSearchParams({
+            session_id: String(fishingSessionId),
+            success: success ? "true" : "false",
+        });
+
+        const response = await fetch(
+            startButton.dataset.finishUrl,
+            {
+                method: "POST",
+                credentials: "same-origin",
+                headers: {
+                    "X-CSRFToken": getCookie("csrftoken") || "",
+                    "Content-Type":
+                        "application/x-www-form-urlencoded",
+                },
+                body: body.toString(),
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.error || "釣り結果の保存に失敗しました。"
+            );
+        }
+
+        return data;
+    }
+
     if (!startButton || !holdButton) return;
 
     const message = document.getElementById("fishing-message");
@@ -155,40 +230,72 @@
             : "魚が落ち着いた！ 長押しで引き寄せよう。";
     }
 
-    function finish(success, reason = "") {
+    // ========================================
+    // 釣り終了
+    // ========================================
+
+    async function finish(success, reason = "") {
+        if (phase !== "fighting" && phase !== "waiting") {
+            return;
+        }
+
         phase = "finished";
 
         clearTimeout(biteTimer);
         cancelAnimationFrame(frameId);
+
         biteTimer = null;
         frameId = null;
 
         releaseInput();
 
         scene.classList.remove("is-fighting", "is-wild");
+
         holdButton.disabled = true;
-        startButton.disabled = false;
-        startButton.textContent = "もう一度釣る";
+        startButton.disabled = true;
+        startButton.textContent = "結果を保存中…";
 
         result.hidden = false;
         result.classList.toggle("is-failure", !success);
 
-        if (success) {
-            const size = random(15, 40).toFixed(1);
+        result.textContent = success
+            ? "釣り成功！ 魚を倉庫に保存しています…"
+            : reason;
 
-            result.textContent =
-                `釣り成功！【${currentRarity.name}】湖の魚（${size}cm）を釣り上げた！`;
+        try {
+            const data = await sendFishingResult(success);
 
-            message.textContent = "お見事！ 魚を釣り上げました。";
-            sceneLabel.textContent = "釣り成功！";
+            if (success && data.success) {
+                result.textContent =
+                    `釣り成功！ ${data.fish_name}を1匹獲得！`;
 
-        } else {
-            result.textContent = reason;
-            message.textContent = "惜しい！ もう一度挑戦してみよう。";
-            sceneLabel.textContent = "魚が逃げていった……";
+                message.textContent =
+                    "釣った魚を倉庫に保存しました！";
+
+                sceneLabel.textContent = "釣り成功！";
+            } else {
+                message.textContent =
+                    "惜しい！ もう一度挑戦してみよう。";
+
+                sceneLabel.textContent =
+                    "魚が逃げていった……";
+            }
+
+        } catch (error) {
+            result.classList.add("is-failure");
+
+            result.textContent = error.message;
+
+            message.textContent =
+                "釣り結果を保存できませんでした。";
+        } finally {
+            fishingSessionId = null;
+
+            startButton.disabled = false;
+            startButton.textContent = "もう一度釣る";
+
+            fishState.textContent = "魚：釣り終了";
         }
-
-        fishState.textContent = "魚：釣り終了";
     }
 
     function update(now) {
@@ -246,24 +353,60 @@
         frameId = requestAnimationFrame(update);
     }
 
-    function startFishing() {
-        if (phase === "waiting" || phase === "fighting") return;
+    async function startFishing() {
+        if (phase === "waiting" ||
+            phase === "fighting" ||
+            phase === "starting") {
+            return;
+        }
+
+        phase = "starting";
+        fishingSessionId = null;
+
+        startButton.disabled = true;
+        startButton.textContent = "準備中…";
+
+        try {
+            // サーバー側で釣りセッションを作成
+            const data = await createFishingSession();
+
+            fishingSessionId = data.session_id;
+
+            // サーバーが決定したレアリティを使用
+            const selectedRarity = RARITIES.find(
+                rarity => rarity.name === data.rarity
+            );
+
+            if (!selectedRarity) {
+                throw new Error("魚のレアリティが不正です。");
+            }
+
+            currentRarity = selectedRarity;
+
+        } catch (error) {
+            phase = "idle";
+            startButton.disabled = false;
+            startButton.textContent = "釣りを始める";
+
+            message.textContent = error.message;
+            return;
+        }
 
         releaseInput();
 
         phase = "waiting";
         progress = 0;
         tension = 0;
-        currentRarity = chooseRarity();
         remaining = currentRarity.timeLimit;
+
         result.hidden = true;
         result.classList.remove("is-failure");
 
-        startButton.disabled = true;
         startButton.textContent = "魚を待っています…";
         holdButton.disabled = true;
 
         scene.classList.remove("is-fighting", "is-wild");
+
         message.textContent = "糸を投げた……魚が食いつくのを待とう。";
         sceneLabel.textContent = "浮きが揺れている……";
         fishState.textContent = "魚：まだかかっていません";
@@ -279,18 +422,23 @@
 
             holdButton.disabled = false;
             startButton.textContent = "釣り中";
+
             scene.classList.add("is-fighting");
 
             setBehavior(false);
+
             sceneLabel.textContent =
                 `${currentRarity.name}の魚が食いついた！`;
 
             message.textContent =
                 `【${currentRarity.name}】魚が食いついた！ 長押しで引き寄せよう。`;
+
             lastTime = performance.now();
+
             render();
 
             frameId = requestAnimationFrame(update);
+
         }, random(1500, 3000));
     }
 
