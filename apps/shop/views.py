@@ -1294,11 +1294,32 @@ def npc_shop(request):
             None,
         )
 
+    fish_inventory = []
+
+    if character is not None:
+        fish_inventory = (
+            InventoryItem.objects
+            .filter(
+                character=character,
+                item__name__in=[
+                    "コモンの魚",
+                    "レアの魚",
+                    "エピックの魚",
+                    "レジェンドの魚",
+                ],
+                item__category=Item.Category.MATERIAL,
+                item__npc_sellable=True,
+            )
+            .select_related("item")
+            .order_by("item__sell_price")
+        )
+
     return render(
         request,
         "npc_shop.html",
         {
             "shop_stocks": shop_stocks,
+            "fish_inventory": fish_inventory,
             "character": character,
         },
     )
@@ -1594,3 +1615,99 @@ def buy_item(
     return redirect(
         "shop:npc_shop"
     )
+
+# ============================================================
+# NPCショップ：魚の売却
+# ============================================================
+
+from django.views.decorators.http import require_POST
+
+FISH_SELL_PRICES = {
+    "コモンの魚": 2,
+    "レアの魚": 5,
+    "エピックの魚": 10,
+    "レジェンドの魚": 30,
+}
+
+
+@login_required
+@require_POST
+@transaction.atomic
+def sell_fish(request, inventory_item_id):
+
+    # 売却個数の確認
+    try:
+        quantity = int(request.POST.get("quantity", 1))
+    except (TypeError, ValueError):
+        messages.error(request, "売却個数が正しくありません。")
+        return redirect("shop:npc_shop")
+
+    if quantity < 1:
+        messages.error(request, "売却個数は1個以上にしてください。")
+        return redirect("shop:npc_shop")
+
+    # キャラクターをロック
+    character = (
+        Character.objects
+        .select_for_update()
+        .filter(user=request.user)
+        .first()
+    )
+
+    if character is None:
+        messages.error(request, "キャラクターが見つかりません。")
+        return redirect("shop:npc_shop")
+
+    # 自分の所持アイテムのみロックして取得
+    inventory_item = (
+        InventoryItem.objects
+        .select_for_update()
+        .select_related("item")
+        .filter(
+            pk=inventory_item_id,
+            character=character,
+        )
+        .first()
+    )
+
+    if inventory_item is None:
+        messages.error(request, "売却するアイテムが見つかりません。")
+        return redirect("shop:npc_shop")
+
+    item = inventory_item.item
+
+    # 魚以外の売却を禁止
+    if (
+        item.name not in FISH_SELL_PRICES
+        or item.category != Item.Category.MATERIAL
+        or not item.npc_sellable
+    ):
+        messages.error(request, "このアイテムは売却できません。")
+        return redirect("shop:npc_shop")
+
+    if quantity > inventory_item.quantity:
+        messages.error(request, "所持数を超えて売却できません。")
+        return redirect("shop:npc_shop")
+
+    # 固定売却価格
+    unit_price = FISH_SELL_PRICES[item.name]
+    total_price = unit_price * quantity
+
+    # 魚を消費
+    if inventory_item.quantity == quantity:
+        inventory_item.delete()
+    else:
+        inventory_item.quantity -= quantity
+        inventory_item.save(update_fields=["quantity"])
+
+    # Qを加算
+    character.gold += total_price
+    character.save(update_fields=["gold"])
+
+    messages.success(
+        request,
+        f"{item.name}を{quantity}個売却し、"
+        f"{total_price}Qを獲得しました。",
+    )
+
+    return redirect("shop:npc_shop")
