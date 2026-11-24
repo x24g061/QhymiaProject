@@ -20,6 +20,12 @@ urlpatterns = [
     ),
 
     path(
+        "npc/sell-fish/<int:inventory_item_id>/",
+        views.sell_fish,
+        name="sell_fish",
+    ),
+
+    path(
         "npc/buy/<int:stock_id>/",
         views.buy_item,
         name="buy_item",

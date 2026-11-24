@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'apps.payment',
     'apps.chat.apps.ChatConfig',
     "apps.battle.apps.BattleConfig",
+    "apps.game.apps.GameConfig",
 ]
 
 

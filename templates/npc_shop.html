@@ -309,7 +309,57 @@
              カテゴリー
         ================================== -->
 
-                <nav class="category-tabs" id="categories">
+
+<section class="fish-sell-section">
+
+    <h2>釣った魚を売却</h2>
+
+    <p>
+        釣りで獲得した魚をQに交換できます。
+    </p>
+
+    {% for entry in fish_inventory %}
+
+    <div class="fish-sell-row">
+
+        <div class="fish-sell-details">
+            <strong>{{ entry.item.name }}</strong>
+            <span>所持数：{{ entry.quantity }}個</span>
+            <span>売却価格：{{ entry.item.sell_price }}Q / 個</span>
+        </div>
+
+        <form
+            method="post"
+            action="{% url 'shop:sell_fish' entry.id %}"
+            class="fish-sell-form"
+        >
+            {% csrf_token %}
+
+            <input
+                type="number"
+                name="quantity"
+                value="1"
+                min="1"
+                max="{{ entry.quantity }}"
+                required
+            >
+
+            <button type="submit">
+                売却する
+            </button>
+        </form>
+
+    </div>
+
+    {% empty %}
+
+    <p>売却できる魚を所持していません。</p>
+
+    {% endfor %}
+
+</section>
+
+<nav class="category-tabs" id="categories">
 
                     <button type="button" class="category-button active" data-category="all">
                         すべて

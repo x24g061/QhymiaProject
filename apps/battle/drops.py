@@ -192,9 +192,19 @@ def grant_arena_drop(
     guaranteed=True の場合は抽選を省略する。
     """
 
+    # 釣り専用の魚は闘技場でドロップさせない
+    fishing_items = [
+        "コモンの魚",
+        "レアの魚",
+        "エピックの魚",
+        "レジェンドの魚",
+    ]
+
     candidates = list(
         Item.objects.filter(
             category=Item.Category.MATERIAL,
+        ).exclude(
+            name__in=fishing_items,
         )
     )
 
