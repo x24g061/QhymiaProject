@@ -1,0 +1,25 @@
+floor,tactic,old_wins,old_valid,old_rate,old_gap_pp,old_all_win_jobs,old_zero_win_jobs,new_wins,new_valid,new_rate,new_gap_pp,new_all_win_jobs,new_zero_win_jobs,delta_pp
+1,B,35,35,1.0,0.0,"[""grappler"", ""warrior"", ""hunter"", ""wizard"", ""priest"", ""wanderer"", ""assassin""]",[],35,35,1.0,0.0,"[""grappler"", ""warrior"", ""hunter"", ""wizard"", ""priest"", ""wanderer"", ""assassin""]",[],0.0
+1,C,34,35,0.9714285714285714,19.999999999999996,"[""grappler"", ""warrior"", ""hunter"", ""wizard"", ""priest"", ""wanderer""]",[],35,35,1.0,0.0,"[""grappler"", ""warrior"", ""hunter"", ""wizard"", ""priest"", ""wanderer"", ""assassin""]",[],2.857142857142858
+2,B,12,35,0.34285714285714286,80.0,[],"[""hunter"", ""wizard"", ""wanderer""]",35,35,1.0,0.0,"[""grappler"", ""warrior"", ""hunter"", ""wizard"", ""priest"", ""wanderer"", ""assassin""]",[],65.71428571428571
+2,C,11,35,0.3142857142857143,80.0,[],"[""hunter"", ""wizard""]",35,35,1.0,0.0,"[""grappler"", ""warrior"", ""hunter"", ""wizard"", ""priest"", ""wanderer"", ""assassin""]",[],68.57142857142857
+3,B,6,35,0.17142857142857143,40.0,[],"[""warrior"", ""hunter"", ""wanderer"", ""assassin""]",19,35,0.5428571428571428,100.0,"[""grappler"", ""wizard"", ""priest""]","[""hunter"", ""wanderer"", ""assassin""]",37.14285714285714
+3,C,7,35,0.2,100.0,"[""priest""]","[""warrior"", ""hunter"", ""wanderer"", ""assassin""]",22,35,0.6285714285714286,100.0,"[""grappler"", ""warrior"", ""wizard"", ""priest""]","[""hunter"", ""wanderer""]",42.857142857142854
+4,B,3,35,0.08571428571428572,40.0,[],"[""warrior"", ""hunter"", ""wizard"", ""wanderer"", ""assassin""]",29,35,0.8285714285714286,40.0,"[""grappler"", ""warrior"", ""priest""]",[],74.28571428571429
+4,C,8,35,0.22857142857142856,60.0,[],"[""warrior"", ""wizard""]",33,35,0.9428571428571428,40.0,"[""grappler"", ""warrior"", ""hunter"", ""priest"", ""wanderer"", ""assassin""]",[],71.42857142857143
+5,B,16,35,0.45714285714285713,100.0,"[""wizard"", ""priest""]","[""assassin""]",35,35,1.0,0.0,"[""grappler"", ""warrior"", ""hunter"", ""wizard"", ""priest"", ""wanderer"", ""assassin""]",[],54.28571428571429
+5,C,30,35,0.8571428571428571,40.0,"[""grappler"", ""wizard"", ""priest"", ""wanderer""]",[],35,35,1.0,0.0,"[""grappler"", ""warrior"", ""hunter"", ""wizard"", ""priest"", ""wanderer"", ""assassin""]",[],14.28571428571429
+6,B,35,35,1.0,0.0,"[""grappler"", ""warrior"", ""hunter"", ""wizard"", ""priest"", ""wanderer"", ""assassin""]",[],35,35,1.0,0.0,"[""grappler"", ""warrior"", ""hunter"", ""wizard"", ""priest"", ""wanderer"", ""assassin""]",[],0.0
+6,C,35,35,1.0,0.0,"[""grappler"", ""warrior"", ""hunter"", ""wizard"", ""priest"", ""wanderer"", ""assassin""]",[],35,35,1.0,0.0,"[""grappler"", ""warrior"", ""hunter"", ""wizard"", ""priest"", ""wanderer"", ""assassin""]",[],0.0
+7,B,6,35,0.17142857142857143,60.0,[],"[""grappler"", ""warrior"", ""hunter"", ""assassin""]",6,35,0.17142857142857143,60.0,[],"[""grappler"", ""warrior"", ""hunter"", ""assassin""]",0.0
+7,C,20,35,0.5714285714285714,80.0,"[""wanderer""]",[],24,35,0.6857142857142857,60.0,"[""wizard"", ""wanderer""]",[],11.428571428571432
+8,B,35,35,1.0,0.0,"[""grappler"", ""warrior"", ""hunter"", ""wizard"", ""priest"", ""wanderer"", ""assassin""]",[],35,35,1.0,0.0,"[""grappler"", ""warrior"", ""hunter"", ""wizard"", ""priest"", ""wanderer"", ""assassin""]",[],0.0
+8,C,35,35,1.0,0.0,"[""grappler"", ""warrior"", ""hunter"", ""wizard"", ""priest"", ""wanderer"", ""assassin""]",[],35,35,1.0,0.0,"[""grappler"", ""warrior"", ""hunter"", ""wizard"", ""priest"", ""wanderer"", ""assassin""]",[],0.0
+9,B,25,35,0.7142857142857143,40.0,"[""wanderer""]",[],22,35,0.6285714285714286,60.0,"[""warrior""]",[],-8.571428571428575
+9,C,21,35,0.6,40.0,[],[],19,35,0.5428571428571428,40.0,[],[],-5.714285714285716
+10,B,20,35,0.5714285714285714,40.0,[],[],19,35,0.5428571428571428,80.0,"[""assassin""]",[],-2.857142857142858
+10,C,24,35,0.6857142857142857,40.0,[],[],26,35,0.7428571428571429,40.0,"[""hunter"", ""assassin""]",[],5.714285714285716
+11,B,32,35,0.9142857142857143,19.999999999999996,"[""grappler"", ""wizard"", ""priest"", ""wanderer""]",[],34,35,0.9714285714285714,19.999999999999996,"[""warrior"", ""hunter"", ""wizard"", ""priest"", ""wanderer"", ""assassin""]",[],5.714285714285716
+11,C,34,35,0.9714285714285714,19.999999999999996,"[""grappler"", ""hunter"", ""wizard"", ""priest"", ""wanderer"", ""assassin""]",[],35,35,1.0,0.0,"[""grappler"", ""warrior"", ""hunter"", ""wizard"", ""priest"", ""wanderer"", ""assassin""]",[],2.857142857142858
+12,B,24,35,0.6857142857142857,40.0,"[""wanderer""]",[],28,35,0.8,40.0,"[""warrior"", ""hunter""]",[],11.428571428571432
+12,C,27,35,0.7714285714285715,40.0,"[""wanderer"", ""assassin""]",[],29,35,0.8285714285714286,40.0,"[""warrior"", ""hunter"", ""assassin""]",[],5.714285714285716

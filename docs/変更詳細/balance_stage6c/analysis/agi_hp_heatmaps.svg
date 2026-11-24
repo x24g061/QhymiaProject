@@ -1,0 +1,146 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1300" height="700" viewBox="0 0 1300 700">
+<rect width="100%" height="100%" fill="white"/>
+<text x="20" y="30" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">Titan AGI x HP: actual screening win rates</text>
+<text x="20" y="58" font-family="DejaVu Sans,sans-serif" font-size="15" fill="#222222">All 20 combinations use the same new seeds. C 25-60% is a permitted band; 25% is not a point target.</text>
+<text x="20" y="82" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">Counts pool seven fixed jobs descriptively. Job-specific Wilson intervals and extreme cells are in TABLES.md.</text>
+<text x="255" y="125" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">B center 35%</text>
+<text x="150" y="162" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">HP 50k</text>
+<text x="275" y="162" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">HP 100k</text>
+<text x="400" y="162" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">HP 150k</text>
+<text x="525" y="162" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">HP 200k</text>
+<text x="20" y="232" font-family="DejaVu Sans,sans-serif" font-size="15" fill="#222222">AGI 180</text>
+<rect x="140" y="190" width="118" height="78" fill="#6eb2dc"/>
+<text x="160" y="223" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">100.0%</text>
+<text x="165" y="247" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">21/21</text>
+<rect x="265" y="190" width="118" height="78" fill="#6eb2dc"/>
+<text x="285" y="223" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">100.0%</text>
+<text x="290" y="247" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">21/21</text>
+<rect x="390" y="190" width="118" height="78" fill="#95c0dc"/>
+<text x="410" y="223" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">71.4%</text>
+<text x="415" y="247" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">15/21</text>
+<rect x="515" y="190" width="118" height="78" fill="#c9d4dc"/>
+<text x="535" y="223" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">33.3%</text>
+<text x="540" y="247" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">7/21</text>
+<text x="20" y="322" font-family="DejaVu Sans,sans-serif" font-size="15" fill="#222222">AGI 900</text>
+<rect x="140" y="280" width="118" height="78" fill="#6eb2dc"/>
+<text x="160" y="313" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">100.0%</text>
+<text x="165" y="337" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">21/21</text>
+<rect x="265" y="280" width="118" height="78" fill="#afcadc"/>
+<text x="285" y="313" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">52.4%</text>
+<text x="290" y="337" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">11/21</text>
+<rect x="390" y="280" width="118" height="78" fill="#f0e2dc"/>
+<text x="410" y="313" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">4.8%</text>
+<text x="415" y="337" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">1/21</text>
+<rect x="515" y="280" width="118" height="78" fill="#f7e5dc"/>
+<text x="535" y="313" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">0.0%</text>
+<text x="540" y="337" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">0/21</text>
+<text x="20" y="412" font-family="DejaVu Sans,sans-serif" font-size="15" fill="#222222">AGI 1800</text>
+<rect x="140" y="370" width="118" height="78" fill="#6eb2dc"/>
+<text x="160" y="403" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">100.0%</text>
+<text x="165" y="427" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">21/21</text>
+<rect x="265" y="370" width="118" height="78" fill="#c2d1dc"/>
+<text x="285" y="403" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">38.1%</text>
+<text x="290" y="427" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">8/21</text>
+<rect x="390" y="370" width="118" height="78" fill="#f7e5dc"/>
+<text x="410" y="403" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">0.0%</text>
+<text x="415" y="427" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">0/21</text>
+<rect x="515" y="370" width="118" height="78" fill="#f7e5dc"/>
+<text x="535" y="403" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">0.0%</text>
+<text x="540" y="427" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">0/21</text>
+<text x="20" y="502" font-family="DejaVu Sans,sans-serif" font-size="15" fill="#222222">AGI 2700</text>
+<rect x="140" y="460" width="118" height="78" fill="#6eb2dc"/>
+<text x="160" y="493" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">100.0%</text>
+<text x="165" y="517" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">21/21</text>
+<rect x="265" y="460" width="118" height="78" fill="#bccfdc"/>
+<text x="285" y="493" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">42.9%</text>
+<text x="290" y="517" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">9/21</text>
+<rect x="390" y="460" width="118" height="78" fill="#f7e5dc"/>
+<text x="410" y="493" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">0.0%</text>
+<text x="415" y="517" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">0/21</text>
+<rect x="515" y="460" width="118" height="78" fill="#f7e5dc"/>
+<text x="535" y="493" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">0.0%</text>
+<text x="540" y="517" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">0/21</text>
+<text x="20" y="592" font-family="DejaVu Sans,sans-serif" font-size="15" fill="#222222">AGI 3600</text>
+<rect x="140" y="550" width="118" height="78" fill="#74b4dc"/>
+<text x="160" y="583" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">95.2%</text>
+<text x="165" y="607" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">20/21</text>
+<rect x="265" y="550" width="118" height="78" fill="#e3dddc"/>
+<text x="285" y="583" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">14.3%</text>
+<text x="290" y="607" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">3/21</text>
+<rect x="390" y="550" width="118" height="78" fill="#f0e2dc"/>
+<text x="410" y="583" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">4.8%</text>
+<text x="415" y="607" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">1/21</text>
+<rect x="515" y="550" width="118" height="78" fill="#f7e5dc"/>
+<text x="535" y="583" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">0.0%</text>
+<text x="540" y="607" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">0/21</text>
+<text x="905" y="125" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">C band 25-60%</text>
+<text x="800" y="162" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">HP 50k</text>
+<text x="925" y="162" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">HP 100k</text>
+<text x="1050" y="162" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">HP 150k</text>
+<text x="1175" y="162" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">HP 200k</text>
+<text x="670" y="232" font-family="DejaVu Sans,sans-serif" font-size="15" fill="#222222">AGI 180</text>
+<rect x="790" y="190" width="118" height="78" fill="#6eb2dc"/>
+<text x="810" y="223" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">100.0%</text>
+<text x="815" y="247" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">21/21</text>
+<rect x="915" y="190" width="118" height="78" fill="#6eb2dc"/>
+<text x="935" y="223" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">100.0%</text>
+<text x="940" y="247" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">21/21</text>
+<rect x="1040" y="190" width="118" height="78" fill="#6eb2dc"/>
+<text x="1060" y="223" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">100.0%</text>
+<text x="1065" y="247" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">21/21</text>
+<rect x="1165" y="190" width="118" height="78" fill="#88bbdc"/>
+<text x="1185" y="223" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">81.0%</text>
+<text x="1190" y="247" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">17/21</text>
+<text x="670" y="322" font-family="DejaVu Sans,sans-serif" font-size="15" fill="#222222">AGI 900</text>
+<rect x="790" y="280" width="118" height="78" fill="#6eb2dc"/>
+<text x="810" y="313" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">100.0%</text>
+<text x="815" y="337" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">21/21</text>
+<rect x="915" y="280" width="118" height="78" fill="#6eb2dc"/>
+<text x="935" y="313" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">100.0%</text>
+<text x="940" y="337" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">21/21</text>
+<rect x="1040" y="280" width="118" height="78" fill="#b5ccdc"/>
+<text x="1060" y="313" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">47.6%</text>
+<text x="1065" y="337" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">10/21</text>
+<rect x="1165" y="280" width="118" height="78" fill="#c2d1dc"/>
+<text x="1185" y="313" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">38.1%</text>
+<text x="1190" y="337" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">8/21</text>
+<text x="670" y="412" font-family="DejaVu Sans,sans-serif" font-size="15" fill="#222222">AGI 1800</text>
+<rect x="790" y="370" width="118" height="78" fill="#6eb2dc"/>
+<text x="810" y="403" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">100.0%</text>
+<text x="815" y="427" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">21/21</text>
+<rect x="915" y="370" width="118" height="78" fill="#88bbdc"/>
+<text x="935" y="403" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">81.0%</text>
+<text x="940" y="427" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">17/21</text>
+<rect x="1040" y="370" width="118" height="78" fill="#afcadc"/>
+<text x="1060" y="403" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">52.4%</text>
+<text x="1065" y="427" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">11/21</text>
+<rect x="1165" y="370" width="118" height="78" fill="#cfd6dc"/>
+<text x="1185" y="403" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">28.6%</text>
+<text x="1190" y="427" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">6/21</text>
+<text x="670" y="502" font-family="DejaVu Sans,sans-serif" font-size="15" fill="#222222">AGI 2700</text>
+<rect x="790" y="460" width="118" height="78" fill="#6eb2dc"/>
+<text x="810" y="493" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">100.0%</text>
+<text x="815" y="517" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">21/21</text>
+<rect x="915" y="460" width="118" height="78" fill="#a8c7dc"/>
+<text x="935" y="493" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">57.1%</text>
+<text x="940" y="517" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">12/21</text>
+<rect x="1040" y="460" width="118" height="78" fill="#d6d8dc"/>
+<text x="1060" y="493" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">23.8%</text>
+<text x="1065" y="517" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">5/21</text>
+<rect x="1165" y="460" width="118" height="78" fill="#dcdbdc"/>
+<text x="1185" y="493" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">19.0%</text>
+<text x="1190" y="517" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">4/21</text>
+<text x="670" y="592" font-family="DejaVu Sans,sans-serif" font-size="15" fill="#222222">AGI 3600</text>
+<rect x="790" y="550" width="118" height="78" fill="#81b9dc"/>
+<text x="810" y="583" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">85.7%</text>
+<text x="815" y="607" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">18/21</text>
+<rect x="915" y="550" width="118" height="78" fill="#bccfdc"/>
+<text x="935" y="583" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">42.9%</text>
+<text x="940" y="607" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">9/21</text>
+<rect x="1040" y="550" width="118" height="78" fill="#e9e0dc"/>
+<text x="1060" y="583" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">9.5%</text>
+<text x="1065" y="607" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">2/21</text>
+<rect x="1165" y="550" width="118" height="78" fill="#e9e0dc"/>
+<text x="1185" y="583" font-family="DejaVu Sans,sans-serif" font-size="20" fill="#222222">9.5%</text>
+<text x="1190" y="607" font-family="DejaVu Sans,sans-serif" font-size="12" fill="#222222">2/21</text>
+</svg>

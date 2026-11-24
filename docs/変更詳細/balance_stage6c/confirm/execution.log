@@ -1,0 +1,11 @@
+conditions=56 battles=672
+7/56 conditions; 84 runs; 11.1s
+14/56 conditions; 168 runs; 19.5s
+21/56 conditions; 252 runs; 44.2s
+28/56 conditions; 336 runs; 68.3s
+35/56 conditions; 420 runs; 94.7s
+42/56 conditions; 504 runs; 116.1s
+49/56 conditions; 588 runs; 142.3s
+56/56 conditions; 672 runs; 169.8s
+{"trials": 672, "valid": 672, "exceptions": 0, "wins": 371, "losses": 301, "draws": 0, "win_rate": 0.5520833333333334, "wilson95": [0.5142951608793114, 0.5892794261579299], "mean_loops": 33.267857142857146, "median_loops": 34.5, "loop_limits": 0, "player_mean_actions": 15.671130952380953, "boss_mean_actions": 23.22470238095238, "mean_action_difference": -7.553571428571429}
+battles_per_second=4.131

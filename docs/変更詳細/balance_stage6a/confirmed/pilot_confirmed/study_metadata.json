@@ -1,0 +1,40 @@
+{
+  "started_jst": "2026-11-20",
+  "branch": "main",
+  "main_verified_sha": "28a2d22b4d9e3bfd7221f221708d1e1980849ab9",
+  "old_head": "caf9664",
+  "legacy_growth_sha256": "6cd8ed58c7b777be7f5b1bc70be3356183816fb8f1728a6139a3f14404778a65",
+  "archive": "docs/変更詳細/balance_stage5a/analysis/profiles.json",
+  "archive_sha256": "d28526f409b784d19a0bc6427d8f5e2b1597a9b0ebdd3be15341d36dd52d5f5f",
+  "script_sha256": "3a4a91cdc7ab43a430a46d334bbfac298b7a8864ada06bee21fa331fea5bcde9",
+  "growth_scope": "新規育成・legacy=0。最後の回帰と最終周の固定職業Lv成長の直接再生。過去周の育成時間は対象外。",
+  "observation": "全戦のactions/hp_events/state_eventsを保存。戦闘中SELECT以外を拒否。",
+  "fixed_fields": [
+    "floor",
+    "job",
+    "race",
+    "reincarnations",
+    "level",
+    "equipment",
+    "equipment_bonuses",
+    "permanent_skill_codes",
+    "inheritance_history",
+    "inheritance_remaining",
+    "inheritance_mode",
+    "seed",
+    "attribute_weights",
+    "max_st",
+    "start_st"
+  ],
+  "seed_check": {
+    "searched_run_files": 16,
+    "unused_seeds": [
+      11061120,
+      11061121,
+      11061122,
+      11061123,
+      11061124,
+      12061121
+    ]
+  }
+}

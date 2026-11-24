@@ -1,0 +1,8 @@
+{
+  "conditions": 322,
+  "battles": 1610,
+  "estimated_battle_seconds": 490.772,
+  "setup_allowance_seconds": 40,
+  "estimated_total_seconds": 530.772,
+  "cost_policy": "同候補実測の最大値×2を優先。未測定は6-A新成長実測×HP比/AGI余裕係数。"
+}

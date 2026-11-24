@@ -1,0 +1,12 @@
+{
+  "conditions": 126,
+  "battles": 1134,
+  "estimated_battle_seconds": 527.846,
+  "setup_allowance_seconds": 40,
+  "estimated_total_seconds": 567.846,
+  "cost_policy": "同候補実測の最大値×2を優先。未測定は6-A新成長実測×HP比/AGI余裕係数。",
+  "trials_per_condition": 9,
+  "selection_file": "selection_reviewed.json",
+  "selection_sha256": "5b6541eb10146576b5eef0a6964ca59b953470f9ae2c742e723bdd9863372c2c",
+  "confirm_driver_sha256": "a92cb7cd79461b558c32664b00ab716bb9efe9523e73aded9f17c55b4adbd150"
+}

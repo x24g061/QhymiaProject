@@ -1,0 +1,248 @@
+{
+  "screen": {
+    "conditions": 322,
+    "battles": 1610,
+    "estimated_battle_seconds": 474.325,
+    "setup_allowance_seconds": 40,
+    "estimated_total_seconds": 514.325,
+    "cost_policy": "同候補実測の最大値×2を優先。未測定は6-A新成長実測×HP比/AGI余裕係数。"
+  },
+  "pilot": {
+    "conditions": 40,
+    "battles": 40,
+    "estimated_battle_seconds": 11.682,
+    "setup_allowance_seconds": 40,
+    "estimated_total_seconds": 51.682,
+    "cost_policy": "同候補実測の最大値×2を優先。未測定は6-A新成長実測×HP比/AGI余裕係数。"
+  },
+  "confirm_max_conditions": 126,
+  "confirm_max_battles": 1890,
+  "confirm_trials": 15,
+  "screen_trials": 5,
+  "limits": {
+    "pilot": 180,
+    "screen": 600,
+    "confirm": 600
+  },
+  "seeds": {
+    "pilot": 21061120,
+    "screen": 22061120,
+    "confirm": 23061120
+  },
+  "seed_check": {
+    "searched_journals": 19,
+    "unused_seeds": [
+      21061120,
+      22061120,
+      22061121,
+      22061122,
+      22061123,
+      22061124,
+      23061120,
+      23061121,
+      23061122,
+      23061123,
+      23061124,
+      23061125,
+      23061126,
+      23061127,
+      23061128,
+      23061129,
+      23061130,
+      23061131,
+      23061132,
+      23061133,
+      23061134
+    ]
+  },
+  "candidates": [
+    {
+      "id": "f8-control",
+      "floor": 8,
+      "override": {}
+    },
+    {
+      "id": "f8-agility900",
+      "floor": 8,
+      "override": {
+        "agility": 900
+      }
+    },
+    {
+      "id": "f8-agility1800",
+      "floor": 8,
+      "override": {
+        "agility": 1800
+      }
+    },
+    {
+      "id": "f8-agility2700",
+      "floor": 8,
+      "override": {
+        "agility": 2700
+      }
+    },
+    {
+      "id": "f8-agility3600",
+      "floor": 8,
+      "override": {
+        "agility": 3600
+      }
+    },
+    {
+      "id": "f8-max_hp100000",
+      "floor": 8,
+      "override": {
+        "max_hp": 100000
+      }
+    },
+    {
+      "id": "f8-max_hp150000",
+      "floor": 8,
+      "override": {
+        "max_hp": 150000
+      }
+    },
+    {
+      "id": "f8-max_hp200000",
+      "floor": 8,
+      "override": {
+        "max_hp": 200000
+      }
+    },
+    {
+      "id": "f7-control",
+      "floor": 7,
+      "override": {}
+    },
+    {
+      "id": "f7-max_hp20000",
+      "floor": 7,
+      "override": {
+        "max_hp": 20000
+      }
+    },
+    {
+      "id": "f7-max_hp24000",
+      "floor": 7,
+      "override": {
+        "max_hp": 24000
+      }
+    },
+    {
+      "id": "f7-max_hp36000",
+      "floor": 7,
+      "override": {
+        "max_hp": 36000
+      }
+    },
+    {
+      "id": "f7-intelligence1000",
+      "floor": 7,
+      "override": {
+        "intelligence": 1000
+      }
+    },
+    {
+      "id": "f7-intelligence1300",
+      "floor": 7,
+      "override": {
+        "intelligence": 1300
+      }
+    },
+    {
+      "id": "f7-intelligence1900",
+      "floor": 7,
+      "override": {
+        "intelligence": 1900
+      }
+    },
+    {
+      "id": "f12-control",
+      "floor": 12,
+      "override": {}
+    },
+    {
+      "id": "f12-max_hp190000",
+      "floor": 12,
+      "override": {
+        "max_hp": 190000
+      }
+    },
+    {
+      "id": "f12-max_hp220000",
+      "floor": 12,
+      "override": {
+        "max_hp": 220000
+      }
+    },
+    {
+      "id": "f12-max_hp260000",
+      "floor": 12,
+      "override": {
+        "max_hp": 260000
+      }
+    },
+    {
+      "id": "f12-strength6500",
+      "floor": 12,
+      "override": {
+        "strength": 6500
+      }
+    },
+    {
+      "id": "f12-strength7500",
+      "floor": 12,
+      "override": {
+        "strength": 7500
+      }
+    },
+    {
+      "id": "f12-intelligence6500",
+      "floor": 12,
+      "override": {
+        "intelligence": 6500
+      }
+    },
+    {
+      "id": "f12-intelligence7500",
+      "floor": 12,
+      "override": {
+        "intelligence": 7500
+      }
+    }
+  ],
+  "b_targets": {
+    "1": 0.1,
+    "2": 0.14,
+    "3": 0.17,
+    "4": 0.21,
+    "5": 0.25,
+    "6": 0.28,
+    "7": 0.32,
+    "8": 0.35,
+    "9": 0.39,
+    "10": 0.43,
+    "11": 0.46,
+    "12": 0.5
+  },
+  "c_reference": {
+    "1": 0.5,
+    "2": 0.48,
+    "3": 0.45,
+    "4": 0.43,
+    "5": 0.41,
+    "6": 0.39,
+    "7": 0.36,
+    "8": 0.34,
+    "9": 0.32,
+    "10": 0.3,
+    "11": 0.27,
+    "12": null
+  },
+  "c_band_focus": [
+    0.25,
+    0.6
+  ],
+  "selection_policy": "率距離最良1候補+率距離20pt以内を優先した格差1候補/階。C帯内は距離0。交差を点数化しない。"
+}

@@ -1,0 +1,17 @@
+{
+  "conditions": 84,
+  "battles": 420,
+  "estimated_battle_seconds": 243.178,
+  "setup_allowance_seconds": 40,
+  "estimated_total_seconds": 283.178,
+  "by_combination_seconds": {
+    "hp50000-agi180": 16.150460739972914,
+    "hp100000-agi2700": 36.81427433004501,
+    "hp75000-agi2700": 47.553355042809926,
+    "hp125000-agi2700": 47.553355042809926,
+    "hp100000-agi2250": 47.553355042809926,
+    "hp100000-agi3150": 47.553355042809926
+  },
+  "policy": "同条件実測最大×2、未測定職は同組合せpilot最大×2。実測なしは6-Bタイタン実測時間×2.5。",
+  "trials": 5
+}

@@ -1,0 +1,9 @@
+conditions=40 battles=40
+7/40 conditions; 7 runs; 5.0s
+14/40 conditions; 14 runs; 8.9s
+21/40 conditions; 21 runs; 10.3s
+28/40 conditions; 28 runs; 11.4s
+35/40 conditions; 35 runs; 12.5s
+40/40 conditions; 40 runs; 13.3s
+{"trials": 40, "valid": 40, "exceptions": 0, "wins": 27, "losses": 13, "draws": 0, "win_rate": 0.675, "wilson95": [0.5201774618987768, 0.799154977682173], "mean_loops": 30.25, "median_loops": 15.5, "loop_limits": 0, "player_mean_actions": 18.125, "boss_mean_actions": 9.175, "mean_action_difference": 8.95}
+battles_per_second=5.344

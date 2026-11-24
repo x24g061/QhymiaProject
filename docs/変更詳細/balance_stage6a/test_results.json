@@ -1,0 +1,25 @@
+{
+  "full": {
+    "command": "venv/bin/python manage.py test --noinput",
+    "tests": 561,
+    "seconds": 76.13,
+    "exit_code": 0,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "expected_failures": 0
+  },
+  "stage6a_initial": {
+    "tests": 9,
+    "seconds": 3.346,
+    "exit_code": 0
+  },
+  "stage6a_final": {
+    "command": "venv/bin/python manage.py test apps.battle.test_balance_stage6a --noinput",
+    "tests": 9,
+    "seconds": 3.297,
+    "exit_code": 0
+  },
+  "django_check": "System check identified no issues (0 silenced).",
+  "tracked_diff_check_exit_code": 0
+}

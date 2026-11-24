@@ -1,0 +1,25 @@
+{
+  "initial_observation": {
+    "tests": 6,
+    "seconds": 3.752,
+    "exit_code": 0
+  },
+  "stage6c": {
+    "command": "venv/bin/python manage.py test apps.battle.test_balance_stage6c --noinput",
+    "tests": 8,
+    "seconds": 3.636,
+    "exit_code": 0,
+    "failures": 0,
+    "errors": 0
+  },
+  "full": {
+    "command": "venv/bin/python manage.py test --noinput",
+    "tests": 577,
+    "seconds": 109.0,
+    "exit_code": 0,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "expected_failures": 0
+  }
+}

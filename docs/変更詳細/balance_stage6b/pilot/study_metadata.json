@@ -1,0 +1,226 @@
+{
+  "phase": "pilot",
+  "branch": "feature/boss-balance-stage6b",
+  "source_stage6a": "docs/変更詳細/balance_stage6a/confirmed/measurement",
+  "source_stage6a_manifest_sha256": "7d284843cf7d6cfe2393700fb8f58c6495501f57e2f6e80928947a8f699f62e6",
+  "wrapper_sha256": "5ee5bc261a8e3377d84523f7b4e6f112ff70677df6a86bfa1f3f6f2f3194bcca",
+  "legacy_reincarnation_points": 0,
+  "b_targets": {
+    "1": 0.1,
+    "2": 0.14,
+    "3": 0.17,
+    "4": 0.21,
+    "5": 0.25,
+    "6": 0.28,
+    "7": 0.32,
+    "8": 0.35,
+    "9": 0.39,
+    "10": 0.43,
+    "11": 0.46,
+    "12": 0.5
+  },
+  "c_reference": {
+    "1": 0.5,
+    "2": 0.48,
+    "3": 0.45,
+    "4": 0.43,
+    "5": 0.41,
+    "6": 0.39,
+    "7": 0.36,
+    "8": 0.34,
+    "9": 0.32,
+    "10": 0.3,
+    "11": 0.27,
+    "12": null
+  },
+  "c_permitted_band_focus_floors": [
+    0.25,
+    0.6
+  ],
+  "c_at_12_is_range_not_target": true,
+  "crossing_is_separate_not_selection_requirement": true,
+  "seed_check": {
+    "searched_journals": 19,
+    "unused_seeds": [
+      21061120,
+      22061120,
+      22061121,
+      22061122,
+      22061123,
+      22061124,
+      23061120,
+      23061121,
+      23061122,
+      23061123,
+      23061124,
+      23061125,
+      23061126,
+      23061127,
+      23061128,
+      23061129,
+      23061130,
+      23061131,
+      23061132,
+      23061133,
+      23061134
+    ]
+  },
+  "candidates": [
+    {
+      "id": "f8-control",
+      "floor": 8,
+      "override": {}
+    },
+    {
+      "id": "f8-agility900",
+      "floor": 8,
+      "override": {
+        "agility": 900
+      }
+    },
+    {
+      "id": "f8-agility1800",
+      "floor": 8,
+      "override": {
+        "agility": 1800
+      }
+    },
+    {
+      "id": "f8-agility2700",
+      "floor": 8,
+      "override": {
+        "agility": 2700
+      }
+    },
+    {
+      "id": "f8-agility3600",
+      "floor": 8,
+      "override": {
+        "agility": 3600
+      }
+    },
+    {
+      "id": "f8-max_hp100000",
+      "floor": 8,
+      "override": {
+        "max_hp": 100000
+      }
+    },
+    {
+      "id": "f8-max_hp150000",
+      "floor": 8,
+      "override": {
+        "max_hp": 150000
+      }
+    },
+    {
+      "id": "f8-max_hp200000",
+      "floor": 8,
+      "override": {
+        "max_hp": 200000
+      }
+    },
+    {
+      "id": "f7-control",
+      "floor": 7,
+      "override": {}
+    },
+    {
+      "id": "f7-max_hp20000",
+      "floor": 7,
+      "override": {
+        "max_hp": 20000
+      }
+    },
+    {
+      "id": "f7-max_hp24000",
+      "floor": 7,
+      "override": {
+        "max_hp": 24000
+      }
+    },
+    {
+      "id": "f7-max_hp36000",
+      "floor": 7,
+      "override": {
+        "max_hp": 36000
+      }
+    },
+    {
+      "id": "f7-intelligence1000",
+      "floor": 7,
+      "override": {
+        "intelligence": 1000
+      }
+    },
+    {
+      "id": "f7-intelligence1300",
+      "floor": 7,
+      "override": {
+        "intelligence": 1300
+      }
+    },
+    {
+      "id": "f7-intelligence1900",
+      "floor": 7,
+      "override": {
+        "intelligence": 1900
+      }
+    },
+    {
+      "id": "f12-control",
+      "floor": 12,
+      "override": {}
+    },
+    {
+      "id": "f12-max_hp190000",
+      "floor": 12,
+      "override": {
+        "max_hp": 190000
+      }
+    },
+    {
+      "id": "f12-max_hp220000",
+      "floor": 12,
+      "override": {
+        "max_hp": 220000
+      }
+    },
+    {
+      "id": "f12-max_hp260000",
+      "floor": 12,
+      "override": {
+        "max_hp": 260000
+      }
+    },
+    {
+      "id": "f12-strength6500",
+      "floor": 12,
+      "override": {
+        "strength": 6500
+      }
+    },
+    {
+      "id": "f12-strength7500",
+      "floor": 12,
+      "override": {
+        "strength": 7500
+      }
+    },
+    {
+      "id": "f12-intelligence6500",
+      "floor": 12,
+      "override": {
+        "intelligence": 6500
+      }
+    },
+    {
+      "id": "f12-intelligence7500",
+      "floor": 12,
+      "override": {
+        "intelligence": 7500
+      }
+    }
+  ],
+  "max_seconds": 180
+}

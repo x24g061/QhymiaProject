@@ -1,0 +1,20 @@
+{
+  "automatic_selection": "selection.json",
+  "selected": [
+    "f8-max_hp200000",
+    "f8-agility3600",
+    "f7-intelligence1900",
+    "f7-intelligence1300",
+    "f12-max_hp190000",
+    "f12-strength6500"
+  ],
+  "changes": [
+    {
+      "from": "f8-agility1800",
+      "to": "f8-agility3600",
+      "reason": "事前機械選別の格差候補は全勝で目標から遠いAGI1800となった。重点8階の行動機会を評価するため、同じAGI系列で勝敗変化が出た最大候補3600を独立seedで確認する。1800はB/C各35/35・ボス平均12.44行動、3600はB30/35・C28/35・平均25.04行動。Cを25%に寄せる選択ではなく、ユーザー指定のAGI単独感度と行動機会に基づく手動の確認候補選択。"
+    }
+  ],
+  "unchanged_policy": "C25〜60%は帯内距離0、参考線との差とB/C交差を合否や順位へ混ぜない。B中心差、C帯外距離、全敗職、最大格差は別々に報告する。選択後の独立確認結果を主評価とする。",
+  "selection_bias_note": "screenの結果を見て選んだ候補。screenとconfirmの合算は探索的補助集計で、独立確認標本の代わりにしない。"
+}

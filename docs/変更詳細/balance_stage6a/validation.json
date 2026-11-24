@@ -1,0 +1,17 @@
+{
+  "conditions": 336,
+  "records": 1680,
+  "unique_case_seeds": 1680,
+  "profile_pairs_replayed": 84,
+  "official_bosses": 12,
+  "all_detailed_hp_st_ledgers_valid": true,
+  "missing": 0,
+  "exceptions": 0,
+  "loop_limits": 0,
+  "draws": 0,
+  "old_file_fingerprints": 594,
+  "old_files_changed": [],
+  "old_files_deleted": [],
+  "battle_source_fingerprint_matches": true,
+  "final_branch": "feature/boss-balance-stage6a"
+}

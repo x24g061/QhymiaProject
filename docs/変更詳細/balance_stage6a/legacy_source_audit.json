@@ -1,0 +1,26 @@
+{
+  "apps/accounts/growth.py": {
+    "source_sha256": {
+      "f246afb": "6cd8ed58c7b777be7f5b1bc70be3356183816fb8f1728a6139a3f14404778a65",
+      "caf9664": "6cd8ed58c7b777be7f5b1bc70be3356183816fb8f1728a6139a3f14404778a65"
+    },
+    "target_functions": [
+      "level_up_once",
+      "apply_stat_growth",
+      "get_growth_weights",
+      "roll_attribute_growth"
+    ],
+    "target_ast_equal": true
+  },
+  "config/views.py": {
+    "source_sha256": {
+      "f246afb": "4000a9dda6cca4cf715c1fd8e9679a6b1dbd74baa4134bc0657d66af7f0ce4aa",
+      "caf9664": "fd1ea94d18e1ab0176552edb57f73f8ec3789fdcae0c199c965e71c47b97b976"
+    },
+    "target_functions": [
+      "generate_reincarnation_bonus",
+      "calculate_reincarnation_stats"
+    ],
+    "target_ast_equal": true
+  }
+}

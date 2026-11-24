@@ -1,0 +1,50 @@
+{
+  "phases": {
+    "pilot": {
+      "conditions": 80,
+      "runs": 80,
+      "exceptions": 0,
+      "missing": 0,
+      "draws": 0,
+      "loop_limits": 0,
+      "battle_seconds": 23.147286355999313
+    },
+    "screen": {
+      "conditions": 280,
+      "runs": 840,
+      "exceptions": 0,
+      "missing": 0,
+      "draws": 0,
+      "loop_limits": 0,
+      "battle_seconds": 219.8845218629849
+    },
+    "refine": {
+      "conditions": 84,
+      "runs": 420,
+      "exceptions": 0,
+      "missing": 0,
+      "draws": 0,
+      "loop_limits": 0,
+      "battle_seconds": 127.27314150300299
+    },
+    "confirm": {
+      "conditions": 56,
+      "runs": 672,
+      "exceptions": 0,
+      "missing": 0,
+      "draws": 0,
+      "loop_limits": 0,
+      "battle_seconds": 162.66750873302226
+    }
+  },
+  "unique_case_seeds": 2012,
+  "original_files": 738,
+  "original_changed": [
+    "AGENTS.md"
+  ],
+  "original_deleted": [],
+  "all_profiles_hp_st_skill_attempts_match": true,
+  "formal_catalog_unchanged": true,
+  "production_source_fingerprint_matches": true,
+  "branch": "feature/boss-balance-stage6c"
+}

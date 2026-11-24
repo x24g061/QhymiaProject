@@ -1,0 +1,1486 @@
+phase,candidate,job,tactic,first_five,battles
+screen,hp50000-agi180,grappler,B,"[""normal""]",2
+screen,hp50000-agi180,grappler,B,"[""steel_body""]",1
+screen,hp50000-agi180,grappler,C1,[],3
+screen,hp50000-agi180,warrior,B,"[""steel_body"", ""solid_stance""]",2
+screen,hp50000-agi180,warrior,B,"[""steel_body""]",1
+screen,hp50000-agi180,warrior,C1,[],3
+screen,hp50000-agi180,hunter,B,"[""normal""]",2
+screen,hp50000-agi180,hunter,B,"[""steel_body""]",1
+screen,hp50000-agi180,hunter,C1,"[""status_skip""]",1
+screen,hp50000-agi180,hunter,C1,[],2
+screen,hp50000-agi180,wizard,B,"[""steel_body""]",1
+screen,hp50000-agi180,wizard,B,"[""normal""]",1
+screen,hp50000-agi180,wizard,B,"[""status_skip""]",1
+screen,hp50000-agi180,wizard,C2,[],2
+screen,hp50000-agi180,wizard,C2,"[""steel_body""]",1
+screen,hp50000-agi180,priest,B,"[""steel_body""]",1
+screen,hp50000-agi180,priest,B,"[""normal""]",1
+screen,hp50000-agi180,priest,B,"[""status_skip""]",1
+screen,hp50000-agi180,priest,C2,"[""normal""]",1
+screen,hp50000-agi180,priest,C2,"[""steel_body""]",1
+screen,hp50000-agi180,priest,C2,[],1
+screen,hp50000-agi180,wanderer,B,"[""steel_body""]",2
+screen,hp50000-agi180,wanderer,B,[],1
+screen,hp50000-agi180,wanderer,C1,[],3
+screen,hp50000-agi180,assassin,B,"[""steel_body""]",3
+screen,hp50000-agi180,assassin,C1,"[""status_skip""]",1
+screen,hp50000-agi180,assassin,C1,[],2
+screen,hp100000-agi180,grappler,B,"[""normal"", ""steel_body"", ""solid_stance""]",1
+screen,hp100000-agi180,grappler,B,"[""normal"", ""normal""]",1
+screen,hp100000-agi180,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp100000-agi180,grappler,C1,"[""steel_body"", ""solid_stance""]",1
+screen,hp100000-agi180,grappler,C1,"[""steel_body""]",1
+screen,hp100000-agi180,grappler,C1,[],1
+screen,hp100000-agi180,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp100000-agi180,warrior,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi180,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+screen,hp100000-agi180,warrior,C1,"[""steel_body"", ""solid_stance""]",2
+screen,hp100000-agi180,warrior,C1,"[""normal""]",1
+screen,hp100000-agi180,hunter,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp100000-agi180,hunter,B,"[""normal"", ""normal""]",1
+screen,hp100000-agi180,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+screen,hp100000-agi180,hunter,C1,"[""normal"", ""status_skip""]",2
+screen,hp100000-agi180,hunter,C1,"[""steel_body""]",1
+screen,hp100000-agi180,wizard,B,"[""steel_body"", ""status_skip""]",1
+screen,hp100000-agi180,wizard,B,"[""normal"", ""steel_body""]",1
+screen,hp100000-agi180,wizard,B,"[""status_skip""]",1
+screen,hp100000-agi180,wizard,C2,"[""normal""]",1
+screen,hp100000-agi180,wizard,C2,"[""steel_body""]",1
+screen,hp100000-agi180,wizard,C2,"[""status_skip""]",1
+screen,hp100000-agi180,priest,B,"[""steel_body"", ""normal"", ""status_skip"", ""solid_stance"", ""counter_stance""]",1
+screen,hp100000-agi180,priest,B,"[""normal"", ""steel_body"", ""solid_stance"", ""status_skip""]",1
+screen,hp100000-agi180,priest,B,"[""status_skip"", ""status_skip"", ""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp100000-agi180,priest,C2,"[""normal"", ""steel_body""]",1
+screen,hp100000-agi180,priest,C2,"[""steel_body"", ""status_skip""]",1
+screen,hp100000-agi180,priest,C2,"[""status_skip"", ""steel_body""]",1
+screen,hp100000-agi180,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp100000-agi180,wanderer,B,"[""steel_body"", ""normal""]",1
+screen,hp100000-agi180,wanderer,B,"[""steel_body"", ""solid_stance""]",1
+screen,hp100000-agi180,wanderer,C1,"[""steel_body""]",2
+screen,hp100000-agi180,wanderer,C1,[],1
+screen,hp100000-agi180,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi180,assassin,B,"[""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp100000-agi180,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp100000-agi180,assassin,C1,"[""normal"", ""status_skip""]",1
+screen,hp100000-agi180,assassin,C1,"[""normal""]",2
+screen,hp150000-agi180,grappler,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp150000-agi180,grappler,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp150000-agi180,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+screen,hp150000-agi180,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi180,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi180,grappler,C1,"[""steel_body""]",1
+screen,hp150000-agi180,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp150000-agi180,warrior,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi180,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+screen,hp150000-agi180,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",2
+screen,hp150000-agi180,warrior,C1,"[""normal"", ""steel_body"", ""solid_stance""]",1
+screen,hp150000-agi180,hunter,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp150000-agi180,hunter,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp150000-agi180,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+screen,hp150000-agi180,hunter,C1,"[""normal"", ""steel_body"", ""status_skip""]",1
+screen,hp150000-agi180,hunter,C1,"[""normal"", ""steel_body"", ""solid_stance""]",1
+screen,hp150000-agi180,hunter,C1,"[""steel_body"", ""normal"", ""status_skip""]",1
+screen,hp150000-agi180,wizard,B,"[""steel_body"", ""status_skip"", ""solid_stance"", ""status_skip"", ""status_skip""]",1
+screen,hp150000-agi180,wizard,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi180,wizard,B,"[""status_skip"", ""steel_body"", ""status_skip"", ""solid_stance"", ""counter_stance""]",1
+screen,hp150000-agi180,wizard,C2,"[""normal"", ""status_skip""]",1
+screen,hp150000-agi180,wizard,C2,"[""steel_body"", ""status_skip""]",1
+screen,hp150000-agi180,wizard,C2,"[""status_skip"", ""status_skip""]",1
+screen,hp150000-agi180,priest,B,"[""steel_body"", ""normal"", ""status_skip"", ""solid_stance"", ""counter_stance""]",1
+screen,hp150000-agi180,priest,B,"[""normal"", ""steel_body"", ""solid_stance"", ""status_skip"", ""status_skip""]",1
+screen,hp150000-agi180,priest,B,"[""status_skip"", ""status_skip"", ""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp150000-agi180,priest,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp150000-agi180,priest,C2,"[""steel_body"", ""status_skip"", ""status_skip"", ""status_skip"", ""status_skip""]",1
+screen,hp150000-agi180,priest,C2,"[""status_skip"", ""steel_body"", ""status_skip"", ""solid_stance"", ""counter_stance""]",1
+screen,hp150000-agi180,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi180,wanderer,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi180,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp150000-agi180,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi180,wanderer,C1,"[""steel_body"", ""solid_stance""]",1
+screen,hp150000-agi180,wanderer,C1,"[""steel_body""]",1
+screen,hp150000-agi180,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi180,assassin,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi180,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+screen,hp150000-agi180,assassin,C1,"[""normal"", ""steel_body"", ""status_skip""]",2
+screen,hp150000-agi180,assassin,C1,"[""normal""]",1
+screen,hp200000-agi180,grappler,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp200000-agi180,grappler,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp200000-agi180,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+screen,hp200000-agi180,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+screen,hp200000-agi180,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+screen,hp200000-agi180,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp200000-agi180,warrior,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi180,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+screen,hp200000-agi180,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+screen,hp200000-agi180,warrior,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi180,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi180,hunter,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp200000-agi180,hunter,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp200000-agi180,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+screen,hp200000-agi180,hunter,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip""]",2
+screen,hp200000-agi180,hunter,C1,"[""steel_body"", ""normal"", ""normal""]",1
+screen,hp200000-agi180,wizard,B,"[""steel_body"", ""status_skip"", ""solid_stance"", ""status_skip"", ""status_skip""]",1
+screen,hp200000-agi180,wizard,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi180,wizard,B,"[""status_skip"", ""steel_body"", ""status_skip"", ""solid_stance"", ""counter_stance""]",1
+screen,hp200000-agi180,wizard,C2,"[""normal"", ""status_skip"", ""normal"", ""status_skip"", ""normal""]",1
+screen,hp200000-agi180,wizard,C2,"[""steel_body"", ""status_skip"", ""status_skip"", ""normal"", ""status_skip""]",1
+screen,hp200000-agi180,wizard,C2,"[""status_skip"", ""status_skip"", ""status_skip"", ""status_skip"", ""status_skip""]",1
+screen,hp200000-agi180,priest,B,"[""steel_body"", ""normal"", ""status_skip"", ""solid_stance"", ""counter_stance""]",1
+screen,hp200000-agi180,priest,B,"[""normal"", ""steel_body"", ""solid_stance"", ""status_skip"", ""status_skip""]",1
+screen,hp200000-agi180,priest,B,"[""status_skip"", ""status_skip"", ""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp200000-agi180,priest,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp200000-agi180,priest,C2,"[""steel_body"", ""status_skip"", ""status_skip"", ""status_skip"", ""status_skip""]",1
+screen,hp200000-agi180,priest,C2,"[""status_skip"", ""steel_body"", ""status_skip"", ""solid_stance"", ""counter_stance""]",1
+screen,hp200000-agi180,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi180,wanderer,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi180,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp200000-agi180,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",3
+screen,hp200000-agi180,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi180,assassin,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi180,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+screen,hp200000-agi180,assassin,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip""]",1
+screen,hp200000-agi180,assassin,C1,"[""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp200000-agi180,assassin,C1,"[""normal"", ""normal""]",1
+screen,hp50000-agi900,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+screen,hp50000-agi900,grappler,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp50000-agi900,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi900,grappler,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+screen,hp50000-agi900,grappler,C1,"[""steel_body"", ""normal""]",1
+screen,hp50000-agi900,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+screen,hp50000-agi900,warrior,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""normal""]",1
+screen,hp50000-agi900,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi900,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",2
+screen,hp50000-agi900,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi900,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+screen,hp50000-agi900,hunter,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp50000-agi900,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp50000-agi900,hunter,C1,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+screen,hp50000-agi900,hunter,C1,"[""steel_body"", ""solid_stance""]",1
+screen,hp50000-agi900,wizard,B,"[""steel_body"", ""status_skip"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi900,wizard,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp50000-agi900,wizard,B,"[""status_skip"", ""status_skip"", ""status_skip"", ""status_skip"", ""status_skip""]",1
+screen,hp50000-agi900,wizard,C2,"[""steel_body"", ""status_skip"", ""status_skip"", ""solid_stance"", ""counter_stance""]",1
+screen,hp50000-agi900,wizard,C2,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi900,wizard,C2,"[""status_skip"", ""status_skip"", ""steel_body""]",1
+screen,hp50000-agi900,priest,B,"[""steel_body"", ""status_skip"", ""status_skip"", ""solid_stance"", ""status_skip""]",1
+screen,hp50000-agi900,priest,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""status_skip""]",1
+screen,hp50000-agi900,priest,B,"[""steel_body"", ""status_skip"", ""solid_stance"", ""status_skip"", ""status_skip""]",1
+screen,hp50000-agi900,priest,C2,"[""steel_body"", ""status_skip"", ""solid_stance"", ""status_skip"", ""status_skip""]",1
+screen,hp50000-agi900,priest,C2,"[""steel_body"", ""status_skip"", ""solid_stance"", ""counter_stance"", ""status_skip""]",1
+screen,hp50000-agi900,priest,C2,"[""steel_body"", ""status_skip"", ""status_skip"", ""status_skip""]",1
+screen,hp50000-agi900,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi900,wanderer,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp50000-agi900,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi900,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi900,wanderer,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+screen,hp50000-agi900,wanderer,C1,"[""steel_body"", ""normal""]",1
+screen,hp50000-agi900,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+screen,hp50000-agi900,assassin,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp50000-agi900,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp50000-agi900,assassin,C1,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+screen,hp50000-agi900,assassin,C1,"[""steel_body"", ""solid_stance""]",1
+screen,hp100000-agi900,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+screen,hp100000-agi900,grappler,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp100000-agi900,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi900,grappler,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi900,grappler,C1,"[""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp100000-agi900,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+screen,hp100000-agi900,warrior,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""normal""]",1
+screen,hp100000-agi900,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi900,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",2
+screen,hp100000-agi900,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi900,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+screen,hp100000-agi900,hunter,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp100000-agi900,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp100000-agi900,hunter,C1,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+screen,hp100000-agi900,hunter,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""normal""]",1
+screen,hp100000-agi900,wizard,B,"[""steel_body"", ""status_skip"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi900,wizard,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp100000-agi900,wizard,B,"[""status_skip"", ""status_skip"", ""status_skip"", ""status_skip"", ""status_skip""]",1
+screen,hp100000-agi900,wizard,C2,"[""steel_body"", ""status_skip"", ""status_skip"", ""solid_stance"", ""counter_stance""]",1
+screen,hp100000-agi900,wizard,C2,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi900,wizard,C2,"[""status_skip"", ""status_skip"", ""steel_body"", ""status_skip"", ""normal""]",1
+screen,hp100000-agi900,priest,B,"[""steel_body"", ""status_skip"", ""status_skip"", ""solid_stance"", ""status_skip""]",1
+screen,hp100000-agi900,priest,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""status_skip""]",1
+screen,hp100000-agi900,priest,B,"[""steel_body"", ""status_skip"", ""solid_stance"", ""status_skip"", ""status_skip""]",1
+screen,hp100000-agi900,priest,C2,"[""steel_body"", ""status_skip"", ""solid_stance"", ""status_skip"", ""status_skip""]",1
+screen,hp100000-agi900,priest,C2,"[""steel_body"", ""status_skip"", ""solid_stance"", ""counter_stance"", ""status_skip""]",1
+screen,hp100000-agi900,priest,C2,"[""steel_body"", ""status_skip"", ""status_skip"", ""status_skip"", ""status_skip""]",1
+screen,hp100000-agi900,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+screen,hp100000-agi900,wanderer,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp100000-agi900,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi900,wanderer,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp100000-agi900,wanderer,C1,"[""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp100000-agi900,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+screen,hp100000-agi900,assassin,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp100000-agi900,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp100000-agi900,assassin,C1,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+screen,hp100000-agi900,assassin,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi900,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+screen,hp150000-agi900,grappler,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp150000-agi900,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi900,grappler,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi900,grappler,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp150000-agi900,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+screen,hp150000-agi900,warrior,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""normal""]",1
+screen,hp150000-agi900,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi900,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",2
+screen,hp150000-agi900,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi900,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+screen,hp150000-agi900,hunter,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp150000-agi900,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp150000-agi900,hunter,C1,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+screen,hp150000-agi900,hunter,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""normal""]",1
+screen,hp150000-agi900,wizard,B,"[""steel_body"", ""status_skip"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi900,wizard,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp150000-agi900,wizard,B,"[""status_skip"", ""status_skip"", ""status_skip"", ""status_skip"", ""status_skip""]",1
+screen,hp150000-agi900,wizard,C2,"[""steel_body"", ""status_skip"", ""status_skip"", ""solid_stance"", ""counter_stance""]",1
+screen,hp150000-agi900,wizard,C2,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi900,wizard,C2,"[""status_skip"", ""status_skip"", ""steel_body"", ""status_skip"", ""normal""]",1
+screen,hp150000-agi900,priest,B,"[""steel_body"", ""status_skip"", ""status_skip"", ""solid_stance"", ""status_skip""]",1
+screen,hp150000-agi900,priest,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""status_skip""]",1
+screen,hp150000-agi900,priest,B,"[""steel_body"", ""status_skip"", ""solid_stance"", ""status_skip"", ""status_skip""]",1
+screen,hp150000-agi900,priest,C2,"[""steel_body"", ""status_skip"", ""solid_stance"", ""status_skip"", ""status_skip""]",1
+screen,hp150000-agi900,priest,C2,"[""steel_body"", ""status_skip"", ""solid_stance"", ""counter_stance"", ""status_skip""]",1
+screen,hp150000-agi900,priest,C2,"[""steel_body"", ""status_skip"", ""status_skip"", ""status_skip"", ""status_skip""]",1
+screen,hp150000-agi900,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+screen,hp150000-agi900,wanderer,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp150000-agi900,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi900,wanderer,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""normal""]",2
+screen,hp150000-agi900,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+screen,hp150000-agi900,assassin,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp150000-agi900,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp150000-agi900,assassin,C1,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+screen,hp150000-agi900,assassin,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi900,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+screen,hp200000-agi900,grappler,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp200000-agi900,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi900,grappler,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi900,grappler,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp200000-agi900,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+screen,hp200000-agi900,warrior,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""normal""]",1
+screen,hp200000-agi900,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi900,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",2
+screen,hp200000-agi900,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi900,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+screen,hp200000-agi900,hunter,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp200000-agi900,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp200000-agi900,hunter,C1,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+screen,hp200000-agi900,hunter,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""normal""]",1
+screen,hp200000-agi900,wizard,B,"[""steel_body"", ""status_skip"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi900,wizard,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp200000-agi900,wizard,B,"[""status_skip"", ""status_skip"", ""status_skip"", ""status_skip"", ""status_skip""]",1
+screen,hp200000-agi900,wizard,C2,"[""steel_body"", ""status_skip"", ""status_skip"", ""solid_stance"", ""counter_stance""]",1
+screen,hp200000-agi900,wizard,C2,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi900,wizard,C2,"[""status_skip"", ""status_skip"", ""steel_body"", ""status_skip"", ""normal""]",1
+screen,hp200000-agi900,priest,B,"[""steel_body"", ""status_skip"", ""status_skip"", ""solid_stance"", ""status_skip""]",1
+screen,hp200000-agi900,priest,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""status_skip""]",1
+screen,hp200000-agi900,priest,B,"[""steel_body"", ""status_skip"", ""solid_stance"", ""status_skip"", ""status_skip""]",1
+screen,hp200000-agi900,priest,C2,"[""steel_body"", ""status_skip"", ""solid_stance"", ""status_skip"", ""status_skip""]",1
+screen,hp200000-agi900,priest,C2,"[""steel_body"", ""status_skip"", ""solid_stance"", ""counter_stance"", ""status_skip""]",1
+screen,hp200000-agi900,priest,C2,"[""steel_body"", ""status_skip"", ""status_skip"", ""status_skip"", ""status_skip""]",1
+screen,hp200000-agi900,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+screen,hp200000-agi900,wanderer,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp200000-agi900,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi900,wanderer,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""normal""]",2
+screen,hp200000-agi900,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+screen,hp200000-agi900,assassin,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp200000-agi900,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp200000-agi900,assassin,C1,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+screen,hp200000-agi900,assassin,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi1800,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi1800,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp50000-agi1800,grappler,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi1800,grappler,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+screen,hp50000-agi1800,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp50000-agi1800,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi1800,warrior,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi1800,warrior,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp50000-agi1800,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi1800,warrior,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+screen,hp50000-agi1800,warrior,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp50000-agi1800,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi1800,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp50000-agi1800,hunter,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi1800,hunter,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""normal""]",1
+screen,hp50000-agi1800,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp50000-agi1800,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi1800,wizard,B,"[""steel_body"", ""normal"", ""status_skip"", ""status_skip"", ""solid_stance""]",1
+screen,hp50000-agi1800,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi1800,wizard,B,"[""steel_body"", ""status_skip"", ""solid_stance"", ""counter_stance"", ""status_skip""]",1
+screen,hp50000-agi1800,wizard,C2,"[""steel_body"", ""normal"", ""status_skip"", ""solid_stance"", ""status_skip""]",1
+screen,hp50000-agi1800,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp50000-agi1800,wizard,C2,"[""steel_body"", ""status_skip"", ""solid_stance"", ""status_skip"", ""status_skip""]",1
+screen,hp50000-agi1800,priest,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+screen,hp50000-agi1800,priest,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp50000-agi1800,priest,C2,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+screen,hp50000-agi1800,priest,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp50000-agi1800,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi1800,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp50000-agi1800,wanderer,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi1800,wanderer,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+screen,hp50000-agi1800,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp50000-agi1800,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi1800,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi1800,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp50000-agi1800,assassin,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi1800,assassin,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""normal""]",1
+screen,hp50000-agi1800,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp50000-agi1800,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi1800,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi1800,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp100000-agi1800,grappler,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi1800,grappler,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp100000-agi1800,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp100000-agi1800,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi1800,warrior,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi1800,warrior,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp100000-agi1800,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi1800,warrior,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+screen,hp100000-agi1800,warrior,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp100000-agi1800,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi1800,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp100000-agi1800,hunter,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi1800,hunter,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""normal""]",1
+screen,hp100000-agi1800,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp100000-agi1800,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi1800,wizard,B,"[""steel_body"", ""normal"", ""status_skip"", ""status_skip"", ""solid_stance""]",1
+screen,hp100000-agi1800,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi1800,wizard,B,"[""steel_body"", ""status_skip"", ""solid_stance"", ""counter_stance"", ""status_skip""]",1
+screen,hp100000-agi1800,wizard,C2,"[""steel_body"", ""normal"", ""status_skip"", ""solid_stance"", ""status_skip""]",1
+screen,hp100000-agi1800,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp100000-agi1800,wizard,C2,"[""steel_body"", ""status_skip"", ""solid_stance"", ""status_skip"", ""status_skip""]",1
+screen,hp100000-agi1800,priest,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+screen,hp100000-agi1800,priest,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp100000-agi1800,priest,C2,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+screen,hp100000-agi1800,priest,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp100000-agi1800,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi1800,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp100000-agi1800,wanderer,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi1800,wanderer,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp100000-agi1800,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp100000-agi1800,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi1800,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi1800,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp100000-agi1800,assassin,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi1800,assassin,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""normal""]",1
+screen,hp100000-agi1800,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp100000-agi1800,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi1800,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi1800,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp150000-agi1800,grappler,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi1800,grappler,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp150000-agi1800,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp150000-agi1800,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi1800,warrior,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi1800,warrior,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp150000-agi1800,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi1800,warrior,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+screen,hp150000-agi1800,warrior,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp150000-agi1800,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi1800,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp150000-agi1800,hunter,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi1800,hunter,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""normal""]",1
+screen,hp150000-agi1800,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp150000-agi1800,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi1800,wizard,B,"[""steel_body"", ""normal"", ""status_skip"", ""status_skip"", ""solid_stance""]",1
+screen,hp150000-agi1800,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi1800,wizard,B,"[""steel_body"", ""status_skip"", ""solid_stance"", ""counter_stance"", ""status_skip""]",1
+screen,hp150000-agi1800,wizard,C2,"[""steel_body"", ""normal"", ""status_skip"", ""solid_stance"", ""status_skip""]",1
+screen,hp150000-agi1800,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp150000-agi1800,wizard,C2,"[""steel_body"", ""status_skip"", ""solid_stance"", ""status_skip"", ""status_skip""]",1
+screen,hp150000-agi1800,priest,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+screen,hp150000-agi1800,priest,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp150000-agi1800,priest,C2,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+screen,hp150000-agi1800,priest,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp150000-agi1800,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi1800,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp150000-agi1800,wanderer,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi1800,wanderer,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp150000-agi1800,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp150000-agi1800,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi1800,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi1800,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp150000-agi1800,assassin,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi1800,assassin,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""normal""]",1
+screen,hp150000-agi1800,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp150000-agi1800,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi1800,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi1800,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp200000-agi1800,grappler,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi1800,grappler,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp200000-agi1800,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp200000-agi1800,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi1800,warrior,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi1800,warrior,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+screen,hp200000-agi1800,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi1800,warrior,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+screen,hp200000-agi1800,warrior,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp200000-agi1800,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi1800,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp200000-agi1800,hunter,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi1800,hunter,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""normal""]",1
+screen,hp200000-agi1800,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp200000-agi1800,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi1800,wizard,B,"[""steel_body"", ""normal"", ""status_skip"", ""status_skip"", ""solid_stance""]",1
+screen,hp200000-agi1800,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi1800,wizard,B,"[""steel_body"", ""status_skip"", ""solid_stance"", ""counter_stance"", ""status_skip""]",1
+screen,hp200000-agi1800,wizard,C2,"[""steel_body"", ""normal"", ""status_skip"", ""solid_stance"", ""status_skip""]",1
+screen,hp200000-agi1800,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp200000-agi1800,wizard,C2,"[""steel_body"", ""status_skip"", ""solid_stance"", ""status_skip"", ""status_skip""]",1
+screen,hp200000-agi1800,priest,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+screen,hp200000-agi1800,priest,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp200000-agi1800,priest,C2,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+screen,hp200000-agi1800,priest,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp200000-agi1800,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi1800,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp200000-agi1800,wanderer,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi1800,wanderer,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp200000-agi1800,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp200000-agi1800,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi1800,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi1800,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp200000-agi1800,assassin,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi1800,assassin,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""normal""]",1
+screen,hp200000-agi1800,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp200000-agi1800,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi2700,grappler,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp50000-agi2700,grappler,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp50000-agi2700,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi2700,grappler,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi2700,grappler,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi2700,grappler,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""normal""]",1
+screen,hp50000-agi2700,warrior,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp50000-agi2700,warrior,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""normal""]",1
+screen,hp50000-agi2700,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi2700,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+screen,hp50000-agi2700,warrior,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi2700,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp50000-agi2700,hunter,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp50000-agi2700,hunter,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp50000-agi2700,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi2700,hunter,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi2700,hunter,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi2700,hunter,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""normal""]",1
+screen,hp50000-agi2700,wizard,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi2700,wizard,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi2700,wizard,B,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""counter_stance""]",1
+screen,hp50000-agi2700,wizard,C2,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi2700,wizard,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi2700,wizard,C2,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""counter_stance""]",1
+screen,hp50000-agi2700,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""status_skip""]",1
+screen,hp50000-agi2700,priest,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp50000-agi2700,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp50000-agi2700,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""status_skip""]",1
+screen,hp50000-agi2700,priest,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp50000-agi2700,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp50000-agi2700,wanderer,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp50000-agi2700,wanderer,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp50000-agi2700,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi2700,wanderer,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi2700,wanderer,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi2700,wanderer,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""normal""]",1
+screen,hp50000-agi2700,assassin,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi2700,assassin,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp50000-agi2700,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp50000-agi2700,assassin,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+screen,hp50000-agi2700,assassin,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi2700,grappler,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp100000-agi2700,grappler,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp100000-agi2700,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi2700,grappler,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi2700,grappler,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi2700,grappler,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""normal""]",1
+screen,hp100000-agi2700,warrior,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp100000-agi2700,warrior,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""normal""]",1
+screen,hp100000-agi2700,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi2700,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+screen,hp100000-agi2700,warrior,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi2700,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp100000-agi2700,hunter,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp100000-agi2700,hunter,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp100000-agi2700,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi2700,hunter,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi2700,hunter,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi2700,hunter,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""normal""]",1
+screen,hp100000-agi2700,wizard,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi2700,wizard,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi2700,wizard,B,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""counter_stance""]",1
+screen,hp100000-agi2700,wizard,C2,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi2700,wizard,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi2700,wizard,C2,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""counter_stance""]",1
+screen,hp100000-agi2700,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""status_skip""]",1
+screen,hp100000-agi2700,priest,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp100000-agi2700,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp100000-agi2700,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""status_skip""]",1
+screen,hp100000-agi2700,priest,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp100000-agi2700,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp100000-agi2700,wanderer,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp100000-agi2700,wanderer,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp100000-agi2700,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi2700,wanderer,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi2700,wanderer,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi2700,wanderer,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""normal""]",1
+screen,hp100000-agi2700,assassin,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi2700,assassin,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp100000-agi2700,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp100000-agi2700,assassin,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+screen,hp100000-agi2700,assassin,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi2700,grappler,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp150000-agi2700,grappler,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp150000-agi2700,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi2700,grappler,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi2700,grappler,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi2700,grappler,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""normal""]",1
+screen,hp150000-agi2700,warrior,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp150000-agi2700,warrior,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""normal""]",1
+screen,hp150000-agi2700,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi2700,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+screen,hp150000-agi2700,warrior,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi2700,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp150000-agi2700,hunter,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp150000-agi2700,hunter,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp150000-agi2700,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi2700,hunter,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi2700,hunter,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi2700,hunter,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""normal""]",1
+screen,hp150000-agi2700,wizard,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi2700,wizard,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi2700,wizard,B,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""counter_stance""]",1
+screen,hp150000-agi2700,wizard,C2,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi2700,wizard,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi2700,wizard,C2,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""counter_stance""]",1
+screen,hp150000-agi2700,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""status_skip""]",1
+screen,hp150000-agi2700,priest,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp150000-agi2700,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp150000-agi2700,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""status_skip""]",1
+screen,hp150000-agi2700,priest,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp150000-agi2700,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp150000-agi2700,wanderer,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp150000-agi2700,wanderer,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp150000-agi2700,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi2700,wanderer,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi2700,wanderer,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi2700,wanderer,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""normal""]",1
+screen,hp150000-agi2700,assassin,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi2700,assassin,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp150000-agi2700,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp150000-agi2700,assassin,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+screen,hp150000-agi2700,assassin,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi2700,grappler,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp200000-agi2700,grappler,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp200000-agi2700,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi2700,grappler,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi2700,grappler,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi2700,grappler,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""normal""]",1
+screen,hp200000-agi2700,warrior,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp200000-agi2700,warrior,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""normal""]",1
+screen,hp200000-agi2700,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi2700,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+screen,hp200000-agi2700,warrior,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi2700,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp200000-agi2700,hunter,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp200000-agi2700,hunter,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp200000-agi2700,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi2700,hunter,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi2700,hunter,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi2700,hunter,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""normal""]",1
+screen,hp200000-agi2700,wizard,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi2700,wizard,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi2700,wizard,B,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""counter_stance""]",1
+screen,hp200000-agi2700,wizard,C2,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi2700,wizard,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi2700,wizard,C2,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""counter_stance""]",1
+screen,hp200000-agi2700,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""status_skip""]",1
+screen,hp200000-agi2700,priest,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp200000-agi2700,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp200000-agi2700,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""status_skip""]",1
+screen,hp200000-agi2700,priest,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp200000-agi2700,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp200000-agi2700,wanderer,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp200000-agi2700,wanderer,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp200000-agi2700,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi2700,wanderer,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi2700,wanderer,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi2700,wanderer,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""normal""]",1
+screen,hp200000-agi2700,assassin,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi2700,assassin,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp200000-agi2700,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp200000-agi2700,assassin,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+screen,hp200000-agi2700,assassin,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi3600,grappler,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp50000-agi3600,grappler,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp50000-agi3600,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi3600,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi3600,grappler,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi3600,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp50000-agi3600,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi3600,warrior,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp50000-agi3600,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp50000-agi3600,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi3600,warrior,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi3600,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp50000-agi3600,hunter,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp50000-agi3600,hunter,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp50000-agi3600,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi3600,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi3600,hunter,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi3600,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp50000-agi3600,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi3600,wizard,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""normal""]",1
+screen,hp50000-agi3600,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp50000-agi3600,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi3600,wizard,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""normal""]",1
+screen,hp50000-agi3600,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp50000-agi3600,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi3600,priest,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp50000-agi3600,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp50000-agi3600,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi3600,priest,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp50000-agi3600,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp50000-agi3600,wanderer,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp50000-agi3600,wanderer,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp50000-agi3600,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi3600,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi3600,wanderer,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi3600,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp50000-agi3600,assassin,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp50000-agi3600,assassin,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""normal""]",1
+screen,hp50000-agi3600,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi3600,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp50000-agi3600,assassin,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp50000-agi3600,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp100000-agi3600,grappler,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp100000-agi3600,grappler,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp100000-agi3600,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi3600,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi3600,grappler,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi3600,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp100000-agi3600,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi3600,warrior,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp100000-agi3600,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp100000-agi3600,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi3600,warrior,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi3600,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp100000-agi3600,hunter,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp100000-agi3600,hunter,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp100000-agi3600,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi3600,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi3600,hunter,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi3600,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp100000-agi3600,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi3600,wizard,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""normal""]",1
+screen,hp100000-agi3600,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp100000-agi3600,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi3600,wizard,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""normal""]",1
+screen,hp100000-agi3600,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp100000-agi3600,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi3600,priest,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp100000-agi3600,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp100000-agi3600,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi3600,priest,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp100000-agi3600,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp100000-agi3600,wanderer,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp100000-agi3600,wanderer,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp100000-agi3600,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi3600,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi3600,wanderer,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi3600,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp100000-agi3600,assassin,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp100000-agi3600,assassin,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""normal""]",1
+screen,hp100000-agi3600,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi3600,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp100000-agi3600,assassin,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp100000-agi3600,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp150000-agi3600,grappler,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp150000-agi3600,grappler,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp150000-agi3600,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi3600,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi3600,grappler,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi3600,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp150000-agi3600,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi3600,warrior,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp150000-agi3600,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp150000-agi3600,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi3600,warrior,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi3600,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp150000-agi3600,hunter,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp150000-agi3600,hunter,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp150000-agi3600,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi3600,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi3600,hunter,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi3600,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp150000-agi3600,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi3600,wizard,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""normal""]",1
+screen,hp150000-agi3600,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp150000-agi3600,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi3600,wizard,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""normal""]",1
+screen,hp150000-agi3600,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp150000-agi3600,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi3600,priest,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp150000-agi3600,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp150000-agi3600,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi3600,priest,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp150000-agi3600,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp150000-agi3600,wanderer,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp150000-agi3600,wanderer,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp150000-agi3600,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi3600,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi3600,wanderer,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi3600,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp150000-agi3600,assassin,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp150000-agi3600,assassin,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""normal""]",1
+screen,hp150000-agi3600,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi3600,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp150000-agi3600,assassin,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp150000-agi3600,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp200000-agi3600,grappler,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp200000-agi3600,grappler,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp200000-agi3600,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi3600,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi3600,grappler,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi3600,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp200000-agi3600,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi3600,warrior,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp200000-agi3600,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp200000-agi3600,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi3600,warrior,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi3600,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+screen,hp200000-agi3600,hunter,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp200000-agi3600,hunter,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp200000-agi3600,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi3600,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi3600,hunter,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi3600,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp200000-agi3600,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi3600,wizard,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""normal""]",1
+screen,hp200000-agi3600,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp200000-agi3600,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi3600,wizard,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""normal""]",1
+screen,hp200000-agi3600,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp200000-agi3600,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi3600,priest,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp200000-agi3600,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp200000-agi3600,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi3600,priest,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+screen,hp200000-agi3600,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp200000-agi3600,wanderer,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp200000-agi3600,wanderer,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""counter_stance""]",1
+screen,hp200000-agi3600,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi3600,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi3600,wanderer,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi3600,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+screen,hp200000-agi3600,assassin,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+screen,hp200000-agi3600,assassin,B,"[""normal"", ""normal"", ""steel_body"", ""solid_stance"", ""normal""]",1
+screen,hp200000-agi3600,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi3600,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+screen,hp200000-agi3600,assassin,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+screen,hp200000-agi3600,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+refine,hp50000-agi180,grappler,B,"[""steel_body""]",2
+refine,hp50000-agi180,grappler,B,"[""normal""]",1
+refine,hp50000-agi180,grappler,B,[],2
+refine,hp50000-agi180,grappler,C1,[],5
+refine,hp50000-agi180,warrior,B,"[""normal""]",2
+refine,hp50000-agi180,warrior,B,"[""steel_body""]",1
+refine,hp50000-agi180,warrior,B,"[""steel_body"", ""normal""]",1
+refine,hp50000-agi180,warrior,B,"[""normal"", ""steel_body""]",1
+refine,hp50000-agi180,warrior,C1,"[""normal""]",1
+refine,hp50000-agi180,warrior,C1,[],2
+refine,hp50000-agi180,warrior,C1,"[""steel_body""]",2
+refine,hp50000-agi180,hunter,B,"[""steel_body""]",2
+refine,hp50000-agi180,hunter,B,"[""normal""]",1
+refine,hp50000-agi180,hunter,B,[],2
+refine,hp50000-agi180,hunter,C1,"[""status_skip""]",1
+refine,hp50000-agi180,hunter,C1,[],4
+refine,hp50000-agi180,wizard,B,"[""steel_body""]",5
+refine,hp50000-agi180,wizard,C2,[],3
+refine,hp50000-agi180,wizard,C2,"[""status_skip""]",2
+refine,hp50000-agi180,priest,B,"[""steel_body""]",5
+refine,hp50000-agi180,priest,C2,[],1
+refine,hp50000-agi180,priest,C2,"[""steel_body""]",2
+refine,hp50000-agi180,priest,C2,"[""status_skip""]",2
+refine,hp50000-agi180,wanderer,B,"[""steel_body""]",3
+refine,hp50000-agi180,wanderer,B,[],2
+refine,hp50000-agi180,wanderer,C1,[],5
+refine,hp50000-agi180,assassin,B,"[""steel_body""]",3
+refine,hp50000-agi180,assassin,B,[],2
+refine,hp50000-agi180,assassin,C1,"[""status_skip""]",1
+refine,hp50000-agi180,assassin,C1,[],4
+refine,hp100000-agi2700,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+refine,hp100000-agi2700,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+refine,hp100000-agi2700,grappler,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp100000-agi2700,grappler,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi2700,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+refine,hp100000-agi2700,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp100000-agi2700,grappler,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi2700,grappler,C1,"[""normal"", ""steel_body"", ""normal"", ""normal"", ""solid_stance""]",1
+refine,hp100000-agi2700,grappler,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi2700,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+refine,hp100000-agi2700,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp100000-agi2700,warrior,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+refine,hp100000-agi2700,warrior,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""normal""]",1
+refine,hp100000-agi2700,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp100000-agi2700,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp100000-agi2700,warrior,C1,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp100000-agi2700,warrior,C1,"[""normal"", ""steel_body"", ""normal"", ""normal"", ""solid_stance""]",1
+refine,hp100000-agi2700,warrior,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi2700,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+refine,hp100000-agi2700,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+refine,hp100000-agi2700,hunter,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp100000-agi2700,hunter,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi2700,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+refine,hp100000-agi2700,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp100000-agi2700,hunter,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi2700,hunter,C1,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""solid_stance""]",1
+refine,hp100000-agi2700,hunter,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi2700,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+refine,hp100000-agi2700,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip"", ""shock_wave""]",1
+refine,hp100000-agi2700,wizard,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+refine,hp100000-agi2700,wizard,B,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""solid_stance""]",1
+refine,hp100000-agi2700,wizard,B,"[""normal"", ""steel_body"", ""status_skip"", ""solid_stance"", ""status_skip""]",1
+refine,hp100000-agi2700,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+refine,hp100000-agi2700,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip"", ""status_skip""]",1
+refine,hp100000-agi2700,wizard,C2,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi2700,wizard,C2,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""solid_stance""]",1
+refine,hp100000-agi2700,wizard,C2,"[""normal"", ""steel_body"", ""status_skip"", ""solid_stance"", ""status_skip""]",1
+refine,hp100000-agi2700,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp100000-agi2700,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip"", ""shock_wave""]",1
+refine,hp100000-agi2700,priest,B,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp100000-agi2700,priest,B,"[""normal"", ""normal"", ""normal"", ""normal"", ""steel_body""]",1
+refine,hp100000-agi2700,priest,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip""]",1
+refine,hp100000-agi2700,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp100000-agi2700,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip"", ""status_skip""]",1
+refine,hp100000-agi2700,priest,C2,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp100000-agi2700,priest,C2,"[""normal"", ""normal"", ""normal"", ""normal"", ""steel_body""]",1
+refine,hp100000-agi2700,priest,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip""]",1
+refine,hp100000-agi2700,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+refine,hp100000-agi2700,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+refine,hp100000-agi2700,wanderer,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp100000-agi2700,wanderer,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi2700,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+refine,hp100000-agi2700,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp100000-agi2700,wanderer,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi2700,wanderer,C1,"[""normal"", ""steel_body"", ""normal"", ""normal"", ""solid_stance""]",1
+refine,hp100000-agi2700,wanderer,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi2700,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+refine,hp100000-agi2700,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp100000-agi2700,assassin,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp100000-agi2700,assassin,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""normal""]",1
+refine,hp100000-agi2700,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp100000-agi2700,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp100000-agi2700,assassin,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi2700,assassin,C1,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""normal""]",1
+refine,hp100000-agi2700,assassin,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+refine,hp75000-agi2700,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+refine,hp75000-agi2700,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+refine,hp75000-agi2700,grappler,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp75000-agi2700,grappler,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp75000-agi2700,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+refine,hp75000-agi2700,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp75000-agi2700,grappler,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp75000-agi2700,grappler,C1,"[""normal"", ""steel_body"", ""normal"", ""normal"", ""solid_stance""]",1
+refine,hp75000-agi2700,grappler,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp75000-agi2700,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+refine,hp75000-agi2700,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp75000-agi2700,warrior,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+refine,hp75000-agi2700,warrior,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""normal""]",1
+refine,hp75000-agi2700,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp75000-agi2700,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp75000-agi2700,warrior,C1,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp75000-agi2700,warrior,C1,"[""normal"", ""steel_body"", ""normal"", ""normal"", ""solid_stance""]",1
+refine,hp75000-agi2700,warrior,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp75000-agi2700,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+refine,hp75000-agi2700,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+refine,hp75000-agi2700,hunter,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp75000-agi2700,hunter,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp75000-agi2700,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+refine,hp75000-agi2700,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp75000-agi2700,hunter,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp75000-agi2700,hunter,C1,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""solid_stance""]",1
+refine,hp75000-agi2700,hunter,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp75000-agi2700,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+refine,hp75000-agi2700,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip"", ""shock_wave""]",1
+refine,hp75000-agi2700,wizard,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+refine,hp75000-agi2700,wizard,B,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""solid_stance""]",1
+refine,hp75000-agi2700,wizard,B,"[""normal"", ""steel_body"", ""status_skip"", ""solid_stance"", ""status_skip""]",1
+refine,hp75000-agi2700,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+refine,hp75000-agi2700,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip"", ""status_skip""]",1
+refine,hp75000-agi2700,wizard,C2,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp75000-agi2700,wizard,C2,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""solid_stance""]",1
+refine,hp75000-agi2700,wizard,C2,"[""normal"", ""steel_body"", ""status_skip"", ""solid_stance"", ""status_skip""]",1
+refine,hp75000-agi2700,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp75000-agi2700,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip"", ""shock_wave""]",1
+refine,hp75000-agi2700,priest,B,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp75000-agi2700,priest,B,"[""normal"", ""normal"", ""normal"", ""normal"", ""steel_body""]",1
+refine,hp75000-agi2700,priest,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip""]",1
+refine,hp75000-agi2700,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp75000-agi2700,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip"", ""status_skip""]",1
+refine,hp75000-agi2700,priest,C2,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp75000-agi2700,priest,C2,"[""normal"", ""normal"", ""normal"", ""normal"", ""steel_body""]",1
+refine,hp75000-agi2700,priest,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip""]",1
+refine,hp75000-agi2700,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+refine,hp75000-agi2700,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+refine,hp75000-agi2700,wanderer,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp75000-agi2700,wanderer,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp75000-agi2700,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+refine,hp75000-agi2700,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp75000-agi2700,wanderer,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp75000-agi2700,wanderer,C1,"[""normal"", ""steel_body"", ""normal"", ""normal"", ""solid_stance""]",1
+refine,hp75000-agi2700,wanderer,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp75000-agi2700,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+refine,hp75000-agi2700,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp75000-agi2700,assassin,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp75000-agi2700,assassin,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""normal""]",1
+refine,hp75000-agi2700,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp75000-agi2700,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp75000-agi2700,assassin,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp75000-agi2700,assassin,C1,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""normal""]",1
+refine,hp75000-agi2700,assassin,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+refine,hp125000-agi2700,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+refine,hp125000-agi2700,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+refine,hp125000-agi2700,grappler,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp125000-agi2700,grappler,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp125000-agi2700,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+refine,hp125000-agi2700,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp125000-agi2700,grappler,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp125000-agi2700,grappler,C1,"[""normal"", ""steel_body"", ""normal"", ""normal"", ""solid_stance""]",1
+refine,hp125000-agi2700,grappler,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp125000-agi2700,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+refine,hp125000-agi2700,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp125000-agi2700,warrior,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+refine,hp125000-agi2700,warrior,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""normal""]",1
+refine,hp125000-agi2700,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp125000-agi2700,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp125000-agi2700,warrior,C1,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp125000-agi2700,warrior,C1,"[""normal"", ""steel_body"", ""normal"", ""normal"", ""solid_stance""]",1
+refine,hp125000-agi2700,warrior,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp125000-agi2700,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+refine,hp125000-agi2700,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+refine,hp125000-agi2700,hunter,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp125000-agi2700,hunter,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp125000-agi2700,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+refine,hp125000-agi2700,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp125000-agi2700,hunter,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp125000-agi2700,hunter,C1,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""solid_stance""]",1
+refine,hp125000-agi2700,hunter,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp125000-agi2700,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+refine,hp125000-agi2700,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip"", ""shock_wave""]",1
+refine,hp125000-agi2700,wizard,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+refine,hp125000-agi2700,wizard,B,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""solid_stance""]",1
+refine,hp125000-agi2700,wizard,B,"[""normal"", ""steel_body"", ""status_skip"", ""solid_stance"", ""status_skip""]",1
+refine,hp125000-agi2700,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+refine,hp125000-agi2700,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip"", ""status_skip""]",1
+refine,hp125000-agi2700,wizard,C2,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp125000-agi2700,wizard,C2,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""solid_stance""]",1
+refine,hp125000-agi2700,wizard,C2,"[""normal"", ""steel_body"", ""status_skip"", ""solid_stance"", ""status_skip""]",1
+refine,hp125000-agi2700,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp125000-agi2700,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip"", ""shock_wave""]",1
+refine,hp125000-agi2700,priest,B,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp125000-agi2700,priest,B,"[""normal"", ""normal"", ""normal"", ""normal"", ""steel_body""]",1
+refine,hp125000-agi2700,priest,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip""]",1
+refine,hp125000-agi2700,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp125000-agi2700,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip"", ""status_skip""]",1
+refine,hp125000-agi2700,priest,C2,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp125000-agi2700,priest,C2,"[""normal"", ""normal"", ""normal"", ""normal"", ""steel_body""]",1
+refine,hp125000-agi2700,priest,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip""]",1
+refine,hp125000-agi2700,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+refine,hp125000-agi2700,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+refine,hp125000-agi2700,wanderer,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp125000-agi2700,wanderer,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp125000-agi2700,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+refine,hp125000-agi2700,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp125000-agi2700,wanderer,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp125000-agi2700,wanderer,C1,"[""normal"", ""steel_body"", ""normal"", ""normal"", ""solid_stance""]",1
+refine,hp125000-agi2700,wanderer,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp125000-agi2700,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+refine,hp125000-agi2700,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp125000-agi2700,assassin,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp125000-agi2700,assassin,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""normal""]",1
+refine,hp125000-agi2700,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp125000-agi2700,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp125000-agi2700,assassin,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp125000-agi2700,assassin,C1,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""normal""]",1
+refine,hp125000-agi2700,assassin,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+refine,hp100000-agi2250,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+refine,hp100000-agi2250,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp100000-agi2250,grappler,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp100000-agi2250,grappler,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""normal""]",1
+refine,hp100000-agi2250,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp100000-agi2250,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp100000-agi2250,grappler,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi2250,grappler,C1,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""normal""]",1
+refine,hp100000-agi2250,grappler,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+refine,hp100000-agi2250,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",2
+refine,hp100000-agi2250,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp100000-agi2250,warrior,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp100000-agi2250,warrior,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+refine,hp100000-agi2250,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+refine,hp100000-agi2250,warrior,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi2250,warrior,C1,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""solid_stance""]",1
+refine,hp100000-agi2250,warrior,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi2250,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+refine,hp100000-agi2250,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp100000-agi2250,hunter,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp100000-agi2250,hunter,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""normal""]",1
+refine,hp100000-agi2250,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp100000-agi2250,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp100000-agi2250,hunter,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi2250,hunter,C1,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""normal""]",1
+refine,hp100000-agi2250,hunter,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+refine,hp100000-agi2250,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""status_skip""]",1
+refine,hp100000-agi2250,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp100000-agi2250,wizard,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi2250,wizard,B,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""solid_stance""]",1
+refine,hp100000-agi2250,wizard,B,"[""normal"", ""steel_body"", ""status_skip"", ""status_skip"", ""status_skip""]",1
+refine,hp100000-agi2250,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""status_skip""]",1
+refine,hp100000-agi2250,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip"", ""shock_wave""]",1
+refine,hp100000-agi2250,wizard,C2,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+refine,hp100000-agi2250,wizard,C2,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""solid_stance""]",1
+refine,hp100000-agi2250,wizard,C2,"[""normal"", ""steel_body"", ""status_skip"", ""normal"", ""status_skip""]",1
+refine,hp100000-agi2250,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp100000-agi2250,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""status_skip""]",1
+refine,hp100000-agi2250,priest,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+refine,hp100000-agi2250,priest,B,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""solid_stance""]",1
+refine,hp100000-agi2250,priest,B,"[""normal"", ""steel_body"", ""status_skip"", ""status_skip"", ""status_skip""]",1
+refine,hp100000-agi2250,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+refine,hp100000-agi2250,priest,C2,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi2250,priest,C2,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""solid_stance""]",1
+refine,hp100000-agi2250,priest,C2,"[""normal"", ""steel_body"", ""status_skip"", ""normal"", ""solid_stance""]",1
+refine,hp100000-agi2250,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+refine,hp100000-agi2250,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp100000-agi2250,wanderer,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp100000-agi2250,wanderer,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""normal""]",1
+refine,hp100000-agi2250,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp100000-agi2250,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp100000-agi2250,wanderer,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi2250,wanderer,C1,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""normal""]",1
+refine,hp100000-agi2250,wanderer,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+refine,hp100000-agi2250,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+refine,hp100000-agi2250,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp100000-agi2250,assassin,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp100000-agi2250,assassin,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""normal""]",1
+refine,hp100000-agi2250,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp100000-agi2250,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp100000-agi2250,assassin,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi2250,assassin,C1,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""normal""]",1
+refine,hp100000-agi2250,assassin,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+refine,hp100000-agi3150,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+refine,hp100000-agi3150,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp100000-agi3150,grappler,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+refine,hp100000-agi3150,grappler,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""normal""]",1
+refine,hp100000-agi3150,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp100000-agi3150,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp100000-agi3150,grappler,C1,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp100000-agi3150,grappler,C1,"[""normal"", ""steel_body"", ""normal"", ""normal"", ""solid_stance""]",1
+refine,hp100000-agi3150,grappler,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi3150,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",3
+refine,hp100000-agi3150,warrior,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+refine,hp100000-agi3150,warrior,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp100000-agi3150,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp100000-agi3150,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp100000-agi3150,warrior,C1,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp100000-agi3150,warrior,C1,"[""normal"", ""steel_body"", ""normal"", ""normal"", ""solid_stance""]",1
+refine,hp100000-agi3150,warrior,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi3150,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+refine,hp100000-agi3150,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp100000-agi3150,hunter,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+refine,hp100000-agi3150,hunter,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""normal""]",1
+refine,hp100000-agi3150,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp100000-agi3150,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp100000-agi3150,hunter,C1,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp100000-agi3150,hunter,C1,"[""normal"", ""steel_body"", ""normal"", ""normal"", ""solid_stance""]",1
+refine,hp100000-agi3150,hunter,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi3150,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp100000-agi3150,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip"", ""shock_wave""]",1
+refine,hp100000-agi3150,wizard,B,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp100000-agi3150,wizard,B,"[""normal"", ""normal"", ""normal"", ""normal"", ""steel_body""]",1
+refine,hp100000-agi3150,wizard,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip""]",1
+refine,hp100000-agi3150,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp100000-agi3150,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip"", ""shock_wave""]",1
+refine,hp100000-agi3150,wizard,C2,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp100000-agi3150,wizard,C2,"[""normal"", ""normal"", ""normal"", ""normal"", ""steel_body""]",1
+refine,hp100000-agi3150,wizard,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip""]",1
+refine,hp100000-agi3150,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp100000-agi3150,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip"", ""shock_wave""]",1
+refine,hp100000-agi3150,priest,B,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp100000-agi3150,priest,B,"[""normal"", ""normal"", ""normal"", ""normal"", ""steel_body""]",1
+refine,hp100000-agi3150,priest,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip""]",1
+refine,hp100000-agi3150,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp100000-agi3150,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip"", ""shock_wave""]",1
+refine,hp100000-agi3150,priest,C2,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp100000-agi3150,priest,C2,"[""normal"", ""normal"", ""normal"", ""normal"", ""steel_body""]",1
+refine,hp100000-agi3150,priest,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip""]",1
+refine,hp100000-agi3150,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+refine,hp100000-agi3150,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp100000-agi3150,wanderer,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+refine,hp100000-agi3150,wanderer,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""normal""]",1
+refine,hp100000-agi3150,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+refine,hp100000-agi3150,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+refine,hp100000-agi3150,wanderer,C1,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp100000-agi3150,wanderer,C1,"[""normal"", ""steel_body"", ""normal"", ""normal"", ""solid_stance""]",1
+refine,hp100000-agi3150,wanderer,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi3150,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",3
+refine,hp100000-agi3150,assassin,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+refine,hp100000-agi3150,assassin,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi3150,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+refine,hp100000-agi3150,assassin,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+refine,hp100000-agi3150,assassin,C1,"[""normal"", ""steel_body"", ""normal"", ""normal"", ""solid_stance""]",1
+refine,hp100000-agi3150,assassin,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp50000-agi180,grappler,B,"[""steel_body""]",7
+confirm,hp50000-agi180,grappler,B,[],5
+confirm,hp50000-agi180,grappler,C1,[],11
+confirm,hp50000-agi180,grappler,C1,"[""normal""]",1
+confirm,hp50000-agi180,warrior,B,"[""steel_body"", ""solid_stance""]",3
+confirm,hp50000-agi180,warrior,B,"[""steel_body""]",4
+confirm,hp50000-agi180,warrior,B,"[""normal""]",4
+confirm,hp50000-agi180,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance""]",1
+confirm,hp50000-agi180,warrior,C1,[],9
+confirm,hp50000-agi180,warrior,C1,"[""steel_body""]",3
+confirm,hp50000-agi180,hunter,B,"[""steel_body""]",8
+confirm,hp50000-agi180,hunter,B,"[""steel_body"", ""normal""]",1
+confirm,hp50000-agi180,hunter,B,[],3
+confirm,hp50000-agi180,hunter,C1,[],10
+confirm,hp50000-agi180,hunter,C1,"[""status_skip""]",1
+confirm,hp50000-agi180,hunter,C1,"[""steel_body""]",1
+confirm,hp50000-agi180,wizard,B,"[""steel_body""]",7
+confirm,hp50000-agi180,wizard,B,"[""normal""]",2
+confirm,hp50000-agi180,wizard,B,"[""status_skip""]",2
+confirm,hp50000-agi180,wizard,B,[],1
+confirm,hp50000-agi180,wizard,C2,[],9
+confirm,hp50000-agi180,wizard,C2,"[""status_skip""]",3
+confirm,hp50000-agi180,priest,B,"[""steel_body""]",8
+confirm,hp50000-agi180,priest,B,"[""normal""]",2
+confirm,hp50000-agi180,priest,B,"[""status_skip""]",2
+confirm,hp50000-agi180,priest,C2,"[""steel_body""]",3
+confirm,hp50000-agi180,priest,C2,"[""status_skip""]",6
+confirm,hp50000-agi180,priest,C2,[],3
+confirm,hp50000-agi180,wanderer,B,"[""steel_body""]",4
+confirm,hp50000-agi180,wanderer,B,"[""normal""]",1
+confirm,hp50000-agi180,wanderer,B,[],7
+confirm,hp50000-agi180,wanderer,C1,[],12
+confirm,hp50000-agi180,assassin,B,"[""steel_body""]",5
+confirm,hp50000-agi180,assassin,B,"[""normal""]",1
+confirm,hp50000-agi180,assassin,B,[],4
+confirm,hp50000-agi180,assassin,B,"[""steel_body"", ""solid_stance""]",2
+confirm,hp50000-agi180,assassin,C1,[],11
+confirm,hp50000-agi180,assassin,C1,"[""steel_body""]",1
+confirm,hp100000-agi3150,grappler,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""normal""]",1
+confirm,hp100000-agi3150,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",3
+confirm,hp100000-agi3150,grappler,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3150,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+confirm,hp100000-agi3150,grappler,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+confirm,hp100000-agi3150,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",4
+confirm,hp100000-agi3150,grappler,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3150,grappler,C1,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+confirm,hp100000-agi3150,grappler,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3150,grappler,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3150,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",4
+confirm,hp100000-agi3150,grappler,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3150,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+confirm,hp100000-agi3150,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+confirm,hp100000-agi3150,warrior,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""normal""]",1
+confirm,hp100000-agi3150,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",5
+confirm,hp100000-agi3150,warrior,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3150,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+confirm,hp100000-agi3150,warrior,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+confirm,hp100000-agi3150,warrior,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3150,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",2
+confirm,hp100000-agi3150,warrior,C1,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+confirm,hp100000-agi3150,warrior,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3150,warrior,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3150,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",2
+confirm,hp100000-agi3150,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+confirm,hp100000-agi3150,warrior,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+confirm,hp100000-agi3150,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+confirm,hp100000-agi3150,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+confirm,hp100000-agi3150,hunter,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""normal""]",1
+confirm,hp100000-agi3150,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",4
+confirm,hp100000-agi3150,hunter,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3150,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+confirm,hp100000-agi3150,hunter,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+confirm,hp100000-agi3150,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",3
+confirm,hp100000-agi3150,hunter,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3150,hunter,C1,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+confirm,hp100000-agi3150,hunter,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3150,hunter,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3150,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",3
+confirm,hp100000-agi3150,hunter,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3150,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+confirm,hp100000-agi3150,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",2
+confirm,hp100000-agi3150,wizard,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""normal""]",1
+confirm,hp100000-agi3150,wizard,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3150,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",4
+confirm,hp100000-agi3150,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+confirm,hp100000-agi3150,wizard,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+confirm,hp100000-agi3150,wizard,B,"[""steel_body"", ""normal"", ""solid_stance"", ""status_skip"", ""counter_stance""]",1
+confirm,hp100000-agi3150,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""status_skip""]",1
+confirm,hp100000-agi3150,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+confirm,hp100000-agi3150,wizard,C2,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""normal""]",1
+confirm,hp100000-agi3150,wizard,C2,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3150,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",4
+confirm,hp100000-agi3150,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+confirm,hp100000-agi3150,wizard,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+confirm,hp100000-agi3150,wizard,C2,"[""steel_body"", ""normal"", ""solid_stance"", ""status_skip"", ""counter_stance""]",1
+confirm,hp100000-agi3150,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""status_skip""]",1
+confirm,hp100000-agi3150,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+confirm,hp100000-agi3150,priest,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""normal""]",1
+confirm,hp100000-agi3150,priest,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3150,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",4
+confirm,hp100000-agi3150,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+confirm,hp100000-agi3150,priest,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+confirm,hp100000-agi3150,priest,B,"[""steel_body"", ""normal"", ""solid_stance"", ""status_skip"", ""counter_stance""]",1
+confirm,hp100000-agi3150,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""status_skip""]",1
+confirm,hp100000-agi3150,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+confirm,hp100000-agi3150,priest,C2,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""normal""]",1
+confirm,hp100000-agi3150,priest,C2,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3150,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",4
+confirm,hp100000-agi3150,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+confirm,hp100000-agi3150,priest,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+confirm,hp100000-agi3150,priest,C2,"[""steel_body"", ""normal"", ""solid_stance"", ""status_skip"", ""counter_stance""]",1
+confirm,hp100000-agi3150,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""status_skip""]",1
+confirm,hp100000-agi3150,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+confirm,hp100000-agi3150,wanderer,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""normal""]",1
+confirm,hp100000-agi3150,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",3
+confirm,hp100000-agi3150,wanderer,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3150,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+confirm,hp100000-agi3150,wanderer,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+confirm,hp100000-agi3150,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",4
+confirm,hp100000-agi3150,wanderer,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3150,wanderer,C1,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+confirm,hp100000-agi3150,wanderer,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3150,wanderer,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3150,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",4
+confirm,hp100000-agi3150,wanderer,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3150,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+confirm,hp100000-agi3150,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+confirm,hp100000-agi3150,assassin,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""normal""]",1
+confirm,hp100000-agi3150,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+confirm,hp100000-agi3150,assassin,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3150,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",3
+confirm,hp100000-agi3150,assassin,B,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""counter_stance""]",1
+confirm,hp100000-agi3150,assassin,B,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""solid_stance""]",1
+confirm,hp100000-agi3150,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+confirm,hp100000-agi3150,assassin,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3150,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+confirm,hp100000-agi3150,assassin,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3150,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",3
+confirm,hp100000-agi3150,assassin,C1,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""normal""]",1
+confirm,hp100000-agi3150,assassin,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3150,assassin,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+confirm,hp100000-agi3150,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",2
+confirm,hp100000-agi3150,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+confirm,hp100000-agi3150,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+confirm,hp100000-agi2250,grappler,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",5
+confirm,hp100000-agi2250,grappler,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,grappler,B,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""normal""]",1
+confirm,hp100000-agi2250,grappler,B,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""solid_stance""]",1
+confirm,hp100000-agi2250,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+confirm,hp100000-agi2250,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+confirm,hp100000-agi2250,grappler,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,grappler,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",5
+confirm,hp100000-agi2250,grappler,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+confirm,hp100000-agi2250,grappler,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",2
+confirm,hp100000-agi2250,grappler,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+confirm,hp100000-agi2250,grappler,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,warrior,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",4
+confirm,hp100000-agi2250,warrior,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,warrior,B,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""counter_stance""]",1
+confirm,hp100000-agi2250,warrior,B,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""solid_stance""]",1
+confirm,hp100000-agi2250,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",2
+confirm,hp100000-agi2250,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+confirm,hp100000-agi2250,warrior,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,warrior,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",3
+confirm,hp100000-agi2250,warrior,C1,"[""steel_body"", ""normal"", ""normal"", ""solid_stance"", ""normal""]",1
+confirm,hp100000-agi2250,warrior,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",2
+confirm,hp100000-agi2250,warrior,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+confirm,hp100000-agi2250,warrior,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",2
+confirm,hp100000-agi2250,hunter,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",5
+confirm,hp100000-agi2250,hunter,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,hunter,B,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""normal""]",1
+confirm,hp100000-agi2250,hunter,B,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""solid_stance""]",1
+confirm,hp100000-agi2250,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+confirm,hp100000-agi2250,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+confirm,hp100000-agi2250,hunter,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,hunter,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi2250,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+confirm,hp100000-agi2250,hunter,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,hunter,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",3
+confirm,hp100000-agi2250,hunter,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+confirm,hp100000-agi2250,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",3
+confirm,hp100000-agi2250,wizard,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip"", ""status_skip""]",2
+confirm,hp100000-agi2250,wizard,B,"[""steel_body"", ""solid_stance"", ""normal"", ""status_skip"", ""counter_stance""]",1
+confirm,hp100000-agi2250,wizard,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",2
+confirm,hp100000-agi2250,wizard,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+confirm,hp100000-agi2250,wizard,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+confirm,hp100000-agi2250,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",1
+confirm,hp100000-agi2250,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip"", ""shock_wave""]",1
+confirm,hp100000-agi2250,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+confirm,hp100000-agi2250,wizard,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi2250,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip"", ""normal""]",2
+confirm,hp100000-agi2250,wizard,C2,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""status_skip""]",1
+confirm,hp100000-agi2250,wizard,C2,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",4
+confirm,hp100000-agi2250,wizard,C2,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""status_skip""]",1
+confirm,hp100000-agi2250,priest,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi2250,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip"", ""status_skip""]",2
+confirm,hp100000-agi2250,priest,B,"[""steel_body"", ""solid_stance"", ""normal"", ""status_skip"", ""normal""]",1
+confirm,hp100000-agi2250,priest,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",3
+confirm,hp100000-agi2250,priest,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip"", ""normal""]",1
+confirm,hp100000-agi2250,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+confirm,hp100000-agi2250,priest,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+confirm,hp100000-agi2250,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""status_skip"", ""status_skip""]",2
+confirm,hp100000-agi2250,priest,C2,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""status_skip""]",1
+confirm,hp100000-agi2250,priest,C2,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",4
+confirm,hp100000-agi2250,priest,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,priest,C2,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+confirm,hp100000-agi2250,wanderer,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",5
+confirm,hp100000-agi2250,wanderer,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,wanderer,B,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""normal""]",1
+confirm,hp100000-agi2250,wanderer,B,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""solid_stance""]",1
+confirm,hp100000-agi2250,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+confirm,hp100000-agi2250,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+confirm,hp100000-agi2250,wanderer,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,wanderer,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",5
+confirm,hp100000-agi2250,wanderer,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+confirm,hp100000-agi2250,wanderer,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",2
+confirm,hp100000-agi2250,wanderer,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+confirm,hp100000-agi2250,wanderer,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,assassin,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",5
+confirm,hp100000-agi2250,assassin,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,assassin,B,"[""steel_body"", ""solid_stance"", ""normal"", ""normal"", ""normal""]",1
+confirm,hp100000-agi2250,assassin,B,"[""normal"", ""normal"", ""normal"", ""steel_body"", ""solid_stance""]",1
+confirm,hp100000-agi2250,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+confirm,hp100000-agi2250,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+confirm,hp100000-agi2250,assassin,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,assassin,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi2250,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+confirm,hp100000-agi2250,assassin,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,assassin,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi2250,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",3
+confirm,hp100000-agi2250,assassin,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+confirm,hp100000-agi2250,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",3
+confirm,hp100000-agi3600,grappler,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""normal""]",1
+confirm,hp100000-agi3600,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",5
+confirm,hp100000-agi3600,grappler,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3600,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+confirm,hp100000-agi3600,grappler,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+confirm,hp100000-agi3600,grappler,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3600,grappler,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",2
+confirm,hp100000-agi3600,grappler,C1,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+confirm,hp100000-agi3600,grappler,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3600,grappler,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3600,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",2
+confirm,hp100000-agi3600,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+confirm,hp100000-agi3600,grappler,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+confirm,hp100000-agi3600,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+confirm,hp100000-agi3600,grappler,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+confirm,hp100000-agi3600,warrior,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+confirm,hp100000-agi3600,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",3
+confirm,hp100000-agi3600,warrior,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""normal""]",2
+confirm,hp100000-agi3600,warrior,B,"[""steel_body"", ""normal"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+confirm,hp100000-agi3600,warrior,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""normal""]",1
+confirm,hp100000-agi3600,warrior,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",2
+confirm,hp100000-agi3600,warrior,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3600,warrior,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+confirm,hp100000-agi3600,warrior,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3600,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",3
+confirm,hp100000-agi3600,warrior,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+confirm,hp100000-agi3600,warrior,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3600,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+confirm,hp100000-agi3600,warrior,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3600,warrior,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+confirm,hp100000-agi3600,hunter,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""normal""]",1
+confirm,hp100000-agi3600,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",5
+confirm,hp100000-agi3600,hunter,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3600,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+confirm,hp100000-agi3600,hunter,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+confirm,hp100000-agi3600,hunter,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3600,hunter,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",2
+confirm,hp100000-agi3600,hunter,C1,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+confirm,hp100000-agi3600,hunter,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3600,hunter,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3600,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",2
+confirm,hp100000-agi3600,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+confirm,hp100000-agi3600,hunter,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+confirm,hp100000-agi3600,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+confirm,hp100000-agi3600,hunter,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+confirm,hp100000-agi3600,wizard,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""normal""]",1
+confirm,hp100000-agi3600,wizard,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3600,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",4
+confirm,hp100000-agi3600,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+confirm,hp100000-agi3600,wizard,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+confirm,hp100000-agi3600,wizard,B,"[""steel_body"", ""normal"", ""solid_stance"", ""status_skip"", ""counter_stance""]",1
+confirm,hp100000-agi3600,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""status_skip""]",1
+confirm,hp100000-agi3600,wizard,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+confirm,hp100000-agi3600,wizard,C2,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""normal""]",1
+confirm,hp100000-agi3600,wizard,C2,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3600,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",4
+confirm,hp100000-agi3600,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+confirm,hp100000-agi3600,wizard,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+confirm,hp100000-agi3600,wizard,C2,"[""steel_body"", ""normal"", ""solid_stance"", ""status_skip"", ""counter_stance""]",1
+confirm,hp100000-agi3600,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""status_skip""]",1
+confirm,hp100000-agi3600,wizard,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+confirm,hp100000-agi3600,priest,B,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+confirm,hp100000-agi3600,priest,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""status_skip""]",1
+confirm,hp100000-agi3600,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",5
+confirm,hp100000-agi3600,priest,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3600,priest,B,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3600,priest,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+confirm,hp100000-agi3600,priest,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+confirm,hp100000-agi3600,priest,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""normal"", ""counter_stance""]",1
+confirm,hp100000-agi3600,priest,C2,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""status_skip""]",1
+confirm,hp100000-agi3600,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",5
+confirm,hp100000-agi3600,priest,C2,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3600,priest,C2,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3600,priest,C2,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+confirm,hp100000-agi3600,priest,C2,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+confirm,hp100000-agi3600,wanderer,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""normal""]",1
+confirm,hp100000-agi3600,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",5
+confirm,hp100000-agi3600,wanderer,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3600,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+confirm,hp100000-agi3600,wanderer,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+confirm,hp100000-agi3600,wanderer,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3600,wanderer,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",2
+confirm,hp100000-agi3600,wanderer,C1,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+confirm,hp100000-agi3600,wanderer,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3600,wanderer,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3600,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",2
+confirm,hp100000-agi3600,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",2
+confirm,hp100000-agi3600,wanderer,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""normal""]",1
+confirm,hp100000-agi3600,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",1
+confirm,hp100000-agi3600,wanderer,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+confirm,hp100000-agi3600,assassin,B,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""normal""]",1
+confirm,hp100000-agi3600,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",3
+confirm,hp100000-agi3600,assassin,B,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3600,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""normal""]",1
+confirm,hp100000-agi3600,assassin,B,"[""normal"", ""normal"", ""steel_body"", ""normal"", ""solid_stance""]",1
+confirm,hp100000-agi3600,assassin,B,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",4
+confirm,hp100000-agi3600,assassin,B,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3600,assassin,C1,"[""normal"", ""steel_body"", ""normal"", ""solid_stance"", ""counter_stance""]",1
+confirm,hp100000-agi3600,assassin,C1,"[""steel_body"", ""solid_stance"", ""normal"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3600,assassin,C1,"[""steel_body"", ""normal"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",2
+confirm,hp100000-agi3600,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""true_fist""]",3
+confirm,hp100000-agi3600,assassin,C1,"[""normal"", ""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave""]",1
+confirm,hp100000-agi3600,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""shock_wave"", ""normal""]",1
+confirm,hp100000-agi3600,assassin,C1,"[""steel_body"", ""solid_stance"", ""counter_stance"", ""normal"", ""shock_wave""]",2

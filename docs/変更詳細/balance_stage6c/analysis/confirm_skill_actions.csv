@@ -1,0 +1,9 @@
+candidate,tactic,battles,counter_damage,support_window_player_direct_damage,incoming_overlap_damage,incoming_overlap_hits,shield_successes,shield_at_full,all_skills_exhausted,mp_shortages
+hp50000-agi180,B,84,713,572692,0,0,151,150,0,0
+hp50000-agi180,C,84,0,44484,0,0,0,0,0,0
+hp100000-agi3150,B,84,152931,3264518,0,0,168,2,49,0
+hp100000-agi3150,C,84,102686,3102156,0,0,0,0,0,0
+hp100000-agi2250,B,84,158156,3496095,0,0,168,24,63,0
+hp100000-agi2250,C,84,125238,3117696,0,0,0,0,8,0
+hp100000-agi3600,B,84,133330,3168254,0,0,168,0,39,0
+hp100000-agi3600,C,84,100776,2556982,0,0,0,0,2,0

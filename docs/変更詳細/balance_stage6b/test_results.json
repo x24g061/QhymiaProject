@@ -1,0 +1,26 @@
+{
+  "stage6b_initial": {
+    "tests": 8,
+    "failures": 1,
+    "cause": "検証テストでdeepcopyしたDjango内部状態のidentityを比較した。モデル値比較へ修正。"
+  },
+  "stage6b_recheck": {
+    "command": "venv/bin/python manage.py test apps.battle.test_balance_stage6b --noinput",
+    "tests": 8,
+    "seconds": 1.383,
+    "exit_code": 0,
+    "failures": 0,
+    "errors": 0
+  },
+  "full": {
+    "command": "venv/bin/python manage.py test --noinput",
+    "tests": 569,
+    "seconds": 95.516,
+    "exit_code": 0,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "expected_failures": 0
+  },
+  "django_check": "System check identified no issues (0 silenced)."
+}

@@ -1,0 +1,43 @@
+conditions=280 battles=840
+7/280 conditions; 21 runs; 6.1s
+14/280 conditions; 42 runs; 8.4s
+21/280 conditions; 63 runs; 14.4s
+28/280 conditions; 84 runs; 19.2s
+35/280 conditions; 105 runs; 30.3s
+42/280 conditions; 126 runs; 40.5s
+49/280 conditions; 147 runs; 57.0s
+56/280 conditions; 168 runs; 72.9s
+63/280 conditions; 189 runs; 75.6s
+70/280 conditions; 210 runs; 78.1s
+77/280 conditions; 231 runs; 82.7s
+84/280 conditions; 252 runs; 87.4s
+91/280 conditions; 273 runs; 94.0s
+98/280 conditions; 294 runs; 100.6s
+105/280 conditions; 315 runs; 107.5s
+112/280 conditions; 336 runs; 114.5s
+119/280 conditions; 357 runs; 117.5s
+126/280 conditions; 378 runs; 120.1s
+133/280 conditions; 399 runs; 124.9s
+140/280 conditions; 420 runs; 129.4s
+147/280 conditions; 441 runs; 135.4s
+154/280 conditions; 462 runs; 141.0s
+161/280 conditions; 483 runs; 146.9s
+168/280 conditions; 504 runs; 152.7s
+175/280 conditions; 525 runs; 156.3s
+182/280 conditions; 546 runs; 159.4s
+189/280 conditions; 567 runs; 164.6s
+196/280 conditions; 588 runs; 169.6s
+203/280 conditions; 609 runs; 175.5s
+210/280 conditions; 630 runs; 180.9s
+217/280 conditions; 651 runs; 187.0s
+224/280 conditions; 672 runs; 192.4s
+231/280 conditions; 693 runs; 196.1s
+238/280 conditions; 714 runs; 200.4s
+245/280 conditions; 735 runs; 206.5s
+252/280 conditions; 756 runs; 212.1s
+259/280 conditions; 777 runs; 218.6s
+266/280 conditions; 798 runs; 225.4s
+273/280 conditions; 819 runs; 232.0s
+280/280 conditions; 840 runs; 238.8s
+{"trials": 840, "valid": 840, "exceptions": 0, "wins": 448, "losses": 392, "draws": 0, "win_rate": 0.5333333333333333, "wilson95": [0.4995207577829598, 0.5668424191084228], "mean_loops": 43.92261904761905, "median_loops": 35.5, "loop_limits": 0, "player_mean_actions": 23.067857142857143, "boss_mean_actions": 20.226190476190474, "mean_action_difference": 2.841666666666667}
+battles_per_second=3.820

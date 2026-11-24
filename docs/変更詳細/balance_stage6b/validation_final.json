@@ -1,0 +1,49 @@
+{
+  "phases": {
+    "pilot": {
+      "conditions": 40,
+      "runs": 40,
+      "exceptions": 0,
+      "missing": 0,
+      "loop_limits": 0,
+      "draws": 0,
+      "source_fingerprint": "75eacf3c1721852b35dd24ec013b6e83c751fe8a73c9f21ef81379d82d55e339"
+    },
+    "screen": {
+      "conditions": 322,
+      "runs": 1610,
+      "exceptions": 0,
+      "missing": 0,
+      "loop_limits": 0,
+      "draws": 0,
+      "source_fingerprint": "a784c855309208e090023f240841aa7dff45a4a3198b0d8676b885918361e65a"
+    },
+    "confirm": {
+      "conditions": 126,
+      "runs": 1134,
+      "exceptions": 0,
+      "missing": 0,
+      "loop_limits": 0,
+      "draws": 0,
+      "source_fingerprint": "a784c855309208e090023f240841aa7dff45a4a3198b0d8676b885918361e65a"
+    }
+  },
+  "unique_case_seeds": 2784,
+  "original_files": 671,
+  "original_changed": [
+    "AGENTS.md"
+  ],
+  "original_deleted": [],
+  "selected_candidates": [
+    "f8-max_hp200000",
+    "f8-agility3600",
+    "f7-intelligence1900",
+    "f7-intelligence1300",
+    "f12-max_hp190000",
+    "f12-strength6500"
+  ],
+  "branch": "feature/boss-balance-stage6b",
+  "all_profiles_and_hp_st_ledgers_match": true,
+  "stage6a_and_backups_preserved": true,
+  "production_logic_unchanged": true
+}

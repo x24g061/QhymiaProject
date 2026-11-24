@@ -1,0 +1,442 @@
+{
+  "grid_shortlist": {
+    "variants": [
+      {
+        "id": "hp100000-agi2700",
+        "hp": 100000,
+        "agi": 2700
+      },
+      {
+        "id": "hp100000-agi1800",
+        "hp": 100000,
+        "agi": 1800
+      },
+      {
+        "id": "hp100000-agi3600",
+        "hp": 100000,
+        "agi": 3600
+      }
+    ],
+    "reasons": [
+      {
+        "candidate": "hp100000-agi2700",
+        "reason": "率の距離を重視",
+        "metrics": {
+          "candidate": "hp100000-agi2700",
+          "hp": 100000,
+          "agi": 2700,
+          "control": false,
+          "complete": true,
+          "B_wins": 9,
+          "B_valid": 21,
+          "B_rate": 0.42857142857142855,
+          "B_gap": 1.0,
+          "B_zero_jobs": [
+            "warrior",
+            "priest",
+            "assassin"
+          ],
+          "B_all_win_jobs": [
+            "wanderer"
+          ],
+          "B_job_wins": {
+            "grappler": 2,
+            "warrior": 0,
+            "hunter": 2,
+            "wizard": 2,
+            "priest": 0,
+            "wanderer": 3,
+            "assassin": 0
+          },
+          "B_mean_loops": 41.19047619047619,
+          "B_player_mean_actions": 19.476190476190478,
+          "B_boss_mean_actions": 31.666666666666668,
+          "B_player_damage_to_opponent": 84587.38095238095,
+          "B_player_damage_taken_total": 9867.52380952381,
+          "B_player_healing_total": 2096.4761904761904,
+          "B_player_initial_hp": 9866.42857142857,
+          "B_boss_direct_attack_actions": 15.857142857142858,
+          "B_boss_threatening_direct_actions": 10.571428571428571,
+          "B_boss_attack_skill_actions": 9.285714285714285,
+          "B_boss_support_actions": 14.857142857142858,
+          "B_boss_died_before_attack_skill": 0,
+          "B_boss_died_before_any_direct_attack": 0,
+          "B_boss_died_without_threatening_direct_action": 0,
+          "B_poison_damage_to_boss": 0,
+          "B_player_all_exhausted_rate": 0.5714285714285714,
+          "B_player_mp_shortages": 0,
+          "B_counter_damage": 1428.2380952380952,
+          "B_player_direct_damage_in_support_windows": 41492.42857142857,
+          "B_incoming_overlap_damage": 0,
+          "B_shield_uses": 42,
+          "B_shield_full": 2,
+          "B_shield_full_fraction": 0.047619047619047616,
+          "C_wins": 12,
+          "C_valid": 21,
+          "C_rate": 0.5714285714285714,
+          "C_gap": 1.0,
+          "C_zero_jobs": [
+            "priest"
+          ],
+          "C_all_win_jobs": [
+            "hunter",
+            "assassin"
+          ],
+          "C_job_wins": {
+            "grappler": 2,
+            "warrior": 1,
+            "hunter": 3,
+            "wizard": 1,
+            "priest": 0,
+            "wanderer": 2,
+            "assassin": 3
+          },
+          "C_mean_loops": 30.666666666666668,
+          "C_player_mean_actions": 15.19047619047619,
+          "C_boss_mean_actions": 24.285714285714285,
+          "C_player_damage_to_opponent": 90065.19047619047,
+          "C_player_damage_taken_total": 7260.238095238095,
+          "C_player_healing_total": 0.0,
+          "C_player_initial_hp": 9866.42857142857,
+          "C_boss_direct_attack_actions": 11.666666666666666,
+          "C_boss_threatening_direct_actions": 8.761904761904763,
+          "C_boss_attack_skill_actions": 6.285714285714286,
+          "C_boss_support_actions": 10.904761904761905,
+          "C_boss_died_before_attack_skill": 0,
+          "C_boss_died_before_any_direct_attack": 0,
+          "C_boss_died_without_threatening_direct_action": 0,
+          "C_poison_damage_to_boss": 13877.57142857143,
+          "C_player_all_exhausted_rate": 0,
+          "C_player_mp_shortages": 0,
+          "C_counter_damage": 1188.1904761904761,
+          "C_player_direct_damage_in_support_windows": 34015.333333333336,
+          "C_incoming_overlap_damage": 0,
+          "C_shield_uses": 0,
+          "C_shield_full": 0,
+          "C_shield_full_fraction": null,
+          "b_center_distance": 0.07857142857142857,
+          "c_band_distance": 0,
+          "c_band_descriptive": true,
+          "b_minus_c": -0.14285714285714285,
+          "rate_penalty": 0.07857142857142857,
+          "zero_job_cells": 4,
+          "max_gap": 1.0,
+          "exhaustion_mean": 0.2857142857142857,
+          "no_threat_mean": 0.0
+        }
+      },
+      {
+        "candidate": "hp100000-agi1800",
+        "reason": "職業格差を重視",
+        "metrics": {
+          "candidate": "hp100000-agi1800",
+          "hp": 100000,
+          "agi": 1800,
+          "control": false,
+          "complete": true,
+          "B_wins": 8,
+          "B_valid": 21,
+          "B_rate": 0.38095238095238093,
+          "B_gap": 1.0,
+          "B_zero_jobs": [
+            "warrior",
+            "wizard",
+            "priest"
+          ],
+          "B_all_win_jobs": [
+            "wanderer"
+          ],
+          "B_job_wins": {
+            "grappler": 2,
+            "warrior": 0,
+            "hunter": 2,
+            "wizard": 0,
+            "priest": 0,
+            "wanderer": 3,
+            "assassin": 1
+          },
+          "B_mean_loops": 33.57142857142857,
+          "B_player_mean_actions": 21.285714285714285,
+          "B_boss_mean_actions": 25.047619047619047,
+          "B_player_damage_to_opponent": 91333.76190476191,
+          "B_player_damage_taken_total": 8574.52380952381,
+          "B_player_healing_total": 1040.047619047619,
+          "B_player_initial_hp": 9866.42857142857,
+          "B_boss_direct_attack_actions": 12.285714285714285,
+          "B_boss_threatening_direct_actions": 8.666666666666666,
+          "B_boss_attack_skill_actions": 7.285714285714286,
+          "B_boss_support_actions": 11.857142857142858,
+          "B_boss_died_before_attack_skill": 0,
+          "B_boss_died_before_any_direct_attack": 0,
+          "B_boss_died_without_threatening_direct_action": 0,
+          "B_poison_damage_to_boss": 0,
+          "B_player_all_exhausted_rate": 0.7619047619047619,
+          "B_player_mp_shortages": 0,
+          "B_counter_damage": 1816.6666666666667,
+          "B_player_direct_damage_in_support_windows": 39990.47619047619,
+          "B_incoming_overlap_damage": 0,
+          "B_shield_uses": 42,
+          "B_shield_full": 16,
+          "B_shield_full_fraction": 0.38095238095238093,
+          "C_wins": 17,
+          "C_valid": 21,
+          "C_rate": 0.8095238095238095,
+          "C_gap": 0.6666666666666667,
+          "C_zero_jobs": [],
+          "C_all_win_jobs": [
+            "grappler",
+            "hunter",
+            "wanderer",
+            "assassin"
+          ],
+          "C_job_wins": {
+            "grappler": 3,
+            "warrior": 2,
+            "hunter": 3,
+            "wizard": 2,
+            "priest": 1,
+            "wanderer": 3,
+            "assassin": 3
+          },
+          "C_mean_loops": 21.238095238095237,
+          "C_player_mean_actions": 15.190476190476192,
+          "C_boss_mean_actions": 16.238095238095237,
+          "C_player_damage_to_opponent": 97845.61904761905,
+          "C_player_damage_taken_total": 5136.714285714286,
+          "C_player_healing_total": 0.0,
+          "C_player_initial_hp": 9866.42857142857,
+          "C_boss_direct_attack_actions": 7.0,
+          "C_boss_threatening_direct_actions": 4.9523809523809526,
+          "C_boss_attack_skill_actions": 4.0476190476190474,
+          "C_boss_support_actions": 7.666666666666667,
+          "C_boss_died_before_attack_skill": 0,
+          "C_boss_died_before_any_direct_attack": 0,
+          "C_boss_died_without_threatening_direct_action": 0,
+          "C_poison_damage_to_boss": 12207.761904761905,
+          "C_player_all_exhausted_rate": 0.047619047619047616,
+          "C_player_mp_shortages": 0,
+          "C_counter_damage": 1379.7619047619048,
+          "C_player_direct_damage_in_support_windows": 36178.47619047619,
+          "C_incoming_overlap_damage": 0,
+          "C_shield_uses": 0,
+          "C_shield_full": 0,
+          "C_shield_full_fraction": null,
+          "b_center_distance": 0.030952380952380953,
+          "c_band_distance": 0.20952380952380956,
+          "c_band_descriptive": false,
+          "b_minus_c": -0.4285714285714286,
+          "rate_penalty": 0.2404761904761905,
+          "zero_job_cells": 3,
+          "max_gap": 1.0,
+          "exhaustion_mean": 0.40476190476190477,
+          "no_threat_mean": 0.0
+        }
+      },
+      {
+        "candidate": "hp100000-agi3600",
+        "reason": "枯渇と脅威攻撃到達を重視",
+        "metrics": {
+          "candidate": "hp100000-agi3600",
+          "hp": 100000,
+          "agi": 3600,
+          "control": false,
+          "complete": true,
+          "B_wins": 3,
+          "B_valid": 21,
+          "B_rate": 0.14285714285714285,
+          "B_gap": 0.3333333333333333,
+          "B_zero_jobs": [
+            "warrior",
+            "wizard",
+            "priest",
+            "assassin"
+          ],
+          "B_all_win_jobs": [],
+          "B_job_wins": {
+            "grappler": 1,
+            "warrior": 0,
+            "hunter": 1,
+            "wizard": 0,
+            "priest": 0,
+            "wanderer": 1,
+            "assassin": 0
+          },
+          "B_mean_loops": 53.714285714285715,
+          "B_player_mean_actions": 19.047619047619047,
+          "B_boss_mean_actions": 39.904761904761905,
+          "B_player_damage_to_opponent": 82556.71428571429,
+          "B_player_damage_taken_total": 11132.571428571428,
+          "B_player_healing_total": 2396.4761904761904,
+          "B_player_initial_hp": 9866.42857142857,
+          "B_boss_direct_attack_actions": 19.857142857142858,
+          "B_boss_threatening_direct_actions": 13.523809523809524,
+          "B_boss_attack_skill_actions": 11.476190476190476,
+          "B_boss_support_actions": 18.428571428571427,
+          "B_boss_died_before_attack_skill": 0,
+          "B_boss_died_before_any_direct_attack": 0,
+          "B_boss_died_without_threatening_direct_action": 0,
+          "B_poison_damage_to_boss": 0,
+          "B_player_all_exhausted_rate": 0.5714285714285714,
+          "B_player_mp_shortages": 0,
+          "B_counter_damage": 1554.0,
+          "B_player_direct_damage_in_support_windows": 39999.04761904762,
+          "B_incoming_overlap_damage": 0,
+          "B_shield_uses": 42,
+          "B_shield_full": 1,
+          "B_shield_full_fraction": 0.023809523809523808,
+          "C_wins": 9,
+          "C_valid": 21,
+          "C_rate": 0.42857142857142855,
+          "C_gap": 1.0,
+          "C_zero_jobs": [
+            "warrior",
+            "wizard",
+            "priest"
+          ],
+          "C_all_win_jobs": [
+            "wanderer"
+          ],
+          "C_job_wins": {
+            "grappler": 2,
+            "warrior": 0,
+            "hunter": 2,
+            "wizard": 0,
+            "priest": 0,
+            "wanderer": 3,
+            "assassin": 2
+          },
+          "C_mean_loops": 38.85714285714286,
+          "C_player_mean_actions": 14.857142857142858,
+          "C_boss_mean_actions": 30.047619047619047,
+          "C_player_damage_to_opponent": 79169.5238095238,
+          "C_player_damage_taken_total": 8495.52380952381,
+          "C_player_healing_total": 0.0,
+          "C_player_initial_hp": 9866.42857142857,
+          "C_boss_direct_attack_actions": 15.285714285714286,
+          "C_boss_threatening_direct_actions": 10.80952380952381,
+          "C_boss_attack_skill_actions": 8.142857142857142,
+          "C_boss_support_actions": 13.476190476190476,
+          "C_boss_died_before_attack_skill": 0,
+          "C_boss_died_before_any_direct_attack": 0,
+          "C_boss_died_without_threatening_direct_action": 0,
+          "C_poison_damage_to_boss": 9647.47619047619,
+          "C_player_all_exhausted_rate": 0.047619047619047616,
+          "C_player_mp_shortages": 0,
+          "C_counter_damage": 1232.2857142857142,
+          "C_player_direct_damage_in_support_windows": 27431.666666666664,
+          "C_incoming_overlap_damage": 0,
+          "C_shield_uses": 0,
+          "C_shield_full": 0,
+          "C_shield_full_fraction": null,
+          "b_center_distance": 0.20714285714285713,
+          "c_band_distance": 0,
+          "c_band_descriptive": true,
+          "b_minus_c": -0.2857142857142857,
+          "rate_penalty": 0.20714285714285713,
+          "zero_job_cells": 7,
+          "max_gap": 1.0,
+          "exhaustion_mean": 0.30952380952380953,
+          "no_threat_mean": 0.0
+        }
+      }
+    ],
+    "policy": "C帯内距離0、B中心距離と帯外距離を参照。最良から20pt以内のみで格差/戦闘内容を比較。交差は加点しない。"
+  },
+  "refine_variants": [
+    {
+      "id": "hp50000-agi180",
+      "hp": 50000,
+      "agi": 180
+    },
+    {
+      "id": "hp100000-agi2700",
+      "hp": 100000,
+      "agi": 2700
+    },
+    {
+      "id": "hp75000-agi2700",
+      "hp": 75000,
+      "agi": 2700
+    },
+    {
+      "id": "hp125000-agi2700",
+      "hp": 125000,
+      "agi": 2700
+    },
+    {
+      "id": "hp100000-agi2250",
+      "hp": 100000,
+      "agi": 2250
+    },
+    {
+      "id": "hp100000-agi3150",
+      "hp": 100000,
+      "agi": 3150
+    }
+  ],
+  "new_midpoints": [
+    {
+      "id": "hp75000-agi2700",
+      "hp": 75000,
+      "agi": 2700
+    },
+    {
+      "id": "hp125000-agi2700",
+      "hp": 125000,
+      "agi": 2700
+    },
+    {
+      "id": "hp100000-agi2250",
+      "hp": 100000,
+      "agi": 2250
+    },
+    {
+      "id": "hp100000-agi3150",
+      "hp": 100000,
+      "agi": 3150
+    }
+  ],
+  "evidence": [
+    {
+      "candidate": "hp75000-agi2700",
+      "axis": "HP",
+      "parents": [
+        "hp50000-agi2700",
+        "hp100000-agi2700"
+      ],
+      "endpoint_min_rate_penalty": 0.07857142857142857,
+      "reason": "実測のB中心またはC上限を挟む隣接点の中間"
+    },
+    {
+      "candidate": "hp125000-agi2700",
+      "axis": "HP",
+      "parents": [
+        "hp100000-agi2700",
+        "hp150000-agi2700"
+      ],
+      "endpoint_min_rate_penalty": 0.07857142857142857,
+      "reason": "実測のB中心またはC上限を挟む隣接点の中間"
+    },
+    {
+      "candidate": "hp100000-agi2250",
+      "axis": "AGI",
+      "parents": [
+        "hp100000-agi1800",
+        "hp100000-agi2700"
+      ],
+      "endpoint_min_rate_penalty": 0.07857142857142857,
+      "reason": "実測のB中心またはC上限を挟む隣接点の中間"
+    },
+    {
+      "candidate": "hp100000-agi3150",
+      "axis": "AGI",
+      "parents": [
+        "hp100000-agi2700",
+        "hp100000-agi3600"
+      ],
+      "endpoint_min_rate_penalty": 0.07857142857142857,
+      "reason": "実測のB中心またはC上限を挟む隣接点の中間"
+    }
+  ],
+  "note": "追加候補はscreen後の実測選択。点推定を正式採用の確定根拠にしない。"
+}

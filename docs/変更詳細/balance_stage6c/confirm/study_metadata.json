@@ -1,0 +1,81 @@
+{
+  "phase": "confirm",
+  "branch": "feature/boss-balance-stage6c",
+  "seed_check": {
+    "searched_journals": 22,
+    "unused_seeds": [
+      31061120,
+      32061120,
+      32061121,
+      32061122,
+      32061123,
+      32061124,
+      33061120,
+      33061121,
+      33061122,
+      33061123,
+      33061124,
+      34061120,
+      34061121,
+      34061122,
+      34061123,
+      34061124,
+      34061125,
+      34061126,
+      34061127,
+      34061128,
+      34061129,
+      34061130,
+      34061131,
+      34061132,
+      34061133,
+      34061134
+    ]
+  },
+  "variants": [
+    {
+      "id": "hp50000-agi180",
+      "hp": 50000,
+      "agi": 180
+    },
+    {
+      "id": "hp100000-agi3150",
+      "hp": 100000,
+      "agi": 3150
+    },
+    {
+      "id": "hp100000-agi2250",
+      "hp": 100000,
+      "agi": 2250
+    },
+    {
+      "id": "hp100000-agi3600",
+      "hp": 100000,
+      "agi": 3600
+    }
+  ],
+  "fixed_skill_order": [
+    "steel_body",
+    "solid_stance",
+    "counter_stance",
+    "shock_wave",
+    "true_fist"
+  ],
+  "fixed_skill_uses": 99,
+  "b_center": 0.35,
+  "c_permitted": [
+    0.25,
+    0.6
+  ],
+  "c_reference_not_point_target": true,
+  "c_inside_band_has_zero_distance": true,
+  "legacy_reincarnation_points": 0,
+  "max_seconds": 600,
+  "source_stage6a_sha256": "7d284843cf7d6cfe2393700fb8f58c6495501f57e2f6e80928947a8f699f62e6",
+  "source_stage6b_screen_sha256": "9ae0b19148f8df8a934045843f5af81ddc480cf435921071766011866562b035",
+  "source_stage6b_confirm_sha256": "72adbefe4a80a702714ecffb79c4bde78760dc8525035a44226f6d5061713a8f",
+  "script_sha256": {
+    "run.py": "5374e749ba009cf1370430dfd9808fd3859f97eab37cb9e1dc1e41191084eca9",
+    "observe.py": "27935a53c50809b3255a441148f01a088e45d19d17015de00adb84f936c304ae"
+  }
+}
