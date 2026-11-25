@@ -314,16 +314,26 @@ class GrowthMigrationTests(TransactionTestCase):
                 rows.append(OldCharacter.objects.filter(pk=c.pk).values().get())
             executor = MigrationExecutor(connection)
             executor.migrate(new)
+
+            # 移行時点のDB構造に対応したモデルを使用する。
+            new_apps = executor.loader.project_state(new).apps
+            NewUser = new_apps.get_model("accounts", "User")
+            NewCharacter = new_apps.get_model("accounts", "Character")
+
             for before in rows:
-                c = Character.objects.get(pk=before["id"])
-                after = Character.objects.filter(pk=c.pk).values().get()
+                c = NewCharacter.objects.get(pk=before["id"])
+                after = NewCharacter.objects.filter(pk=c.pk).values().get()
                 self.assertEqual(after.pop("legacy_reincarnation_points"), 25*max(c.reincarnation_count-150, 0))
                 self.assertEqual(after, before)
                 self.assertEqual(list(c.permanent_skills.values_list("pk", flat=True)), [skill.pk])
                 self.assertEqual(next_reincarnation_points(c),
                                  125*c.reincarnation_count + (125 if c.reincarnation_count < 150 else 100))
-            fresh = Character.objects.create(
-                user=User.objects.create(user_id="post-migration", email="post@example.invalid"), name="移行後新規",
+            fresh = NewCharacter.objects.create(
+                user=NewUser.objects.create(
+                    user_id="post-migration",
+                    email="post@example.invalid",
+                ),
+                name="移行後新規",
             )
             self.assertEqual(fresh.legacy_reincarnation_points, 0)
         finally:

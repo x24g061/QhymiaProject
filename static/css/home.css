@@ -3320,3 +3320,11 @@ main {
     margin: 4px 0;
     overflow-wrap: anywhere;
 }
+
+/* =========================================================
+   ACTIVE BOOSTS - ダークモード文字色
+========================================================= */
+
+html[data-game-theme="dark"] .active-boost-name {
+    color: #ffffff;
+}

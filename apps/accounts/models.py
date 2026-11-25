@@ -55,6 +55,12 @@ class UserManager(BaseUserManager):
 class User(AbstractUser):
     username = None
 
+    signup_bonus_pending = models.BooleanField(
+        default=True,
+        editable=False,
+        help_text="初回登録特典300Qの受取権利",
+    )
+
     user_id = models.CharField(
         max_length=20,
         unique=True,
