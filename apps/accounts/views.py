@@ -585,13 +585,36 @@ def character_create_view(request):
 
             with transaction.atomic():
 
+                # アカウントをロックして二重配布を防止
+                user = (
+                    User.objects
+                    .select_for_update()
+                    .get(pk=request.user.pk)
+                )
+
+                # ロック取得後にキャラクターの存在を再確認
+                if Character.objects.filter(user=user).exists():
+                    return redirect("home")
+
+                # 初回登録特典
+                signup_bonus = (
+                    300 if user.signup_bonus_pending else 0
+                )
+
                 character = Character.objects.create(
-                    user=request.user,
+                    user=user,
                     name=character_name,
                     race=race,
                     job=job,
                     character_image_id=character_image_id,
+                    gold=signup_bonus,
                 )
+
+                if signup_bonus:
+                    user.signup_bonus_pending = False
+                    user.save(
+                        update_fields=["signup_bonus_pending"]
+                    )
 
                 # ================================================
                 # 闘技場初期状態
@@ -612,6 +635,12 @@ def character_create_view(request):
                     floor=arena_floor,
                     current_hp=character.max_hp,
                     current_mp=character.max_mp,
+                )
+
+            if signup_bonus:
+                messages.success(
+                    request,
+                    f"初回登録特典として{signup_bonus}Qを獲得しました！",
                 )
 
             return redirect("home")
