@@ -14,6 +14,10 @@ from apps.battle.drops import grant_arena_drop
 
 from apps.accounts.models import Character
 from apps.accounts.growth import apply_character_exp
+from apps.accounts.beginner_buff import (
+    is_beginner_buff_active,
+    BEGINNER_EXP_MULTIPLIER,
+)
 
 
 def get_arena_state(character):
@@ -411,6 +415,10 @@ def challenge_arena_master(challenger):
         gained_exp = random.randint(8, 13)
     else:
         gained_exp = 8
+
+    # ビギナーバフ：獲得経験値2倍
+    if is_beginner_buff_active(locked_challenger.user):
+        gained_exp *= BEGINNER_EXP_MULTIPLIER
 
     # レベルアップ時も通常HP/MPは回復しない
     apply_character_exp(

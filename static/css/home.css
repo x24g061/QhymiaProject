@@ -3307,3 +3307,16 @@ main {
     }
 
 }
+
+/* ビギナーバフ・ブースト効果説明 */
+.active-boost-content {
+    min-width: 0;
+}
+
+.active-boost-description {
+    display: block;
+    font-size: 12px;
+    line-height: 1.6;
+    margin: 4px 0;
+    overflow-wrap: anywhere;
+}

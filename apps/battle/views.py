@@ -9,6 +9,10 @@ from django.utils import timezone
 from django.views.decorators.http import require_GET, require_POST
 
 from apps.accounts.growth import apply_exploration_exp
+from apps.accounts.beginner_buff import (
+    is_beginner_buff_active,
+    BEGINNER_EXP_MULTIPLIER,
+)
 from apps.accounts.models import Character
 
 from .arena_services import (
@@ -300,6 +304,10 @@ def battle(request):
     )
 
     battle_result = engine.run()
+
+    # ビギナーバフ：獲得経験値2倍
+    if is_beginner_buff_active(character.user):
+        battle_result["exp_gained"] *= BEGINNER_EXP_MULTIPLIER
 
 
     # 敵画像を設定する

@@ -1242,6 +1242,11 @@ def use_item(
 
     else:
 
+        # 効果適用前のCTを取得
+        cooldown_before = (
+            character.get_exploration_cooldown_seconds()
+        )
+
         # 新しく効果開始
         character.exploration_cooldown_reduced_until = (
             now
@@ -1253,7 +1258,14 @@ def use_item(
 
         # ====================================================
         # 初回使用時だけ
-        # 現在進行中の探索CTを20秒短縮
+        # 現在進行中の探索CTを短縮
+        cooldown_after = (
+            character.get_exploration_cooldown_seconds()
+        )
+
+        reduction_seconds = max(
+            0, cooldown_before - cooldown_after
+        )
         # ====================================================
 
         if (
@@ -1265,11 +1277,11 @@ def use_item(
             shortened_until = (
                 character.exploration_cooldown_until
                 - timedelta(
-                    seconds=20
+                    seconds=reduction_seconds
                 )
             )
 
-            # 残り20秒以下なら即探索可能
+            # 残り時間が短縮量以下なら即探索可能
             if shortened_until <= now:
 
                 character.exploration_cooldown_until = now
@@ -1313,7 +1325,8 @@ def use_item(
         request,
         (
             f"{item.name}を使用しました。"
-            "戦闘クールタイムが20秒になります。"
+            f"戦闘クールタイムが"
+            f"{character.get_exploration_cooldown_seconds()}秒になります。"
         ),
     )
 
