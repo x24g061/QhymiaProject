@@ -2,6 +2,11 @@ import random
 
 from django.db import transaction
 
+from apps.accounts.beginner_buff import (
+    is_beginner_buff_active,
+    BEGINNER_DROP_MULTIPLIER,
+)
+
 from apps.inventory.models import (
     Equipment,
     InventoryItem,
@@ -63,10 +68,25 @@ def grant_exploration_drop(
     # 1%ドロップ判定
     # ========================================================
 
-    if not guaranteed:
+    equipment_bonus_only = False
 
-        if random.random() >= EXPLORATION_DROP_RATE:
-            return None
+    if not guaranteed:
+        roll = random.random()
+
+        if roll >= EXPLORATION_DROP_RATE:
+
+            if not is_beginner_buff_active(character.user):
+                return None
+
+            boosted_rate = min(
+                1.0,
+                EXPLORATION_DROP_RATE * BEGINNER_DROP_MULTIPLIER,
+            )
+
+            if roll >= boosted_rate:
+                return None
+
+            equipment_bonus_only = True
 
 
     # ========================================================
@@ -86,6 +106,13 @@ def grant_exploration_drop(
     )[0]
 
     item = selected_drop.item
+
+    # ビギナーバフの追加抽選では装備品のみ対象
+    if (
+        equipment_bonus_only
+        and item.category != Item.Category.EQUIPMENT
+    ):
+        return None
 
 
     # ========================================================

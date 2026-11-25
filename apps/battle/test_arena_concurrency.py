@@ -1,3 +1,5 @@
+from datetime import timedelta as BeginnerTestTimedelta
+from django.utils.timezone import now as beginner_test_now
 from queue import Queue
 from threading import Barrier, Thread
 from unittest.mock import patch
@@ -36,12 +38,14 @@ class ArenaConcurrencyTests(TransactionTestCase):
         )
 
         self.user1 = User.objects.create_user(
+            date_joined=beginner_test_now() - BeginnerTestTimedelta(days=7),
             user_id="arena_concurrent_1",
             email="arena-concurrent-1@example.com",
             password="testpass123",
         )
 
         self.user2 = User.objects.create_user(
+            date_joined=beginner_test_now() - BeginnerTestTimedelta(days=7),
             user_id="arena_concurrent_2",
             email="arena-concurrent-2@example.com",
             password="testpass123",
@@ -222,6 +226,7 @@ class ArenaConcurrencyTests(TransactionTestCase):
     ):
         # 既存2人とは別にフロアマスターを用意
         master_user = User.objects.create_user(
+            date_joined=beginner_test_now() - BeginnerTestTimedelta(days=7),
             user_id="arena_master",
             email="arena-concurrent-master@example.com",
             password="testpass123",

@@ -1,3 +1,5 @@
+from datetime import timedelta as BeginnerTestTimedelta
+from django.utils.timezone import now as beginner_test_now
 from unittest.mock import patch
 from datetime import timedelta
 
@@ -50,6 +52,7 @@ class PlayerCombatantArenaTests(TestCase):
 
     def setUp(self):
         self.user = User.objects.create_user(
+            date_joined=beginner_test_now() - BeginnerTestTimedelta(days=7),
             user_id="arena_combatant_user",
             email="arena_combatant@example.com",
             password="testpass123",
@@ -120,12 +123,14 @@ class ArenaBattleEngineTests(TestCase):
 
     def setUp(self):
         self.challenger_user = User.objects.create_user(
+            date_joined=beginner_test_now() - BeginnerTestTimedelta(days=7),
             user_id="arena_challenger",
             email="arena_challenger@example.com",
             password="testpass123",
         )
 
         self.defender_user = User.objects.create_user(
+            date_joined=beginner_test_now() - BeginnerTestTimedelta(days=7),
             user_id="arena_defender",
             email="arena_defender@example.com",
             password="testpass123",
@@ -867,6 +872,7 @@ class BattleEngineTests(TestCase):
         """
 
         self.user = User.objects.create_user(
+            date_joined=beginner_test_now() - BeginnerTestTimedelta(days=7),
             user_id="battle_test_user",
             email="battle@example.com",
             password="testpass123",
@@ -2971,6 +2977,7 @@ class CombatantTests(TestCase):
     def setUp(self):
 
         self.user = User.objects.create_user(
+            date_joined=beginner_test_now() - BeginnerTestTimedelta(days=7),
             user_id="combatant_test_user",
             email="combatant@example.com",
             password="testpass123",
@@ -3123,6 +3130,7 @@ class ExplorationDropTests(TestCase):
     def setUp(self):
 
         self.user = User.objects.create_user(
+            date_joined=beginner_test_now() - BeginnerTestTimedelta(days=7),
             user_id="drop_test_user",
             email="drop@example.com",
             password="testpass123",
@@ -3133,6 +3141,116 @@ class ExplorationDropTests(TestCase):
                 user=self.user,
                 name="ドロップテスト",
             )
+        )
+
+
+    def prepare_beginner_drop(self, hours, equipment_drop):
+        self.user.date_joined = (
+            beginner_test_now()
+            - BeginnerTestTimedelta(hours=hours)
+        )
+        self.user.save(update_fields=["date_joined"])
+
+        FloorDropItem.objects.filter(floor=1).delete()
+
+        item = Item.objects.create(
+            name="初心者ドロップ確認用",
+            category=(
+                Item.Category.EQUIPMENT
+                if equipment_drop
+                else Item.Category.MATERIAL
+            ),
+        )
+
+        if equipment_drop:
+            Equipment.objects.create(
+                item=item,
+                rank=Equipment.Rank.E,
+                slot=Equipment.Slot.WEAPON,
+                style=Equipment.Style.PHYSICAL,
+                base_battle_power=120,
+                strength_rate=60,
+                intelligence_rate=0,
+                dexterity_rate=20,
+                agility_rate=10,
+                vitality_rate=0,
+                luck_rate=10,
+            )
+
+        FloorDropItem.objects.create(
+            floor=1,
+            item=item,
+            drop_weight=100,
+        )
+
+        return item
+
+    def check_beginner_drop(
+        self, hours, equipment_drop, roll, expected,
+        guaranteed=False,
+    ):
+        item = self.prepare_beginner_drop(
+            hours, equipment_drop
+        )
+
+        with patch(
+            "apps.battle.drops.random.random",
+            return_value=roll,
+        ):
+            result = grant_exploration_drop(
+                self.character,
+                1,
+                guaranteed=guaranteed,
+            )
+
+        if expected is None:
+            self.assertIsNone(result)
+        else:
+            self.assertIsNotNone(result)
+            self.assertEqual(result["kind"], expected)
+
+        self.assertEqual(
+            OwnedEquipment.objects.filter(
+                character=self.character,
+                equipment__item=item,
+            ).count(),
+            int(expected == "equipment"),
+        )
+
+        self.assertEqual(
+            InventoryItem.objects.filter(
+                character=self.character,
+                item=item,
+            ).count(),
+            int(expected == "item"),
+        )
+
+    def test_normal_user_has_no_bonus_drop(self):
+        self.check_beginner_drop(168, True, 0.04, None)
+
+    def test_beginner_equipment_bonus_drop(self):
+        self.check_beginner_drop(
+            1, True, 0.04, "equipment"
+        )
+
+    def test_beginner_material_has_no_bonus_drop(self):
+        self.check_beginner_drop(1, False, 0.04, None)
+
+    def test_beginner_normal_material_drop(self):
+        self.check_beginner_drop(
+            1, False, 0.01, "item"
+        )
+
+    def test_beginner_drop_rate_upper_boundary(self):
+        self.check_beginner_drop(1, True, 0.05, None)
+
+    def test_expired_beginner_drop(self):
+        self.check_beginner_drop(72, True, 0.04, None)
+
+    def test_beginner_guaranteed_drop(self):
+        self.check_beginner_drop(
+            1, True, 0.99, "equipment",
+            guaranteed=True,
         )
 
 
@@ -3319,6 +3437,7 @@ class ExplorationBossProgressionTests(TestCase):
         """
 
         self.user = User.objects.create_user(
+            date_joined=beginner_test_now() - BeginnerTestTimedelta(days=7),
             user_id="boss_test_user",
             email="boss_test@example.com",
             password="testpass123",
@@ -3632,12 +3751,14 @@ class ArenaVacantClaimTests(TestCase):
 
     def setUp(self):
         self.user = User.objects.create_user(
+            date_joined=beginner_test_now() - BeginnerTestTimedelta(days=7),
             user_id="arena_claim_user",
             email="arena_claim@example.com",
             password="testpass123",
         )
 
         self.other_user = User.objects.create_user(
+            date_joined=beginner_test_now() - BeginnerTestTimedelta(days=7),
             user_id="arena_claim_other",
             email="arena_claim_other@example.com",
             password="testpass123",
@@ -3853,12 +3974,14 @@ class ArenaMasterChallengeTests(TestCase):
 
     def setUp(self):
         self.user1 = User.objects.create_user(
+            date_joined=beginner_test_now() - BeginnerTestTimedelta(days=7),
             user_id="arena_master_test1",
             email="arena_master1@example.com",
             password="testpass123",
         )
 
         self.user2 = User.objects.create_user(
+            date_joined=beginner_test_now() - BeginnerTestTimedelta(days=7),
             user_id="arena_master_test2",
             email="arena_master2@example.com",
             password="testpass123",
@@ -4174,6 +4297,90 @@ class ArenaMasterChallengeTests(TestCase):
         )
 
 
+    def set_beginner_user(self):
+        user = self.challenger.user
+        user.date_joined = timezone.now() - timedelta(hours=1)
+        user.save(update_fields=["date_joined"])
+
+    def test_beginner_win_grants_double_exp(self):
+        self.set_beginner_user()
+
+        fake_result = {
+            "winner": "challenger",
+            "logs": ["勝利"],
+            "challenger_hp": 20,
+            "challenger_mp": 10,
+            "defender_hp": 0,
+            "defender_mp": 5,
+        }
+
+        with patch(
+            "apps.battle.arena_services.ArenaBattleEngine.run",
+            return_value=fake_result,
+        ), patch(
+            "apps.battle.arena_services.random.randint",
+            return_value=13,
+        ):
+            result = challenge_arena_master(self.challenger)
+
+        self.challenger.refresh_from_db()
+
+        self.assertEqual(result["gained_exp"], 26)
+        self.assertEqual(self.challenger.exp, 26)
+        self.assertEqual(
+            ArenaBattleHistory.objects.get(
+                pk=result["history_id"]
+            ).gained_exp,
+            26,
+        )
+
+    def test_beginner_loss_grants_double_exp(self):
+        self.set_beginner_user()
+
+        fake_result = {
+            "winner": "defender",
+            "logs": ["敗北"],
+            "challenger_hp": 0,
+            "challenger_mp": 5,
+            "defender_hp": 30,
+            "defender_mp": 10,
+        }
+
+        with patch(
+            "apps.battle.arena_services.ArenaBattleEngine.run",
+            return_value=fake_result,
+        ):
+            result = challenge_arena_master(self.challenger)
+
+        self.challenger.refresh_from_db()
+
+        self.assertEqual(result["gained_exp"], 16)
+        self.assertEqual(self.challenger.exp, 16)
+
+    def test_beginner_draw_grants_double_exp(self):
+        self.set_beginner_user()
+
+        fake_result = {
+            "winner": "draw",
+            "logs": ["引き分け"],
+            "challenger_hp": 20,
+            "challenger_mp": 10,
+            "defender_hp": 30,
+            "defender_mp": 10,
+        }
+
+        with patch(
+            "apps.battle.arena_services.ArenaBattleEngine.run",
+            return_value=fake_result,
+        ):
+            result = challenge_arena_master(self.challenger)
+
+        self.challenger.refresh_from_db()
+
+        self.assertEqual(result["gained_exp"], 16)
+        self.assertEqual(self.challenger.exp, 16)
+
+
     def test_win_grants_exp_and_starts_cooldown(self):
         fake_result = {
             "winner": "challenger",
@@ -4300,6 +4507,7 @@ class ArenaExpGrowthTests(TestCase):
     def test_arena_exp_does_not_heal_normal_hp_mp(self):
 
         user = User.objects.create_user(
+            date_joined=beginner_test_now() - BeginnerTestTimedelta(days=7),
             user_id="arena_exp_user",
             email="arena_exp@example.com",
             password="testpass123",

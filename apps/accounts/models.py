@@ -6,6 +6,11 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
 
+from apps.accounts.beginner_buff import (
+    is_beginner_buff_active,
+    BEGINNER_COOLDOWN_MULTIPLIER,
+)
+
 
 class UserManager(BaseUserManager):
     """user_idをログインIDとして扱うユーザー管理クラス。"""
@@ -416,10 +421,20 @@ class Character(models.Model):
 
     def get_exploration_cooldown_seconds(self):
         """現在適用される探索CT秒数を返す。"""
-        if self.is_exploration_cooldown_reduced():
-            return 20
 
-        return 40
+        seconds = 40
+
+        # CT短縮アイテムの効果
+        if self.is_exploration_cooldown_reduced():
+            seconds = 20
+
+        # ビギナーバフの効果
+        if is_beginner_buff_active(self.user):
+            seconds = int(
+                seconds * BEGINNER_COOLDOWN_MULTIPLIER
+            )
+
+        return seconds
 
     def get_exploration_cooldown_remaining(self):
         """現在の探索CT残り秒数を返す。"""

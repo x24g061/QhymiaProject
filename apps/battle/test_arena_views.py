@@ -1,3 +1,5 @@
+from datetime import timedelta as BeginnerTestTimedelta
+from django.utils.timezone import now as beginner_test_now
 from datetime import timedelta
 from unittest.mock import patch
 
@@ -19,9 +21,11 @@ class ArenaScreenTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.user = User.objects.create_user(
+            date_joined=beginner_test_now() - BeginnerTestTimedelta(days=7),
             user_id="arena_screen", email="arena-screen@example.com", password="testpass123",
         )
         cls.other_user = User.objects.create_user(
+            date_joined=beginner_test_now() - BeginnerTestTimedelta(days=7),
             user_id="arena_defender", email="arena-defender@example.com", password="testpass123",
         )
         cls.character = Character.objects.create(

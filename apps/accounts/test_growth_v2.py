@@ -1,5 +1,7 @@
 """成長Ver.2の境界・移行・実画面経由の保存契約。通常DBは操作しない。"""
 import random
+from datetime import timedelta
+from django.utils import timezone
 from unittest.mock import patch
 
 from django.db import connection
@@ -105,7 +107,11 @@ class GrowthFormulaTests(SimpleTestCase):
 
 class GrowthPersistenceTests(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(user_id="growth-v2", password=None)
+        self.user = User.objects.create_user(
+            user_id="growth-v2",
+            password=None,
+            date_joined=timezone.now() - timedelta(days=7),
+        )
         self.c = Character.objects.create(user=self.user, name="成長Ver2", level=50,
                                           reincarnation_count=154, current_hp=7, current_mp=2)
         self.client.force_login(self.user)
@@ -176,6 +182,46 @@ class GrowthPersistenceTests(TestCase):
                                  (51, self.c.max_hp, self.c.max_mp))
                 if boss:
                     self.assertTrue(FloorProgress.objects.get(character=self.c, floor=1).boss_defeated)
+
+    def test_beginner_exploration_grants_double_exp(self):
+        self.user.date_joined = (
+            timezone.now() - timedelta(hours=1)
+        )
+        self.user.save(update_fields=["date_joined"])
+
+        self.c.exp = 0
+        self.c.save(update_fields=["exp"])
+
+        with (
+            patch(
+                "apps.battle.views.should_encounter_boss",
+                return_value=False,
+            ),
+            patch(
+                "apps.battle.views.BattleEngine.run",
+                return_value={
+                    "winner": "player",
+                    "exp_gained": 10,
+                    "logs": [],
+                },
+            ),
+            patch(
+                "apps.battle.views.grant_exploration_drop",
+                return_value=None,
+            ),
+        ):
+            response = self.client.post(
+                reverse("battle:battle"),
+                {"floor": "1"},
+            )
+
+        self.assertEqual(response.status_code, 200)
+
+        self.c.refresh_from_db()
+
+        self.assertEqual(self.c.exp, 20)
+        self.assertEqual(response.context["exp_gained"], 20)
+        self.assertEqual(response.context["cooldown_seconds"], 20)
 
     def test_arena_route_grows_without_healing_normal_resources(self):
         other_user = User.objects.create_user(user_id="growth-defender", email="gd@example.invalid", password=None)
@@ -281,4 +327,9 @@ class GrowthMigrationTests(TransactionTestCase):
             )
             self.assertEqual(fresh.legacy_reincarnation_points, 0)
         finally:
-            MigrationExecutor(connection).migrate(new)
+            # 後続テストに影響しないよう、
+            # 全アプリの最新マイグレーションへ復元する。
+            executor = MigrationExecutor(connection)
+            executor.migrate(
+                executor.loader.graph.leaf_nodes()
+            )

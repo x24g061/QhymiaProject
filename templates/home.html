@@ -769,6 +769,12 @@
                                     {{ boost.name }}
                                 </strong>
 
+                                {% if boost.description %}
+                                <span class="active-boost-description">
+                                    {{ boost.description }}
+                                </span>
+                                {% endif %}
+
                                 <span class="active-boost-expiry">
                                     有効期限
                                     {{ boost.expires_at|date:"Y/m/d H:i" }}

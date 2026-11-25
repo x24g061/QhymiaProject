@@ -1,3 +1,5 @@
+from datetime import timedelta as BeginnerTestTimedelta
+from django.utils.timezone import now as beginner_test_now
 
 import time
 from queue import Queue
@@ -26,6 +28,7 @@ class ExplorationConcurrencyTests(TransactionTestCase):
 
     def setUp(self):
         self.user = User.objects.create_user(
+            date_joined=beginner_test_now() - BeginnerTestTimedelta(days=7),
             user_id="exploration_test",
             email="exploration-concurrent@example.com",
             password="testpass123",
