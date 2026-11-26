@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.templatetags.static import static
+from django.utils import timezone
 from django.views.decorators.http import require_GET, require_POST
 
 from .models import ChatMessage
@@ -28,7 +29,7 @@ def get_messages(request):
                 else None
             ),
             "message": chat.message,
-            "created_at": chat.created_at.strftime("%H:%M"),
+            "created_at": timezone.localtime(chat.created_at).strftime("%H:%M"),
         }
         for chat in reversed(messages)
     ]
@@ -121,7 +122,7 @@ def send_message(request):
             ),
             "message": chat.message,
             "created_at":
-                chat.created_at.strftime("%H:%M"),
+                timezone.localtime(chat.created_at).strftime("%H:%M"),
         }
     })
 

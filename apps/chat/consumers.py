@@ -1,6 +1,7 @@
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from django.templatetags.static import static
+from django.utils import timezone
 
 from apps.accounts.models import Character
 
@@ -218,7 +219,7 @@ class ChatConsumer(
                 chat.message,
 
             "created_at":
-                chat.created_at.strftime(
+                timezone.localtime(chat.created_at).strftime(
                     "%H:%M"
                 ),
         }
