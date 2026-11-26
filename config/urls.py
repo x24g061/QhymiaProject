@@ -18,6 +18,8 @@ from .views import (
     home,
     player_search,
     player_detail,
+    admin_server_announcement,
+    server_announcement_api,
 )
 
 urlpatterns = [
@@ -97,6 +99,20 @@ urlpatterns = [
         'admin-mode/logout/',
         admin_mode_logout,
         name='admin_mode_logout',
+    ),
+
+        # サーバー告知管理
+    path(
+        "admin-panel/server-announcement/",
+        admin_server_announcement,
+        name="admin_server_announcement",
+    ),
+
+    # サーバー告知取得API
+    path(
+        "api/server-announcement/",
+        server_announcement_api,
+        name="server_announcement_api",
     ),
 
     # SNS

@@ -1252,3 +1252,102 @@ main {
     font-weight: 700;
     color: #1685aa;
 }
+
+/* ========================================
+   SERVER ANNOUNCEMENT
+======================================== */
+
+.admin-announcement-section {
+    margin: 24px 0;
+    padding: 24px;
+    background: rgba(128, 128, 128, 0.06);
+    border: 1px solid rgba(128, 128, 128, 0.25);
+    border-radius: 18px;
+    color: inherit;
+}
+
+.admin-announcement-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.admin-announcement-form textarea {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 110px;
+    padding: 14px;
+    border: 1px solid rgba(128, 128, 128, 0.4);
+    border-radius: 10px;
+    background: #ffffff;
+    color: #203f49;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.6;
+    resize: vertical;
+}
+
+.admin-announcement-count {
+    text-align: right;
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+.admin-announcement-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.admin-announcement-checkbox input {
+    width: 18px;
+    height: 18px;
+    accent-color: #327f91;
+}
+
+.admin-announcement-form button {
+    padding: 12px 20px;
+    background: #203f49;
+    color: #ffffff;
+    border: none;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.admin-announcement-form button:hover {
+    background: #327f91;
+}
+
+.admin-announcement-status {
+    margin-top: 12px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.announcement-active {
+    color: #329768;
+}
+
+.announcement-inactive {
+    color: #888888;
+}
+
+.admin-announcement-updated {
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+html[data-game-theme="dark"] .admin-announcement-form textarea {
+    background: #18252d;
+    color: #ffffff;
+    border-color: #465963;
+}
+
+@media (max-width: 700px) {
+    .admin-announcement-section {
+        padding: 16px;
+    }
+}
