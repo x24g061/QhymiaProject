@@ -29,6 +29,7 @@ def grant_exploration_drop(
     character,
     floor,
     guaranteed=False,
+    debug_drop_rate=None,
 ):
     """
     探索勝利時のドロップ抽選。
@@ -36,9 +37,16 @@ def grant_exploration_drop(
     通常:
         2.5%でドロップ
 
+    ビギナーバフ:
+        通常抽選に加えて装備品の追加抽選あり
+
+    DEBUG MODE:
+        debug_drop_rate に指定された
+        0～100%の確率でドロップする。
+        通常率・ビギナーバフより優先する。
+
     guaranteed=True:
-        抽選を省略して必ずドロップ
-        ※将来のボス用
+        抽選を省略して必ずドロップ。
 
     当選後:
         FloorDropItemのdrop_weightを使って
@@ -65,28 +73,61 @@ def grant_exploration_drop(
 
 
     # ========================================================
-    # 1%ドロップ判定
+    # ドロップ判定
     # ========================================================
 
     equipment_bonus_only = False
 
     if not guaranteed:
+
         roll = random.random()
 
-        if roll >= EXPLORATION_DROP_RATE:
+        # ====================================================
+        # DEBUG MODE
+        # ====================================================
 
-            if not is_beginner_buff_active(character.user):
-                return None
+        if debug_drop_rate is not None:
 
-            boosted_rate = min(
-                1.0,
-                EXPLORATION_DROP_RATE * BEGINNER_DROP_MULTIPLIER,
+            debug_drop_rate = max(
+                0,
+                min(
+                    100,
+                    int(debug_drop_rate),
+                ),
             )
 
-            if roll >= boosted_rate:
+            effective_drop_rate = (
+                debug_drop_rate / 100
+            )
+
+            if roll >= effective_drop_rate:
                 return None
 
-            equipment_bonus_only = True
+        # ====================================================
+        # 通常モード
+        # ====================================================
+
+        else:
+
+            if roll >= EXPLORATION_DROP_RATE:
+
+                if not is_beginner_buff_active(
+                    character.user
+                ):
+                    return None
+
+                boosted_rate = min(
+                    1.0,
+                    (
+                        EXPLORATION_DROP_RATE
+                        * BEGINNER_DROP_MULTIPLIER
+                    ),
+                )
+
+                if roll >= boosted_rate:
+                    return None
+
+                equipment_bonus_only = True
 
 
     # ========================================================
@@ -107,7 +148,11 @@ def grant_exploration_drop(
 
     item = selected_drop.item
 
+
+    # ========================================================
     # ビギナーバフの追加抽選では装備品のみ対象
+    # ========================================================
+
     if (
         equipment_bonus_only
         and item.category != Item.Category.EQUIPMENT
@@ -121,13 +166,10 @@ def grant_exploration_drop(
 
     if item.category == Item.Category.EQUIPMENT:
 
-        # Itemに対応するEquipmentを取得
         try:
             equipment = item.equipment_data
 
         except Equipment.DoesNotExist:
-            # 装備カテゴリなのにEquipmentデータがない場合
-            # 不正データなのでドロップしない
             return None
 
         with transaction.atomic():
@@ -136,15 +178,10 @@ def grant_exploration_drop(
                 OwnedEquipment.objects.create(
                     character=character,
                     equipment=equipment,
-
-                    # ドロップした瞬間は+0
                     enhancement_level=0,
-
-                    # 初期戦闘力
                     battle_power=(
                         equipment.base_battle_power
                     ),
-
                     is_equipped=False,
                 )
             )
@@ -178,7 +215,6 @@ def grant_exploration_drop(
             )
         )
 
-        # すでに所持していたら+1
         if not created:
 
             inventory_item.quantity += 1

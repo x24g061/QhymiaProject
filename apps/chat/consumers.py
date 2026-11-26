@@ -199,8 +199,10 @@ class ChatConsumer(
 
 
         return {
-            "id":
-                chat.id,
+            "id": chat.id,
+
+            "character_id":
+                character.id,
 
             "character_name":
                 character.name,
@@ -209,16 +211,16 @@ class ChatConsumer(
                 static(
                     character.character_image_path
                 )
-                if
-                character.character_image_path
+                if character.character_image_path
                 else None
             ),
 
             "message":
                 chat.message,
 
-            "created_at":
+            "created_at": (
                 chat.created_at.strftime(
-                    "%H:%M"
-                ),
+                    "%Y/%m/%d/%H:%M:%S"
+                )
+            ),
         }

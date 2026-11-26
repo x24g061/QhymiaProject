@@ -75,6 +75,31 @@
 
             {% endif %}
 
+            {% if request.session.debug_mode %}
+
+            <div class="debug-mode-header">
+
+                <span class="debug-mode-badge">
+                    DEBUG MODE
+                </span>
+
+                <a href="{% url 'accounts:debug_settings' %}" class="debug-settings-button">
+                    デバッグ設定
+                </a>
+
+                <form method="post" action="{% url 'accounts:disable_debug_mode' %}" class="debug-mode-off-form">
+                    {% csrf_token %}
+
+                    <button type="submit" class="debug-mode-off-button">
+                        OFF
+                    </button>
+
+                </form>
+
+            </div>
+
+            {% endif %}
+
             {% block header_right_extra %}
             {% endblock %}
 

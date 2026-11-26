@@ -13,6 +13,11 @@ from apps.accounts.beginner_buff import (
     is_beginner_buff_active,
     BEGINNER_EXP_MULTIPLIER,
 )
+
+from apps.accounts.debug_mode import (
+    is_debug_mode,
+    get_debug_drop_rate,
+)
 from apps.accounts.models import Character
 
 from .arena_services import (
@@ -79,10 +84,12 @@ def battle(request):
 
     # ========================================================
     # 探索クールタイム確認
+    # デバッグモード中はCTを無視する
     # ========================================================
 
     if (
-        character.exploration_cooldown_until
+        not is_debug_mode(request)
+        and character.exploration_cooldown_until
         and character.exploration_cooldown_until > now
     ):
         remaining = (
@@ -96,8 +103,6 @@ def battle(request):
         )
 
         return redirect("home")
-
-
     # ========================================================
     # 探索階層を取得
     # ========================================================
@@ -269,9 +274,13 @@ def battle(request):
     # 探索クールタイム設定
     # ========================================================
 
-    cooldown_seconds = (
-        character.get_exploration_cooldown_seconds()
-    )
+    if is_debug_mode(request):
+        cooldown_seconds = 0
+
+    else:
+        cooldown_seconds = (
+            character.get_exploration_cooldown_seconds()
+        )
 
     # 探索した時刻を保存
     character.last_explored_at = now
@@ -291,8 +300,6 @@ def battle(request):
             "updated_at",
         ]
     )
-
-
     # ========================================================
     # 自動戦闘
     # ========================================================
@@ -370,10 +377,13 @@ def battle(request):
 
         drop_result = (
             grant_exploration_drop(
-                character=character,
-                floor=selected_floor,
-            )
-        )
+            character=character,
+            floor=selected_floor,
+            debug_drop_rate=(
+            get_debug_drop_rate(request)
+        ),
+    )
+)
 
 
     # ========================================================

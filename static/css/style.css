@@ -652,3 +652,137 @@ main {
     }
 
 }
+
+
+/* =========================================================
+   HEADER DEBUG MODE
+========================================================= */
+
+.header-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 12px;
+
+    flex-wrap: nowrap;
+}
+
+
+/* DEBUGグループ */
+.debug-mode-header {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 8px;
+
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+
+/* DEBUG MODE 表示 */
+.debug-mode-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 34px;
+
+    padding: 0 12px;
+
+    color: #ffd95a;
+
+    background: rgba(255, 217, 90, 0.08);
+
+    border: 1px solid rgba(255, 217, 90, 0.45);
+    border-radius: 10px;
+
+    font-size: 11px;
+    font-weight: 900;
+
+    letter-spacing: 0.08em;
+
+    white-space: nowrap;
+}
+
+
+/* デバッグ設定 */
+.debug-settings-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 36px;
+
+    padding: 0 14px;
+
+    color: #ffffff;
+
+    background: #1976bd;
+
+    border: 1px solid #2d8bd3;
+    border-radius: 10px;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    text-decoration: none;
+
+    white-space: nowrap;
+
+    transition:
+        background 0.2s,
+        transform 0.2s;
+}
+
+.debug-settings-button:hover {
+    background: #2588d1;
+
+    transform: translateY(-1px);
+}
+
+
+/* OFFフォーム */
+.debug-mode-off-form {
+    display: inline-flex;
+
+    margin: 0;
+}
+
+
+/* OFFボタン */
+.debug-mode-off-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 36px;
+
+    padding: 0 12px;
+
+    color: #ffffff;
+
+    background: #8e3434;
+
+    border: 1px solid #b54a4a;
+    border-radius: 10px;
+
+    font-size: 11px;
+    font-weight: 800;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition:
+        background 0.2s,
+        transform 0.2s;
+}
+
+.debug-mode-off-button:hover {
+    background: #aa4040;
+
+    transform: translateY(-1px);
+}
+
