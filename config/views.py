@@ -425,6 +425,9 @@ def admin_panel(request):
 
             "admin_authorized_users":
                 admin_authorized_users,
+
+            "server_announcement":
+                ServerAnnouncement.objects.filter(pk=1).first(),
         },
     )
 @login_required
@@ -2185,3 +2188,87 @@ def again(request):
 
 
     return render(request, "again.html", context)
+
+
+# ========================================
+# サーバー告知管理
+# ========================================
+
+from apps.game.models import ServerAnnouncement
+from django.http import JsonResponse
+from django.views.decorators.http import require_GET
+from django.views.decorators.cache import never_cache
+
+
+@login_required
+@require_POST
+def admin_server_announcement(request):
+
+    if not is_admin_mode_active(request):
+        messages.error(
+            request,
+            "管理者権限がありません。",
+        )
+        return redirect("home")
+
+    message = request.POST.get(
+        "message", ""
+    ).strip()
+
+    is_active = (
+        request.POST.get("is_active") == "on"
+    )
+
+    if len(message) > 300:
+        messages.error(
+            request,
+            "告知は300文字以内で入力してください。",
+        )
+        return redirect("admin_panel")
+
+    if is_active and not message:
+        messages.error(
+            request,
+            "告知内容を入力してください。",
+        )
+        return redirect("admin_panel")
+
+    ServerAnnouncement.objects.update_or_create(
+        pk=1,
+        defaults={
+            "message": message,
+            "is_active": is_active,
+            "updated_by": request.user,
+        },
+    )
+
+    messages.success(
+        request,
+        "サーバー告知を更新しました。",
+    )
+
+    return redirect("admin_panel")
+
+
+# ========================================
+# サーバー告知取得API
+# ========================================
+
+@never_cache
+@login_required
+@require_GET
+def server_announcement_api(request):
+
+    announcement = (
+        ServerAnnouncement.objects
+        .filter(pk=1, is_active=True)
+        .first()
+    )
+
+    return JsonResponse({
+        "is_active": bool(announcement),
+        "message": (
+            announcement.message
+            if announcement else ""
+        ),
+    })

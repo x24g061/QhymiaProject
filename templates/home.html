@@ -64,6 +64,25 @@
          右：次の階
     ====================================== -->
 
+
+    <!-- サーバー告知バー -->
+    <div
+        id="server-announcement"
+        class="server-announcement"
+        data-url="{% url 'server_announcement_api' %}"
+        hidden
+    >
+        <div class="server-announcement-label">
+            SERVER INFO
+        </div>
+
+        <div class="server-announcement-marquee">
+            <span id="server-announcement-text"></span>
+        </div>
+    </div>
+
+    <script src="{% static 'js/server-announcement.js' %}" defer></script>
+
     <section class="arena-panel collapsible-section" data-collapse-id="arena">
 
         <div class="arena-collapse-heading">

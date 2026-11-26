@@ -48,3 +48,38 @@ class FishingSession(models.Model):
 
     def __str__(self):
         return f"{self.user} - {self.rarity} - {self.status}"
+
+
+class ServerAnnouncement(models.Model):
+    """
+    サーバーの運営告知を管理する。
+    """
+
+    message = models.CharField(
+        max_length=300,
+        blank=True,
+        default="",
+        verbose_name="告知内容",
+    )
+
+    is_active = models.BooleanField(
+        default=False,
+        verbose_name="表示中",
+    )
+
+    updated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="server_announcements",
+        verbose_name="更新者",
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        verbose_name="更新日時",
+    )
+
+    def __str__(self):
+        return self.message or "サーバー告知"

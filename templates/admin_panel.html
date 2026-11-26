@@ -56,6 +56,95 @@
      ADMIN MODE 許可ユーザー管理
 ======================================== -->
 
+
+<section class="admin-announcement-section">
+
+    <div class="admin-panel-header">
+        <div>
+            <p class="admin-panel-label">
+                SERVER ANNOUNCEMENT
+            </p>
+
+            <h2>サーバー告知管理</h2>
+
+            <p>
+                ホーム画面に表示する運営告知を設定します。
+            </p>
+        </div>
+    </div>
+
+    <div class="admin-announcement-status">
+        {% if server_announcement.is_active %}
+            <span class="announcement-active">
+                ● 告知表示中
+            </span>
+        {% else %}
+            <span class="announcement-inactive">
+                ● 告知停止中
+            </span>
+        {% endif %}
+    </div>
+
+    <form
+        method="post"
+        action="{% url 'admin_server_announcement' %}"
+        class="admin-announcement-form"
+    >
+        {% csrf_token %}
+
+        <label for="announcement-message">
+            告知内容
+        </label>
+
+        <textarea
+            id="announcement-message"
+            name="message"
+            maxlength="300"
+            rows="4"
+            placeholder="サーバー再起動のお知らせなど"
+        >{{ server_announcement.message|default:"" }}</textarea>
+
+        <div class="admin-announcement-count">
+            <span id="announcement-count">0</span> / 300文字
+        </div>
+
+        <label class="admin-announcement-checkbox">
+            <input
+                type="checkbox"
+                name="is_active"
+                {% if server_announcement.is_active %}checked{% endif %}
+            >
+            告知を表示する
+        </label>
+
+        <button type="submit">
+            保存・告知反映
+        </button>
+
+        {% if server_announcement.updated_at %}
+            <p class="admin-announcement-updated">
+                最終更新：
+                {{ server_announcement.updated_at|date:"Y/m/d H:i:s" }}
+            </p>
+        {% endif %}
+    </form>
+
+</section>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const input = document.getElementById("announcement-message");
+    const count = document.getElementById("announcement-count");
+
+    function updateCount() {
+        count.textContent = Array.from(input.value).length;
+    }
+
+    input.addEventListener("input", updateCount);
+    updateCount();
+});
+</script>
+
 <section class="admin-authorized-section">
 
     <div class="admin-panel-header">
