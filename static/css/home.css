@@ -2388,6 +2388,25 @@ main {
 }
 
 
+/* =========================
+   プレイヤーアイコンリンク
+========================= */
+
+.chat-message-avatar-link {
+    display: block;
+
+    flex-shrink: 0;
+
+    text-decoration: none;
+}
+
+
+.chat-message-avatar-link:hover
+.chat-message-avatar {
+    transform: scale(1.06);
+}
+
+
 .chat-message-avatar {
     width: 42px;
     height: 42px;
@@ -2413,6 +2432,9 @@ main {
             0.28);
 
     border-radius: 12px;
+
+    transition:
+        transform 0.15s ease;
 }
 
 
@@ -2426,7 +2448,6 @@ main {
 
     image-rendering: pixelated;
 }
-
 
 .chat-message-content {
     flex: 1;

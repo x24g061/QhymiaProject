@@ -11,6 +11,9 @@
 
 <div class="character-change-page">
 
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
     <section class="character-change-header">
 
         <div>
@@ -22,7 +25,7 @@
                 キャラクター変更
             </h1>
 
-            <p>
+            <p class="character-change-description">
                 使用するキャラクター画像を変更できます。
             </p>
         </div>
@@ -34,94 +37,258 @@
     </section>
 
 
-    <section class="current-character">
+    <!-- =====================================================
+         CHARACTER CHANGE PANEL
+    ====================================================== -->
+    <section class="character-change-panel">
 
-        <p class="character-change-label">
-            CURRENT CHARACTER
-        </p>
+        <form method="post" id="characterChangeForm">
 
-        <h2>
-            現在のキャラクター
-        </h2>
+            {% csrf_token %}
 
-        <div class="current-character-content">
+            <!-- 実際にPOSTする選択画像ID -->
+            <input
+                type="hidden"
+                name="character_image_id"
+                id="selectedCharacterId"
+                value="{{ character.character_image_id|default:'' }}"
+            >
 
-            <div class="current-character-image">
 
-                {% if character.character_image_path %}
+            <!-- =================================================
+                 左：現在のキャラクター
+            ================================================== -->
+            <div class="character-change-column current-column">
 
-                <img src="{% static character.character_image_path %}" alt="{{ character.name }}">
+                <p class="character-panel-label">
+                    CURRENT
+                </p>
 
-                {% else %}
+                <h2>
+                    元のイラスト
+                </h2>
 
-                <span>?</span>
+
+                <button
+                    type="button"
+                    class="current-character-select"
+                    id="currentCharacterSelect"
+                    data-character-id="{{ character.character_image_id|default:'' }}"
+                    data-character-image="{% if character.character_image_path %}{% static character.character_image_path %}{% endif %}"
+                >
+
+                    <div class="character-preview current-preview">
+
+                        {% if character.character_image_path %}
+
+                        <img
+                            src="{% static character.character_image_path %}"
+                            alt="{{ character.name }}"
+                        >
+
+                        {% else %}
+
+                        <span class="character-preview-empty">
+                            ?
+                        </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </button>
+
+
+                <p class="current-character-number">
+
+                    今のイラスト：
+
+                    {% if character.character_image_id %}
+
+                    <button
+                        type="button"
+                        class="current-character-id-button"
+                        id="currentCharacterIdButton"
+                    >
+                        No.{{ character.character_image_id|stringformat:"03d" }}
+                    </button>
+
+                    {% else %}
+
+                    <span>
+                        未設定
+                    </span>
+
+                    {% endif %}
+
+                </p>
+
+            </div>
+
+
+            <!-- =================================================
+                 中央：選択中のキャラクター
+            ================================================== -->
+            <div class="character-change-column selected-column">
+
+                <p class="character-panel-label">
+                    SELECTED
+                </p>
+
+                <h2>
+                    選択イラスト
+                </h2>
+
+
+                <div class="character-preview selected-preview" id="selectedPreview">
+
+                    {% if character.character_image_path %}
+
+                    <img
+                        src="{% static character.character_image_path %}"
+                        alt="選択中のキャラクター"
+                        id="selectedPreviewImage"
+                    >
+
+                    {% else %}
+
+                    <span
+                        class="character-preview-empty"
+                        id="selectedPreviewEmpty"
+                    >
+                        ?
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="character-id-input-area">
+
+                    <label for="characterIdInput">
+                        イラストID
+                    </label>
+
+                    <div class="character-id-input-wrapper">
+
+                        <span>
+                            No.
+                        </span>
+
+                        <input
+                            type="number"
+                            id="characterIdInput"
+                            min="1"
+                            placeholder="1"
+                            inputmode="numeric"
+                        >
+
+                    </div>
+
+                    <p
+                        class="character-id-error"
+                        id="characterIdError"
+                    ></p>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 右：変更操作
+            ================================================== -->
+            <div class="character-change-column action-column">
+
+                <div class="character-q-display">
+
+                    <span>
+                        所持Q
+                    </span>
+
+                    <strong>
+                        {{ character.gold|default:0 }}Q
+                    </strong>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="character-change-submit"
+                    id="openCharacterConfirm"
+                    {% if character.gold < 50 %}disabled{% endif %}
+                >
+                    <span>
+                        変更する
+                    </span>
+
+                    <small>
+                        （50Q）
+                    </small>
+                </button>
+
+
+                {% if character.gold < 50 %}
+
+                <p class="character-q-warning">
+                    Qが不足しています。
+                </p>
 
                 {% endif %}
 
             </div>
 
-
-            <div>
-
-                <strong>
-                    {{ character.name }}
-                </strong>
-
-                <p>
-                    現在の画像：
-
-                    {% if character.character_image_id %}
-
-                    No.{{ character.character_image_id|stringformat:"03d" }}
-
-                    {% else %}
-
-                    未設定
-
-                    {% endif %}
-                </p>
-
-            </div>
-
-        </div>
+        </form>
 
     </section>
 
 
+    <!-- =====================================================
+         CHARACTER LIST
+    ====================================================== -->
     <section class="character-selection">
 
-    <p class="character-change-label">
-        CHARACTER LIST
-    </p>
+        <p class="character-change-label">
+            CHARACTER LIST
+        </p>
 
-    <h2>
-        変更するキャラクターを選択
-    </h2>
+        <h2>
+            変更するキャラクターを選択
+        </h2>
 
-
-    <form method="post">
-
-        {% csrf_token %}
 
         <div class="character-change-grid">
 
             {% for item in available_characters %}
 
             <button
-                type="submit"
-                name="character_image_id"
-                value="{{ item.number }}"
-                class="character-change-card {% if character.character_image_id == item.number %}character-change-card-current{% endif %}"
+                type="button"
+                class="
+                    character-change-card
+                    {% if character.character_image_id == item.number %}
+                        character-change-card-current
+                    {% endif %}
+                "
+                data-character-id="{{ item.number }}"
+                data-character-image="{% static item.image %}"
             >
 
-                <img
-                    src="{% static item.image %}"
-                    alt="No.{{ item.number|stringformat:'03d' }}"
-                >
+                <div class="character-card-image">
+
+                    <img
+                        src="{% static item.image %}"
+                        alt="No.{{ item.number|stringformat:'03d' }}"
+                    >
+
+                </div>
+
 
                 <span>
                     No.{{ item.number|stringformat:"03d" }}
                 </span>
+
 
                 {% if character.character_image_id == item.number %}
 
@@ -135,7 +302,7 @@
 
             {% empty %}
 
-            <p>
+            <p class="character-list-empty">
                 使用できるキャラクター画像がありません。
             </p>
 
@@ -143,10 +310,453 @@
 
         </div>
 
-    </form>
-
-</section>
+    </section>
 
 </div>
+
+
+<!-- =========================================================
+     FINAL CONFIRM MODAL
+========================================================= -->
+<div
+    class="character-confirm-overlay"
+    id="characterConfirmOverlay"
+    hidden
+>
+
+    <div class="character-confirm-modal">
+
+        <p class="character-panel-label">
+            FINAL CONFIRM
+        </p>
+
+        <h2>
+            キャラクターを変更しますか？
+        </h2>
+
+
+        <div class="character-confirm-preview">
+
+            <div class="confirm-preview-box">
+
+                {% if character.character_image_path %}
+
+                <img
+                    src="{% static character.character_image_path %}"
+                    alt="現在のキャラクター"
+                >
+
+                {% endif %}
+
+                <span>
+                    現在
+                </span>
+
+            </div>
+
+
+            <div class="character-confirm-arrow">
+                →
+            </div>
+
+
+            <div class="confirm-preview-box">
+
+                <img
+                    src=""
+                    alt="変更後のキャラクター"
+                    id="confirmSelectedImage"
+                >
+
+                <span>
+                    変更後
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <p class="character-confirm-number">
+
+            変更先：
+
+            <strong id="confirmSelectedNumber">
+                -
+            </strong>
+
+        </p>
+
+
+        <p class="character-confirm-cost">
+            50Qを消費します。
+        </p>
+
+
+        <div class="character-confirm-actions">
+
+            <button
+                type="button"
+                class="character-confirm-cancel"
+                id="cancelCharacterChange"
+            >
+                キャンセル
+            </button>
+
+            <button
+                type="button"
+                class="character-confirm-submit"
+                id="confirmCharacterChange"
+            >
+                50Qで変更する
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const form = document.getElementById("characterChangeForm");
+
+    const selectedCharacterId =
+        document.getElementById("selectedCharacterId");
+
+    const selectedPreview =
+        document.getElementById("selectedPreview");
+
+    const characterIdInput =
+        document.getElementById("characterIdInput");
+
+    const characterIdError =
+        document.getElementById("characterIdError");
+
+    const characterCards =
+        document.querySelectorAll(".character-change-card");
+
+    const currentCharacterSelect =
+        document.getElementById("currentCharacterSelect");
+
+    const currentCharacterIdButton =
+        document.getElementById("currentCharacterIdButton");
+
+    const openConfirmButton =
+        document.getElementById("openCharacterConfirm");
+
+    const confirmOverlay =
+        document.getElementById("characterConfirmOverlay");
+
+    const confirmSelectedImage =
+        document.getElementById("confirmSelectedImage");
+
+    const confirmSelectedNumber =
+        document.getElementById("confirmSelectedNumber");
+
+    const cancelCharacterChange =
+        document.getElementById("cancelCharacterChange");
+
+    const confirmCharacterChange =
+        document.getElementById("confirmCharacterChange");
+
+
+    /*
+    =========================================================
+    選択中キャラクター更新
+    =========================================================
+    */
+    function selectCharacter(id, imagePath) {
+
+        if (!id || !imagePath) {
+            return;
+        }
+
+        const numericId = parseInt(id, 10);
+
+        selectedCharacterId.value = numericId;
+
+        characterIdInput.value = numericId;
+
+        characterIdError.textContent = "";
+
+
+        selectedPreview.innerHTML = "";
+
+        const image = document.createElement("img");
+
+        image.src = imagePath;
+        image.alt = "選択中のキャラクター";
+        image.id = "selectedPreviewImage";
+
+        selectedPreview.appendChild(image);
+
+
+        characterCards.forEach(function (card) {
+
+            const cardId =
+                parseInt(card.dataset.characterId, 10);
+
+            card.classList.toggle(
+                "character-change-card-selected",
+                cardId === numericId
+            );
+
+        });
+
+    }
+
+
+    /*
+    =========================================================
+    キャラクター一覧クリック
+    =========================================================
+    */
+    characterCards.forEach(function (card) {
+
+        card.addEventListener("click", function () {
+
+            selectCharacter(
+                this.dataset.characterId,
+                this.dataset.characterImage
+            );
+
+        });
+
+    });
+
+
+    /*
+    =========================================================
+    現在のキャラクタークリック
+    =========================================================
+    */
+    if (currentCharacterSelect) {
+
+        currentCharacterSelect.addEventListener(
+            "click",
+            function () {
+
+                selectCharacter(
+                    this.dataset.characterId,
+                    this.dataset.characterImage
+                );
+
+            }
+        );
+
+    }
+
+
+    /*
+    =========================================================
+    現在IDクリック
+    =========================================================
+    */
+    if (
+        currentCharacterIdButton &&
+        currentCharacterSelect
+    ) {
+
+        currentCharacterIdButton.addEventListener(
+            "click",
+            function () {
+
+                selectCharacter(
+                    currentCharacterSelect.dataset.characterId,
+                    currentCharacterSelect.dataset.characterImage
+                );
+
+            }
+        );
+
+    }
+
+
+    /*
+    =========================================================
+    ID入力
+    =========================================================
+    */
+    characterIdInput.addEventListener(
+        "input",
+        function () {
+
+            const inputId =
+                parseInt(this.value, 10);
+
+            if (!inputId) {
+
+                characterIdError.textContent = "";
+
+                return;
+            }
+
+
+            let matchedCard = null;
+
+
+            characterCards.forEach(function (card) {
+
+                const cardId =
+                    parseInt(
+                        card.dataset.characterId,
+                        10
+                    );
+
+                if (cardId === inputId) {
+
+                    matchedCard = card;
+
+                }
+
+            });
+
+
+            if (matchedCard) {
+
+                selectCharacter(
+                    matchedCard.dataset.characterId,
+                    matchedCard.dataset.characterImage
+                );
+
+            } else {
+
+                characterIdError.textContent =
+                    "このIDのキャラクター画像は存在しません。";
+
+            }
+
+        }
+    );
+
+
+    /*
+    =========================================================
+    変更ボタン
+    =========================================================
+    */
+    openConfirmButton.addEventListener(
+        "click",
+        function () {
+
+            const selectedId =
+                selectedCharacterId.value;
+
+            if (!selectedId) {
+
+                characterIdError.textContent =
+                    "変更するキャラクターを選択してください。";
+
+                return;
+            }
+
+
+            let selectedCard = null;
+
+
+            characterCards.forEach(function (card) {
+
+                if (
+                    parseInt(
+                        card.dataset.characterId,
+                        10
+                    ) ===
+                    parseInt(
+                        selectedId,
+                        10
+                    )
+                ) {
+
+                    selectedCard = card;
+
+                }
+
+            });
+
+
+            if (!selectedCard) {
+                return;
+            }
+
+
+            confirmSelectedImage.src =
+                selectedCard.dataset.characterImage;
+
+            confirmSelectedNumber.textContent =
+                "No." +
+                String(selectedId).padStart(3, "0");
+
+
+            confirmOverlay.hidden = false;
+
+            document.body.classList.add(
+                "character-confirm-open"
+            );
+
+        }
+    );
+
+
+    /*
+    =========================================================
+    キャンセル
+    =========================================================
+    */
+    cancelCharacterChange.addEventListener(
+        "click",
+        function () {
+
+            confirmOverlay.hidden = true;
+
+            document.body.classList.remove(
+                "character-confirm-open"
+            );
+
+        }
+    );
+
+
+    /*
+    =========================================================
+    最終確認
+    =========================================================
+    */
+    confirmCharacterChange.addEventListener(
+        "click",
+        function () {
+
+            form.submit();
+
+        }
+    );
+
+
+    /*
+    =========================================================
+    モーダル背景クリックで閉じる
+    =========================================================
+    */
+    confirmOverlay.addEventListener(
+        "click",
+        function (event) {
+
+            if (event.target === confirmOverlay) {
+
+                confirmOverlay.hidden = true;
+
+                document.body.classList.remove(
+                    "character-confirm-open"
+                );
+
+            }
+
+        }
+    );
+
+});
+</script>
 
 {% endblock %}

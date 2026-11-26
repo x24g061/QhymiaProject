@@ -22,6 +22,13 @@ from .models import (
     UserSettings,
 )
 
+from .debug_mode import (
+    disable_debug_mode,
+    get_debug_drop_rate,
+    set_debug_drop_rate,
+    is_debug_mode,
+)
+
 from PIL import Image, UnidentifiedImageError
 
 
@@ -699,6 +706,9 @@ def passive_detail_view(request):
 # キャラクター画像変更
 @login_required
 def character_image_change_view(request):
+
+    CHARACTER_IMAGE_CHANGE_COST = 50
+
     character = getattr(
         request.user,
         "character",
@@ -719,7 +729,13 @@ def character_image_change_view(request):
         for item in available_characters
     }
 
+
+    # ========================================
+    # キャラクター画像変更
+    # ========================================
+
     if request.method == "POST":
+
         character_image_id = request.POST.get(
             "character_image_id"
         )
@@ -728,27 +744,117 @@ def character_image_change_view(request):
             character_image_id = int(
                 character_image_id
             )
+
         except (TypeError, ValueError):
             character_image_id = None
 
-        # 実際に存在する画像だけ変更可能
+
+        # ========================================
+        # 存在しない画像
+        # ========================================
+
         if (
             character_image_id
-            in available_numbers
+            not in available_numbers
         ):
-            character.character_image_id = (
-                character_image_id
-            )
 
-            character.save(
-                update_fields=[
-                    "character_image_id"
-                ]
+            messages.error(
+                request,
+                "存在するキャラクター画像を選択してください。",
             )
 
             return redirect(
                 "accounts:character_image_change"
             )
+
+
+        # ========================================
+        # DB更新
+        # ========================================
+
+        with transaction.atomic():
+
+            # 二重クリック・同時送信対策
+            character = (
+                Character.objects
+                .select_for_update()
+                .get(pk=character.pk)
+            )
+
+
+            # ====================================
+            # 現在と同じ画像
+            # ====================================
+
+            if (
+                character.character_image_id
+                == character_image_id
+            ):
+
+                messages.info(
+                    request,
+                    "現在使用しているキャラクター画像です。",
+                )
+
+                return redirect(
+                    "accounts:character_image_change"
+                )
+
+
+            # ====================================
+            # Q不足
+            # ====================================
+
+            if (
+                character.gold
+                < CHARACTER_IMAGE_CHANGE_COST
+            ):
+
+                messages.error(
+                    request,
+                    "キャラクター画像の変更には50Q必要です。",
+                )
+
+                return redirect(
+                    "accounts:character_image_change"
+                )
+
+
+            # ====================================
+            # 50Q消費
+            # ====================================
+
+            character.gold -= (
+                CHARACTER_IMAGE_CHANGE_COST
+            )
+
+
+            # ====================================
+            # キャラクター画像変更
+            # ====================================
+
+            character.character_image_id = (
+                character_image_id
+            )
+
+
+            character.save(
+                update_fields=[
+                    "gold",
+                    "character_image_id",
+                ]
+            )
+
+
+        messages.success(
+            request,
+            "キャラクター画像を変更しました。",
+        )
+
+        return redirect(
+            "accounts:character_image_change"
+        )
+
 
     return render(
         request,
@@ -757,6 +863,8 @@ def character_image_change_view(request):
             "character": character,
             "available_characters":
                 available_characters,
+            "character_image_change_cost":
+                CHARACTER_IMAGE_CHANGE_COST,
         },
     )
 # プロフィール
@@ -1036,7 +1144,114 @@ def palm_view(request):
                 palm_growth_items,
         },
     )
+@login_required
+def disable_debug_mode_view(request):
 
+    if request.method != "POST":
+        return redirect("home")
+
+    disable_debug_mode(request)
+
+    messages.success(
+        request,
+        "デバッグモードを解除しました。",
+    )
+
+    return redirect("home")
+
+@login_required
+def update_debug_drop_rate_view(request):
+
+    if request.method != "POST":
+        return redirect("home")
+
+    if not is_debug_mode(request):
+        messages.warning(
+            request,
+            "デバッグモードが有効ではありません。",
+        )
+        return redirect("home")
+
+    drop_rate = request.POST.get(
+        "debug_drop_rate",
+        "100",
+    )
+
+    try:
+        drop_rate = int(drop_rate)
+
+    except (TypeError, ValueError):
+        messages.error(
+            request,
+            "ドロップ率は0〜100の整数で入力してください。",
+        )
+        return redirect("home")
+
+    drop_rate = set_debug_drop_rate(
+        request,
+        drop_rate,
+    )
+
+    messages.success(
+        request,
+        f"デバッグ用ドロップ率を{drop_rate}%に変更しました。",
+    )
+
+    return redirect("home")
+
+@login_required
+def debug_settings_view(request):
+
+    if not is_debug_mode(request):
+        messages.warning(
+            request,
+            "デバッグモードが有効ではありません。",
+        )
+        return redirect("home")
+
+    if request.method == "POST":
+
+        drop_rate = request.POST.get(
+            "debug_drop_rate",
+            "100",
+        )
+
+        try:
+            drop_rate = int(drop_rate)
+
+        except (TypeError, ValueError):
+
+            messages.error(
+                request,
+                "ドロップ率は0〜100の整数で入力してください。",
+            )
+
+            return redirect(
+                "accounts:debug_settings"
+            )
+
+        drop_rate = set_debug_drop_rate(
+            request,
+            drop_rate,
+        )
+
+        messages.success(
+            request,
+            f"ドロップ率を{drop_rate}%に変更しました。",
+        )
+
+        return redirect(
+            "accounts:debug_settings"
+        )
+
+    return render(
+        request,
+        "debug_settings.html",
+        {
+            "debug_drop_rate":
+                get_debug_drop_rate(request),
+        },
+    )
 # 利用規約
 def terms_view(request):
     from_page = request.GET.get("from")

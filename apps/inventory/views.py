@@ -30,6 +30,11 @@ from .services import (
     unequip_item,
 )
 
+from apps.accounts.debug_mode import (
+    enable_debug_mode,
+    is_debug_mode,
+)
+
 
 # ============================================================
 # 倉庫画面
@@ -828,6 +833,61 @@ def use_item(
             "inventory:inventory"
         )
 
+    # ========================================================
+    # デ・バーガー
+    # ========================================================
+
+    if item.name == "デ・バーガー":
+
+        # すでにデバッグモード中なら消費しない
+        if is_debug_mode(request):
+
+            messages.warning(
+                request,
+                "すでにデバッグモードが有効です。",
+            )
+
+            return redirect(
+                "inventory:inventory"
+            )
+
+
+        # ================================================
+        # デバッグモードON
+        # ================================================
+
+        enable_debug_mode(request)
+
+
+        # ================================================
+        # アイテムを1個消費
+        # ================================================
+
+        if inventory_item.quantity <= 1:
+
+            inventory_item.delete()
+
+        else:
+
+            inventory_item.quantity -= 1
+
+            inventory_item.save(
+                update_fields=[
+                    "quantity",
+                ]
+            )
+
+
+        messages.success(
+            request,
+            "デ・バーガーを使用しました。"
+            "デバッグモードが有効になりました。",
+        )
+
+
+        return redirect(
+            "inventory:inventory"
+        )
     # ========================================
     # ボス挑戦チケット
     # ========================================

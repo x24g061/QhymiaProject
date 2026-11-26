@@ -4,7 +4,6 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.templatetags.static import static
-from django.utils import timezone
 from django.views.decorators.http import require_GET, require_POST
 
 from .models import ChatMessage
@@ -22,14 +21,28 @@ def get_messages(request):
     data = [
         {
             "id": chat.id,
+
+            # プレイヤー詳細画面へのリンク用
+            "character_id": chat.character.id,
+
             "character_name": chat.character.name,
+
             "character_image_url": (
-                static(chat.character.character_image_path)
+                static(
+                    chat.character.character_image_path
+                )
                 if chat.character.character_image_path
                 else None
             ),
+
             "message": chat.message,
-            "created_at": timezone.localtime(chat.created_at).strftime("%H:%M"),
+
+            # 例: 2026/11/26/10:35:03
+            "created_at": (
+                chat.created_at.strftime(
+                    "%Y/%m/%d/%H:%M:%S"
+                )
+            ),
         }
         for chat in reversed(messages)
     ]
@@ -43,9 +56,14 @@ def get_messages(request):
 @login_required
 def send_message(request):
     try:
-        data = json.loads(request.body)
+        data = json.loads(
+            request.body
+        )
 
-    except (json.JSONDecodeError, UnicodeDecodeError):
+    except (
+        json.JSONDecodeError,
+        UnicodeDecodeError,
+    ):
         return JsonResponse(
             {
                 "error":
@@ -54,20 +72,32 @@ def send_message(request):
             status=400,
         )
 
-    if not isinstance(data, dict):
+    if not isinstance(
+        data,
+        dict,
+    ):
         return JsonResponse(
-            {"error": "送信データが正しくありません"},
+            {
+                "error":
+                    "送信データが正しくありません"
+            },
             status=400,
         )
 
     message = data.get(
         "message",
-        ""
+        "",
     )
 
-    if not isinstance(message, str):
+    if not isinstance(
+        message,
+        str,
+    ):
         return JsonResponse(
-            {"error": "送信データが正しくありません"},
+            {
+                "error":
+                    "送信データが正しくありません"
+            },
             status=400,
         )
 
@@ -92,7 +122,9 @@ def send_message(request):
         )
 
     try:
-        character = request.user.character
+        character = (
+            request.user.character
+        )
 
     except Exception:
         return JsonResponse(
@@ -103,16 +135,25 @@ def send_message(request):
             status=400,
         )
 
-    chat = ChatMessage.objects.create(
-        character=character,
-        message=message,
+    chat = (
+        ChatMessage.objects.create(
+            character=character,
+            message=message,
+        )
     )
 
     return JsonResponse({
         "success": True,
+
         "message": {
             "id": chat.id,
-            "character_name": character.name,
+
+            # プレイヤー詳細画面へのリンク用
+            "character_id": character.id,
+
+            "character_name":
+                character.name,
+
             "character_image_url": (
                 static(
                     character.character_image_path
@@ -120,11 +161,19 @@ def send_message(request):
                 if character.character_image_path
                 else None
             ),
-            "message": chat.message,
-            "created_at":
-                timezone.localtime(chat.created_at).strftime("%H:%M"),
+
+            "message":
+                chat.message,
+
+            # 例: 2026/11/26/10:35:03
+            "created_at": (
+                chat.created_at.strftime(
+                    "%Y/%m/%d/%H:%M:%S"
+                )
+            ),
         }
     })
+
 
 # ========================================
 # オープンチャット利用規約

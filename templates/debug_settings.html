@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+デバッグ設定 | Qhymia
+{% endblock %}
+{% block body_class %}debug-settings-body{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/debug-settings.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="debug-settings-page">
+
+    <div class="debug-settings-container">
+
+        <div class="debug-settings-header">
+
+            <div>
+                <p class="debug-settings-kicker">
+                    DEBUG MODE
+                </p>
+
+                <h2>
+                    デバッグ設定
+                </h2>
+
+                <p class="debug-settings-description">
+                    デバッグモード中のみ利用できる開発用設定です。
+                </p>
+            </div>
+
+            <a
+                href="{% url 'home' %}"
+                class="debug-settings-back-button"
+            >
+                ホームへ戻る
+            </a>
+
+        </div>
+
+
+        <section class="debug-settings-card">
+
+            <div class="debug-settings-card-title">
+                探索設定
+            </div>
+
+            <div class="debug-setting-row">
+
+                <div class="debug-setting-label">
+
+                    <span class="debug-setting-name">
+                        探索クールタイム
+                    </span>
+
+                    <span class="debug-setting-help">
+                        デバッグモード中は探索待機時間を無効化します。
+                    </span>
+
+                </div>
+
+                <div class="debug-setting-value">
+                    0秒
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="debug-settings-card">
+
+            <div class="debug-settings-card-title">
+                ドロップ設定
+            </div>
+
+            <form method="post">
+
+                {% csrf_token %}
+
+                <div class="debug-setting-row">
+
+                    <div class="debug-setting-label">
+
+                        <label
+                            for="debug_drop_rate"
+                            class="debug-setting-name"
+                        >
+                            探索ドロップ率
+                        </label>
+
+                        <span class="debug-setting-help">
+                            探索勝利時のドロップ率を0〜100%で指定します。
+                        </span>
+
+                    </div>
+
+                    <div class="debug-drop-rate-control">
+
+                        <input
+                            type="number"
+                            id="debug_drop_rate"
+                            name="debug_drop_rate"
+                            min="0"
+                            max="100"
+                            step="1"
+                            value="{{ debug_drop_rate }}"
+                        >
+
+                        <span class="debug-percent">
+                            %
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="debug-settings-actions">
+
+                    <button
+                        type="submit"
+                        class="debug-settings-save-button"
+                    >
+                        設定を保存
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <section class="debug-settings-card debug-settings-status-card">
+
+            <div class="debug-settings-card-title">
+                現在の状態
+            </div>
+
+            <div class="debug-status-grid">
+
+                <div class="debug-status-item">
+
+                    <span>
+                        DEBUG MODE
+                    </span>
+
+                    <strong>
+                        ON
+                    </strong>
+
+                </div>
+
+                <div class="debug-status-item">
+
+                    <span>
+                        探索CT
+                    </span>
+
+                    <strong>
+                        0秒
+                    </strong>
+
+                </div>
+
+                <div class="debug-status-item">
+
+                    <span>
+                        ドロップ率
+                    </span>
+
+                    <strong>
+                        {{ debug_drop_rate }}%
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <div class="debug-settings-footer">
+
+            <form
+                method="post"
+                action="{% url 'accounts:disable_debug_mode' %}"
+            >
+
+                {% csrf_token %}
+
+                <button
+                    type="submit"
+                    class="debug-disable-button"
+                >
+                    デバッグモードを終了
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

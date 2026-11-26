@@ -1,7 +1,6 @@
 from channels.db import database_sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from django.templatetags.static import static
-from django.utils import timezone
 
 from apps.accounts.models import Character
 
@@ -200,8 +199,10 @@ class ChatConsumer(
 
 
         return {
-            "id":
-                chat.id,
+            "id": chat.id,
+
+            "character_id":
+                character.id,
 
             "character_name":
                 character.name,
@@ -210,16 +211,16 @@ class ChatConsumer(
                 static(
                     character.character_image_path
                 )
-                if
-                character.character_image_path
+                if character.character_image_path
                 else None
             ),
 
             "message":
                 chat.message,
 
-            "created_at":
-                timezone.localtime(chat.created_at).strftime(
-                    "%H:%M"
-                ),
+            "created_at": (
+                chat.created_at.strftime(
+                    "%Y/%m/%d/%H:%M:%S"
+                )
+            ),
         }

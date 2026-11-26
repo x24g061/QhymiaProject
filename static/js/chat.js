@@ -94,6 +94,19 @@ document.addEventListener(
 
 
             // キャラクターアイコン
+            const avatarLink =
+                document.createElement(
+                    "a"
+                );
+
+            avatarLink.href =
+                `/player/${chat.character_id}/`;
+
+            avatarLink.classList.add(
+                "chat-message-avatar-link"
+            );
+
+
             const avatar =
                 document.createElement(
                     "div"
@@ -210,8 +223,12 @@ document.addEventListener(
                 text
             );
 
-            body.appendChild(
+            avatarLink.appendChild(
                 avatar
+            );
+
+            body.appendChild(
+                avatarLink
             );
 
             body.appendChild(
@@ -326,7 +343,7 @@ document.addEventListener(
             // https → wss
             const protocol =
                 window.location.protocol ===
-                "https:"
+                    "https:"
                     ? "wss"
                     : "ws";
 
@@ -500,7 +517,7 @@ document.addEventListener(
             if (
                 !chatSocket ||
                 chatSocket.readyState !==
-                    WebSocket.OPEN
+                WebSocket.OPEN
             ) {
 
                 chatError.textContent =
