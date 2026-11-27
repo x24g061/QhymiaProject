@@ -1,0 +1,392 @@
+.achievement-page {
+    min-height: 100vh;
+    padding: 24px 12px 50px;
+    background: #14232c;
+    color: #e9f1f5;
+}
+
+.achievement-container {
+    width: min(100%, 960px);
+    margin: 0 auto;
+}
+
+.achievement-back {
+    display: inline-block;
+    margin-bottom: 18px;
+    color: #80c9ea;
+    text-decoration: none;
+}
+
+.achievement-header {
+    margin-bottom: 24px;
+}
+
+.achievement-label {
+    color: #80a1b3;
+    font-size: 11px;
+    letter-spacing: 4px;
+}
+
+.achievement-header h1 {
+    margin: 6px 0;
+    font-size: 32px;
+    color: #fff;
+}
+
+.achievement-header p:last-child {
+    font-size: 14px;
+    color: #a7bac5;
+}
+
+.achievement-summary {
+    padding: 24px;
+    background: #20343f;
+    border: 1px solid #40535e;
+    border-radius: 12px;
+    margin-bottom: 24px;
+}
+
+.achievement-summary h2 {
+    margin: 10px 0 16px;
+}
+
+.achievement-completion {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 24px 0 10px;
+    font-size: 14px;
+}
+
+.achievement-progress {
+    height: 7px;
+    background: #40535e;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.achievement-progress > div {
+    height: 100%;
+    background: #63b6d1;
+    border-radius: 10px;
+}
+
+.achievement-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.achievement-filters button,
+.achievement-filters select,
+.achievement-button {
+    padding: 10px 16px;
+    background: #20343f;
+    color: #e9f1f5;
+    border: 1px solid #526c7b;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.achievement-filters button.active,
+.achievement-button:hover {
+    background: #327f91;
+    border-color: #63b6d1;
+}
+
+.achievement-list {
+    display: grid;
+    gap: 12px;
+}
+
+.achievement-card {
+    padding: 18px;
+    background: #20343f;
+    border: 1px solid #40535e;
+    border-radius: 12px;
+}
+
+.achievement-card[hidden],
+#achievement-empty[hidden] {
+    display: none !important;
+}
+
+.achievement-card.equipped {
+    border-color: #edca65;
+}
+
+.achievement-card.locked {
+    background: #192b35;
+}
+
+.achievement-card-main {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.achievement-rank {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border: 1px solid currentColor;
+    border-radius: 6px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.achievement-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.achievement-info h3 {
+    margin: 4px 0;
+    font-size: 18px;
+    overflow-wrap: anywhere;
+}
+
+.achievement-info p {
+    margin: 4px 0;
+    font-size: 13px;
+    color: #a7bac5;
+}
+
+.achievement-category {
+    font-size: 11px;
+    color: #80a1b3;
+}
+
+.achievement-card.locked h3 {
+    color: #9aa9b1;
+}
+
+.achievement-locked,
+.achievement-date,
+.achievement-progress-text {
+    color: #a7bac5;
+    font-size: 12px;
+}
+
+.achievement-equipped {
+    color: #edca65;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.achievement-card .achievement-progress {
+    margin-top: 16px;
+}
+
+.achievement-progress-text {
+    margin: 6px 0 0;
+    text-align: right;
+}
+
+.achievement-date {
+    margin: 12px 0 0;
+}
+
+.achievement-messages p {
+    background: #254553;
+    border: 1px solid #63b6d1;
+    border-radius: 6px;
+    padding: 12px;
+}
+
+.achievement-page .rank-F { color: #c5cbd0; }
+.achievement-page .rank-E { color: #81cc8a; }
+.achievement-page .rank-D { color: #72c9ec; }
+.achievement-page .rank-C { color: #819dff; }
+.achievement-page .rank-B { color: #bd91ff; }
+.achievement-page .rank-A { color: #ffb664; }
+.achievement-page .rank-S { color: #ffe17a; }
+
+@media (max-width: 600px) {
+
+    .achievement-card {
+        padding: 12px;
+    }
+
+    .achievement-card-main {
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .achievement-info h3 {
+        font-size: 15px;
+    }
+
+    .achievement-button {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+
+    .achievement-summary {
+        padding: 16px;
+    }
+
+}
+
+
+/* ========================================
+   壁紙対応・ライトモード
+======================================== */
+
+.achievement-page {
+    background: transparent;
+    color: #203f49;
+}
+
+.achievement-header h1 {
+    color: #203f49;
+}
+
+.achievement-header p:last-child,
+.achievement-label,
+.achievement-back {
+    color: #327f91;
+}
+
+.achievement-summary,
+.achievement-card {
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid #cbd9df;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+}
+
+.achievement-card.locked {
+    background: rgba(245, 248, 250, 0.88);
+}
+
+.achievement-info p,
+.achievement-category,
+.achievement-locked,
+.achievement-date,
+.achievement-progress-text {
+    color: #657780;
+}
+
+.achievement-card.locked h3 {
+    color: #70818a;
+}
+
+.achievement-progress {
+    background: #d6e0e5;
+}
+
+.achievement-progress > div {
+    background: #327f91;
+}
+
+.achievement-filters button,
+.achievement-filters select,
+.achievement-button {
+    background: rgba(255, 255, 255, 0.95);
+    color: #203f49;
+    border-color: #b9cbd3;
+}
+
+.achievement-filters button.active,
+.achievement-button:hover {
+    background: #327f91;
+    color: #ffffff;
+}
+
+.achievement-equipped {
+    color: #a67c18;
+}
+
+.achievement-card.equipped {
+    border: 2px solid #c9a343;
+}
+
+/* ライトモード用レアリティカラー */
+
+.achievement-page .rank-F { color: #68757d; }
+.achievement-page .rank-E { color: #398448; }
+.achievement-page .rank-D { color: #258aa9; }
+.achievement-page .rank-C { color: #456ac8; }
+.achievement-page .rank-B { color: #8654bc; }
+.achievement-page .rank-A { color: #c67622; }
+.achievement-page .rank-S { color: #b18a20; }
+
+
+/* ========================================
+   ダークモード
+======================================== */
+
+html[data-game-theme="dark"] .achievement-page {
+    color: #e9f1f5;
+}
+
+html[data-game-theme="dark"] .achievement-header h1 {
+    color: #ffffff;
+}
+
+html[data-game-theme="dark"] .achievement-header p:last-child,
+html[data-game-theme="dark"] .achievement-label,
+html[data-game-theme="dark"] .achievement-back {
+    color: #80c9ea;
+}
+
+html[data-game-theme="dark"] .achievement-summary,
+html[data-game-theme="dark"] .achievement-card {
+    background: rgba(32, 52, 63, 0.94);
+    border-color: #40535e;
+}
+
+html[data-game-theme="dark"] .achievement-card.locked {
+    background: rgba(25, 43, 53, 0.92);
+}
+
+html[data-game-theme="dark"] .achievement-info p,
+html[data-game-theme="dark"] .achievement-category,
+html[data-game-theme="dark"] .achievement-locked,
+html[data-game-theme="dark"] .achievement-date,
+html[data-game-theme="dark"] .achievement-progress-text {
+    color: #a7bac5;
+}
+
+html[data-game-theme="dark"] .achievement-card.locked h3 {
+    color: #9aa9b1;
+}
+
+html[data-game-theme="dark"] .achievement-progress {
+    background: #40535e;
+}
+
+html[data-game-theme="dark"] .achievement-filters button,
+html[data-game-theme="dark"] .achievement-filters select,
+html[data-game-theme="dark"] .achievement-button {
+    background: #20343f;
+    color: #e9f1f5;
+    border-color: #526c7b;
+}
+
+html[data-game-theme="dark"] .achievement-filters button.active,
+html[data-game-theme="dark"] .achievement-button:hover {
+    background: #327f91;
+}
+
+html[data-game-theme="dark"] .achievement-equipped {
+    color: #edca65;
+}
+
+html[data-game-theme="dark"] .achievement-card.equipped {
+    border-color: #edca65;
+}
+
+html[data-game-theme="dark"] .achievement-page .rank-F { color: #c5cbd0; }
+html[data-game-theme="dark"] .achievement-page .rank-E { color: #81cc8a; }
+html[data-game-theme="dark"] .achievement-page .rank-D { color: #72c9ec; }
+html[data-game-theme="dark"] .achievement-page .rank-C { color: #819dff; }
+html[data-game-theme="dark"] .achievement-page .rank-B { color: #bd91ff; }
+html[data-game-theme="dark"] .achievement-page .rank-A { color: #ffb664; }
+html[data-game-theme="dark"] .achievement-page .rank-S { color: #ffe17a; }
+

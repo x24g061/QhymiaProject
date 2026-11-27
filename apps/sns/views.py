@@ -1,3 +1,5 @@
+from apps.achievements.services import preload_public_titles
+
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -155,6 +157,11 @@ def sns_page(request):
 
         for post in posts:
             post.is_recommended = False
+
+        preload_public_titles(
+            getattr(post.user, "character", None)
+            for post in posts
+        )
 
 
     elif view_mode == "latest":
@@ -391,6 +398,11 @@ def mini_sns_feed(request):
 
         for post in posts:
             post.is_recommended = False
+
+        preload_public_titles(
+            getattr(post.user, "character", None)
+            for post in posts
+        )
 
 
     else:

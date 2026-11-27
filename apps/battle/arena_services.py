@@ -590,7 +590,29 @@ def challenge_arena_master(challenger):
     # 探索・闘技場共通CT開始
     _start_arena_cooldown(locked_challenger)
 
+    # ========================================
+    # 闘技場実績の達成判定
+    # ========================================
+
+    from apps.achievements.services import unlock_achievements
+
+    # 挑戦者は既存のキャラクターロック内で判定
+    newly_unlocked = unlock_achievements(locked_challenger)
+
+    # 防衛者は戦闘の確定後に判定
+    transaction.on_commit(
+        lambda: unlock_achievements(defender),
+        robust=True,
+    )
+
     return {
+        "newly_unlocked_achievements": [
+            {
+                "name": achievement.title_name,
+                "rank": achievement.rank,
+            }
+            for achievement in newly_unlocked
+        ],
         "winner": winner,
         "history_id": history.pk,
         "gained_exp": gained_exp,

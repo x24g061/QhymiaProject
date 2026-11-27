@@ -181,6 +181,8 @@ def player_search(request):
 
 @login_required
 def player_detail(request, character_id):
+    from apps.achievements.services import get_public_title
+
     """検索したプレイヤーのプロフィールを表示"""
 
     character = get_object_or_404(
@@ -210,6 +212,7 @@ def player_detail(request, character_id):
         {
             "character": character,
             "is_other_profile": True,
+            "equipped_title": get_public_title(character),
             "main_attribute_value": main_attribute_value,
         },
     )
@@ -2114,6 +2117,10 @@ def again(request):
                     messages.success(request, f"「{inherited.name}」を永久習得しました！")
                 else:
                     messages.info(request, "回帰前の職業のスキルはすべて永久習得済みです。")
+                from apps.achievements.services import unlock_and_notify
+
+                unlock_and_notify(request, character)
+
                 request.session.pop("reincarnation_preview_version", None)
 
 

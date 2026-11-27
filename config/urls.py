@@ -23,6 +23,7 @@ from .views import (
 )
 
 urlpatterns = [
+    path("achievements/", include("apps.achievements.urls")),
     path('admin/', admin.site.urls),
 
     path('', home, name='home'),

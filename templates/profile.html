@@ -74,6 +74,14 @@
                         プレイヤー名
                     </span>
 
+                    {% if equipped_title %}
+
+                    <div class="profile-equipped-title profile-title-rank-{{ equipped_title.achievement.rank }}">
+                        ✦ {{ equipped_title.achievement.title_name }} ✦
+                    </div>
+
+                    {% endif %}
+
                     <strong>
                         {{ character.name }}
                     </strong>
@@ -480,6 +488,65 @@
                     </div>
 
             </section>
+
+        {% if not is_other_profile and character %}
+
+            <section class="profile-achievement-panel">
+
+                <h2 class="profile-achievement-heading">
+                    ACHIEVEMENTS / 実績・称号
+                </h2>
+
+                <div class="profile-achievement-content">
+
+                    <div class="profile-achievement-title">
+
+                        <span class="profile-achievement-icon">
+                            🏆
+                        </span>
+
+                        <div>
+                            <span class="profile-achievement-label">
+                                現在の称号
+                            </span>
+
+                            {% if equipped_title %}
+                            <strong class="profile-title-rank-{{ equipped_title.achievement.rank }}">
+                                {{ equipped_title.achievement.title_name }}
+                            </strong>
+                            {% else %}
+                            <strong>称号なし</strong>
+                            {% endif %}
+                        </div>
+
+                    </div>
+
+                    <div class="profile-achievement-rate">
+
+                        <span>実績達成率</span>
+
+                        <strong>
+                            {{ achievement_count }} / {{ achievement_total }}
+                            （{{ achievement_completion }}%）
+                        </strong>
+
+                    </div>
+
+                    <div class="profile-achievement-progress">
+                        <div style="width: {{ achievement_completion }}%"></div>
+                    </div>
+
+                    <a href="{% url 'achievements:list' %}"
+                       class="profile-achievement-link">
+                        実績・称号一覧へ
+                        <span>›</span>
+                    </a>
+
+                </div>
+
+            </section>
+
+            {% endif %}
 
         </main>
 

@@ -3,6 +3,8 @@ from datetime import timedelta
 from django.db.models import Count
 from django.utils import timezone
 
+from apps.achievements.services import preload_public_titles
+
 from .models import Post
 
 
@@ -36,6 +38,11 @@ def get_latest_posts():
 
     for post in posts:
         post.is_recommended = False
+
+    preload_public_titles(
+        getattr(post.user, "character", None)
+        for post in posts
+    )
 
     return posts
 
@@ -81,5 +88,10 @@ def get_recommended_posts():
 
     for post in posts:
         post.is_recommended = True
+
+    preload_public_titles(
+        getattr(post.user, "character", None)
+        for post in posts
+    )
 
     return posts

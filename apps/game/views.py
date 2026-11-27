@@ -102,6 +102,11 @@ def start_fishing(request):
 @transaction.atomic
 def finish_fishing(request):
 
+    from apps.achievements.services import (
+        record_fishing,
+        notify_achievements,
+    )
+
     # ====================================
     # セッションIDの確認
     # ====================================
@@ -223,6 +228,13 @@ def finish_fishing(request):
             ]
         )
 
+        newly_unlocked = record_fishing(character)
+
+        notify_achievements(
+            request,
+            newly_unlocked,
+        )
+
         return JsonResponse({
             "success": False,
             "message": "魚は釣れませんでした。",
@@ -297,6 +309,14 @@ def finish_fishing(request):
     # ====================================
     # 結果を返す
     # ====================================
+
+    # 釣り実績の記録と通知
+    newly_unlocked = record_fishing(character)
+
+    notify_achievements(
+        request,
+        newly_unlocked,
+    )
 
     return JsonResponse({
         "success": True,

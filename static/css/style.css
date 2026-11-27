@@ -786,3 +786,38 @@ main {
     transform: translateY(-1px);
 }
 
+
+
+/* ========================================
+   公開用プレイヤー称号
+======================================== */
+
+.public-player-title {
+    display: inline-block;
+    margin-left: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.5;
+    vertical-align: middle;
+    overflow-wrap: anywhere;
+}
+
+.public-player-title.public-title-rank-F { color: #68757d; }
+.public-player-title.public-title-rank-E { color: #398448; }
+.public-player-title.public-title-rank-D { color: #258aa9; }
+.public-player-title.public-title-rank-C { color: #456ac8; }
+.public-player-title.public-title-rank-B { color: #8654bc; }
+.public-player-title.public-title-rank-A { color: #c67622; }
+.public-player-title.public-title-rank-S { color: #b18a20; }
+
+
+/* ダークモード */
+
+html[data-game-theme="dark"] .public-player-title.public-title-rank-F { color: #c5cbd0; }
+html[data-game-theme="dark"] .public-player-title.public-title-rank-E { color: #81cc8a; }
+html[data-game-theme="dark"] .public-player-title.public-title-rank-D { color: #72c9ec; }
+html[data-game-theme="dark"] .public-player-title.public-title-rank-C { color: #819dff; }
+html[data-game-theme="dark"] .public-player-title.public-title-rank-B { color: #bd91ff; }
+html[data-game-theme="dark"] .public-player-title.public-title-rank-A { color: #ffb664; }
+html[data-game-theme="dark"] .public-player-title.public-title-rank-S { color: #ffe17a; }
+

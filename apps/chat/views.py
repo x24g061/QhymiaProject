@@ -6,6 +6,11 @@ from django.shortcuts import render
 from django.templatetags.static import static
 from django.views.decorators.http import require_GET, require_POST
 
+from apps.achievements.services import (
+    get_public_title_data,
+    preload_public_titles,
+)
+
 from .models import ChatMessage
 
 
@@ -18,6 +23,11 @@ def get_messages(request):
         .order_by("-created_at")[:50]
     )
 
+    preload_public_titles(
+        chat.character
+        for chat in messages
+    )
+
     data = [
         {
             "id": chat.id,
@@ -26,6 +36,8 @@ def get_messages(request):
             "character_id": chat.character.id,
 
             "character_name": chat.character.name,
+
+            **get_public_title_data(chat.character),
 
             "character_image_url": (
                 static(
@@ -153,6 +165,8 @@ def send_message(request):
 
             "character_name":
                 character.name,
+
+            **get_public_title_data(character),
 
             "character_image_url": (
                 static(
