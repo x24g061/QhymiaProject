@@ -368,8 +368,14 @@
 
                                 {% for listing in market_listings %}
 
-                                <article class="table-row" data-item data-name="{{ listing.item.name }}"
-                                    data-category="{{ listing.item.category }}" data-price="{{ listing.unit_price }}">
+                                <article
+    class="table-row{% if character and listing.seller_id == character.id %} own-market-listing{% endif %}"
+    data-item
+    data-name="{{ listing.item.name }}"
+    data-category="{{ listing.item.category }}"
+    data-price="{{ listing.unit_price }}"
+    data-character-gold="{{ character.gold|default:0 }}"
+>
 
 
                                     <!-- 種類 -->
@@ -387,21 +393,25 @@
 
                                     <!-- アイテム名 -->
 
-                                    <div class="table-cell item-name-cell" data-label="アイテム名">
+                                   <div class="table-cell item-name-cell" data-label="アイテム名">
 
-                                        <strong>
+    <strong>
 
-                                            {{ listing.item.name }}
+        {{ listing.item.name }}
 
-                                            {% if listing.owned_equipment %}
+        {% if listing.owned_equipment %}
+        +{{ listing.owned_equipment.enhancement_level }}
+        {% endif %}
 
-                                            +{{ listing.owned_equipment.enhancement_level }}
+    </strong>
 
-                                            {% endif %}
+    {% if character and listing.seller_id == character.id %}
+    <span class="own-listing-badge">
+        自分の出品
+    </span>
+    {% endif %}
 
-                                        </strong>
-
-                                    </div>
+</div>
 
 
                                     <!-- 説明 -->
@@ -443,13 +453,19 @@
 
                                     <div class="table-cell price-cell" data-label="価格">
 
-                                        <strong>
-                                            {{ listing.unit_price }}
-                                        </strong>
+    <strong>
+        {{ listing.unit_price }}
+    </strong>
 
-                                        Q
+    Q
 
-                                    </div>
+    {% if not character or listing.seller_id != character.id %}
+    <span class="market-total-price">
+        合計 {{ listing.unit_price }} Q
+    </span>
+    {% endif %}
+
+</div>
                                     <!-- 購入個数 -->
 
                                     <div class="table-cell market-buy-quantity-cell" data-label="個数">
@@ -464,9 +480,35 @@
 
                                         {% else %}
 
-                                        <input type="number" name="quantity" value="1" min="1"
-                                            max="{{ listing.quantity }}" form="market-buy-form-{{ listing.id }}"
-                                            class="market-buy-quantity-input">
+                                        <div class="market-quantity-control">
+
+    <button
+        type="button"
+        class="market-quantity-button market-quantity-plus"
+        aria-label="数量を1増やす"
+    >
+        ＋
+    </button>
+
+    <input
+        type="number"
+        name="quantity"
+        value="1"
+        min="1"
+        max="{{ listing.quantity }}"
+        form="market-buy-form-{{ listing.id }}"
+        class="market-buy-quantity-input"
+    >
+
+    <button
+        type="button"
+        class="market-quantity-button market-quantity-minus"
+        aria-label="数量を1減らす"
+    >
+        −
+    </button>
+
+</div>
 
                                         {% endif %}
 
@@ -502,9 +544,13 @@
 
                                             {% endif %}
 
-                                            <button type="submit" class="buy-button">
-                                                購入する
-                                            </button>
+                                            <button
+    type="submit"
+    class="buy-button market-buy-button"
+    data-item-name="{{ listing.item.name }}"
+>
+    購入する
+</button>
 
                                         </form>
 
@@ -920,7 +966,46 @@
         </div>
 
     </div>
+<div id="market-purchase-modal" class="npc-purchase-modal">
 
+    <div class="npc-purchase-modal-card">
+
+        <h2>購入確認</h2>
+
+        <p id="market-modal-item-name"></p>
+
+        <div class="npc-modal-summary">
+            <span id="market-modal-quantity"></span>
+            <strong id="market-modal-total"></strong>
+        </div>
+
+        <p class="npc-modal-message">
+            この内容で購入しますか？
+        </p>
+
+        <div class="npc-modal-actions">
+
+            <button
+                type="button"
+                id="market-modal-cancel"
+                class="npc-modal-cancel"
+            >
+                キャンセル
+            </button>
+
+            <button
+                type="button"
+                id="market-modal-confirm"
+                class="npc-modal-confirm"
+            >
+                購入する
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 </body>
 
 {% if user.is_authenticated %}

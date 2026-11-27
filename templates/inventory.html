@@ -63,30 +63,53 @@
         <!-- 左メニュー -->
         <aside class="inventory-side-menu">
 
-            <h2>
-                アイテムメニュー
-            </h2>
-
-            <button type="button" class="side-button active" data-target="equipment">
-                <span>装備中アイテム</span>
-                <span>▶</span>
-            </button>
-
-            <p class="side-description">
-                現在キャラクターが装備しているアイテムを確認できます。
-            </p>
+    <h2>
+        倉庫メニュー
+    </h2>
 
 
-            <button type="button" class="side-button" data-target="items">
-                <span>所持アイテム</span>
-                <span>▶</span>
-            </button>
+    <button
+        type="button"
+        class="side-button active"
+        data-target="equipment"
+    >
+        <span>装備中</span>
+        <span>▶</span>
+    </button>
 
-            <p class="side-description">
-                現在倉庫に所持しているアイテムを確認できます。
-            </p>
+    <p class="side-description">
+        現在キャラクターが装備している装備を確認できます。
+    </p>
 
-        </aside>
+
+    <button
+        type="button"
+        class="side-button"
+        data-target="owned-equipment"
+    >
+        <span>所持装備</span>
+        <span>▶</span>
+    </button>
+
+    <p class="side-description">
+        倉庫に保管している装備品を確認・装備できます。
+    </p>
+
+
+    <button
+        type="button"
+        class="side-button"
+        data-target="items"
+    >
+        <span>所持アイテム</span>
+        <span>▶</span>
+    </button>
+
+    <p class="side-description">
+        消耗品や素材などの所持アイテムを確認できます。
+    </p>
+
+</aside>
 
 
         <!-- 右側 -->
@@ -228,7 +251,173 @@
                 </div>
 
             </section>
+<section id="owned-equipment-panel" class="inventory-panel">
 
+    <div class="inventory-toolbar">
+
+        <div>
+            <p class="small-title">
+                OWNED EQUIPMENT
+            </p>
+
+            <h2>
+                所持装備
+            </h2>
+        </div>
+
+    </div>
+
+
+    <div class="table-wrapper">
+
+        <div class="item-table">
+
+            <div class="item-header">
+
+                <div>種類</div>
+                <div>装備名</div>
+                <div>個数 / 戦闘力</div>
+                <div>操作</div>
+
+            </div>
+
+
+            <div class="table-body">
+
+                {% for row in equipment_display_rows %}
+
+                <article
+                    class="item-row"
+                    data-name="{{ row.owned.equipment.item.name }}"
+                    data-rank="{{ row.owned.equipment.rank }}"
+                    data-slot="{{ row.owned.equipment.slot }}"
+                    data-power="{{ row.owned.battle_power }}"
+                    data-enhancement="{{ row.owned.enhancement_level }}"
+                >
+
+                    <div class="table-cell">
+
+                        <span class="category-tag">
+                            装備品
+                        </span>
+
+                    </div>
+
+
+                    <div class="table-cell item-name-cell">
+
+                        <div>
+
+                            <strong>
+                                【{{ row.owned.equipment.rank }}】
+                                {{ row.owned.equipment.item.name }}
+                                +{{ row.owned.enhancement_level }}
+                            </strong>
+
+
+                            {% if row.owned.special_effect %}
+
+                            <div class="equipment-special-effect">
+                                ✨ 特殊能力：
+                                {{ row.owned.get_special_effect_display }}
+                            </div>
+
+                            {% endif %}
+
+
+                            <br>
+
+
+                            <small>
+                                {{ row.owned.equipment.get_slot_display }}
+                                /
+                                {{ row.owned.equipment.get_style_display }}
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="table-cell quantity-cell">
+
+                        <div class="equipment-stack-summary">
+
+                            <div>
+                                所持
+                                <strong>
+                                    {{ row.quantity }}
+                                </strong>
+                                個
+                            </div>
+
+                            <div>
+                                戦闘力
+                                <strong>
+                                    {{ row.owned.battle_power }}
+                                </strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="table-cell">
+
+                        {% if row.owned.is_equipped %}
+
+                        <form
+                            method="post"
+                            action="{% url 'inventory:unequip_equipment' row.owned.id %}"
+                        >
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="equipment-action-button remove"
+                            >
+                                外す
+                            </button>
+                        </form>
+
+                        {% else %}
+
+                        <form
+                            method="post"
+                            action="{% url 'inventory:equip_equipment' row.owned.id %}"
+                        >
+                            {% csrf_token %}
+
+                            <button
+                                type="submit"
+                                class="equipment-action-button"
+                            >
+                                装備する
+                            </button>
+                        </form>
+
+                        {% endif %}
+
+                    </div>
+
+                </article>
+
+                {% empty %}
+
+                <div class="empty-items">
+                    所持している装備はありません。
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
             <!-- ===============================
                  所持アイテム
             ================================ -->
@@ -242,9 +431,7 @@
                         すべて
                     </button>
 
-                    <button type="button" class="category-button" data-category="equipment">
-                        装備品
-                    </button>
+                    
 
                     <button type="button" class="category-button" data-category="consumable">
                         消耗品
@@ -309,7 +496,7 @@
 
                             <div>種類</div>
                             <div>アイテム名</div>
-                            <div>個数 / 戦闘力</div>
+                            <div>個数</div>
                             <div>操作</div>
 
                         </div>
@@ -317,140 +504,7 @@
 
                         <div id="items" class="table-body">
 
- {% for row in equipment_display_rows %}
-
-<article
-    class="item-row"
-    data-item
-    data-name="{{ row.owned.equipment.item.name }}"
-    data-category="equipment"
-    data-quantity="{{ row.quantity }}"
->
-
-    <!-- 種類 -->
-    <div class="table-cell">
-
-        <span class="category-tag">
-            装備品
-        </span>
-
-    </div>
-
-
-    <!-- 装備名 -->
-    <div class="table-cell item-name-cell">
-
-        <div>
-
-            <strong>
-                【{{ row.owned.equipment.rank }}】
-                {{ row.owned.equipment.item.name }}
-                +{{ row.owned.enhancement_level }}
-            </strong>
-
-
-            {% if row.owned.special_effect %}
-
-            <div class="equipment-special-effect">
-                ✨ 特殊能力：
-                {{ row.owned.get_special_effect_display }}
-            </div>
-
-            {% endif %}
-
-
-            <br>
-
-
-            <small>
-
-                {{ row.owned.equipment.get_slot_display }}
-
-                /
-
-                {{ row.owned.equipment.get_style_display }}
-
-            </small>
-
-        </div>
-
-    </div>
-
-
-    <!-- 個数 / 戦闘力 -->
-    <div class="table-cell quantity-cell">
-
-        <div class="equipment-stack-summary">
-
-            <div>
-                所持
-
-                <strong>
-                    {{ row.quantity }}
-                </strong>
-
-                個
-            </div>
-
-            <div>
-                戦闘力
-
-                <strong>
-                    {{ row.owned.battle_power }}
-                </strong>
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- 操作 -->
-    <div class="table-cell">
-
-        {% if row.owned.is_equipped %}
-
-        <form
-            method="post"
-            action="{% url 'inventory:unequip_equipment' row.owned.id %}"
-        >
-
-            {% csrf_token %}
-
-            <button
-                type="submit"
-                class="equipment-action-button remove"
-            >
-                外す
-            </button>
-
-        </form>
-
-        {% else %}
-
-        <form
-            method="post"
-            action="{% url 'inventory:equip_equipment' row.owned.id %}"
-        >
-
-            {% csrf_token %}
-
-            <button
-                type="submit"
-                class="equipment-action-button"
-            >
-                装備する
-            </button>
-
-        </form>
-
-        {% endif %}
-
-    </div>
-
-</article>
-
-{% endfor %}
+ 
 
 
                             <!-- ========================================
@@ -553,6 +607,6 @@
 
 </div>
 
-<script src="{% static 'js/inventory.js' %}"></script>
+<script src="{% static 'js/inventory.js' %}?v=3"></script>
 
 {% endblock %}
