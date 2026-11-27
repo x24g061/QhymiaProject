@@ -1792,3 +1792,428 @@ button:disabled {
         width: 100%;
     }
 }
+
+/* =========================================================
+   NPC SHOP PANEL
+========================================================= */
+
+.npc-shop-panel {
+    display: none;
+}
+
+.npc-shop-panel.active {
+    display: block;
+}
+
+/* =========================================================
+   NPC SHOP QUANTITY CONTROL
+========================================================= */
+
+.npc-quantity-control {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+
+.npc-quantity-input {
+    width: 60px;
+    height: 36px;
+
+    padding: 4px 6px;
+
+    text-align: center;
+
+    color: var(--main-deep);
+
+    background:
+        rgba(255, 255, 255, 0.88);
+
+    border:
+        1px solid rgba(55, 101, 111, 0.22);
+
+    border-radius: 8px;
+
+    font-weight: 700;
+}
+
+
+/* ブラウザ標準の上下矢印を非表示 */
+
+.npc-quantity-input::-webkit-inner-spin-button,
+.npc-quantity-input::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+}
+
+
+.npc-quantity-input {
+    appearance: textfield;
+}
+
+
+.npc-quantity-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 60px;
+    height: 28px;
+
+    padding: 0;
+
+    color:
+        var(--main-deep);
+
+    background:
+        rgba(255, 255, 255, 0.78);
+
+    border:
+        1px solid rgba(55, 101, 111, 0.22);
+
+    border-radius: 8px;
+
+    font-size: 15px;
+    font-weight: 900;
+
+    transition:
+        background 0.15s,
+        color 0.15s,
+        transform 0.15s;
+}
+
+
+.npc-quantity-button:hover:not(:disabled) {
+    color: #ffffff;
+
+    background:
+        var(--main);
+
+    transform:
+        translateY(-1px);
+}
+
+
+.npc-quantity-button:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+
+.npc-total-price {
+    display: block;
+
+    margin-top: 4px;
+
+    color:
+        var(--muted);
+
+    font-size: 9px;
+    font-weight: 700;
+}
+
+.buy-button.insufficient-q {
+    opacity: 0.55;
+    cursor: not-allowed;
+
+    color: #9b2f2f;
+
+    background:
+        rgba(255, 235, 235, 0.9);
+
+    border:
+        1px solid rgba(170, 70, 70, 0.25);
+}
+
+/* =========================================================
+   NPC SHOP PURCHASE MODAL
+========================================================= */
+
+.npc-purchase-modal {
+    position: fixed;
+
+    inset: 0;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(7, 18, 24, 0.58);
+
+    backdrop-filter:
+        blur(5px);
+
+    z-index: 9999;
+}
+
+
+.npc-purchase-modal.active {
+    display: flex;
+}
+
+
+.npc-purchase-modal-card {
+    width: min(420px, 100%);
+
+    padding: 28px;
+
+    color:
+        var(--text);
+
+    background:
+        rgba(250, 253, 252, 0.97);
+
+    border:
+        1px solid rgba(255, 255, 255, 0.8);
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 24px 70px rgba(7, 24, 31, 0.32);
+
+    text-align: center;
+}
+
+
+.npc-purchase-modal-card h2 {
+    margin:
+        0 0 18px;
+
+    color:
+        var(--main-deep);
+
+    font-size: 22px;
+}
+
+
+#npc-modal-item-name {
+    margin:
+        0 0 16px;
+
+    font-size: 16px;
+    font-weight: 800;
+}
+
+
+.npc-modal-summary {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+
+    margin:
+        0 0 18px;
+
+    padding:
+        14px;
+
+    background:
+        var(--main-pale);
+
+    border-radius: 12px;
+}
+
+
+#npc-modal-total {
+    color:
+        var(--main-deep);
+
+    font-size: 18px;
+}
+
+
+.npc-modal-message {
+    margin:
+        0 0 20px;
+
+    color:
+        var(--muted);
+}
+
+
+.npc-modal-actions {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 10px;
+}
+
+
+.npc-modal-cancel,
+.npc-modal-confirm {
+    min-height: 42px;
+
+    border-radius: 10px;
+
+    font-weight: 800;
+}
+
+
+.npc-modal-cancel {
+    color:
+        var(--main-dark);
+
+    background:
+        #ffffff;
+
+    border:
+        1px solid rgba(55, 101, 111, 0.22);
+}
+
+
+.npc-modal-confirm {
+    color:
+        #ffffff;
+
+    background:
+        var(--main);
+
+    border:
+        1px solid var(--main);
+}
+
+
+.npc-modal-cancel:hover {
+    background:
+        var(--main-pale);
+}
+
+
+.npc-modal-confirm:hover {
+    background:
+        var(--main-dark);
+}
+
+/* =========================================================
+   MARKET QOL
+========================================================= */
+
+.own-market-listing {
+    background:
+        rgba(220, 239, 241, 0.55);
+}
+
+.own-listing-badge {
+    display: inline-block;
+
+    margin-top: 5px;
+    padding: 3px 7px;
+
+    color: var(--main-dark);
+
+    background:
+        var(--main-soft);
+
+    border-radius: 999px;
+
+    font-size: 9px;
+    font-weight: 800;
+}
+
+
+.market-total-price {
+    display: block;
+
+    margin-top: 4px;
+
+    color: var(--muted);
+
+    font-size: 9px;
+    font-weight: 700;
+}
+
+
+.market-quantity-control {
+    display: inline-flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+}
+
+
+.market-buy-quantity-input {
+    width: 60px;
+    height: 36px;
+
+    padding: 4px 6px;
+
+    text-align: center;
+
+    color: var(--main-deep);
+
+    background:
+        rgba(255, 255, 255, 0.88);
+
+    border:
+        1px solid rgba(55, 101, 111, 0.22);
+
+    border-radius: 8px;
+
+    font-weight: 700;
+}
+
+
+.market-buy-quantity-input::-webkit-inner-spin-button,
+.market-buy-quantity-input::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+}
+
+
+.market-buy-quantity-input {
+    appearance: textfield;
+}
+
+
+.market-quantity-button {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 60px;
+    height: 28px;
+
+    padding: 0;
+
+    color: var(--main-deep);
+
+    background:
+        rgba(255, 255, 255, 0.78);
+
+    border:
+        1px solid rgba(55, 101, 111, 0.22);
+
+    border-radius: 8px;
+
+    font-size: 15px;
+    font-weight: 900;
+}
+
+
+.market-quantity-button:hover:not(:disabled) {
+    color: #ffffff;
+
+    background: var(--main);
+}
+
+
+.market-quantity-button:disabled {
+    opacity: 0.35;
+    cursor: default;
+}

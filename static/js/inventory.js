@@ -11,70 +11,105 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     const equipmentPanel =
-        document.querySelector(
-            "#equipment-panel"
-        );
+    document.querySelector(
+        "#equipment-panel"
+    );
 
+const ownedEquipmentPanel =
+    document.querySelector(
+        "#owned-equipment-panel"
+    );
 
-    const itemsPanel =
-        document.querySelector(
-            "#items-panel"
-        );
+const itemsPanel =
+    document.querySelector(
+        "#items-panel"
+    );
 
 
     sideButtons.forEach(button => {
 
-        button.addEventListener(
-            "click",
-            () => {
+    button.addEventListener(
+        "click",
+        () => {
 
-                sideButtons.forEach(target => {
+            sideButtons.forEach(target => {
 
-                    target.classList.remove(
-                        "active"
-                    );
-
-                });
-
-
-                button.classList.add(
+                target.classList.remove(
                     "active"
                 );
 
+            });
 
+
+            button.classList.add(
+                "active"
+            );
+
+
+            if (equipmentPanel) {
                 equipmentPanel.classList.remove(
                     "active-panel"
                 );
+            }
 
+
+            if (ownedEquipmentPanel) {
+                ownedEquipmentPanel.classList.remove(
+                    "active-panel"
+                );
+            }
+
+
+            if (itemsPanel) {
                 itemsPanel.classList.remove(
                     "active-panel"
                 );
+            }
 
 
-                if (
-                    button.dataset.target ===
-                    "equipment"
-                ) {
+            const target =
+                button.dataset.target;
 
-                    equipmentPanel.classList.add(
-                        "active-panel"
-                    );
 
-                }
+            if (
+                target === "equipment" &&
+                equipmentPanel
+            ) {
 
-                else {
-
-                    itemsPanel.classList.add(
-                        "active-panel"
-                    );
-
-                }
+                equipmentPanel.classList.add(
+                    "active-panel"
+                );
 
             }
-        );
 
-    });
 
+            else if (
+                target === "owned-equipment" &&
+                ownedEquipmentPanel
+            ) {
+
+                ownedEquipmentPanel.classList.add(
+                    "active-panel"
+                );
+
+            }
+
+
+            else if (
+                target === "items" &&
+                itemsPanel
+            ) {
+
+                itemsPanel.classList.add(
+                    "active-panel"
+                );
+
+            }
+
+        }
+    );
+
+});
 
 
     /*

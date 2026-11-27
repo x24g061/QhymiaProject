@@ -25,7 +25,6 @@
 
 <body
     class="{% if user.is_authenticated and user.game_settings.background_image %}user-custom-background{% endif %}"
-
     {% if user.is_authenticated and user.game_settings.background_image %}
     style="
         --user-background-image:
@@ -63,9 +62,9 @@
                 ← フリーマーケットへ
             </a>
 
-            <button type="button" class="top-button" disabled>
+            <a href="{% url 'inventory:inventory' %}" class="top-button">
                 倉庫を開く
-            </button>
+            </a>
 
 
             <button type="button" class="top-button" disabled>
@@ -138,59 +137,52 @@
             <aside class="side-menu">
 
                 <h2>
-                    アイテムメニュー
+                    ショップメニュー
                 </h2>
 
 
-                <button type="button" class="side-button active">
-
+                <button type="button" class="side-button active npc-shop-tab-button" data-npc-panel="npc-items-panel">
                     <span class="side-button-title">
-                        出品中のアイテム
+                        商品を購入
                     </span>
 
                     <span class="side-arrow">
                         ▶
                     </span>
-
                 </button>
 
-
                 <p class="side-description">
-                    現在ショップで販売されている商品を確認できます。
+                    NPCショップで販売中の商品を購入できます。
                 </p>
 
-                <button type="button" class="side-button" disabled>
 
+                <button type="button" class="side-button npc-shop-tab-button" data-npc-panel="npc-fish-panel">
                     <span class="side-button-title">
-                        手持ちのアイテム
+                        魚を売却
                     </span>
 
                     <span class="side-arrow">
                         ▶
                     </span>
-
                 </button>
 
-
                 <p class="side-description">
-                    現在所持しているアイテムを確認する画面です。
+                    釣りで獲得した魚をQに交換できます。
                 </p>
 
-                <button type="button" class="side-button" disabled>
 
+                <button type="button" class="side-button npc-shop-tab-button" data-npc-panel="npc-q-panel">
                     <span class="side-button-title">
-                        装備中のアイテム
+                        Qを購入
                     </span>
 
                     <span class="side-arrow">
                         ▶
                     </span>
-
                 </button>
 
-
                 <p class="side-description">
-                    現在装備しているアイテムを確認する画面です。
+                    ゲーム内で使用するQを購入できます。
                 </p>
 
             </aside>
@@ -205,7 +197,7 @@
  Q購入エリア
 ================================== -->
 
-                <section class="q-charge-section">
+                <section id="npc-q-panel" class="q-charge-section npc-shop-panel">
 
                     <div class="q-charge-header">
                         <div>
@@ -319,335 +311,351 @@
         ================================== -->
 
 
-<section class="fish-sell-section">
+                <section id="npc-fish-panel" class="fish-sell-section npc-shop-panel">
 
-    <h2>釣った魚を売却</h2>
+                    <h2>釣った魚を売却</h2>
 
-    <p>
-        釣りで獲得した魚をQに交換できます。
-    </p>
+                    <p>
+                        釣りで獲得した魚をQに交換できます。
+                    </p>
 
-    {% for entry in fish_inventory %}
+                    {% for entry in fish_inventory %}
 
-    <div class="fish-sell-row">
+                    <div class="fish-sell-row">
 
-        <div class="fish-sell-details">
-            <strong>{{ entry.item.name }}</strong>
-            <span>所持数：{{ entry.quantity }}個</span>
-            <span>売却価格：{{ entry.item.sell_price }}Q / 個</span>
-        </div>
+                        <div class="fish-sell-details">
+                            <strong>{{ entry.item.name }}</strong>
+                            <span>所持数：{{ entry.quantity }}個</span>
+                            <span>売却価格：{{ entry.item.sell_price }}Q / 個</span>
+                        </div>
 
-        <form
-            method="post"
-            action="{% url 'shop:sell_fish' entry.id %}"
-            class="fish-sell-form"
-        >
-            {% csrf_token %}
+                        <form method="post" action="{% url 'shop:sell_fish' entry.id %}" class="fish-sell-form">
+                            {% csrf_token %}
 
-            <input
-                type="number"
-                name="quantity"
-                value="1"
-                min="1"
-                max="{{ entry.quantity }}"
-                required
-            >
+                            <input type="number" name="quantity" value="1" min="1" max="{{ entry.quantity }}" required>
 
-            <button type="submit">
-                売却する
-            </button>
-        </form>
+                            <button type="submit">
+                                売却する
+                            </button>
+                        </form>
 
-    </div>
+                    </div>
 
-    {% empty %}
+                    {% empty %}
 
-    <p>売却できる魚を所持していません。</p>
+                    <p>売却できる魚を所持していません。</p>
 
-    {% endfor %}
+                    {% endfor %}
 
-</section>
+                </section>
+                <section id="npc-items-panel" class="npc-shop-panel active">
+                    <nav class="category-tabs" id="categories">
 
-<nav class="category-tabs" id="categories">
-
-                    <button type="button" class="category-button active" data-category="all">
-                        すべて
-                    </button>
+                        <button type="button" class="category-button active" data-category="all">
+                            すべて
+                        </button>
 
 
-                    <button type="button" class="category-button" data-category="equipment">
-                        装備品
-                    </button>
+                        <button type="button" class="category-button" data-category="equipment">
+                            装備品
+                        </button>
 
 
-                    <button type="button" class="category-button" data-category="consumable">
-                        消耗品
-                    </button>
+                        <button type="button" class="category-button" data-category="consumable">
+                            消耗品
+                        </button>
 
 
-                    <button type="button" class="category-button" data-category="material">
-                        素材
-                    </button>
+                        <button type="button" class="category-button" data-category="material">
+                            素材
+                        </button>
 
 
-                    <button type="button" class="category-button" data-category="key_item">
-                        重要アイテム
-                    </button>
+                        <button type="button" class="category-button" data-category="key_item">
+                            重要アイテム
+                        </button>
 
-                </nav>
+                    </nav>
 
-                <!-- =================================
+                    <!-- =================================
              商品一覧上部
         ================================== -->
 
-                <section class="market-toolbar">
+                    <section class="market-toolbar">
 
-                    <div>
+                        <div>
 
-                        <p class="market-small-title">
-                            SHOP ITEM LIST
-                        </p>
+                            <p class="market-small-title">
+                                SHOP ITEM LIST
+                            </p>
 
-                        <h2 id="category-title">
-                            販売中のアイテム
-                        </h2>
+                            <h2 id="category-title">
+                                販売中のアイテム
+                            </h2>
 
-                    </div>
-
-
-                    <div class="toolbar-controls">
-
-                        <input type="search" id="search" placeholder="アイテム名で検索">
+                        </div>
 
 
-                        <select id="sort">
+                        <div class="toolbar-controls">
 
-                            <option value="default">
-                                標準
-                            </option>
+                            <input type="search" id="search" placeholder="アイテム名で検索">
 
-                            <option value="price-low">
-                                価格が安い順
-                            </option>
 
-                            <option value="price-high">
-                                価格が高い順
-                            </option>
+                            <select id="sort">
 
-                            <option value="name">
-                                名前順
-                            </option>
+                                <option value="default">
+                                    標準
+                                </option>
 
-                        </select>
+                                <option value="price-low">
+                                    価格が安い順
+                                </option>
 
-                    </div>
+                                <option value="price-high">
+                                    価格が高い順
+                                </option>
 
-                </section>
+                                <option value="name">
+                                    名前順
+                                </option>
 
-                <!-- =================================
+                            </select>
+
+                        </div>
+
+                    </section>
+
+                    <!-- =================================
              表
         ================================== -->
 
-                <section class="table-wrapper">
+                    <section class="table-wrapper">
 
 
-                    <div class="item-table npc-item-table">
+                        <div class="item-table npc-item-table">
 
 
-                        <!-- ヘッダー -->
+                            <!-- ヘッダー -->
 
-                        <div class="table-header">
+                            <div class="table-header">
 
-                            <div>
-                                種類
-                            </div>
-
-                            <div>
-                                アイテム名
-                            </div>
-
-                            <div>
-                                説明
-                            </div>
-
-                            <div>
-                                在庫
-                            </div>
-
-                            <div>
-                                価格
-                            </div>
-                            <div>
-                                個数
-                            </div>
-                            <div>
-                                購入
-                            </div>
-
-                        </div>
-
-                        <!-- 商品 -->
-
-                        <div id="items" class="table-body">
-
-
-                            {% for stock in shop_stocks %}
-
-
-                            <article class="table-row" data-item data-name="{{ stock.item.name }}"
-                                data-category="{{ stock.item.category }}" data-price="{{ stock.price }}">
-
-
-                                <!-- 種類 -->
-
-                                <div class="table-cell category-cell" data-label="種類">
-
-                                    <span class="category-tag">
-
-                                        {{ stock.item.get_category_display }}
-
-                                    </span>
-
+                                <div>
+                                    種類
                                 </div>
 
-                                <!-- 名前 -->
-
-                                <div class="table-cell item-name-cell" data-label="アイテム名">
-
-                                    <strong>
-                                        {{ stock.item.name }}
-                                    </strong>
-
+                                <div>
+                                    アイテム名
                                 </div>
 
-                                <!-- 説明 -->
-
-                                <div class="table-cell description-cell" data-label="説明">
-
-                                    {% if stock.item.description %}
-
-                                    {{ stock.item.description }}
-
-                                    {% else %}
-
-                                    -
-
-                                    {% endif %}
-
+                                <div>
+                                    説明
                                 </div>
 
-                                <!-- 在庫 -->
-
-                                <div class="table-cell stock-cell" data-label="在庫">
-
-                                    {% if stock.stock > 0 %}
-
-                                    <strong>
-                                        {{ stock.stock }}
-                                    </strong>
-
-                                    個
-
-                                    {% else %}
-
-                                    <span class="sold-out-text">
-                                        売切
-                                    </span>
-
-                                    {% endif %}
-
+                                <div>
+                                    在庫
                                 </div>
 
-                                <!-- 価格 -->
-
-                                <div class="table-cell price-cell" data-label="価格">
-
-                                    <strong>
-                                        {{ stock.price }}
-                                    </strong>
-
-                                    Q
-
+                                <div>
+                                    価格
+                                </div>
+                                <div>
+                                    個数
+                                </div>
+                                <div>
+                                    購入
                                 </div>
 
-                                <!-- 個数 -->
+                            </div>
 
-                                <div class="table-cell npc-quantity-cell" data-label="個数">
+                            <!-- 商品 -->
 
-                                    {% if stock.stock > 0 %}
-
-                                    <input type="number" name="quantity" value="1" min="1" max="{{ stock.stock }}"
-                                        form="npc-buy-form-{{ stock.id }}" class="npc-quantity-input">
-
-                                    {% else %}
-
-                                    -
-
-                                    {% endif %}
-
-                                </div>
+                            <div id="items" class="table-body">
 
 
-                                <!-- 購入 -->
+                                {% for stock in shop_stocks %}
 
-                                <div class="table-cell buy-cell" data-label="購入">
 
-                                    {% if stock.stock > 0 %}
+                               <article class="table-row"
+    data-item
+    data-name="{{ stock.item.name }}"
+    data-category="{{ stock.item.category }}"
+    data-price="{{ stock.price }}"
+    data-character-gold="{{ character.gold|default:0 }}">
 
-                                    <form id="npc-buy-form-{{ stock.id }}" method="post"
-                                        action="{% url 'shop:buy_item' stock.id %}">
 
-                                        {% csrf_token %}
+                                    <!-- 種類 -->
 
-                                        <button type="submit" class="buy-button">
-                                            購入する
+                                    <div class="table-cell category-cell" data-label="種類">
+
+                                        <span class="category-tag">
+
+                                            {{ stock.item.get_category_display }}
+
+                                        </span>
+
+                                    </div>
+
+                                    <!-- 名前 -->
+
+                                    <div class="table-cell item-name-cell" data-label="アイテム名">
+
+                                        <strong>
+                                            {{ stock.item.name }}
+                                        </strong>
+
+                                    </div>
+
+                                    <!-- 説明 -->
+
+                                    <div class="table-cell description-cell" data-label="説明">
+
+                                        {% if stock.item.description %}
+
+                                        {{ stock.item.description }}
+
+                                        {% else %}
+
+                                        -
+
+                                        {% endif %}
+
+                                    </div>
+
+                                    <!-- 在庫 -->
+
+                                    <div class="table-cell stock-cell" data-label="在庫">
+
+                                        {% if stock.stock > 0 %}
+
+                                        <strong>
+                                            {{ stock.stock }}
+                                        </strong>
+
+                                        個
+
+                                        {% else %}
+
+                                        <span class="sold-out-text">
+                                            売切
+                                        </span>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                    <!-- 価格 -->
+
+                                    <div class="table-cell price-cell" data-label="価格">
+
+    <strong>
+        {{ stock.price }}
+    </strong>
+
+    Q
+
+    <span class="npc-total-price">
+        合計 {{ stock.price }} Q
+    </span>
+
+</div>
+
+                                    <!-- 個数 -->
+
+                                    <div class="table-cell npc-quantity-cell" data-label="個数">
+
+                                        {% if stock.stock > 0 %}
+
+                                        <div class="npc-quantity-control vertical">
+
+                                            <button type="button" class="npc-quantity-button npc-quantity-plus"
+                                                aria-label="数量を1増やす">
+                                                ＋
+                                            </button>
+
+                                            <input type="number" name="quantity" value="1" min="1"
+                                                max="{{ stock.stock }}" form="npc-buy-form-{{ stock.id }}"
+                                                class="npc-quantity-input">
+
+                                            <button type="button" class="npc-quantity-button npc-quantity-minus"
+                                                aria-label="数量を1減らす">
+                                                −
+                                            </button>
+
+                                        </div>
+
+                                        {% else %}
+
+                                        -
+
+                                        {% endif %}
+
+                                    </div>
+
+
+                                    <!-- 購入 -->
+
+                                    <div class="table-cell buy-cell" data-label="購入">
+
+                                        {% if stock.stock > 0 %}
+
+                                        <form id="npc-buy-form-{{ stock.id }}" method="post"
+                                            action="{% url 'shop:buy_item' stock.id %}">
+
+                                            {% csrf_token %}
+
+                                           <button
+    type="submit"
+    class="buy-button"
+    data-item-name="{{ stock.item.name }}"
+>
+    購入する
+</button>
+
+                                        </form>
+
+                                        {% else %}
+
+                                        <button type="button" class="buy-button disabled" disabled>
+                                            売り切れ
                                         </button>
 
-                                    </form>
+                                        {% endif %}
 
-                                    {% else %}
+                                    </div>
 
-                                    <button type="button" class="buy-button disabled" disabled>
-                                        売り切れ
-                                    </button>
 
-                                    {% endif %}
+                                </article>
+
+
+                                {% empty %}
+
+
+                                <div class="empty-items">
+
+                                    現在販売中の商品はありません。
 
                                 </div>
 
 
-                            </article>
+                                {% endfor %}
 
-
-                            {% empty %}
-
-
-                            <div class="empty-items">
-
-                                現在販売中の商品はありません。
 
                             </div>
 
 
-                            {% endfor %}
+                            <!-- 検索結果0件 -->
+
+                            <div id="search-empty" class="empty-items hidden">
+
+                                条件に一致する商品がありません。
+
+                            </div>
 
 
                         </div>
 
-
-                        <!-- 検索結果0件 -->
-
-                        <div id="search-empty" class="empty-items hidden">
-
-                            条件に一致する商品がありません。
-
-                        </div>
-
-
-                    </div>
-
+                    </section>
                 </section>
-
 
             </main>
 
@@ -656,7 +664,46 @@
 
 
     </div>
+<div id="npc-purchase-modal" class="npc-purchase-modal">
 
+    <div class="npc-purchase-modal-card">
+
+        <h2>購入確認</h2>
+
+        <p id="npc-modal-item-name"></p>
+
+        <div class="npc-modal-summary">
+            <span id="npc-modal-quantity"></span>
+            <strong id="npc-modal-total"></strong>
+        </div>
+
+        <p class="npc-modal-message">
+            この内容で購入しますか？
+        </p>
+
+        <div class="npc-modal-actions">
+
+            <button
+                type="button"
+                id="npc-modal-cancel"
+                class="npc-modal-cancel"
+            >
+                キャンセル
+            </button>
+
+            <button
+                type="button"
+                id="npc-modal-confirm"
+                class="npc-modal-confirm"
+            >
+                購入する
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
 </body>
 {% if user.is_authenticated %}
 <script src="{% static 'js/market-notifications.js' %}" defer></script>
