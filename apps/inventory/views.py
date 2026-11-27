@@ -276,6 +276,219 @@ def synthesis(request):
             "equipment_ids"
         )
 
+        # カード1枚の選択から素材3個のIDを受け取る
+        selected_materials = request.POST.getlist(
+            "selected_materials"
+        )
+
+        # 一括合成
+        if request.POST.get("bulk_synthesis") == "1":
+            try:
+                count = int(request.POST.get("synthesis_count", "1"))
+
+                if not 1 <= count <= 10:
+                    raise ValueError("合成回数は1〜10回で指定してください。")
+
+                if len(selected_materials) != 1 or selected_ids:
+                    raise ValueError("装備の選択が不正です。")
+
+                raw_ids = selected_materials[0].split(",")
+
+                if (
+                    len(raw_ids) > 30
+                    or any(
+                        not value.isascii()
+                        or not value.isdecimal()
+                        or len(value) > 19
+                        or not 0 < int(value) < 2**63
+                        for value in raw_ids
+                    )
+                ):
+                    raise ValueError("装備の選択が不正です。")
+
+                material_ids = [
+                    int(value)
+                    for value in raw_ids[:count * 3]
+                ]
+
+                if (
+                    len(material_ids) != count * 3
+                    or len(set(material_ids)) != count * 3
+                ):
+                    raise ValueError("合成素材が不足しています。")
+
+                use_guarantee = (
+                    request.POST.get("use_guarantee") == "on"
+                )
+
+                results = []
+
+                with transaction.atomic():
+                    locked_character = (
+                        Character.objects
+                        .select_for_update()
+                        .get(pk=character.pk)
+                    )
+
+                    materials = list(
+                        OwnedEquipment.objects
+                        .select_for_update()
+                        .select_related("equipment", "equipment__item")
+                        .filter(
+                            character=locked_character,
+                            pk__in=material_ids,
+                            is_equipped=False,
+                        )
+                    )
+
+                    if len(materials) != count * 3:
+                        raise ValueError("合成可能な素材が不足しています。")
+
+                    if MarketListing.objects.filter(
+                        owned_equipment_id__in=material_ids,
+                        status=MarketListing.Status.LISTED,
+                    ).exists():
+                        raise ValueError("出品中の装備は合成できません。")
+
+                    groups = {
+                        (item.equipment_id, item.enhancement_level)
+                        for item in materials
+                    }
+
+                    if len(groups) != 1:
+                        raise ValueError("同じ装備・同じ強化値を選択してください。")
+
+                    locked_character.reset_daily_synthesis_count_if_needed()
+
+                    free_count = max(
+                        0,
+                        3 - locked_character.daily_synthesis_count,
+                    )
+
+                    total_cost = max(0, count - free_count) * 10
+
+                    if locked_character.gold < total_cost:
+                        raise ValueError("合成に必要なQが不足しています。")
+
+                    if use_guarantee:
+                        guarantee = (
+                            InventoryItem.objects
+                            .select_for_update()
+                            .filter(
+                                character=locked_character,
+                                item__name="合成成功保証書",
+                            )
+                            .first()
+                        )
+
+                        if not guarantee or guarantee.quantity < count:
+                            raise ValueError("合成成功保証書が不足しています。")
+
+                    material_map = {
+                        item.pk: item for item in materials
+                    }
+
+                    # 画面表示時に確定した素材だけを使用する
+                    for index in range(count):
+                        batch_ids = material_ids[index * 3:index * 3 + 3]
+
+                        batch = [
+                            material_map[pk]
+                            for pk in batch_ids
+                        ]
+
+                        result = synthesize_equipments(
+                            locked_character,
+                            batch,
+                            use_guarantee=use_guarantee,
+                        )
+
+                        results.append(result)
+
+                result_counts = {
+                    "success": 0,
+                    "great_success": 0,
+                    "super_success": 0,
+                    "failure": 0,
+                }
+
+                for result in results:
+                    result_counts[result["result"]] += 1
+
+                messages.success(
+                    request,
+                    f"{count}回の合成が完了しました。"
+                    f" 成功：{result_counts['success']}回"
+                    f" ／ 大成功：{result_counts['great_success']}回"
+                    f" ／ 超大成功：{result_counts['super_success']}回"
+                    f" ／ 失敗：{result_counts['failure']}回"
+                    f" ／ 消費Q：{total_cost}Q"
+                )
+
+                # SNS共有候補が複数ある場合は
+                # 最も強化値の高い装備を選択する
+                share_candidates = [
+                    result["equipment"]
+                    for result in results
+                    if result.get("equipment") is not None
+                    and (
+                        result["result"] in {
+                            "great_success", "super_success"
+                        }
+                        or result["equipment"].enhancement_level >= 7
+                    )
+                ]
+
+                if (
+                    share_candidates
+                    and user_settings.synthesis_sns_prompt_enabled
+                ):
+                    equipment = max(
+                        share_candidates,
+                        key=lambda item: item.enhancement_level,
+                    )
+
+                    equipment_name = equipment.equipment.item.name
+                    level = equipment.enhancement_level
+                    rank = equipment.equipment.rank
+
+                    request.session["synthesis_sns_share"] = {
+                        "text": (
+                            f"装備合成に成功！"
+                            f"【{rank}】{equipment_name}"
+                            f"+{level}を獲得した！"
+                        ),
+                        "equipment_name": equipment_name,
+                        "level": level,
+                    }
+
+            except ValueError as error:
+                messages.error(request, str(error))
+
+            return redirect("inventory:synthesis")
+
+        if selected_materials:
+            if len(selected_materials) != 1 or selected_ids:
+                messages.error(request, "装備の選択が不正です。")
+                return redirect("inventory:synthesis")
+
+            selected_ids = selected_materials[0].split(",")
+
+            if (
+                len(selected_ids) != 3
+                or any(
+                    not value.isascii()
+                    or not value.isdecimal()
+                    or len(value) > 19
+                    or not 0 < int(value) < 2**63
+                    for value in selected_ids
+                )
+            ):
+                messages.error(request, "装備の選択が不正です。")
+                return redirect("inventory:synthesis")
+
+            selected_ids = [int(value) for value in selected_ids]
+
         # 3つ選択されているか確認
         if len(selected_ids) != 3:
 
@@ -578,7 +791,34 @@ def synthesis(request):
 
         equipment = group[0].equipment
 
+        # 特殊能力なしを優先し、戦闘力が低いものから選択
+        materials = sorted(
+            group,
+            key=lambda owned: (
+                bool(owned.special_effect),
+                owned.battle_power,
+                owned.pk,
+            ),
+        )[:30]
+
+        selected_material_ids = ",".join(
+            str(owned.pk) for owned in materials
+        )
+
+        selected_effects = [
+            owned.get_special_effect_display()
+            for owned in materials
+            if owned.special_effect
+        ]
+
         synthesis_groups.append({
+            "max_synthesis_count": min(10, len(group) // 3),
+            "normal_material_count": sum(
+                1 for owned in materials
+                if not owned.special_effect
+            ),
+            "selected_material_ids": selected_material_ids,
+            "selected_effects": selected_effects,
             "equipment_id": equipment_id,
             "equipment": equipment,
             "level": level,

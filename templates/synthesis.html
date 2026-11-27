@@ -153,6 +153,7 @@
             <form method="post" class="synthesis-form">
 
                 {% csrf_token %}
+                <input type="hidden" name="bulk_synthesis" value="1">
 
 
                 <div class="synthesis-rule">
@@ -162,8 +163,7 @@
                     </strong>
 
                     <span>
-                        同じ装備・同じ強化値の装備を
-                        3つ選択してください。
+                        合成する装備を選択してください。
                     </span>
 
                 </div>
@@ -221,82 +221,53 @@
 
                     {% if synthesis_groups %}
 
-                    <table class="synthesis-group-table">
-                        <thead>
-                            <tr>
-                                <th>種類</th>
-                                <th>レアリティ</th>
-                                <th>アイテム名</th>
-                                <th>個数</th>
-                                <th>対象</th>
-                            </tr>
-                        </thead>
+                    <div class="synthesis-single-list">
 
-                        <tbody>
-                            {% for group in synthesis_groups %}
-                            <tr>
-                                <td>
-                                    {{ group.equipment.get_slot_display }}
-                                </td>
+                        {% for group in synthesis_groups %}
 
-                                <td>
-                                    {{ group.equipment.rank }}
-                                </td>
+                        <label class="synthesis-single-card">
 
-                                <td>
+                            <span class="synthesis-single-icon"
+                                  aria-hidden="true">⚔</span>
+
+                            <span class="synthesis-single-content">
+
+                                <strong class="synthesis-single-name">
                                     {{ group.equipment.item.name }}
                                     +{{ group.level }}
-                                </td>
+                                </strong>
 
-                                <td>
-                                    {{ group.count }}
-                                </td>
+                                <span class="synthesis-single-count">
+                                    所持数：{{ group.count }}個
+                                </span>
 
-                                <td>
-                                    <input type="radio" name="selected_group" value="{{ forloop.counter }}"
-                                        class="synthesis-group-radio">
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-
-                    <!-- 素材を3つ選ぶ -->
-                    {% for group in synthesis_groups %}
-                    <div class="synthesis-material-panel" data-group="{{ forloop.counter }}" hidden>
-                        <h3>
-                            {{ group.equipment.item.name }}
-                            +{{ group.level }}
-                        </h3>
-
-                        <p>
-                            合成に使用する装備を3個選択してください。
-                        </p>
-
-                        {% for owned in group.owned_items %}
-                        <label class="synthesis-material-item">
-
-                            <input type="checkbox" name="equipment_ids" value="{{ owned.id }}" disabled>
-
-                            <span>
-                                {{ owned.equipment.item.name }}
-                                +{{ owned.enhancement_level }}
-                                （戦闘力 {{ owned.battle_power }}）
-
-                                {% if owned.special_effect %}
-                                【特殊能力：
-                                {{ owned.get_special_effect_display }}】
+                                {% if group.selected_effects %}
+                                <span class="synthesis-single-warning">
+                                    特殊能力付き素材を使用：
+                                    {{ group.selected_effects|join:"、" }}
+                                </span>
                                 {% endif %}
+
                             </span>
 
+                            <input
+                                type="radio"
+                                name="selected_materials"
+                                value="{{ group.selected_material_ids }}"
+                                data-max="{{ group.max_synthesis_count }}"
+                                data-normal-count="{{ group.normal_material_count }}"
+                                class="synthesis-group-radio"
+                                {% if group.selected_effects %}
+                                data-has-special="true"
+                                {% endif %}
+                                required
+                            >
+
                         </label>
+
                         {% endfor %}
 
-                        <p class="synthesis-selected-count">
-                            選択数：0 / 3
-                        </p>
                     </div>
-                    {% endfor %}
 
                     {% else %}
 
@@ -317,6 +288,32 @@
 
 
                 {% if synthesis_groups %}
+
+                <div class="synthesis-bulk-controls"
+                     data-daily-count="{{ character.daily_synthesis_count }}"
+                     data-gold="{{ character.gold }}"
+                     data-guarantee="{{ guarantee_quantity }}">
+
+                    <label for="synthesis-count">合成回数</label>
+
+                    <div class="synthesis-count-buttons">
+                        <button type="button" id="synthesis-minus">−</button>
+
+                        <input type="number"
+                               name="synthesis_count"
+                               id="synthesis-count"
+                               min="1"
+                               max="10"
+                               step="1"
+                               value="1"
+                               required>
+
+                        <button type="button" id="synthesis-plus">＋</button>
+                        <button type="button" id="synthesis-max">最大</button>
+                    </div>
+
+                    <p id="synthesis-limit">装備を選択してください。</p>
+                </div>
 
                 <div class="synthesis-submit-area">
 
@@ -458,10 +455,6 @@
             ".synthesis-group-radio"
         );
 
-        const panels = document.querySelectorAll(
-            ".synthesis-material-panel"
-        );
-
         const submitButton = document.getElementById(
             "synthesis-submit"
         );
@@ -481,90 +474,145 @@
                     return;
                 }
 
+                const selected = document.querySelector(
+                    ".synthesis-group-radio:checked"
+                );
+
+                if (!selected) {
+                    event.preventDefault();
+                    return;
+                }
+
+                if (
+                    Number(selected.dataset.normalCount)
+                        < Number(document.getElementById(
+                            "synthesis-count"
+                        ).value) * 3
+                    && !window.confirm(
+                        "特殊能力付き装備が素材に含まれています。合成しますか？"
+                    )
+                ) {
+                    event.preventDefault();
+                    return;
+                }
+
                 synthesisSubmitting = true;
                 submitButton.disabled = true;
                 submitButton.textContent = "合成中...";
             });
         }
 
+        const countInput = document.getElementById("synthesis-count");
+        const bulkControls = document.querySelector(".synthesis-bulk-controls");
+        const limitText = document.getElementById("synthesis-limit");
+        const priceText = document.querySelector(".synthesis-price strong");
+
         function updateSelection() {
+            if (!countInput || !bulkControls) return;
+
             const selected = document.querySelector(
                 ".synthesis-group-radio:checked"
             );
 
-            panels.forEach(function (panel) {
-                const isActive = selected &&
-                    panel.dataset.group === selected.value;
+            const maxCount = selected
+                ? Math.min(10, Number(selected.dataset.max))
+                : 1;
 
-                panel.hidden = !isActive;
+            const count = Number(countInput.value);
+            const dailyCount = Number(bulkControls.dataset.dailyCount);
+            const gold = Number(bulkControls.dataset.gold);
+            const guarantee = Number(bulkControls.dataset.guarantee);
 
-                const checkboxes = panel.querySelectorAll(
-                    'input[name="equipment_ids"]'
-                );
+            const freeCount = Math.max(0, 3 - dailyCount);
 
-                checkboxes.forEach(function (checkbox) {
-                    checkbox.disabled = !isActive;
+            const validCount = Number.isInteger(count)
+                && count >= 1
+                && count <= maxCount;
 
-                    if (!isActive) {
-                        checkbox.checked = false;
-                    }
-                });
+            const cost = validCount
+                ? Math.max(0, count - freeCount) * 10
+                : 0;
 
-                if (!isActive) {
-                    return;
+            countInput.max = maxCount;
+
+            let valid = Boolean(selected) && validCount;
+
+            let warning = selected
+                ? "最大 " + maxCount + " 回まで合成可能"
+                : "装備を選択してください。";
+
+            if (!validCount) {
+                warning = "1〜" + maxCount + "の整数を入力してください。";
+            } else if (cost > gold) {
+                warning = "所持Qが不足しています。";
+                valid = false;
+            } else if (
+                guaranteeCheckbox
+                && guaranteeCheckbox.checked
+                && guarantee < count
+            ) {
+                warning = "合成成功保証書が不足しています。";
+                valid = false;
+            }
+
+            limitText.textContent = warning;
+
+            if (priceText) {
+                priceText.textContent = validCount && selected
+                    ? (cost === 0 ? "無料" : cost + "Q")
+                    : "―";
+            }
+
+            if (submitButton) {
+                submitButton.disabled = !valid || synthesisSubmitting;
+
+                if (!synthesisSubmitting) {
+                    submitButton.textContent = validCount && selected
+                        ? count + "回合成する"
+                        : "合成する";
                 }
-
-                const checked = panel.querySelectorAll(
-                    'input[name="equipment_ids"]:checked'
-                );
-
-                const counter = panel.querySelector(
-                    ".synthesis-selected-count"
-                );
-
-                counter.textContent =
-                    "選択数：" + checked.length + " / 3";
-
-                if (submitButton) {
-                    submitButton.disabled = checked.length !== 3;
-                }
-            });
-
-            if (!selected && submitButton) {
-                submitButton.disabled = true;
             }
         }
 
         radios.forEach(function (radio) {
             radio.addEventListener("change", function () {
-                if (submitButton) {
-                    submitButton.disabled = true;
-                }
-
+                countInput.value = "1";
                 updateSelection();
             });
         });
 
-        panels.forEach(function (panel) {
-            const checkboxes = panel.querySelectorAll(
-                'input[name="equipment_ids"]'
-            );
+        if (countInput) {
+            countInput.addEventListener("input", updateSelection);
 
-            checkboxes.forEach(function (checkbox) {
-                checkbox.addEventListener("change", function () {
-
-                    const checked = panel.querySelectorAll(
-                        'input[name="equipment_ids"]:checked'
+            document.getElementById("synthesis-minus")
+                .addEventListener("click", function () {
+                    countInput.value = Math.max(
+                        1,
+                        (Number(countInput.value) || 1) - 1
                     );
-
-                    if (checked.length > 3) {
-                        checkbox.checked = false;
-                    }
-
                     updateSelection();
                 });
-            });
-        });
+
+            document.getElementById("synthesis-plus")
+                .addEventListener("click", function () {
+                    countInput.value = Math.min(
+                        Number(countInput.max),
+                        (Number(countInput.value) || 0) + 1
+                    );
+                    updateSelection();
+                });
+
+            document.getElementById("synthesis-max")
+                .addEventListener("click", function () {
+                    countInput.value = countInput.max;
+                    updateSelection();
+                });
+        }
+
+        if (guaranteeCheckbox) {
+            guaranteeCheckbox.addEventListener("change", updateSelection);
+        }
+
         // ========================================
         // SNS共有確認
         // ========================================

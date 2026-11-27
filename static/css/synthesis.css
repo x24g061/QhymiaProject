@@ -1084,3 +1084,193 @@ main {
         align-items: flex-start;
     }
 }
+
+
+/* ========================================
+   合成装備のシングル選択
+======================================== */
+
+.synthesis-single-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+.synthesis-single-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    min-height: 64px;
+    padding: 16px 20px;
+    box-sizing: border-box;
+
+    background: #ffffff;
+    border: 2px solid #d3dfe4;
+    border-radius: 14px;
+
+    color: #203f49;
+    cursor: pointer;
+
+    transition:
+        border-color 0.15s,
+        background 0.15s,
+        box-shadow 0.15s;
+}
+
+.synthesis-single-card:hover {
+    background: #f2faff;
+    border-color: #70b9df;
+}
+
+.synthesis-single-card:has(input:checked) {
+    border-color: #0084ff;
+    background: #f7fbff;
+    box-shadow: 0 0 0 1px #0084ff;
+}
+
+.synthesis-single-card:focus-within {
+    outline: 2px solid #70b9df;
+    outline-offset: 2px;
+}
+
+.synthesis-single-icon {
+    flex-shrink: 0;
+    font-size: 24px;
+    color: #327f91;
+}
+
+.synthesis-single-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    gap: 5px;
+}
+
+.synthesis-single-name {
+    font-size: 16px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.synthesis-single-card .synthesis-group-radio {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    accent-color: #0084ff;
+    cursor: pointer;
+}
+
+.synthesis-single-warning {
+    color: #ad6800;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* ダークモード */
+
+html[data-game-theme="dark"] .synthesis-single-card {
+    background: #182830;
+    border-color: #40545e;
+    color: #ffffff;
+}
+
+html[data-game-theme="dark"] .synthesis-single-card:hover {
+    background: #213b46;
+    border-color: #70b9df;
+}
+
+html[data-game-theme="dark"] .synthesis-single-card:has(input:checked) {
+    background: #213b46;
+    border-color: #0084ff;
+}
+
+html[data-game-theme="dark"] .synthesis-single-icon {
+    color: #78c4df;
+}
+
+html[data-game-theme="dark"] .synthesis-single-warning {
+    color: #f0c36a;
+}
+
+@media (max-width: 600px) {
+    .synthesis-single-card {
+        gap: 10px;
+        padding: 12px 14px;
+    }
+
+    .synthesis-single-name {
+        font-size: 14px;
+    }
+}
+
+
+/* ========================================
+   一括合成
+======================================== */
+
+.synthesis-single-count {
+    font-size: 13px;
+    opacity: 0.75;
+}
+
+.synthesis-bulk-controls {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #cbd9df;
+    border-radius: 12px;
+    background: #f4f8fa;
+    color: #203f49;
+}
+
+.synthesis-bulk-controls label {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.synthesis-count-buttons {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.synthesis-count-buttons input {
+    width: 90px;
+    height: 42px;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    border: 1px solid #b9cbd3;
+    border-radius: 8px;
+    background: white;
+    color: #203f49;
+}
+
+.synthesis-count-buttons button {
+    min-width: 42px;
+    height: 42px;
+    padding: 0 12px;
+    border: 1px solid #b9cbd3;
+    border-radius: 8px;
+    background: white;
+    color: #203f49;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.synthesis-count-buttons button:hover {
+    background: #e1f3ff;
+    border-color: #0084ff;
+}
+
+#synthesis-limit {
+    margin: 12px 0 0;
+    font-size: 13px;
+}
