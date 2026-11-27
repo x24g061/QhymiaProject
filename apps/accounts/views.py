@@ -4,11 +4,14 @@ from datetime import timedelta
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.db import transaction
+from django.http import FileResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.staticfiles import finders
 from django.utils import timezone
+from django.views.decorators.cache import never_cache
+from django.views.decorators.http import require_safe
 
 from apps.battle.models import (
     ArenaFloor,
@@ -31,6 +34,52 @@ from .debug_mode import (
 
 from PIL import Image, UnidentifiedImageError
 
+
+BACKGROUND_IMAGE_CONTENT_TYPES = {
+    "JPEG": "image/jpeg",
+    "PNG": "image/png",
+    "WEBP": "image/webp",
+}
+
+
+@never_cache
+@login_required
+@require_safe
+def background_image_view(request, filename):
+    if filename in {".", ".."} or "\\" in filename or "\x00" in filename:
+        return HttpResponseNotFound()
+
+    user_settings = getattr(request.user, "game_settings", None)
+    if user_settings is None:
+        return HttpResponseNotFound()
+
+    background = user_settings.background_image
+    if background.name != f"user_backgrounds/{filename}":
+        return HttpResponseNotFound()
+
+    try:
+        image_file = background.storage.open(background.name, "rb")
+    except (FileNotFoundError, IsADirectoryError):
+        return HttpResponseNotFound()
+
+    try:
+        with Image.open(
+            image_file, formats=tuple(BACKGROUND_IMAGE_CONTENT_TYPES)
+        ) as image:
+            content_type = BACKGROUND_IMAGE_CONTENT_TYPES[image.format]
+            image.verify()
+        image_file.seek(0)
+    except (
+        OSError, ValueError, SyntaxError, LookupError, Image.DecompressionBombError
+    ):
+        image_file.close()
+        return HttpResponseNotFound()
+
+    return FileResponse(
+        image_file,
+        content_type=content_type,
+        headers={"X-Content-Type-Options": "nosniff"},
+    )
 
 
 def logout_view(request):
@@ -152,11 +201,7 @@ def settings_view(request):
             # 使用可能な画像形式
             # ====================================
 
-            allowed_types = {
-                "image/jpeg",
-                "image/png",
-                "image/webp",
-            }
+            allowed_types = BACKGROUND_IMAGE_CONTENT_TYPES.values()
 
             if (
                 background_image.content_type
