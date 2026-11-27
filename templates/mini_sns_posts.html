@@ -1,4 +1,5 @@
 {% load static %}
+{% load achievement_tags %}
 
 {% for post in mini_sns_posts %}
 
@@ -34,7 +35,7 @@
         <div class="mini-sns-user-info">
 
             <strong>
-                {{ post.user.character.name }}
+                {{ post.user.character.name }} {% public_title post.user.character %}
             </strong>
 
             <span>

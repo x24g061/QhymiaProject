@@ -915,21 +915,67 @@ def character_image_change_view(request):
 # プロフィール
 @login_required
 def profile_view(request):
+    from apps.achievements.models import (
+        Achievement,
+        CharacterAchievement,
+        CharacterTitle,
+    )
+    from apps.achievements.services import unlock_achievements
+
     character = getattr(
         request.user,
         "character",
         None,
     )
 
+    equipped_title = None
+    achievement_total = 0
+    achievement_count = 0
+    achievement_completion = 0
+
+    if character is not None:
+
+        unlock_achievements(character)
+
+        achievement_total = Achievement.objects.filter(
+            is_active=True,
+        ).count()
+
+        achievement_count = CharacterAchievement.objects.filter(
+            character=character,
+            achievement__is_active=True,
+        ).count()
+
+        equipped_title = (
+            CharacterTitle.objects
+            .select_related("achievement")
+            .filter(
+                character=character,
+                achievement__is_active=True,
+                achievement__unlocked_characters__character=character,
+            )
+            .first()
+        )
+
+        if achievement_total:
+            achievement_completion = round(
+                achievement_count / achievement_total * 100,
+                1,
+            )
+
     return render(
         request,
         "profile.html",
         {
             "character": character,
+            "equipped_title": equipped_title,
+            "achievement_total": achievement_total,
+            "achievement_count": achievement_count,
+            "achievement_completion": achievement_completion,
         },
     )
 
-    
+
 # 手相
 @login_required
 def palm_view(request):

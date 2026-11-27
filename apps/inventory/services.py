@@ -648,6 +648,14 @@ def synthesize_equipments(
         for equipment in equipments
     ]
 
+    from apps.achievements.services import (
+        unlock_achievements,
+        record_synthesis,
+    )
+
+    # 素材が消失する前に既存の最高強化値を記録
+    newly_unlocked = unlock_achievements(character)
+
     OwnedEquipment.objects.filter(
         id__in=equipment_ids
     ).delete()
@@ -663,9 +671,15 @@ def synthesize_equipments(
     # ========================================
 
     if result == "failure":
+
+        newly_unlocked.extend(
+            record_synthesis(character, result)
+        )
+
         return {
             "result": result,
             "equipment": None,
+            "newly_unlocked_achievements": newly_unlocked,
         }
 
     # ========================================
@@ -683,9 +697,18 @@ def synthesize_equipments(
         )
     )
 
+    newly_unlocked.extend(
+        record_synthesis(
+            character,
+            result,
+            new_level,
+        )
+    )
+
     return {
         "result": result,
         "equipment": new_equipment,
+        "newly_unlocked_achievements": newly_unlocked,
     }
 # ========================================
 # 戦闘用：装備特殊能力の倍率

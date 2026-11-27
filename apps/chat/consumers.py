@@ -4,6 +4,8 @@ from django.templatetags.static import static
 
 from apps.accounts.models import Character
 
+from apps.achievements.services import get_public_title_data
+
 from .models import ChatMessage
 
 
@@ -206,6 +208,8 @@ class ChatConsumer(
 
             "character_name":
                 character.name,
+
+            **get_public_title_data(character),
 
             "character_image_url": (
                 static(

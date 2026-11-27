@@ -405,6 +405,20 @@ def synthesis(request):
 
                         results.append(result)
 
+                # 一括合成で獲得した実績をまとめて通知
+                from apps.achievements.services import notify_achievements
+
+                notify_achievements(
+                    request,
+                    [
+                        achievement
+                        for result in results
+                        for achievement in result.get(
+                            "newly_unlocked_achievements", []
+                        )
+                    ],
+                )
+
                 result_counts = {
                     "success": 0,
                     "great_success": 0,
@@ -557,6 +571,14 @@ def synthesis(request):
                 "inventory:synthesis"
             )
 
+
+        # 実績獲得通知
+        from apps.achievements.services import notify_achievements
+
+        notify_achievements(
+            request,
+            result.get("newly_unlocked_achievements", []),
+        )
 
         # ====================================================
         # 合成結果メッセージ

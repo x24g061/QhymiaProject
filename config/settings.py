@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'apps.chat.apps.ChatConfig',
     "apps.battle.apps.BattleConfig",
     "apps.game.apps.GameConfig",
+    "apps.achievements.apps.AchievementsConfig",
 ]
 
 

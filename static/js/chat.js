@@ -188,6 +188,22 @@ document.addEventListener(
             name.textContent =
                 chat.character_name;
 
+            if (chat.title_name) {
+                const title = document.createElement("span");
+
+                title.classList.add("public-player-title");
+
+                if (["F", "E", "D", "C", "B", "A", "S"].includes(chat.title_rank)) {
+                    title.classList.add(
+                        "public-title-rank-" + chat.title_rank
+                    );
+                }
+
+                title.textContent = "【" + chat.title_name + "】";
+
+                name.appendChild(title);
+            }
+
 
             const time =
                 document.createElement(

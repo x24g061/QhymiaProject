@@ -176,6 +176,13 @@ def battle(request):
     # 探索回数を1回加算
     # ========================================================
 
+    from apps.achievements.services import (
+        record_exploration,
+        unlock_and_notify,
+    )
+
+    record_exploration(character)
+
     floor_progress.exploration_count += 1
 
     floor_progress.save(
@@ -425,6 +432,9 @@ def battle(request):
     # 戦闘画面表示
     # ========================================================
 
+    # 実績達成判定
+    unlock_and_notify(request, character)
+
     return render(
         request,
         "battle.html",
@@ -661,6 +671,15 @@ def arena_battle(request):
     except ValueError as error:
         messages.warning(request, str(error))
         return redirect("home")
+
+    # 新しく獲得した実績を通知
+    for achievement in result.get("newly_unlocked_achievements", []):
+        messages.success(
+            request,
+            f"🏆 実績獲得！ "
+            f"【{achievement['rank']}】"
+            f"{achievement['name']}",
+        )
 
     # POST後は保存済みの履歴へ移動し、結果の再読込による再戦を防ぐ。
     return redirect("battle:arena_result", history_id=result["history_id"])

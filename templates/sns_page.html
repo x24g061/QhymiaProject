@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load achievement_tags %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/sns_page.css' %}?v=2">
@@ -264,7 +265,7 @@
                         </span>
 
                         <strong class="sns-character-name">
-                            {{ post.user.character.name }}
+                            {{ post.user.character.name }} {% public_title post.user.character %}
                         </strong>
 
                     </div>

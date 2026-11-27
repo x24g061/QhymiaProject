@@ -1,0 +1,294 @@
+{% extends "base.html" %}
+{% load static l10n %}
+
+{% block title %}
+実績・称号 | Qhymia
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/achievements.css' %}">
+
+<div class="achievement-page">
+
+    <div class="achievement-container">
+
+        <a href="{% url 'home' %}"
+           class="achievement-back">
+            ← ホームに戻る
+        </a>
+
+        <section class="achievement-header">
+
+            <p class="achievement-label">
+                ACHIEVEMENTS
+            </p>
+
+            <h1>実績・称号</h1>
+
+            <p>冒険の軌跡を刻み、称号を獲得しよう。</p>
+
+        </section>
+
+
+
+        <section class="achievement-summary">
+
+            <span>現在の称号</span>
+
+            {% if equipped_title %}
+
+            <h2 class="rank-{{ equipped_title.achievement.rank }}">
+                {{ equipped_title.achievement.title_name }}
+            </h2>
+
+            <form method="post"
+                  action="{% url 'achievements:change_title' %}">
+
+                {% csrf_token %}
+
+                <input type="hidden"
+                       name="action"
+                       value="unequip">
+
+                <button class="achievement-button">
+                    称号を解除
+                </button>
+
+            </form>
+
+            {% else %}
+
+            <h2>称号なし</h2>
+
+            {% endif %}
+
+            <div class="achievement-completion">
+
+                <span>実績達成率</span>
+
+                <strong>
+                    {{ unlocked_count }} / {{ total }}
+                    （{{ completion }}%）
+                </strong>
+
+            </div>
+
+            <div class="achievement-progress">
+                <div style="width: {{ completion|unlocalize }}%"></div>
+            </div>
+
+        </section>
+
+        <div class="achievement-filters">
+
+            <button type="button"
+                    data-filter="all"
+                    class="active">
+                すべて
+            </button>
+
+            <button type="button"
+                    data-filter="unlocked">
+                獲得済み
+            </button>
+
+            <button type="button"
+                    data-filter="locked">
+                未獲得
+            </button>
+
+            <select id="achievement-category">
+
+                <option value="all">すべての分類</option>
+                <option value="growth">回帰・成長</option>
+                <option value="exploration">探索・戦闘</option>
+                <option value="arena">闘技場</option>
+                <option value="equipment">装備・合成</option>
+                <option value="fishing">釣り</option>
+                <option value="economy">経済</option>
+                <option value="other">その他</option>
+
+            </select>
+
+        </div>
+
+        <div class="achievement-list">
+
+            {% for row in achievement_rows %}
+
+            <article
+                class="achievement-card
+                {% if row.unlocked %}unlocked{% else %}locked{% endif %}
+                {% if row.equipped %}equipped{% endif %}"
+                data-status="{% if row.unlocked %}unlocked{% else %}locked{% endif %}"
+                data-category="{{ row.achievement.category }}">
+
+                <div class="achievement-card-main">
+
+                    <div class="achievement-rank rank-{{ row.achievement.rank }}">
+                        {{ row.achievement.rank }}
+                    </div>
+
+                    <div class="achievement-info">
+
+                        <span class="achievement-category">
+                            {{ row.achievement.get_category_display }}
+                        </span>
+
+                        <h3 class="{% if row.unlocked %}rank-{{ row.achievement.rank }}{% endif %}">
+                            {{ row.achievement.title_name }}
+                        </h3>
+
+                        <p>
+                            {{ row.achievement.description }}
+                        </p>
+
+                    </div>
+
+                    {% if row.unlocked %}
+
+                        {% if row.equipped %}
+
+                        <span class="achievement-equipped">
+                            装着中
+                        </span>
+
+                        {% else %}
+
+                        <form method="post"
+                              action="{% url 'achievements:change_title' %}">
+
+                            {% csrf_token %}
+
+                            <input type="hidden"
+                                   name="action"
+                                   value="equip">
+
+                            <input type="hidden"
+                                   name="achievement_id"
+                                   value="{{ row.achievement.id }}">
+
+                            <button class="achievement-button">
+                                装着する
+                            </button>
+
+                        </form>
+
+                        {% endif %}
+
+                    {% else %}
+
+                    <span class="achievement-locked">
+                        未獲得
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+                {% if row.unlocked %}
+
+                <p class="achievement-date">
+                    獲得日：
+                    {{ row.unlocked_at|date:"Y/m/d H:i" }}
+                </p>
+
+                {% else %}
+
+                <div class="achievement-progress">
+                    <div style="width: {{ row.percent }}%"></div>
+                </div>
+
+                <p class="achievement-progress-text">
+                    {% if row.achievement.condition_type == "boss_defeated" %}
+                        未討伐
+                    {% else %}
+                        {{ row.current }} / {{ row.target }}
+                    {% endif %}
+                </p>
+
+                {% endif %}
+
+            </article>
+
+            {% endfor %}
+
+        </div>
+
+        <p id="achievement-empty" hidden>
+            該当する実績がありません。
+        </p>
+
+    </div>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const buttons = document.querySelectorAll(
+        ".achievement-filters button"
+    );
+
+    const cards = document.querySelectorAll(
+        ".achievement-card"
+    );
+
+    const category = document.getElementById(
+        "achievement-category"
+    );
+
+    const empty = document.getElementById(
+        "achievement-empty"
+    );
+
+    let status = "all";
+
+    function applyFilter() {
+
+        let visible = 0;
+
+        cards.forEach(function (card) {
+
+            const matchStatus =
+                status === "all" ||
+                card.dataset.status === status;
+
+            const matchCategory =
+                category.value === "all" ||
+                card.dataset.category === category.value;
+
+            card.hidden = !(matchStatus && matchCategory);
+
+            if (!card.hidden) visible++;
+
+        });
+
+        empty.hidden = visible > 0;
+    }
+
+    buttons.forEach(function (button) {
+
+        button.addEventListener("click", function () {
+
+            status = button.dataset.filter;
+
+            buttons.forEach(function (item) {
+                item.classList.remove("active");
+            });
+
+            button.classList.add("active");
+
+            applyFilter();
+
+        });
+
+    });
+
+    category.addEventListener("change", applyFilter);
+
+});
+</script>
+
+{% endblock %}
