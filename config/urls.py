@@ -3,6 +3,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
+from apps.accounts.views import background_image_view
+
 from .views import (
     admin_mode_login,
     admin_mode_logout,
@@ -26,6 +28,12 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', home, name='home'),
+
+    path(
+        "media/user_backgrounds/<str:filename>",
+        background_image_view,
+        name="user_background_image",
+    ),
 
     path(
         'player_search/',
@@ -143,7 +151,8 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
+    # 背景画像は専用ビューで配信し、開発用公開配信はSNS画像に限定する。
     urlpatterns += static(
-        settings.MEDIA_URL,
-        document_root=settings.MEDIA_ROOT,
+        f"{settings.MEDIA_URL.rstrip('/')}/sns/",
+        document_root=settings.MEDIA_ROOT / "sns",
     )
